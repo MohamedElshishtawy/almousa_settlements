@@ -1,0 +1,93 @@
+.dark-mode aside {
+    background: var(--black-olive);
+}
+.dark-mode aside nav ul li.active,
+.dark-mode aside nav ul li.active:before,
+.dark-mode main .primary-div{
+    background: var(--grape) !important;
+    color: var(--light-white) !important;
+    border: 0;
+}
+.dark-mode main {
+    background: var(--black);
+}
+.dark-mode h1 {
+    color: var(--light-white);
+}
+.dark-mode h1:before,
+.dark-mode h1:after {
+    background: var(--grape);
+}
+.dark-mode main .statistics,
+.dark-mode main .current-exams,
+.dark-mode main .default-div{
+    background: var(--black-olive);
+    color: var(--light-white);
+}
+.dark-mode main .statistics h5 {
+    color: var(--grape);
+}
+.dark-mode main .hello-edu {
+    background: var(--grape);
+}
+.dark-mode table th,
+.dark-mode table td {
+    background: var(--black-olive) !important;
+    color: var(--white) !important;
+}
+.dark-mode .account,
+.dark-mode main > section:first-child .moon,
+.dark-mode #menu-btn,
+.dark-mode .account-menu {
+    background: var(--black-olive);
+    color: var(--light-white);
+    border: 0;
+}
+.dark-mode .account-menu {
+    box-shadow: 0px 8px 4px var(--black);
+}
+
+.dark-mode input:not([type=submit]),
+.dark-mode textarea {
+    background: var(--light-black);
+    color: var(--light-white);
+    outline: 0;
+}
+
+.dark-mode input:not([type=submit]):not([type=radio]):not([type=checkbox]),
+.dark-mode textarea {
+    border: 0;
+}
+
+.dark-mode input[type=file]::file-selector-button {
+    background: var(--grape);
+    color: var(--light-white);
+    border: 0;
+    outline: 0;
+}
+.dark-mode input[type=file]::file-selector-button:hover {
+    opacity: 0.8;
+    background: var(--grape);
+    color: var(--light-white);
+}
+.dark-mode input:not([type=submit]):not([type=radio]):not([type=checkbox])::placeholder,
+.dark-mode textarea::placeholder {
+    color: var(--light-white);
+}
+.dark-mode input:not([type=submit]),
+.dark-mode textarea:focus {
+    background: var(--light-black);
+    color: var(--light-white);
+}
+
+.dark-mode input:disabled,
+.dark-mode textarea:disabled {
+    opacity: 0.5;
+    cursor: no-drop;
+}
+
+
+.dark-mode #toEn,
+.dark-mode #toAr  {
+     color: var(--light-white);
+}

@@ -1,0 +1,51 @@
+body {
+    direction: rtl;
+}
+aside nav ul li.active {
+    padding-right: 10px;
+    margin-right: 10px;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+aside nav ul li.active::before{
+    left: auto;
+    right: -10px;
+}
+
+aside .background-image img {
+    transform: rotateX(0);
+}
+
+.close-aside {
+    left: 10px;
+    right: auto;
+}
+
+h1:after, h1:before {
+    right: 0;
+    left: auto;
+    border-radius: 7px 0 0 7px;
+}
+
+.account-menu {
+    left: 0;
+    right: auto;
+}
+
+
+@media  (max-width: 950px) {
+    aside {
+        transform: translateX(300px);
+    }
+}
+
+#closeWindow {
+    right: auto;
+    left: -8px;
+}
+
+
+.add-qustion i {
+    margin-right: 35px;
+}

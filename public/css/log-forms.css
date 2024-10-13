@@ -1,0 +1,121 @@
+
+.form {
+    display: grid;
+    justify-content: center;
+    align-content: space-between;
+    & .main-img {
+        & img  {
+            width: 100%;
+            max-height: 50vh;
+        }
+    }
+    & .header {
+        & div:first-child {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            & img {
+                width: 40px;
+            }
+            & h1 {
+                font-size: 30px;
+                color: var(--main-bg);
+            }
+        }
+        & p {
+            margin: 51px 0;
+            font-weight: bold;
+        }
+        & div:first-child {
+            margin-top: 20px;
+        }
+    }
+    & .main-form {
+        display: grid;
+        align-content: space-evenly;
+        & form {
+            width: 90%;
+            margin: auto;
+        }
+        & input {
+            margin: 10px 0;
+            font-size: 17px;
+            padding: 16px 11px;
+        }
+        & .button-div {
+            display: flex;
+            justify-content: center;
+            & button {
+                width: 90%;
+                background: var(--main-bg);
+                color: white;
+                padding: 16px 11px;
+                border-radius: 12px;
+                border: 0;
+                margin: 30px 0;
+
+            }
+        }
+        & .or {
+            position: relative;
+            text-align: center;
+            display: grid;
+            justify-content: center;
+            & p {
+                position: relative;
+                background: var(--white);
+                padding: 0 10px;
+                z-index: 1;
+            }
+            &:after {
+                content: '';
+                background: var(--black);
+                position: absolute;
+                width: 90%;
+                height: 1px;
+                left: 50%;
+                bottom: 22px;
+                transform: translateX(-50%);
+            }
+        }
+        & div:last-child {
+            text-align: start;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            & a {
+                text-align: center;
+                padding: 10px 20px;
+                border: 1px solid;
+                border-radius: 10px;
+                color: var(--main-bg);
+            }
+
+        }
+    }
+}
+
+.dark-mode .or  {
+    &:after {
+        background: var(--white) !important;
+    }
+    & p {
+    background: var(--black) !important;
+    }
+}
+
+
+
+.yt-iframe {
+    display: grid;
+    justify-content: center;
+    padding: 25px;
+    border-radius: 10px;
+    & iframe {
+        border-radius: 10px;
+        max-width: 400px;
+        width: 100%;
+    }
+}
+
