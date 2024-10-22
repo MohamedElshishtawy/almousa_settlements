@@ -1,0 +1,42 @@
+
+.card-body {
+    padding: 0 !important;
+    max-height: 90vh;
+    overflow: auto;
+    & table {
+        backdrop-filter: blur(10px);
+        & thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+
+            & th {
+                background: var(--bs-green);
+                color: white;
+                z-index: 10;
+                position: sticky;
+                top: 0;
+                font-weight: 300;
+                font-size: 15px;
+                border-width: 1px;
+                /* border-color: red; */
+                border-radius: 5px;
+            }
+            & th.main-title {
+                font-weight: bold;
+                font-size: 20px;
+            }
+        }
+        & td, & th {
+            vertical-align: middle;
+        }
+        & td {
+            .product-name {
+
+            }
+        }
+    }
+
+}
+

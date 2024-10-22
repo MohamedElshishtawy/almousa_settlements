@@ -21,6 +21,8 @@ class Day extends Model
     ];
     protected $fillable = ['name'];
 
+
+
     public function products_day_meal()
     {
         return $this->belongsTo(ProductDayMeal::class);

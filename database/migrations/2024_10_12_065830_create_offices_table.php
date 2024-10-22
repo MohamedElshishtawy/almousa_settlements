@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->foreignIdFor(\App\Living\Living::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
             $table->foreignIdFor(\App\Mission\Mission::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
             $table->timestamps();

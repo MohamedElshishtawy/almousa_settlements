@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Mission\Mission;
 use App\Product\ProductDayMeal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,4 +24,24 @@ class Meal extends Model
     {
         return $this->belongsTo(ProductDayMeal::class);
     }
+
+    public function meals($for)
+    {
+        if (in_array($for, Mission::$missions)) {
+            return $for == 'رمضان' ? ['عشاء' ,'سحور', 'فطور'] : [ 'عشاء' ,'غداء','فطور'];
+        }
+        return null;
+    }
+
+    public function getMeals($for)
+    {
+        $meals = collect();
+        foreach ($this->meals($for) as $meal) {
+            $mealDB = Meal::where('name', $meal)->first();
+            $mealDB ? $meals->push($mealDB) : null;
+        }
+
+        return $meals;
+    }
+
 }

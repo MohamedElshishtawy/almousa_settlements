@@ -17,6 +17,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
+
     protected $fillable = [
         'name',
         'phone',
@@ -45,4 +47,9 @@ class User extends Authenticatable
     ];
 
     static $roles = ['admin' => 0, 'employee' => 1];
+
+    function isAdmin() {
+        return $this->role == User::$roles['admin'];
+    }
+
 }

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->float('price');
-            $table->foreignIdFor(\App\Product\FoodType::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
-            $table->foreignIdFor(\App\Product\FoodUnit::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
+            $table->string('name')->nullable();
+            $table->float('price')->nullable();
+            $table->float('daily_amount')->nullable();
+            $table->foreignIdFor(\App\Product\FoodType::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Product\FoodUnit::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -12,6 +12,10 @@ class Office extends Model
 
     protected $fillable = [
         'name',
+        'start_date',
+        'end_date',
+        'living_id',
+        'mission_id'
     ];
 
 
@@ -19,4 +23,16 @@ class Office extends Model
     {
         return $this->hasOne(EmployeeOffice::class);
     }
+
+    public function living()
+    {
+        return $this->belongsTo(\App\Living\Living::class);
+    }
+
+
+    public function mission()
+    {
+        return $this->belongsTo(\App\Mission\Mission::class);
+    }
+
 }

@@ -36,6 +36,36 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        // seed the living
+        $livings = \App\Living\Living::$livings;
+        foreach ($livings as $living) {
+            \App\Living\Living::create([
+                'title' => $living,
+            ]);
+        }
+
+        $foodType = ['لحم' , 'مطهو' ,'جاف'];
+        foreach ($foodType as $type) {
+            \App\Product\FoodType::create([
+                'title' => $type,
+            ]);
+        }
+
+        $foodUnits = ['عبوة صغيرة','عبوة وسط' ,'عبوة كبيرة' , 'عبوة' , 'جرام' ,'لتر'];
+        foreach ($foodUnits as $unit) {
+            \App\Product\FoodUnit::create([
+                'title' => $unit,
+            ]);
+        }
+
+        // seed the missions
+        $missions = \App\Mission\Mission::$missions;
+        foreach ($missions as $mission) {
+            \App\Mission\Mission::create([
+                'title' => $mission,
+            ]);
+        }
+
         // Admin user
         \App\Models\User::create([
             'name' => 'أستاذ محمد',

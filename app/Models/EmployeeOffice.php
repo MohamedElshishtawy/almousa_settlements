@@ -12,7 +12,7 @@ class EmployeeOffice extends Model
     protected $table = 'employee_offices';
 
     protected $fillable = [
-        'employee_id',
+        'user_id',
         'office_id',
     ];
 

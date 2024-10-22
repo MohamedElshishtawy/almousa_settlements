@@ -12,6 +12,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
+        'daily_amount',
         'food_type_id',
         'food_unit_id',
     ];

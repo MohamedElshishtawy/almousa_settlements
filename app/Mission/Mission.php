@@ -14,6 +14,8 @@ class Mission extends Model
         'title',
     ];
 
+    public static $missions = ['حج', 'رمضان']; // [0,1] we are using indexes of these values
+
     public function productsLivingMission()
     {
         return $this->hasMany(ProductLivingMission::class);

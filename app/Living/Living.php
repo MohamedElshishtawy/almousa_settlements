@@ -14,6 +14,8 @@ class Living extends Model
         'title',
     ];
 
+    public static $livings = ['قيادة', 'ميدان'];
+
     public function productsLivingMission()
     {
         return $this->hasMany(ProductLivingMission::class);
