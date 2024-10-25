@@ -13,8 +13,8 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.css">
-    <link href="{{asset('css/layout.css')}}" rel="stylesheet"/>
+
+    <link href="{{asset('css/layout.css?1')}}" rel="stylesheet"/>
     @yield('css')
 </head>
 <body dir="rtl">
@@ -37,6 +37,7 @@
                                     <li><a href="{{route('admin.users')}}">الموظفين</a></li>
                                     <li><a href="{{route('admin.offices')}}">المقرات</a></li>
                                     <li><a href="{{route('admin.products')}}">الأصناف</a></li>
+                                    <li><a href="{{route('admin.units')}}">الوحدات</a></li>
                                 @endif
                             @endauth
                         </ul>
@@ -87,6 +88,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.23.5/dist/bootstrap-table.min.js"></script>
+
 </body>
 </html>

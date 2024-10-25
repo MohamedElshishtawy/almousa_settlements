@@ -18,6 +18,13 @@ class Meal extends Model
         'سحور',
     ];
 
+    static $translateSmaller = [
+            'فطور' => 'ف',
+            'غداء' => 'غ',
+            'عشاء' => 'ع',
+            'سحور' => 'س',
+        ];
+
     protected $fillable = ['name'];
 
     public function products_day_meal()

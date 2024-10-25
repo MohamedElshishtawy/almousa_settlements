@@ -45,6 +45,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [AdminController::class, 'products'])->name('admin.products');
         Route::get('/{mission}/{living}', [AdminController::class, 'productsSpecific'])->name('admin.products.specific');
     });
+    Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
 
 });
 

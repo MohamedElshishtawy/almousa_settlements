@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('products_day_meal', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Product\Product::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Product\StaticProduct::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Day::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Meal::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();

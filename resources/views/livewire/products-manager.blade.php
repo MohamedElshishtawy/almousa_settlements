@@ -9,13 +9,13 @@
             </th>
         </tr>
         <tr>
-            <th rowspan="2">تسلسل</th>
+            <th rowspan="2">ت</th>
             <th rowspan="2">اسم الصنف</th>
             <th rowspan="2">المقرر اليومى</th>
             <th rowspan="2">الوحدة</th>
             <th rowspan="2">السعر</th>
             <th rowspan="2">النوع</th>
-            <th rowspan="2">عدد مرات الصرف بالإسبوع</th>
+            <th rowspan="2">الصرف</th>
             @foreach(\App\Models\Day::$days as $day)
                 <th colspan="3">{{$day}}</th>
             @endforeach
@@ -23,7 +23,7 @@
         <tr>
             @foreach(\App\Models\Day::$days as $day)
                 @foreach(array_reverse((new \App\Models\Meal())->meals($mission->title)) as $meal)
-                    <th>{{$meal}}</th>
+                    <th>{{\App\Models\Meal::$translateSmaller[$meal]}}</th>
                 @endforeach
             @endforeach
         </tr>

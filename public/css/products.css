@@ -3,8 +3,10 @@
     padding: 0 !important;
     max-height: 90vh;
     overflow: auto;
+    width: 100%;
     & table {
         backdrop-filter: blur(10px);
+        width: 100%;
         & thead {
             position: sticky;
             top: 0;
@@ -32,8 +34,8 @@
             vertical-align: middle;
         }
         & td {
-            .product-name {
-
+            input.product-name {
+                max-width: 150px;
             }
         }
     }

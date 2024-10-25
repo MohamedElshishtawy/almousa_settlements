@@ -19,7 +19,7 @@
             <div class="col-md-6">
                 <label for="living_id" class="form-label">المعايش</label>
                 <select id="living_id" class="form-select" wire:model.defer="living_id">
-                    <option value="">اختر المسكن</option>
+                    <option value="">اختر المعايش</option>
                     @foreach ($livings as $living)
                         <option value="{{ $living->id }}">{{ $living->title }}</option>
                     @endforeach

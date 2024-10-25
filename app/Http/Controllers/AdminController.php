@@ -85,5 +85,10 @@ class AdminController extends Controller
         ]);
     }
 
+    public function units()
+    {
+        return view('admin.units');
+    }
+
 
 }

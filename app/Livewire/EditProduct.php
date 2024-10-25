@@ -2,6 +2,7 @@
 namespace App\Livewire;
 
 use App\Product\Product;
+use App\Product\ProductController;
 use App\Product\ProductDayMeal;
 use Livewire\Component;
 
@@ -21,7 +22,8 @@ class EditProduct extends Component
         $this->food_type_id = $product->food_type_id;
         $this->food_unit_id = $product->food_unit_id;
         $this->daily_amount = $product->daily_amount;
-        $this->times_per_week = $product->pdoductsDayMeal()->count();
+
+        $this->times_per_week = ProductController::getWeeklyUsedCount($product);
 //        $this->meals = $this->loadMeals($product);  // This assumes meals are stored as relations or attributes
     }
 
@@ -59,7 +61,7 @@ class EditProduct extends Component
                 'meal_id' => $mealId
             ]);
         }
-        $this->times_per_week = $this->product->pdoductsDayMeal()->count();
+        $this->times_per_week = ProductController::getWeeklyUsedCount($this->product);
     }
 
     // Handle saving meals

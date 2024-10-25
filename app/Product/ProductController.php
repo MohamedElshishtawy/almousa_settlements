@@ -28,8 +28,11 @@ class ProductController extends Controller
         }
 
         return $counts;
+    }
 
-
+    public static function getWeeklyUsedCount(Product $id)
+    {
+        return $id->pdoductsDayMeal()->select('day_id')->groupBy('day_id')->get()->count();
     }
 
 }

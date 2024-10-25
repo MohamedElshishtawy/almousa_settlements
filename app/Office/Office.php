@@ -35,4 +35,8 @@ class Office extends Model
         return $this->belongsTo(\App\Mission\Mission::class);
     }
 
+    public function reports()
+    {
+        return $this->hasMany(\App\Report\Report::class);
+    }
 }

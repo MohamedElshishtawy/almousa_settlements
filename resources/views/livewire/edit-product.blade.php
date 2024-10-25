@@ -12,12 +12,12 @@
 
     <!-- Editable input for product name -->
     <td>
-        <input type="text" wire:model.live.debounce.250ms="name" class="form-control product-name">
+        <input type="text" wire:model.live.debounce.250ms="name" class="form-control product-name" placeholder="أكتب هنا...">
     </td>
 
     <!-- Editable input for daily amount -->
     <td>
-        <input type="text" wire:model.live.debounce.250ms="daily_amount" class="form-control">
+        <input type="text" wire:model.live.debounce.250ms="daily_amount" class="form-control number-input" placeholder="0">
     </td>
 
     <!-- Editable dropdown for unit -->
@@ -31,7 +31,7 @@
 
     <!-- Editable input for price -->
     <td>
-        <input type="text" wire:model.live.debounce.250ms="price" class="form-control">
+        <input type="text" wire:model.live.debounce.250ms="price" class="form-control number-input" placeholder="0.00">
     </td>
 
     <!-- Editable dropdown for type -->
