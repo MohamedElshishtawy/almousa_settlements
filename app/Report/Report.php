@@ -20,4 +20,9 @@ class Report extends Model
     {
         return $this->hasOne(Import::class);
     }
+
+    public function surplus()
+    {
+        return $this->hasOne(Surplus::class);
+    }
 }

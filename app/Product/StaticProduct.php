@@ -32,4 +32,9 @@ class StaticProduct extends Product
     }
 
 
+    public function surplusProductError()
+    {
+        return $this->hasOne(\App\Report\SurplusProductError::class);
+    }
+
 }

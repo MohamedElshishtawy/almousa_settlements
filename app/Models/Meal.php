@@ -51,4 +51,9 @@ class Meal extends Model
         return $meals;
     }
 
+    public function surpluses()
+    {
+        return $this->hasMany(\App\Report\Surplus::class);
+    }
+
 }
