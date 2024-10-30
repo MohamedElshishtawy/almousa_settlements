@@ -91,9 +91,9 @@
                 // if there is a report, so you will use form the static product
                 // ,but it there is no report you will use the normal product
                     if ($report) {
-                        $dailyTotal = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) * $product->daily_amount;
+                        $dailyTotal = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) ;
                     } else {
-                        $dailyTotal = \App\Product\Product::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) * $product->daily_amount;
+                        $dailyTotal = \App\Product\Product::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id);
                     }
                     // check if digit (int or any thing)
                     $expectedSupply = $benefits &&
