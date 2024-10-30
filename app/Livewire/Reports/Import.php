@@ -52,6 +52,7 @@ class Import extends Component
         $report->office()->associate($this->office);
         $report->for_date = $this->date;
         $report->save();
+        $this->report = $report;
 
         // create import
         $import = new \App\Report\Import();
@@ -88,6 +89,8 @@ class Import extends Component
                 $importProductError->save();
             }
         }
+
+
 
 
 
