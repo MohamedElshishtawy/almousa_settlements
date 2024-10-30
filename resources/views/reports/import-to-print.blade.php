@@ -35,9 +35,10 @@
     @foreach($products as $product)
         <tr>
 
-            @php($dailyTotal = $import->benefits * \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) * $product->daily_amount)
-            @php($realyImported = $product->importProductError ? $product->importProductError->error : ($import->benefits_error ? $dailyTotal - $import->benefits_error * $dailyTotal : 0))
-            @php($diffrence = ($dailyTotal) - $realyImported)
+            @php($HowManyPday = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($import->report->for_date)->id))
+            @php($dailyTotal =  $HowManyPday ? $import->benefits * $product->daily_amount : 'غير مقرر')
+            @php($realyImported = $HowManyPday ? ($product->importProductError ? $product->importProductError->error : ($import->benefits_error ? $dailyTotal - $import->benefits_error * $product->daily_amount : 0)) : 'غير مقرر')
+            @php($diffrence = $HowManyPday ? ($dailyTotal) - $realyImported : 'غير مقرر')
 
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
             <td>{{ $product->name }}</td>
