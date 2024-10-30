@@ -79,7 +79,7 @@
             <th>الوحدة</th>
             <th>الصرف بالاسبوع</th>
             <th>السعر</th>
-            <th>المقرر خلال اليوم</th>
+            <th>مرات الصرف باليوم</th>
             <th>التوريد المتوقع</th>
             <th>الكمية الموردة</th>
             <th>الفرق</th>
@@ -96,14 +96,13 @@
                         $dailyTotal = \App\Product\Product::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id);
                     }
                     // check if digit (int or any thing)
-                    $expectedSupply = $benefits &&
-                                  $dailyTotal &&
-                                   is_numeric($benefits) &&
-                                    is_numeric($dailyTotal) ?
-                                      $dailyTotal * $benefits : 0;
+                    // $daily_amoutn * $benefits
+                    $expectedSupply = $dailyTotal && $benefits && $product->daily_amount && is_numeric($benefits) ?
+                                      $product->daily_amount * $benefits : 0;
                     $error = isset($realyImported[$product->id]) && is_numeric($realyImported[$product->id]) ? $realyImported[$product->id] : 0;
                     $benefitError = $benefitError ?: 0;
-                    $difference = $expectedSupply - $error - ($benefitError * $dailyTotal);
+
+                    $difference = $dailyTotal ? ( $error ? $expectedSupply - $error : ($benefitError ? $expectedSupply - ($benefitError * $product->daily_amount) : $expectedSupply ) ) : 'غير مقرر';
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
