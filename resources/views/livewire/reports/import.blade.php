@@ -97,6 +97,7 @@
                     }
                     // check if digit (int or any thing)
                     // $daily_amoutn * $benefits
+                    dd($dailyTotal, $benefits, $product->daily_amount, is_numeric($benefits));
                     $expectedSupply = $dailyTotal && $benefits && $product->daily_amount && is_numeric($benefits) ?
                                       $product->daily_amount * $benefits : 0;
                     $error = isset($realyImported[$product->id]) && is_numeric($realyImported[$product->id]) ? $realyImported[$product->id] : 0;

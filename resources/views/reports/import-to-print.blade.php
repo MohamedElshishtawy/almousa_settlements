@@ -34,7 +34,6 @@
     @php $index = 0; @endphp
     @foreach($products as $product)
         <tr>
-
             @php($HowManyPday = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($import->report->for_date)->id))
             @php($dailyTotal =  $HowManyPday ? $import->benefits * $product->daily_amount : 'غير مقرر')
             @php($realyImported = $HowManyPday ? ($product->importProductError ? $product->importProductError->error : ($import->benefits_error ? $dailyTotal - $import->benefits_error * $product->daily_amount : 0)) : 'غير مقرر')
