@@ -47,8 +47,12 @@ class Import extends Component
 
     public function save()
     {
+        // if there is old report don't make
+        if (Report::where('for_date')->where('office_id', $this->office->id)->exists()) {
+            return; // update insted of this
+        }
         // create Report
-        $report = new \App\Report\Report();
+        $report = new Report();
         $report->office()->associate($this->office);
         $report->for_date = $this->date;
         $report->save();

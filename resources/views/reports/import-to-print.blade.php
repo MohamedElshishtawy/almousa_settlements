@@ -36,7 +36,8 @@
         <tr>
 
             @php($dailyTotal = $import->benefits * \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) * $product->daily_amount)
-            @php($diffrence = ($product->daily_amount * $dailyTotal) - ($product->importProductError ? $product->importProductError->error : 0))
+            @php($realyImported = ($product->importProductError ? $product->importProductError->error : 0) - ($import->benefits_error ? $import->benefits_error * $dailyTotal : 0))
+            @php($diffrence = ($dailyTotal) - $realyImported)
 
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
             <td>{{ $product->name }}</td>
@@ -44,10 +45,7 @@
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(\App\Product\ProductController::getWeeklyUsedCount($product)) }}</td>
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($dailyTotal)}}</td>
             <td>
-                {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(
-                    ($product->importProductError ? $product->importProductError->error : 0) -
-                    ($import->benefits_error ? $import->benefits_error * $dailyTotal : 0)
-                    )}}
+                {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($realyImported)}}
             </td>
 
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($diffrence) }}</td>
