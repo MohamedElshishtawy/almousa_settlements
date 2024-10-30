@@ -36,7 +36,7 @@
         <tr>
 
             @php($dailyTotal = $import->benefits * \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) * $product->daily_amount)
-            @php($realyImported = ($product->importProductError ? $product->importProductError->error : 0) - ($import->benefits_error ? $import->benefits_error * $dailyTotal : 0))
+            @php($realyImported = $product->importProductError ? $product->importProductError->error : ($import->benefits_error ? $import->benefits_error * $dailyTotal : 0))
             @php($diffrence = ($dailyTotal) - $realyImported)
 
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
