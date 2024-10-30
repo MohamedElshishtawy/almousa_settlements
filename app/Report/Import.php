@@ -22,6 +22,6 @@ class Import extends Model
 
     public function importProductError()
     {
-        return $this->hasOne(ImportProductError::class);
+        return $this->hasMany(ImportProductError::class);
     }
 }

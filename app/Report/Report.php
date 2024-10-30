@@ -25,4 +25,11 @@ class Report extends Model
     {
         return $this->hasOne(Surplus::class);
     }
+
+
+    public function staticProducts()
+    {
+        return $this->hasMany(\App\Product\StaticProduct::class);
+    }
+
 }

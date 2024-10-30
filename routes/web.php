@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Report\ReportController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -43,11 +44,18 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     });
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminController::class, 'products'])->name('admin.products');
-        Route::get('/{mission}/{living}', [AdminController::class, 'productsSpecific'])->name('admin.products.specific');
+        Route::get('/{mission}/{living}', [AdminController::class, 'productsSpecific'])
+            ->name('admin.products.specific');
     });
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
-
 });
 
+Route::prefix('managers')->middleware(['auth'])->group(function () {
+    Route::get('/reports', [ReportController::class, 'reports'])->name('managers.reports');
+    Route::get('/reports/import/{office}/{date}', [ReportController::class, 'import'])
+        ->name('managers.reports.import');
+    Route::get('/reports/import/{office}/{date}/print', [ReportController::class, 'importPrint'])
+        ->name('managers.reports.import.print');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

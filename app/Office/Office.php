@@ -39,4 +39,20 @@ class Office extends Model
     {
         return $this->hasMany(\App\Report\Report::class);
     }
+
+    public static function dateRange($office)
+    {
+        if (!is_object($office)){
+            $office = Office::find($office);
+        }
+        $endDate = $office->end_date;
+        $currentDate = $office->start_date;
+        $dateRange = [];
+        while (strtotime($currentDate) <= strtotime($endDate)) {
+            $dateRange[] = $currentDate;
+            $currentDate = date("Y-m-d", strtotime("+1 day", strtotime($currentDate)));
+        }
+        return $dateRange;
+    }
+
 }

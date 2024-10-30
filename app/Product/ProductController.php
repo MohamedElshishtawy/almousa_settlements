@@ -35,4 +35,9 @@ class ProductController extends Controller
         return $id->pdoductsDayMeal()->select('day_id')->groupBy('day_id')->get()->count();
     }
 
+    public function getProducts($office)
+    {
+        return (new ProductQuery())->getProducts($office);
+    }
+
 }

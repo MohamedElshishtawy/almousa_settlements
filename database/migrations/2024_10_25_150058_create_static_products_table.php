@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('daily_amount')->nullable();
             $table->foreignIdFor(\App\Product\FoodType::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Product\FoodUnit::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Report\Report::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
