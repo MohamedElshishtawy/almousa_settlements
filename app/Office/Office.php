@@ -12,10 +12,7 @@ class Office extends Model
 
     protected $fillable = [
         'name',
-        'start_date',
-        'end_date',
         'living_id',
-        'mission_id'
     ];
 
 
@@ -30,9 +27,9 @@ class Office extends Model
     }
 
 
-    public function mission()
+    public function OfficeMissions()
     {
-        return $this->belongsTo(\App\Mission\Mission::class);
+        return $this->HasMany(OfficeMission::class);
     }
 
     public function reports()
@@ -40,17 +37,22 @@ class Office extends Model
         return $this->hasMany(\App\Report\Report::class);
     }
 
+    /*
+     * This function to return all time working for this office while Main mission or getting ready
+     * */
     public static function dateRange($office)
     {
         if (!is_object($office)){
             $office = Office::find($office);
         }
-        $endDate = $office->end_date;
-        $currentDate = $office->start_date;
         $dateRange = [];
-        while (strtotime($currentDate) <= strtotime($endDate)) {
-            $dateRange[] = $currentDate;
-            $currentDate = date("Y-m-d", strtotime("+1 day", strtotime($currentDate)));
+        foreach ($office->missions as $mission) {
+            $endDate = $mission->end_date;
+            $currentDate = $mission->start_date;
+            while (strtotime($currentDate) <= strtotime($endDate)) {
+                $dateRange[] = $currentDate;
+                $currentDate = date("Y-m-d", strtotime("+1 day", strtotime($currentDate)));
+            }
         }
         return $dateRange;
     }

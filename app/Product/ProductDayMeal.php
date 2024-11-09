@@ -13,15 +13,15 @@ class ProductDayMeal extends Meal
     protected  $table = 'products_day_meal';
 
     protected $fillable = [
-        'product_id',
+        'product_living_mission_id',
         'day_id',
         'meal_id',
     ];
 
 
-    public function product()
+    public function ProductLivingMission()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(ProductLivingMission::class);
     }
 
     public function day()
@@ -33,6 +33,11 @@ class ProductDayMeal extends Meal
     public function meal()
     {
         return $this->belongsTo(Meal::class);
+    }
+
+    public static function howMealPerDay($productLivingMissionId ,$dayId)
+    {
+        return ProductDayMeal::where('day_id', $dayId)->where('product_living_mission_id', $productLivingMissionId)->count();
     }
 
 }

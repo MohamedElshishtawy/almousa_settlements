@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('employee_offices', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Office\Office::class);
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Office\Office::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

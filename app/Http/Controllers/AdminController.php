@@ -7,7 +7,9 @@ use App\Mission\Mission;
 use App\Models\Employee;
 use App\Models\User;
 use App\Office\Office;
+use App\Product\FoodUnit;
 use App\Product\ProductController;
+use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
 
 class AdminController extends Controller
 {
@@ -77,9 +79,17 @@ class AdminController extends Controller
         ]);
     }
 
+    public function all()
+    {
+        return view('admin.all-products', [
+            'counts' => (new ProductController)->countProducts(),
+        ]);
+    }
+
+
     public function productsSpecific(Mission $mission, Living $living)
     {
-        return view('admin.products_specific', [
+        return view('admin.product-day-meal', [
             'mission' => $mission,
             'living' => $living,
         ]);
@@ -87,7 +97,8 @@ class AdminController extends Controller
 
     public function units()
     {
-        return view('admin.units');
+        $units = FoodUnit::all();
+        return view('admin.units', compact('units'));
     }
 
 

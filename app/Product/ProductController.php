@@ -22,7 +22,7 @@ class ProductController extends Controller
 
         foreach ($missions as $mission) {
             foreach ($livings as $living) {
-                $counts[$mission->title][$living->title] = (new ProductQuery())
+                $counts[$mission->id][$living->id] = (new ProductQuery())
                     ->countProductsSpecific($mission->id, $living->id);
             }
         }
@@ -30,14 +30,21 @@ class ProductController extends Controller
         return $counts;
     }
 
-    public static function getWeeklyUsedCount(Product $id)
+    public static function getWeeklyUsedCount($id, $fromStatic = false)
     {
-        return $id->pdoductsDayMeal()->select('day_id')->groupBy('day_id')->get()->count();
+        if (!is_object($id)) {
+            if ($fromStatic) {
+                $id = StaticProduct::find($id);
+            } else {
+                $id = Product::find($id);
+            }
+        }
+        return $id->productsDayMeal()->select('day_id')->groupBy('day_id')->get()->count();
     }
 
-    public function getProducts($office)
+    public function getProducts($officeMission)
     {
-        return (new ProductQuery())->getProducts($office);
+        return (new ProductQuery())->getProducts($officeMission);
     }
 
 }

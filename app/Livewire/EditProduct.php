@@ -4,6 +4,7 @@ namespace App\Livewire;
 use App\Product\Product;
 use App\Product\ProductController;
 use App\Product\ProductDayMeal;
+use App\Product\ProductLivingMission;
 use Livewire\Component;
 
 
@@ -11,20 +12,15 @@ class EditProduct extends Component
 {
 
     public Product $product;
-    public $name, $price, $food_type_id, $food_unit_id, $daily_amount, $times_per_week, $meals;
+    public $name, $food_type_id, $food_unit_id;
     public $index, $mission, $living, $units, $types;
 
     public function mount($product)
     {
         $this->product = $product;
         $this->name = $product->name;
-        $this->price = $product->price;
         $this->food_type_id = $product->food_type_id;
         $this->food_unit_id = $product->food_unit_id;
-        $this->daily_amount = $product->daily_amount;
-
-        $this->times_per_week = ProductController::getWeeklyUsedCount($product);
-//        $this->meals = $this->loadMeals($product);  // This assumes meals are stored as relations or attributes
     }
 
     // Load the meals for each product into the component's state
@@ -37,10 +33,8 @@ class EditProduct extends Component
         // Update the product
         $this->product->update([
             'name' => $this->name,
-            'price' => $this->price,
             'food_type_id' => $this->food_type_id,
             'food_unit_id' => $this->food_unit_id,
-            'daily_amount' => $this->daily_amount,
         ]);
         $this->product->save();
     }
@@ -61,7 +55,18 @@ class EditProduct extends Component
                 'meal_id' => $mealId
             ]);
         }
-        $this->times_per_week = ProductController::getWeeklyUsedCount($this->product);
+    }
+
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+        if ($product) {
+            $product->delete();
+        }
+
+        // take action to refresh the data
+        $this->dispatch('deleted');
+
     }
 
     // Handle saving meals
@@ -74,6 +79,8 @@ class EditProduct extends Component
             }
         }
     }
+
+
 
     public function render()
     {

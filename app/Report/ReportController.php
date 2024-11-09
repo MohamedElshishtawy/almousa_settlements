@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Office\Office;
 use App\Office\OfficeController;
+use App\Office\OfficeMission;
 use App\Product\ProductController;
 
 class ReportController extends Controller
@@ -22,11 +23,15 @@ class ReportController extends Controller
 
     }
 
-    public function import($office, $date)
+    public function import($officeMission, $date)
     {
-        $products = (new ProductController())->getProducts($office);
+        $officeMission = OfficeMission::find($officeMission);
+
+        $office = $officeMission->office;
+
+        $products = (new ProductController())->getProducts($officeMission);
         return view('reports.import',
-            compact('office', 'date', 'products'));
+            compact('office', 'date', 'products', 'officeMission'));
     }
 
     public function importPrint($office, $date)

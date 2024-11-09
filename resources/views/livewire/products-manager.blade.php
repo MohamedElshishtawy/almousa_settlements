@@ -35,7 +35,3 @@
         </tbody>
     </table>
 
-    <div class="d-flex">
-        <button wire:click="addProduct()" class="btn btn-success">إضافة صنف</button>
-    </div>
-</div>

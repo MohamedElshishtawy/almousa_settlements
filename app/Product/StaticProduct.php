@@ -13,12 +13,13 @@ class StaticProduct extends Product
 
     protected $fillable = [
         'old_id',
+        'old_product_living_mission_old',
         'name',
         'price',
         'daily_amount',
         'food_type_id',
         'food_unit_id',
-        'report_id'
+        'report_id',
     ];
 
     public function report()
@@ -26,7 +27,7 @@ class StaticProduct extends Product
         return $this->belongsTo(\App\Report\Report::class);
     }
 
-    public function pdoductsDayMeal()
+    public function productsDayMeal()
     {
         return $this->hasMany(StaticProductDayMeal::class);
     }

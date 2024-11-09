@@ -71,6 +71,11 @@
     }
 }
 
+.delete-btn {
+    background: transparent;
+    border: none;
+}
+
 @media (max-width: 1025px) {
     .report-page {
         grid-template-columns: 1fr;

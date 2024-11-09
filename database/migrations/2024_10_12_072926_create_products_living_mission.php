@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('products_living_mission', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Product\Product::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
-            $table->foreignIdFor(\App\Living\Living::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
-            $table->foreignIdFor(\App\Mission\Mission::class)->constrained()->cascadeOnUpdate()->cascadeOnUpdate();
+            $table->float('price')->nullable();
+            $table->float('daily_amount')->nullable();
+            $table->foreignIdFor(\App\Product\Product::class)
+                ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Living\Living::class)
+                ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Mission\Mission::class)
+                ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

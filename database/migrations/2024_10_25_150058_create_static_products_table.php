@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('static_products', function (Blueprint $table) {
             $table->id();
             $table->integer('old_id');
+            $table->integer('old_product_living_mission_old');
             $table->string('name')->nullable();
             $table->float('price')->nullable();
             $table->float('daily_amount')->nullable();

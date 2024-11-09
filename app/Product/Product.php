@@ -3,6 +3,8 @@
 namespace App\Product;
 
 use App\Models\Day;
+use App\Office\Office;
+use App\Office\OfficeMission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +14,6 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'price',
-        'daily_amount',
         'food_type_id',
         'food_unit_id',
     ];
@@ -28,19 +28,14 @@ class Product extends Model
         return $this->belongsTo(FoodUnit::class);
     }
 
-    public function pdoductsDayMeal()
-    {
-        return $this->hasMany(ProductDayMeal::class);
-    }
-
     public function productsLivingMission()
     {
         return $this->hasMany(ProductLivingMission::class);
     }
 
-    public static function howMealPerDay($productId ,$dayId)
+    public static function getProductMissionData(Product $product, Office $office,  OfficeMission $officeMission)
     {
-        return ProductDayMeal::where('day_id', $dayId)->where('product_id', $productId)->count();
+        return $product->productsLivingMission->where('living_id', $office->living_id)->where('mission_id', $officeMission->mission_id)->first();
     }
 
 }

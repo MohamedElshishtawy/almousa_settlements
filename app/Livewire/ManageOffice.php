@@ -10,7 +10,7 @@ use Livewire\Component;
 class ManageOffice extends Component
 {
     public Office $office;
-    public $name, $start_date, $end_date, $living_id, $mission_id;
+    public $name, $start_date, $end_date, $living_id, $mission_id, $getting_ready_start_date, $getting_ready_end_date;
 
     public $livings; // To store available living options
     public $missions; // To store available mission options
@@ -21,10 +21,12 @@ class ManageOffice extends Component
     {
         return [
             'office.name' => ['required'],
-            'office.start_date' => 'required|date',
-            'office.end_date' => 'nullable|date|after_or_equal:office.start_date',
             'office.living_id' => 'required|exists:livings,id',
-            'office.mission_id' => 'required|exists:missions,id',
+            'getting_ready_start_date' => 'nullable|date|before:office.start_date',
+            'getting_ready_end_date' => 'nullable|date|after_or_equal:office.getting_ready_start_date',
+            'start_date' => 'required|date|after:office.getting_ready_start_date',
+            'end_date' => 'nullable|date|after_or_equal:office.start_date',
+            'mission_id' => 'required|exists:missions,id',
         ];
 
     }
@@ -34,26 +36,50 @@ class ManageOffice extends Component
         $this->office = $office;
         if ($office->exists) {
             $this->name = $office->name;
-            $this->start_date = $office->start_date;
-            $this->end_date = $office->end_date;
             $this->living_id = $office->living_id;
-            $this->mission_id = $office->mission_id;
+            $this->mission_id = $office->OfficeMissions()->first()->id;
+            $mainMission = $office->OfficeMissions()->whereNotIn('mission_id', Mission::gettingReadyMissionsIds())->first();
+            $this->start_date = $mainMission->start_date;
+            $this->end_date = $mainMission->end_date;
+            $gettingReadyMission = $office->OfficeMissions()->whereIn('mission_id', Mission::gettingReadyMissionsIds())->first();
+            $this->getting_ready_start_date = $gettingReadyMission->start_date;
+            $this->getting_ready_end_date = $gettingReadyMission->end_date;
         }
-        $this->livings = Living::all(); // Fetch all available living options
-        $this->missions = Mission::all(); // Fetch all available mission options
+        $this->livings = Living::all();
+        $this->missions = Mission::all()->slice(0,2); // Fetch only hajj and ramadan missions
     }
 
     public function save()
     {
+
         $this->office->name = $this->name;
         $this->office->living_id = $this->living_id;
-        $this->office->mission_id = $this->mission_id;
-        $this->office->start_date = $this->start_date;
-        $this->office->end_date = $this->end_date;
-
-        $this->validate();
 
         $this->office->save();
+
+        // update of make new for the office relations tables
+        if ($this->office->OfficeMissions()->count() > 0) {
+            $MainMission = $this->office->OfficeMissions()->where('mission_id', $this->mission_id)->first();
+            $MainMission->start_date = $this->start_date;
+            $MainMission->end_date = $this->end_date;
+            $MainMission->save();
+            $getReadyMission = $this->office->OfficeMissions()
+                ->where('mission_id', Mission::syncMainWithReady($this->mission_id))->first();
+            $getReadyMission->start_date = $this->getting_ready_start_date;
+            $getReadyMission->end_date = $this->getting_ready_end_date;
+            $getReadyMission->save();
+        } else {
+            $this->office->OfficeMissions()->create([
+                'mission_id' => $this->mission_id,
+                'start_date' => $this->start_date,
+                'end_date' => $this->end_date,
+            ]);
+            $this->office->OfficeMissions()->create([
+                'mission_id' => Mission::syncMainWithReady($this->mission_id),
+                'start_date' => $this->getting_ready_start_date,
+                'end_date' => $this->getting_ready_end_date,
+            ]);
+        }
 
         // Redirect to the offices list or any other appropriate route
         return redirect()->route('admin.offices')->with('message', $this->office->exists ? 'تم تحديث المقر بنجاح' : 'تم إنشاء المقر بنجاح');

@@ -23,23 +23,28 @@ class ReportSurvice
 {
     $days = collect();
     foreach ($offices as $office) {
-        $currentDate = Carbon::parse($office->start_date);
-        $endDate = Carbon::parse($office->end_date);
+        foreach($office->OfficeMissions as $officeMission)  {
+            // main mission
+            $currentDate = Carbon::parse($officeMission->start_date);
+            $endDate = Carbon::parse($officeMission->end_date);
+            while ($currentDate <= $endDate) {
+                $report = Report::where('office_id', $office->id)->where('for_date', $currentDate->toDateString())->first();
+                $data = [
+                    'office' => $office,
+                    'officeMission' => $officeMission,
+                    'import' => $report ? $report->import : [],
+                    'surplus' => $report ? $report->surplus : [],
+                    'date' => $currentDate->toDateString(),
+                ];
 
-        while ($currentDate <= $endDate) {
-            $report = Report::where('office_id', $office->id)->where('for_date', $currentDate->toDateString())->first();
-
-            $data = [
-                'office' => $office,
-                'import' => $report ? $report->import : [],
-                'surplus' => $report ? $report->surplus : [],
-                'date' => $currentDate->toDateString(),
-            ];
-
-            $days->push($data);
-            $currentDate = $currentDate->addDay();
+                $days->push($data);
+                $currentDate = $currentDate->addDay();
+            }
         }
+
     }
+    // sort days with date
+    $days = $days->sortBy('date');
     return $days;
 }
 

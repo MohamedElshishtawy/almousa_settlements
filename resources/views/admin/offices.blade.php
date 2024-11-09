@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>إدارة المقرات</h2>
@@ -25,8 +25,9 @@
                                 <th scope="col">الاسم</th>
                                 <th scope="col">المهمة</th>
                                 <th scope="col">المعايش</th>
-                                <th scope="col">البداية</th>
-                                <th scope="col">النهاية</th>
+                                <th colspan="2"> تجهيز</th>
+                                <th colspan="2">الرئيسية</th>
+
                                 <th scope="col">تعديل</th>
                                 <th scope="col">حذف</th>
                             </tr>
@@ -34,13 +35,17 @@
                             <tbody>
                             @php($n = 0)
                             @forelse ($offices as $office)
-                                <tr>
+                                @php($mainOfficeMission = $office->OfficeMissions()->whereNotIn('mission_id', \App\Mission\Mission::gettingReadyMissionsIds())->first())
+                                @php($getReadyOfficeMission = $office->OfficeMissions()->whereNot('id',$mainOfficeMission->id)->first())
+                                <tr id="{{$office->id}}">
                                     <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
                                     <td>{{ $office->name }}</td>
-                                    <td>{{ $office->mission->title }}</td>
+                                    <td>{{$mainOfficeMission->mission->title}}</td>
                                     <td>{{ $office->living->title }}</td>
-                                    <td>{{ $office->start_date }}</td>
-                                    <td>{{ $office->end_date }}</td>
+                                    <td>{{ $getReadyOfficeMission->start_date }}</td>
+                                    <td>{{ $getReadyOfficeMission->end_date }}</td>
+                                    <td>{{ $mainOfficeMission->start_date }}</td>
+                                    <td>{{ $mainOfficeMission->end_date }}</td>
                                     <td>
                                         <a href="{{ route('admin.office.edit', $office->id) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-edit"></i> تعديل</a>
                                     </td>

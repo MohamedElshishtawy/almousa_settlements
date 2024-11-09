@@ -14,10 +14,10 @@
     @foreach($units as $unit)
         <tr wire:key="{{$unit->id}}">
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</td>
-            <td>{{ $unit->title }}</td>
+            <td><input class="form-control" wire:model.live="titles.{{$unit->id}}" wire:change="editTitle({{$unit->id}})" value="{{$unit->title}}" ></td>
             <td>
                 <button wire:click="delete({{ $unit->id }})" class="btn btn-danger" @if($unit->products()->count())
-                        disabled
+                    disabled
                         data-toggle="tooltip" data-placement="top" title="هناك بعض المنتجات تعتمد على تلك الوحدة"
                     @endif
 

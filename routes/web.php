@@ -44,6 +44,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     });
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminController::class, 'products'])->name('admin.products');
+        Route::get('/all', [AdminController::class, 'all'])->name('admin.products.all');
         Route::get('/{mission}/{living}', [AdminController::class, 'productsSpecific'])
             ->name('admin.products.specific');
     });
@@ -52,7 +53,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 Route::prefix('managers')->middleware(['auth'])->group(function () {
     Route::get('/reports', [ReportController::class, 'reports'])->name('managers.reports');
-    Route::get('/reports/import/{office}/{date}', [ReportController::class, 'import'])
+    Route::get('/reports/import/{officeMission}/{date}', [ReportController::class, 'import'])
         ->name('managers.reports.import');
     Route::get('/reports/import/{office}/{date}/print', [ReportController::class, 'importPrint'])
         ->name('managers.reports.import.print');

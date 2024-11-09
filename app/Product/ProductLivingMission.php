@@ -17,6 +17,8 @@ class ProductLivingMission extends Model
         'product_id',
         'living_id',
         'mission_id',
+        'price',
+        'daily_amount',
     ];
 
     public function product()
@@ -33,4 +35,15 @@ class ProductLivingMission extends Model
     {
         return $this->belongsTo(Mission::class);
     }
+
+    public function productsDayMeal()
+    {
+        return $this->hasMany(ProductDayMeal::class);
+    }
+
+
+
+
+
+
 }

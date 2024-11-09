@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/1f4dd9add7.js" crossorigin="anonymous"></script>
 
-    <link href="{{asset('css/layout.css?1')}}" rel="stylesheet"/>
+    <link href="{{asset('css/layout.css?2')}}" rel="stylesheet"/>
     @yield('css')
 </head>
 <body dir="rtl">
@@ -85,6 +85,9 @@
         @endauth
 
         <main class="py-4">
+{{--            <p class="alert alert-warning" wire:offline>--}}
+{{--                انت غير متصل بالإنترنت--}}
+{{--            </p>--}}
             @yield('content')
         </main>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Product;
 
 use App\Office\Office;
+use App\Office\OfficeMission;
 
 class ProductQuery
 {
@@ -20,29 +21,31 @@ class ProductQuery
 
     public function countProductsSpecific($mission, $living)
     {
-        return ProductLivingMission::where('living_id', $living)->where('mission_id', $mission)->count();
+        return ProductLivingMission::where('living_id', $living)
+            ->where('mission_id', $mission)
+            ->where('price', '>', 0)
+            ->where('daily_amount', '>', 0)->count();
     }
 
-    public function getProducts($office)
+    public function getProducts($officeMission)
     {
         // check the data type
-        if (!is_object($office)) {
-            $office = Office::find($office);
+        if (!is_object($officeMission)) {
+            $officeMission = OfficeMission::find($officeMission);
         }
 
 
         $products = collect();
-        $productLivingMission = ProductLivingMission::where('living_id', $office->living_id)
-            ->where('mission_id', $office->mission_id)->get();
+        $productLivingMission = ProductLivingMission::where('living_id', $officeMission->office->living_id)
+            ->where('mission_id', $officeMission->mission_id)->get();
         foreach ($productLivingMission as $item) {
             // if the product have any value == null don't push
             $product = Product::find($item->product_id);
-
             if ($product->name &&
-                $product->price &&
-                $product->daily_amount &&
                 $product->food_type_id &&
-                $product->food_unit_id) {
+                $product->food_unit_id &&
+                $productLivingMission->where('product_id', $product->id)->first()->price &&
+                $productLivingMission->where('product_id', $product->id)->first()->daily_amount) {
                 $products->push($product);
             }
         }

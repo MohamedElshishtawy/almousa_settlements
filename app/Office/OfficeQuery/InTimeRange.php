@@ -14,7 +14,13 @@ class InTimeRange
 
     public function run()
     {
-        return Office::where('start_date', '<=', now()->toDate())->where('end_date', '>=', now() )->get();
+        return Office::where(function ($query) {
+            $query->where('getting_ready_start_date', '<=', now()->toDate())
+                ->orWhere('start_date', '>=', now()->toDate());
+        })->where(function ($query) {
+            $query->where('getting_ready_end_date', '>=', now()->toDate())
+                ->orWhere('end_date', '<=', now()->toDate());
+        })->get();
     }
 
 }

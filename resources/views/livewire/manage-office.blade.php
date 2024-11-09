@@ -41,13 +41,27 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="start_date" class="form-label">تاريخ البدء</label>
+                <label for="start_date" class="form-label">تاريخ بدء التجهيز</label>
+                <input type="date" id="getting_ready_start_date" class="form-control" wire:model.defer="getting_ready_start_date" placeholder="أكتب هنا">
+                @error('office.getting_ready_start_date') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="col-md-6">
+                <label for="end_date" class="form-label">تاريخ إنتهاء التجهيز</label>
+                <input type="date" id="getting_ready_end_date" class="form-control" wire:model.defer="getting_ready_end_date" placeholder="أكتب هنا">
+                @error('office.getting_ready_end_date') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="start_date" class="form-label">تاريخ بدء المهمة</label>
                 <input type="date" id="start_date" class="form-control" wire:model.defer="start_date" placeholder="أكتب هنا">
                 @error('office.start_date') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="col-md-6">
-                <label for="end_date" class="form-label">تاريخ الانتهاء</label>
+                <label for="end_date" class="form-label">تاريخ إنتهاء المهمة</label>
                 <input type="date" id="end_date" class="form-control" wire:model.defer="end_date" placeholder="أكتب هنا">
                 @error('office.end_date') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
