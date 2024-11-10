@@ -97,14 +97,14 @@
 
                     $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ?
                         $reallyImported[$product->id] : 0;
-                    $exactlyImported = number_format((float)$exactlyImported, 2, '.', '');
+                    $exactlyImported = number_format($exactlyImported, 2, '.', '');
 
                     $dailyTotal = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id);
-                    $dailyTotal = number_format((float)$dailyTotal, 2, '.', '');
+                    $dailyTotal = number_format($dailyTotal, 2, '.', '');
 
                     $expectedSupply = $dailyTotal && $benefits && $product->daily_amount && is_numeric($benefits) ?
                     $product->daily_amount * $benefits : 0;
-                    $expectedSupply = number_format((float)$expectedSupply, 2, '.', '');
+                    $expectedSupply = number_format($expectedSupply, 2, '.', '');
 
                     if (!$dailyTotal)
                         $difference = 'غير مقرر';
@@ -112,21 +112,21 @@
                         $difference = $exactlyImported ?
                          $expectedSupply - $exactlyImported
                          : ($benefitError ? $expectedSupply - ($benefitError * $product->daily_amount) : $expectedSupply ) ;
-                        $difference = number_format((float)$difference, 2, '.', '');
+                        $difference = number_format($difference, 2, '.', '');
                     }
 
                 } else {
                     $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ?
                      $reallyImported[$product->id] : 0;
-                    $exactlyImported = number_format((float)$exactlyImported, 2, '.', '');
+                    $exactlyImported = number_format($exactlyImported, 2, '.', '');
 
                     $productMissionData = \App\Product\Product::getProductMissionData($product, $office, $officeMission);
                     $dailyTotal = \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
-                    $dailyTotal = number_format((float)$dailyTotal, 2, '.', '');
+                    $dailyTotal = number_format($dailyTotal, 2, '.', '');
 
                     $expectedSupply = $dailyTotal && $benefits && $productMissionData->daily_amount && is_numeric($benefits) ?
                     $productMissionData->daily_amount * $benefits : 0;
-                    $expectedSupply = number_format((float)$expectedSupply, 2, '.', '');
+                    $expectedSupply = number_format($expectedSupply, 2, '.', '');
 
                     if (!$dailyTotal)
                         $difference = 'غير مقرر';
@@ -134,7 +134,7 @@
                         $difference = $exactlyImported ?
                          $expectedSupply - $exactlyImported
                          : ($benefitError ? $expectedSupply - ($benefitError * $productMissionData->daily_amount) : $expectedSupply ) ;
-                        $difference = number_format((float)$difference, 2, '.', '');
+                        $difference = number_format($difference, 2, '.', '');
                     }
                 }
                 @endphp

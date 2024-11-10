@@ -61,7 +61,7 @@ class Import extends Component
                 }
 
                 if ($dailyTotal) {
-                    $this->reallyImported[$product->id] = number_format((float)$productMissionData->daily_amount * $this->benefits,
+                    $this->reallyImported[$product->id] = number_format($productMissionData->daily_amount * $this->benefits,
                         2, '.', '');
                 }
             }
