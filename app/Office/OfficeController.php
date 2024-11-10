@@ -21,4 +21,30 @@ class OfficeController extends Controller
         }
         return $offices;
     }
+
+    public function offices()
+    {
+        return view('admin.offices', [
+            'offices' => Office::all()
+        ]);
+    }
+
+    public function CreateOffice()
+    {
+        return view('admin.create-office');
+    }
+
+    public function EditOffice(Office $id)
+    {
+        return view('admin.create-office', [
+            'office' => $id
+        ]);
+    }
+
+    public function DeleteOffice(Office $id)
+    {
+        $id->delete();
+        return redirect()->route('admin.offices')->with('message', 'تم حذف المقر بنجاح');
+    }
+
 }

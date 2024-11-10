@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Office\OfficeController;
 use App\Report\ReportController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -37,10 +38,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         Route::delete('/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
     Route::prefix('offices')->group(function () {
-        Route::get('/offices', [AdminController::class, 'offices'])->name('admin.offices');
-        Route::get('/offices/create', [AdminController::class, 'CreateOffice'])->name('admin.office.create');
-        Route::get('/offices/{id}', [AdminController::class, 'EditOffice'])->name('admin.office.edit');
-        Route::delete('/offices/{id}', [AdminController::class, 'DeleteOffice'])->name('admin.office.delete');
+        Route::get('/offices', [OfficeController::class, 'offices'])->name('admin.offices');
+        Route::get('/offices/create', [OfficeController::class, 'CreateOffice'])->name('admin.office.create');
+        Route::get('/offices/{id}', [OfficeController::class, 'EditOffice'])->name('admin.office.edit');
+        Route::delete('/offices/{id}', [OfficeController::class, 'DeleteOffice'])->name('admin.office.delete');
     });
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminController::class, 'products'])->name('admin.products');

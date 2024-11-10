@@ -8,10 +8,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>إدارة المقرات</h2>
-
                     </div>
-
-
                     <div class="card-body table-responsive">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -23,7 +20,6 @@
                             @else
                                 @livewire('manage-office')
                             @endisset
-
                     </div>
                 </div>
             </div>

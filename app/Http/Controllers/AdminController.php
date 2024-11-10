@@ -46,31 +46,7 @@ class AdminController extends Controller
     }
 
 
-    public function offices()
-    {
-        return view('admin.offices', [
-            'offices' => Office::all()
-        ]);
-    }
 
-    public function CreateOffice()
-    {
-        return view('admin.create_office');
-    }
-
-
-    public function EditOffice(Office $id)
-    {
-        return view('admin.create_office', [
-            'office' => $id
-        ]);
-    }
-
-    public function DeleteOffice(Office $id)
-    {
-        $id->delete();
-        return redirect()->route('admin.offices')->with('message', 'تم حذف المقر بنجاح');
-    }
 
     public function products()
     {

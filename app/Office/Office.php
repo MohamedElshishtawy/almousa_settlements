@@ -37,24 +37,5 @@ class Office extends Model
         return $this->hasMany(\App\Report\Report::class);
     }
 
-    /*
-     * This function to return all time working for this office while Main mission or getting ready
-     * */
-    public static function dateRange($office)
-    {
-        if (!is_object($office)){
-            $office = Office::find($office);
-        }
-        $dateRange = [];
-        foreach ($office->missions as $mission) {
-            $endDate = $mission->end_date;
-            $currentDate = $mission->start_date;
-            while (strtotime($currentDate) <= strtotime($endDate)) {
-                $dateRange[] = $currentDate;
-                $currentDate = date("Y-m-d", strtotime("+1 day", strtotime($currentDate)));
-            }
-        }
-        return $dateRange;
-    }
 
 }

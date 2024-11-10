@@ -10,7 +10,9 @@ use Livewire\Component;
 class ManageOffice extends Component
 {
     public Office $office;
-    public $name, $start_date, $end_date, $living_id, $mission_id, $getting_ready_start_date, $getting_ready_end_date;
+    public $name, $start_date, $end_date, $living_id, $getting_ready_start_date, $getting_ready_end_date;
+    public $mission_id; // main mission
+
 
     public $livings; // To store available living options
     public $missions; // To store available mission options
@@ -37,11 +39,13 @@ class ManageOffice extends Component
         if ($office->exists) {
             $this->name = $office->name;
             $this->living_id = $office->living_id;
-            $this->mission_id = $office->OfficeMissions()->first()->id;
-            $mainMission = $office->OfficeMissions()->whereNotIn('mission_id', Mission::gettingReadyMissionsIds())->first();
+            $mainMission = $office->OfficeMissions()
+                ->whereNotIn('mission_id', Mission::gettingReadyMissionsIds())->first();
+            $this->mission_id = $mainMission->id;
             $this->start_date = $mainMission->start_date;
             $this->end_date = $mainMission->end_date;
-            $gettingReadyMission = $office->OfficeMissions()->whereIn('mission_id', Mission::gettingReadyMissionsIds())->first();
+            $gettingReadyMission = $office->OfficeMissions()
+                ->whereIn('mission_id', Mission::gettingReadyMissionsIds())->first();
             $this->getting_ready_start_date = $gettingReadyMission->start_date;
             $this->getting_ready_end_date = $gettingReadyMission->end_date;
         }
@@ -54,17 +58,17 @@ class ManageOffice extends Component
 
         $this->office->name = $this->name;
         $this->office->living_id = $this->living_id;
-
         $this->office->save();
 
         // update of make new for the office relations tables
         if ($this->office->OfficeMissions()->count() > 0) {
-            $MainMission = $this->office->OfficeMissions()->where('mission_id', $this->mission_id)->first();
+            $MainMission = $this->office->OfficeMissions()
+                ->whereNotIn('mission_id', Mission::gettingReadyMissionsIds())->first();
             $MainMission->start_date = $this->start_date;
             $MainMission->end_date = $this->end_date;
             $MainMission->save();
             $getReadyMission = $this->office->OfficeMissions()
-                ->where('mission_id', Mission::syncMainWithReady($this->mission_id))->first();
+                ->whereIn('mission_id', Mission::gettingReadyMissionsIds())->first();
             $getReadyMission->start_date = $this->getting_ready_start_date;
             $getReadyMission->end_date = $this->getting_ready_end_date;
             $getReadyMission->save();
