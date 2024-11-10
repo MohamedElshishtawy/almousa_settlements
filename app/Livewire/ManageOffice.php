@@ -22,13 +22,13 @@ class ManageOffice extends Component
     protected function rules()
     {
         return [
-            'office.name' => ['required'],
-            'office.living_id' => 'required|exists:livings,id',
-            'getting_ready_start_date' => 'nullable|date|before:office.start_date',
-            'getting_ready_end_date' => 'nullable|date|after_or_equal:office.getting_ready_start_date',
-            'start_date' => 'required|date|after:office.getting_ready_start_date',
-            'end_date' => 'nullable|date|after_or_equal:office.start_date',
+            'name' => ['required'],
+            'living_id' => 'required|exists:livings,id',
             'mission_id' => 'required|exists:missions,id',
+            'getting_ready_start_date' => 'required|date|before:start_date|before_or_equal:getting_ready_end_date',
+            'getting_ready_end_date' => 'required|date|after_or_equal:getting_ready_start_date|before:start_date',
+            'start_date' => 'required|date|after:getting_ready_start_date|after:getting_ready_end_date',
+            'end_date' => 'required|date|after_or_equal:start_date|after:getting_ready_start_date|after:getting_ready_end_date',
         ];
 
     }
@@ -55,6 +55,8 @@ class ManageOffice extends Component
 
     public function save()
     {
+
+        $this->validate();
 
         $this->office->name = $this->name;
         $this->office->living_id = $this->living_id;

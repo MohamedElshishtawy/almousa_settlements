@@ -152,7 +152,7 @@ class Import extends Component
             }
 
         }
-        return redirect()->route('managers.reports.import', [$this->office->id, $this->date])->with('success', 'تم الحفظ بنجاح;');
+        return redirect()->route('managers.reports.import', [$this->officeMission->id , $this->date])->with('success', 'تم الحفظ بنجاح;');
    }
 
     public function reportUpdate()
@@ -176,7 +176,7 @@ class Import extends Component
                 ]);
             }
         }
-        return redirect()->route('managers.reports.import', [$this->office->id, $this->date])->with('success', 'تم الحفظ بنجاح;');
+        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date])->with('success', 'تم الحفظ بنجاح;');
     }
     public function render()
     {
