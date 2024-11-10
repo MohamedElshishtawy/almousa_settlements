@@ -35,7 +35,8 @@ class Import extends Component
             });
             foreach ($this->products as $staticProduct)  {
                 if ($staticProduct->importProductError) {
-                    $this->reallyImported[$staticProduct->id] = $staticProduct->importProductError->error;
+                    $this->reallyImported[$staticProduct->id] = number_format((float)$staticProduct->importProductError->error,
+                        2, '.', '');
                 }
             }
         }
@@ -59,7 +60,8 @@ class Import extends Component
                 }
 
                 if ($dailyTotal) {
-                    $this->reallyImported[$product->id] = $productMissionData->daily_amount * $this->benefits;
+                    $this->reallyImported[$product->id] = number_format((float)$productMissionData->daily_amount * $this->benefits,
+                        2, '.', '');
                 }
             }
 
