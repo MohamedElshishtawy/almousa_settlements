@@ -30,7 +30,7 @@ class ReportController extends Controller
         $office = $officeMission->office;
 
         $products = (new ProductController())->getProducts($officeMission);
-        dd($products);
+
         return view('reports.import',
             compact('office', 'date', 'products', 'officeMission'));
     }
