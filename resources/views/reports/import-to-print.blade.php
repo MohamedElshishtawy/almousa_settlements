@@ -33,27 +33,30 @@
     </thead>
     @php $index = 0; @endphp
     @foreach($products as $product)
-        <tr>
-            @php($HowManyPday = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($import->report->for_date)->id))
-            @php($dailyTotal =  $HowManyPday ? $import->benefits * $product->daily_amount : 'غير مقرر')
-            @php($realyImported = $HowManyPday ? ($product->importProductError ? $product->importProductError->error : ($import->benefits_error ? $dailyTotal - $import->benefits_error * $product->daily_amount : 0)) : 'غير مقرر')
-            @php($diffrence = $HowManyPday ? ($dailyTotal) - $realyImported : 'غير مقرر')
+        @php
+            $HowManyPday = \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($import->report->for_date)->id);
+            $dailyTotal = $HowManyPday ? $import->benefits * $product->daily_amount : 'غير مقرر';
+            $realyImported = $HowManyPday ? ($product->importProductError ? $product->importProductError->error : ($import->benefits_error ? $dailyTotal - $import->benefits_error * $product->daily_amount : 0)) : 'غير مقرر';
+            $diffrence = $HowManyPday ? ($dailyTotal) - $realyImported : 'غير مقرر';
 
+            // Format the numbers with two decimal places
+            $dailyTotalFormatted = is_numeric($dailyTotal) ? number_format($dailyTotal, 2) : $dailyTotal;
+            $realyImportedFormatted = is_numeric($realyImported) ? number_format($realyImported, 2) : $realyImported;
+            $diffrenceFormatted = is_numeric($diffrence) ? number_format($diffrence, 2) : $diffrence;
+        @endphp
+
+        <tr>
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
             <td>{{ $product->name }}</td>
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($product->daily_amount) }}</td>
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(\App\Product\ProductController::getWeeklyUsedCount($product)) }}</td>
-            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($dailyTotal)}}</td>
-            <td>
-                {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($realyImported)}}
-            </td>
-
-            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($diffrence) }}</td>
+            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($dailyTotalFormatted) }}</td>
+            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($realyImportedFormatted) }}</td>
+            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($diffrenceFormatted) }}</td>
             <td>{{ $product->foodUnit->title }}</td>
         </tr>
     @endforeach
 </table>
-
 
 </body>
 </html>
