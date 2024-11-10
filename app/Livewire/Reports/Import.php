@@ -183,14 +183,16 @@ class Import extends Component
     }
     public function render()
     {
-        return view('livewire.reports.import');
+        return view('livewire.reports.import', [
+            'products' => $this->products
+        ]);
     }
 
     // Method to calculate the difference for a specific product
     public function calculateDifference($index, $expectedSupply)
     {
         $rellyImported = isset($this->reallyImported[$index]) ? $this->reallyImported[$index] : 0;
-        dd($this->reallyImported);
+
         $this->reallyImported[$index] = $rellyImported;
         return $expectedSupply - $rellyImported;
     }
