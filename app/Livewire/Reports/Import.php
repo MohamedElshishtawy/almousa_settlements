@@ -30,6 +30,7 @@ class Import extends Component
             $this->benefits = $this->report->import->benefits;
             $this->benefitError = $this->report->import->benefits_error;
             $this->products = $this->report->staticProducts;
+            dd($this->products, $this->report);
             $this->report->import->importProductError->each(function ($error) {
                 $this->reallyImported[$error->staticProduct->id] = $error->error;
             });
