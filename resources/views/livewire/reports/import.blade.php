@@ -4,7 +4,7 @@
         <h1 class="text-center text-success">
             محضر توريد
             {{ $officeMission->mission->title }}
-            {{ $officeMission->office->name }}
+            {{ $officeMission->office->living->title }}
         </h1>
 
     </div>
