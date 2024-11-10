@@ -85,6 +85,7 @@
             </thead>
             <tbody>
             @php $index = 0; @endphp
+            @dd($products)
             @foreach($products as $product)
                 @php
                 //if there is a report, so you will use form the static product
