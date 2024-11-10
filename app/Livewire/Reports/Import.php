@@ -74,6 +74,7 @@ class Import extends Component
         if (!is_object($this->office)) {
             $this->office = \App\Office\Office::find($this->office);
         }
+        dd($this->products);
        $this->setData();
     }
 
