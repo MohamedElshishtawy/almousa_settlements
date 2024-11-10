@@ -91,7 +91,7 @@ class Import extends Component
     {
         $index = $id;
         $rellyImported = isset($this->reallyImported[$index]) ? $this->reallyImported[$index] : 0;
-        $this->reallyImported[$index] = (int)$value;
+        $this->reallyImported[$index] = (float)$value;
 
     }
     public function save()
