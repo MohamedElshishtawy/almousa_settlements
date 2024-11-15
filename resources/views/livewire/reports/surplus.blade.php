@@ -124,7 +124,7 @@
                 @php
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
                     $thisDayAmount = \App\Product\StaticProduct::howMealPerDay($staticProduct->id, \App\Models\Day::date2object($date)->id) * $report->import->benefits;
-                    $thisDayImported = $staticProduct->importProductError->error;
+                    $thisDayImported = $staticProduct->importProductError ? $staticProduct->importProductError->error : 0;
                     $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
                         ($surplusAmount[$staticProduct->id] ?? 0) +
                         $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0); // 0 for the wrongs input
