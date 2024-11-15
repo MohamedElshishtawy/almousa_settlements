@@ -129,6 +129,12 @@
                         $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0); // 0 for the wrongs input
                     $total = $thisDayImported - $totalSurplus;
 
+                    // format
+                    $staticProduct->daily_amount = number_format($staticProduct->daily_amount, 2);
+                    $thisDayAmount = number_format($thisDayAmount, 2);
+                    $thisDayImported = number_format($thisDayImported, 2);
+                    $totalSurplus = number_format($totalSurplus, 2);
+                    $total = number_format($total, 2);
 
                 @endphp
                 <tr>
@@ -141,16 +147,16 @@
                         </div>
                     </td>
                     <td>{{$surplusBenefit}}</td>
-                    <td>{{$thisDayAmount ?: 'غير مقرر'}}</td>
+                    <td>{{(int)$thisDayAmount ? $thisDayAmount : 'غير مقرر'}}</td>
                     <td>{{$thisDayImported}}</td>
-                    <td>{{$thisDayAmount ? $totalSurplus : 'غير مقرر'}}</td>
-                    <td>{{$thisDayAmount ? $total : 'غير مقرر'}}</td>
+                    <td>{{(int)$thisDayAmount ? $totalSurplus : 'غير مقرر'}}</td>
+                    <td>{{(int)$thisDayAmount ? $total : 'غير مقرر'}}</td>
                     <td>
                         <div class="d-flex">
                             <input type="text"
                                    wire:input.debounce.450ms="surplusAmountUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
-                                  wire:model.defer="surplusAmount.{{$staticProduct->id}}" @if(!$thisDayAmount) disabled @endif>
+                                  wire:model.defer="surplusAmount.{{$staticProduct->id}}" @if(!(int)$thisDayAmount) disabled @endif>
                             <span class="unit">{{ $staticProduct->foodUnit->title }}</span>
                         </div>
                     </td>
@@ -159,7 +165,7 @@
                             <input type="text"
                                    wire:input.debounce.450ms="surplusBenefitsUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
-                                    wire:model.defer="surplusBenefits.{{$staticProduct->id}}" @if(!$thisDayAmount) disabled @endif>
+                                    wire:model.defer="surplusBenefits.{{$staticProduct->id}}" @if(!(int)$thisDayAmount) disabled @endif>
                             <span class="unit">{{'شخص'}}</span>
                         </div>
                     </td>
