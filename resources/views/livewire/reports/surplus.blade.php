@@ -111,6 +111,7 @@
             <th>الإستحقاق اليومى</th>
             <th>الوفر(عدد المستفيدين)</th>
             <th>إجمال الإستحقاق</th>
+            <th>الوارد الحقيقى</th>
             <th>إجمالى الوفر</th>
             <th>إجمالى المصروف</th>
             <th>وفر بالكمية</th>
@@ -122,11 +123,14 @@
             @foreach($staticProducts as $staticProduct)
                 @php
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
-                    $thisDayAmount = $staticProduct->daily_amount * $report->import->benefits;
+                    $thisDayAmount = \App\Product\StaticProduct::howMealPerDay($staticProduct->id, \App\Models\Day::date2object($date)->id) * $report->import->benefits;
+                    $thisDayImported = $staticProduct->importProductError->error;
                     $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
                         ($surplusAmount[$staticProduct->id] ?? 0) +
                         $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0); // 0 for the wrongs input
-                    $total = $thisDayAmount - $totalSurplus;
+                    $total = $thisDayImported - $totalSurplus;
+
+
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
@@ -139,6 +143,7 @@
                     </td>
                     <td>{{$surplusBenefit}}</td>
                     <td>{{$thisDayAmount ?: 'غير مقرر'}}</td>
+                    <td>{{$thisDayImported}}</td>
                     <td>{{$thisDayAmount ? $totalSurplus : 'غير مقرر'}}</td>
                     <td>{{$thisDayAmount ? $total : 'غير مقرر'}}</td>
                     <td>
@@ -146,7 +151,7 @@
                             <input type="text"
                                    wire:input.debounce.450ms="surplusAmountUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
-                                  wire:model.defer="surplusAmount.{{$staticProduct->id}}">
+                                  wire:model.defer="surplusAmount.{{$staticProduct->id}}" @if(!$thisDayAmount) disabled @endif>
                             <span class="unit">{{ $staticProduct->foodUnit->title }}</span>
                         </div>
                     </td>
@@ -155,8 +160,7 @@
                             <input type="text"
                                    wire:input.debounce.450ms="surplusBenefitsUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
-                                    wire:model.defer="surplusBenefits.{{$staticProduct->id}}"
-                            >
+                                    wire:model.defer="surplusBenefits.{{$staticProduct->id}}" @if(!$thisDayAmount) disabled @endif>
                             <span class="unit">{{'شخص'}}</span>
                         </div>
                     </td>
