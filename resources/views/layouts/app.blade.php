@@ -39,8 +39,8 @@
                                     <li><a href="{{route('admin.offices')}}">المقرات</a></li>
                                     <li><a href="{{route('admin.products')}}">الأصناف</a></li>
                                     <li><a href="{{route('admin.units')}}">الوحدات</a></li>
-                                    <li><a href="{{route('managers.reports')}}">المحاضر</a></li>
                                 @endif
+                                    <li><a href="{{route('managers.reports')}}">المحاضر</a></li>
                             @endauth
                         </ul>
 
