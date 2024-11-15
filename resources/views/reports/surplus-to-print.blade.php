@@ -57,8 +57,8 @@
             <td>{{ $staticProduct->foodUnit->title }}</td>
             <td>{{ $staticProduct->daily_amount }}</td>
             <td>{{$thisDayAmount ?: 'غير مقرر'}}</td>
-            <td>{{$thisDayImported}}</td>
-            <td>{{$surplusBenefit}}</td>
+            <td>{{$thisDayAmount ? $thisDayImported : 'غير مقرر'}}</td>
+            <td>{{$thisDayAmount ? $surplusBenefit : 'غير مقرر'}}</td>
             <td>{{$thisDayAmount ? $totalSurplus : 'غير مقرر'}}</td>
             <td>{{$thisDayAmount ? $total : 'غير مقرر'}}</td>
         </tr>
