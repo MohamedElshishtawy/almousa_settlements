@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@php($active = 'products')
 @section('css')
     <link href="{{ asset('css/products.css?2') }}" rel="stylesheet">
 @endsection

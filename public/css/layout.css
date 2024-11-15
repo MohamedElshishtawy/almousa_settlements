@@ -4,6 +4,15 @@ body {
     /*background-position: bottom left;*/
     /*background-size: cover;*/
     /*min-height: 100vh;*/
+    /*font-family: "Amiri", serif;*/
+    /*font-weight: 400;*/
+    /*font-style: normal;*/
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
 }
 .gap
 .card {
@@ -18,13 +27,44 @@ body {
 }
 .navbar {
     padding: 0;
+
     & .nav-pages {
-        gap: 10px;
+        &  li {
+            display: flex;
+        }
         & a {
             color: #232323;
             text-decoration: none;
-            font-weight: 400;
+            padding: 10px;
+            transition: all 0.3s;
+            position: relative;
+            &:after {
+                position: absolute;
+                content: '';
+                background: var(--bs-success);
+                height: 0;
+                right: 0;
+                bottom: 0;
+                transition: all 0.3s ;
+                width: 100%;
+            }
+            &:hover {
+                background: #e2e2e2;
+                &:after {
+                    height: 2px;
+                }
+            }
+            &.active {
+                background: #e2e2e2;
+                font-weight: 600;
+                &:after {
+                    height: 2px;
+                }
+            }
         }
+    }
+    & .notification-li {
+        cursor: pointer;
     }
 }
 

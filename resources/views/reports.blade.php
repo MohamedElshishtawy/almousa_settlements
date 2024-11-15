@@ -1,9 +1,9 @@
 @extends('layouts.app')
-
+@php($active = 'reports')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>المحاضر</h2>
@@ -73,11 +73,6 @@
                                     <td>{{ $day['office']->name }}</td>
                                     <td>{{ $day['officeMission']->mission->title }}</td>
                                     <td>{{ $day['office']->living->title }}</td>
-
-
-
-
-
                                 </tr>
                             @empty
                                 <tr>

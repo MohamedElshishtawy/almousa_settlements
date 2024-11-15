@@ -14,8 +14,16 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/1f4dd9add7.js" crossorigin="anonymous"></script>
+    {{--Google Font--}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
-    <link href="{{asset('css/layout.css?2')}}" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200..1000&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link href="{{asset('css/layout.css?4')}}" rel="stylesheet"/>
     @yield('css')
 </head>
 <body dir="rtl">
@@ -35,17 +43,17 @@
                         <ul class="navbar-nav nav-pages">
                             @auth
                                 @if(auth()->user()->isAdmin())
-                                    <li><a href="{{route('admin.users')}}">الموظفين</a></li>
-                                    <li><a href="{{route('admin.offices')}}">المقرات</a></li>
-                                    <li><a href="{{route('admin.products')}}">الأصناف</a></li>
-                                    <li><a href="{{route('admin.units')}}">الوحدات</a></li>
+                                    <li><a href="{{route('admin.users')}}" class="@if(isset($active) && $active == 'employee') active @endif">الموظفين</a></li>
+                                    <li><a href="{{route('admin.offices')}}" class="@if(isset($active) && $active == 'office') active @endif">المقرات</a></li>
+                                    <li><a href="{{route('admin.products')}}" class="@if(isset($active) && $active == 'products') active @endif">الأصناف</a></li>
+                                    <li><a href="{{route('admin.units')}}" class="@if(isset($active) && $active == 'units') active @endif">الوحدات</a></li>
                                 @endif
-                                    <li><a href="{{route('managers.reports')}}">المحاضر</a></li>
+                                    <li><a href="{{route('managers.reports')}}" class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>
                             @endauth
                         </ul>
 
                         <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav align-items-center gap-1">
                             <!-- Authentication Links -->
                             @guest
                                 @if (Route::has('login'))
@@ -60,9 +68,17 @@
                                     </li>
                                 @endif
                             @else
+                                <li class="nav-item dropdown notification-li">
+                                    <i class="fa-solid fa-bell fa-lg"></i>
+                                </li>
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
+                                         {{--first word only--}}
+                                        <span class="mx-2">
+                                            <i class="fa-solid fa-user-circle fa-lg"></i>
+                                        {{ explode(' ', Auth::user()->name)[0]}}
+                                        </span>
+
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
