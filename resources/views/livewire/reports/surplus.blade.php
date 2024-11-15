@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <div class="report-page ">
 
     <div class="header ">
@@ -122,8 +123,9 @@
             @foreach($staticProducts as $staticProduct)
                 @php
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
-                    $thisDayAmount = \App\Product\StaticProduct::howMealPerDay($staticProduct->id, \App\Models\Day::date2object($date)->id) * $report->import->benefits;
-                    $thisDayImported = $staticProduct->importProductError ? $staticProduct->importProductError->error : 0;
+                    $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
+                    $thisDayAmount = $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
+                    $thisDayImported = $staticProduct->importProductError && $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? $staticProduct->importProductError->error / $hasThisMeal->count() : 0;
                     $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
                         ($surplusAmount[$staticProduct->id] ?? 0) +
                         $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0); // 0 for the wrongs input
@@ -135,7 +137,6 @@
                     $thisDayImported = number_format($thisDayImported, 2);
                     $totalSurplus = number_format($totalSurplus, 2);
                     $total = number_format($total, 2);
-
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>

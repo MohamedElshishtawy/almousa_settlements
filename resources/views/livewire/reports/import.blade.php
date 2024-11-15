@@ -97,7 +97,7 @@
 
                     // Format numbers
                     $exactlyImported = number_format($exactlyImported, 2, '.', '');
-                    $dailyTotal = number_format($dailyTotal, 2, '.', '');
+
                     $expectedSupply = number_format($expectedSupply, 2, '.', '');
                     $difference = is_numeric($difference) ? number_format($difference, 2, '.', '') : $difference;
                 @endphp
@@ -107,7 +107,7 @@
                     <td>{{ $productMissionData->daily_amount }}</td>
                     <td>{{ $product->foodUnit->title }}</td>
                     <td>{{ \App\Product\ProductController::getWeeklyUsedCount($productMissionData, true) }}</td>
-                    <td>{{ $productMissionData->price }}</td>
+                    <td>{{ number_format($productMissionData->price, 2) . ' ر.س.' }}</td>
                     <td>{{ (int)$dailyTotal ? $dailyTotal : 'غير مقرر' }}</td>
                     <td>{{ (int)$expectedSupply? $expectedSupply : 'غير مقرر' }}</td>
                     <td>

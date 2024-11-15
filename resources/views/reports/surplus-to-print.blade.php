@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <!doctype html>
 <html lang="ar">
 <head>
@@ -38,7 +39,9 @@
     @php $index = 0; @endphp
     @foreach($staticProducts as $staticProduct)
         @php
-            $thisDayAmount = \App\Product\StaticProduct::howMealPerDay($staticProduct->id, \App\Models\Day::date2object($date)->id) * $report->import->benefits;
+            $hasThisMeal = $staticProduct->productsDayMeal->where('meal_id', $meal->id)
+            ->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id)->count();
+            $thisDayAmount = $hasThisMeal ?  \App\Product\StaticProduct::howMealPerDay($staticProduct->id, \App\Models\Day::date2object($date)->id) * $report->import->benefits / $hasThisMeal : 0;
             $thisDayImported = $staticProduct->importProductError ? $staticProduct->importProductError->error : 0;
             $surplusProductError = $surplus->surplusProductErrors
                             ->where('static_product_id', $staticProduct->id)->first();
