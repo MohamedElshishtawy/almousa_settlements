@@ -75,7 +75,14 @@
     background: transparent;
     border: none;
 }
+.unit {
+    font-size: 11px;
+    color: #6f6f6f;
+    margin-right: 5px;
 
+    display: flex;
+    align-items: center;
+}
 @media (max-width: 1025px) {
     .report-page {
         grid-template-columns: 1fr;

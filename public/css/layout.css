@@ -5,6 +5,7 @@ body {
     /*background-size: cover;*/
     /*min-height: 100vh;*/
 }
+.gap
 .card {
     background: transparent;
     backdrop-filter: blur(1px);

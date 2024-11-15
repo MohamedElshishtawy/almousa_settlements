@@ -33,7 +33,7 @@ class ReportSurvice
                     'office' => $office,
                     'officeMission' => $officeMission,
                     'import' => $report ? $report->import : [],
-                    'surplus' => $report ? $report->surplus : [],
+                    'surplus' => $report && $report->surplus && $report->surplus->count() > 0 ? $report->surplus : [],
                     'date' => $currentDate->toDateString(),
                 ];
 

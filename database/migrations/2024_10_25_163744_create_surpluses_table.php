@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('surpluses', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(App\Report\Report::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Meal::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->integer('surplus')->default(0);
+            $table->foreignIdFor(App\Models\Meal::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

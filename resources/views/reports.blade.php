@@ -32,6 +32,7 @@
                             </thead>
                             <tbody>
                             @php($n = 0)
+
                             @forelse ($days as $day)
 
                                 <tr>
@@ -55,18 +56,19 @@
 
                                     @if($day['surplus'])
                                         <td>
-                                            <span class="btn btn-success">
+                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}"  class="btn btn-success">
                                                 <span>الوفر</span>
-                                                <span>تم</span>
-                                            </span>
+                                                <span><i class="fa-regular fa-circle-check fa-sm"></i></span>
+                                            </a>
                                         </td>
                                     @else
                                         <td>
-                                            <a href="#" class="btn btn-primary">
+                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}" class="btn btn-primary @if(!$day['import']) disabled  @endif"  >
                                                 <span>الوفر</span>
                                             </a>
                                         </td>
                                     @endif
+
 
                                     <td>{{ $day['office']->name }}</td>
                                     <td>{{ $day['officeMission']->mission->title }}</td>
@@ -88,5 +90,6 @@
             </div>
         </div>
     </div>
+
 @endsection
 

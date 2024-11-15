@@ -23,7 +23,7 @@ class Report extends Model
 
     public function surplus()
     {
-        return $this->hasOne(Surplus::class);
+        return $this->hasMany(Surplus::class);
     }
 
 

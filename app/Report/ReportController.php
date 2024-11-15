@@ -4,6 +4,7 @@ namespace App\Report;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\Meal;
 use App\Office\Office;
 use App\Office\OfficeController;
 use App\Office\OfficeMission;
@@ -47,5 +48,35 @@ class ReportController extends Controller
             compact('office', 'date', 'products', 'import'));
     }
 
+    public function surplus($officeMission, $date, $meal = null)
+    {
+        $officeMission = OfficeMission::find($officeMission);
+
+        $office = $officeMission->office;
+
+        $report = $office->reports()->where('for_date', $date)->first();
+
+        $staticProducts = $report->staticProducts;
+
+        $meals = Meal::getMealsFor($officeMission->mission);
+
+        $urlMeal = $meal;
+        return view('reports.surplus',
+            compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'meals', 'urlMeal'));
+    }
+
+    public function surplusPrint($officeMission, $date, $mealId)
+    {
+
+        $officeMission = OfficeMission::find($officeMission);
+        $office = $officeMission->office;
+        $report = $office->reports()->where('for_date', $date)->first();
+        $staticProducts = $report->staticProducts;
+        $surplus = $report->surplus->where('meal_id', $mealId)->first();
+        $meal = Meal::find($mealId);
+        return view('reports.surplus-to-print',
+            compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal'));
+
+    }
 
 }

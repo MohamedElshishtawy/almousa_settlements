@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('import_product_errors', function (Blueprint $table) {
+        Schema::create('surplus_food_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Report\Import::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Product\StaticProduct::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->float('error')->default(0);
+            $table->foreignIdFor(\App\Report\Surplus::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Product\FoodType::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->integer('value')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('import_product_errors');
+        Schema::dropIfExists('surplus_food_types');
     }
 };

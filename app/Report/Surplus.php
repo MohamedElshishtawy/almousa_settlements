@@ -12,7 +12,6 @@ class Surplus extends Model
     protected $fillable = [
         'report_id',
         'meal_id',
-        'surplus',
     ];
 
     public function report()
@@ -25,9 +24,18 @@ class Surplus extends Model
         return $this->belongsTo(\App\Models\Meal::class);
     }
 
-    public function surplus_product_errors()
+    public function surplusProductErrors()
     {
         return $this->hasMany(SurplusProductError::class);
     }
+
+    public function surplusFoodTypes()
+    {
+        return $this->hasMany(SurplusFoodType::class);
+    }
+
+
+
+
 
 }

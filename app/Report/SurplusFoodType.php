@@ -5,15 +5,13 @@ namespace App\Report;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SurplusProductError extends Model
+class SurplusFoodType extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
+    protected  $fillable = [
         'surplus_id',
-        'static_product_id',
-        'surplus_benefits',
-        'surplus_amount',
+        'food_type_id',
+        'value',
     ];
 
     public function surplus()
@@ -21,11 +19,8 @@ class SurplusProductError extends Model
         return $this->belongsTo(Surplus::class);
     }
 
-    public function static_product()
+    public function food_type()
     {
-        return $this->belongsTo(\App\Product\StaticProduct::class);
+        return $this->belongsTo(\App\Product\FoodType::class);
     }
-
-
-
 }

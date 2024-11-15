@@ -51,9 +51,21 @@ class Meal extends Model
         return $meals;
     }
 
+    public static function getMealsFor(Mission $mission)
+    {
+        if ($mission->title == 'رمضان') {
+            return Meal::whereNot('name', 'غداء')->get();
+        }
+        return Meal::whereNot('name', 'سحور')->get();
+    }
+
     public function surpluses()
     {
         return $this->hasMany(\App\Report\Surplus::class);
     }
 
+    public function surplus_meals()
+    {
+        return $this->hasMany(\App\Report\SurplusMeal::class);
+    }
 }

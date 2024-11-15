@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Report\Surplus::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Product\StaticProduct::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-
+            $table->integer('surplus_benefits')->nullable();
+            $table->float('surplus_amount')->nullable();
             $table->timestamps();
         });
     }

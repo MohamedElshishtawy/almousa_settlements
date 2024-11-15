@@ -58,6 +58,10 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         ->name('managers.reports.import');
     Route::get('/reports/import/{office}/{date}/print', [ReportController::class, 'importPrint'])
         ->name('managers.reports.import.print');
+    Route::get('/reports/surplus/{officeMission}/{date}/{meal?}', [ReportController::class, 'surplus'])
+        ->name('managers.reports.surplus');
+    Route::get('/reports/surplus/{officeMission}/{date}/{meal}/print', [ReportController::class, 'surplusPrint'])
+        ->name('managers.reports.surplus.print');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
