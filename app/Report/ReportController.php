@@ -56,6 +56,7 @@ class ReportController extends Controller
 
         $report = $office->reports()->where('for_date', $date)->first();
 
+
         $staticProducts = $report->staticProducts;
 
         $meals = Meal::getMealsFor($officeMission->mission);

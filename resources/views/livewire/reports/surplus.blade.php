@@ -15,7 +15,7 @@
             <div class="d-flex">
                 @if($surplus)
 
-                        <a href="{{route('managers.reports.surplus.print', [$office, $date, $selectedMeal->id])}}"
+                        <a href="{{route('managers.reports.surplus.print', [$officeMission, $date, $selectedMeal->id])}}"
                            class="mx-1 btn btn-secondary">
                             <i class="fa-solid fa-print"></i>
                         </a>
