@@ -17,7 +17,7 @@
 
     <!-- Editable dropdown for unit -->
     <td>
-        <input type="text" wire:model.live="daily_amount" placeholder="0" class="form-control number-input @if($daily_amount && $daily_amount > 0) is-valid @else is-invalid @endif">
+        <input type="text" wire:model.live.450ms="daily_amount" placeholder="0" class="form-control number-input @if($daily_amount && $daily_amount > 0) is-valid @else is-invalid @endif">
     </td>
     <td>
         {{$product->foodUnit->title}}
@@ -25,7 +25,7 @@
 
     <!-- Editable input for price -->
     <td>
-        <input type="text" wire:model.live="price" placeholder="0.00" class="form-control number-input @if($price && $price > 0 ) is-valid @else is-invalid @endif">
+        <input type="text" wire:model.live.450ms="price" placeholder="0.00" class="form-control number-input @if($price && $price > 0 ) is-valid @else is-invalid @endif">
     </td>
 
     <!-- Editable input for quantity -->

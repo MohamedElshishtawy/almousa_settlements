@@ -63,6 +63,7 @@
         max-height: 90vh;
         overflow: auto;
         padding-top: 0;
+        position: relative;
         & table > thead {
             position: sticky;
             top: 0;

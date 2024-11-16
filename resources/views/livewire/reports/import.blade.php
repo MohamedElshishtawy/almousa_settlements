@@ -12,9 +12,6 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($report)
-                    <span wire:loading>
-                        <span class="spinner-border text-success" role="status"></span>
-                    </span>
                     <a href="{{ route('managers.reports.import.print', [$office, $date]) }}" class="mx-1 btn btn-secondary">
                         <i class="fa-solid fa-print"></i>
                     </a>
