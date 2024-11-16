@@ -119,5 +119,6 @@ body {
 
 
 input.number-input {
-    width: 80px !important;
+    width: 100px !important;
+    padding: 5px 0;
 }
