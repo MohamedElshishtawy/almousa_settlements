@@ -40,6 +40,7 @@
                 <input type="checkbox" wire:click="toggleDayMeal({{ $day->id }},{{ $meal->id }})"
                        class="form-check-input"
                     {{$productLivingMission->productsDayMeal()->where('day_id', $day->id)->where('meal_id', $meal->id)->first() ? 'checked' : ''}}
+                    wire:loading.attr="disabled"
                 >
             </td>
         @endforeach

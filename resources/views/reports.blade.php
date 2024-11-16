@@ -37,7 +37,7 @@
 
                                 <tr>
                                     <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
-                                    <td>{{ $day['date'] }}</td>
+                                    <td>{{ \App\Models\Day::DateToHijri($day['date']) }}</td>
 
                                     @if($day['import'])
                                         <td>

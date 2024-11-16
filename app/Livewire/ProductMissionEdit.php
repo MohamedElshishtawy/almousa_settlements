@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Models\Day;
+use App\Models\Meal;
 use App\Product\Product;
 use App\Product\ProductController;
 use App\Product\ProductDayMeal;
@@ -18,7 +20,7 @@ class ProductMissionEdit extends Component
             ->where('living_id', $this->living->id)
             ->where('mission_id', $this->mission->id)
             ->first();
-        $this->times_per_week = ProductController::getWeeklyUsedCount($this->productLivingMission);
+        $this->times_per_week = $this->product->getHowManyDayPerWeekUsed($this->productLivingMission);
         $this->price = $this->productLivingMission->price;
         $this->daily_amount = $this->productLivingMission->daily_amount;
     }
@@ -35,10 +37,12 @@ class ProductMissionEdit extends Component
 
     public function toggleDayMeal($dayId, $mealId)
     {
-        $check = ProductDayMeal::where('product_living_mission_id', $this->product->id)
+
+        $check = ProductDayMeal::where('product_living_mission_id', $this->productLivingMission->id)
             ->where('day_id', $dayId)
             ->where('meal_id', $mealId)
             ->first();
+
         if ($check) {
             $check->delete();
         }
@@ -49,7 +53,8 @@ class ProductMissionEdit extends Component
                 'meal_id' => $mealId
             ]);
         }
-        $this->times_per_week = ProductController::getWeeklyUsedCount($this->productLivingMission);
+
+        $this->times_per_week = $this->product->getHowManyDayPerWeekUsed($this->productLivingMission);
     }
 
 

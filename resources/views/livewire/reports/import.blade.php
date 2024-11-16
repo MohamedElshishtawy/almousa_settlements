@@ -28,7 +28,7 @@
                     <span wire:loading>
                         <span class="spinner-border text-success" role="status"></span>
                     </span>
-                    <button wire:loading.remove class="btn btn-success" wire:click="save">حفظ</button>
+                    <button wire:loading.remove class="btn btn-success mx-1" wire:click="save">حفظ</button>
                 @endif
             </div>
         </div>
@@ -80,35 +80,39 @@
             </tr>
             </thead>
             <tbody>
-            @php $index = 0; @endphp
+            @php
+            $index = 0;
+            $day = \App\Models\Day::date2object($date);
+            @endphp
             @foreach($products as $product)
                 @php
-                    $benefits = is_numeric($benefits) ? $benefits : 0;
-                    $benefitError = $benefitError ?: 0;
+                $benefits = is_numeric($benefits) ? $benefits : 0;
+                $benefitError = $benefitError ?: 0;
 
-                    // Determine if using report or product data
-                    $productMissionData = $report ? $product : \App\Product\Product::getProductMissionData($product, $office, $officeMission);
+                // Determine if using report or product data
+                $productMissionData = $report ? $product : \App\Product\Product::getProductMissionData($product, $office, $officeMission);
+                $dayMissionTimes = $product->getHowManyPerDay($day, !$report?$productMissionData:null);
 
-                    $dailyTotal = $report ? \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) :
-                                             \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
-                    $expectedSupply = $dailyTotal && $benefits && is_numeric($benefits) ? $productMissionData->daily_amount * $benefits : 0;
-                    $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
-                    $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 'غير مقرر';
+                $dailyTotal = $report ? \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) :
+                                         \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
+                $expectedSupply = $dailyTotal && $benefits && is_numeric($benefits) ? $productMissionData->daily_amount * $benefits : 0;
+                $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
+                $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 'غير مقرر';
 
-                    // Format numbers
-                    $exactlyImported = number_format($exactlyImported, 2, '.', '');
+                // Format numbers
+                $exactlyImported = round($exactlyImported, 4);
 
-                    $expectedSupply = number_format($expectedSupply, 2, '.', '');
-                    $difference = is_numeric($difference) ? number_format($difference, 2, '.', '') : $difference;
+                $expectedSupply = round($expectedSupply, 4);
+                $difference = is_numeric($difference) ? round($difference, 4) : $difference;
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $productMissionData->daily_amount }}</td>
+                    <td>{{ round($productMissionData->daily_amount, 4) }}</td>
                     <td>{{ $product->foodUnit->title }}</td>
-                    <td>{{ \App\Product\ProductController::getWeeklyUsedCount($productMissionData, true) }}</td>
+                    <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
                     <td>{{ number_format($productMissionData->price, 2) . ' ر.س.' }}</td>
-                    <td>{{ (int)$dailyTotal ? $dailyTotal : 'غير مقرر' }}</td>
+                    <td>{{ (int)$dailyTotal ? $dayMissionTimes : 'غير مقرر' }}</td>
                     <td>{{ (int)$expectedSupply? $expectedSupply : 'غير مقرر' }}</td>
                     <td>
                         <input type="text"

@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Alkoumi\LaravelArabicNumbers\Numbers;
 use App\Product\ProductDayMeal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Http;
 
 class Day extends Model
 {
@@ -42,6 +44,15 @@ class Day extends Model
             return null;
         }
         return Day::where('name', $dayText)->first();
+    }
+
+    public static function DateToHijri($date)
+    {
+        $dateForamte = date('d-m-Y', strtotime($date));
+        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateForamte)->json();
+        $dayNumber = Numbers::ShowInArabicDigits((int)$date['data']['hijri']['day']);
+        $yearArabic = Numbers::ShowInArabicDigits($date['data']['hijri']['year']);
+        return $date['data']['hijri']['weekday']['ar'] . ' ' . $dayNumber . ' ' . $date['data']['hijri']['month']['ar']  .' '. $yearArabic ;
     }
 
     public static function date2object($date)

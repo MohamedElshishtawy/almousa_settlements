@@ -2,13 +2,16 @@
 
 namespace App\Report;
 
+use Alkoumi\LaravelArabicNumbers\Numbers;
 use App\Http\Controllers\Controller;
+use App\Models\Day;
 use App\Models\Employee;
 use App\Models\Meal;
 use App\Office\Office;
 use App\Office\OfficeController;
 use App\Office\OfficeMission;
 use App\Product\ProductController;
+use Illuminate\Support\Facades\Http;
 
 class ReportController extends Controller
 {
@@ -43,6 +46,8 @@ class ReportController extends Controller
         $products = $report->staticProducts;
 
         $import = $report ? $report->import : null ;
+
+        $date = Day::DateToHijri($date);
 
         return view('reports.import-to-print',
             compact('office', 'date', 'products', 'import'));

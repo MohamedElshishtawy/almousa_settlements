@@ -4,6 +4,8 @@ namespace App\Product;
 
 use App\Living\Living;
 use App\Mission\Mission;
+use App\Models\Day;
+use App\Models\Meal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,6 +44,22 @@ class ProductLivingMission extends Model
     }
 
 
+    public function getHowManyPerDay(Day $day)
+    {
+        return count(array_unique($this->productsDayMeal->where('day_id', $day->id)->pluck('meal_id')->toArray()));
+    }
+
+    public function getHowManyPerWeek()
+    {
+
+        return $this->productsDayMeal->select('day_id')->groupBy('day_id')->count();
+    }
+
+
+    public function isHasMeal(Day $day, Meal $meal)
+    {
+        return $this->productsDayMeal->where('day_id', $day->id)->where('meal_id', $meal->id)->first();
+    }
 
 
 

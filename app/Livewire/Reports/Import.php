@@ -30,7 +30,7 @@ class Import extends Component
 
             foreach ($this->products as $product) {
                 $this->reallyImported[$product->id] = isset($product->importProductError) ?
-                    number_format($product->importProductError->error, 2, '.', '') : 0;
+                    round($product->importProductError->error, 4) : 0;
             }
         } else {
             // reset
@@ -46,7 +46,7 @@ class Import extends Component
             $dailyTotal = $this->report ? StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($this->date)->id) :
                 ProductDayMeal::howMealPerDay($product->id, \App\Models\Day::date2object($this->date)->id);
             if ($dailyTotal && is_numeric($this->benefits)) {
-                $this->reallyImported[$product->id] = number_format($product->daily_amount * $this->benefits, 2, '.', '');
+                $this->reallyImported[$product->id] = round($product->daily_amount * $this->benefits, 4);
             }
         }
     }
@@ -79,7 +79,7 @@ class Import extends Component
                 \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($this->date)->id);
 
             if ($dailyTotal && is_numeric($value)) {
-                $this->reallyImported[$product->id] = number_format($productMissionData->daily_amount * $value, 2, '.', '');
+                $this->reallyImported[$product->id] = round($productMissionData->daily_amount * $value, 4);
             }
         }
 
