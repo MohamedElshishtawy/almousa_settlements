@@ -53,6 +53,22 @@ class ReportController extends Controller
             compact('office', 'date', 'products', 'import'));
     }
 
+    public function importPrintWriting($office, $date)
+    {
+        $office = is_object($office) ?: Office::find($office);
+        $report = $office->reports()->where('for_date', $date)->first();
+        $products = $report->staticProducts;
+
+        $import = $report ? $report->import : null ;
+
+        $Hijri = Day::DateToHijriSpecificArray($date);
+
+        return view('reports.import-writing-print',
+            compact('office', 'Hijri', 'products', 'report', 'import'));
+    }
+
+
+
     public function surplus($officeMission, $date, $meal = null)
     {
         $officeMission = OfficeMission::find($officeMission);

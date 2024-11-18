@@ -55,6 +55,19 @@ class Day extends Model
         return $date['data']['hijri']['weekday']['ar'] . ' ' . $dayNumber . ' ' . $date['data']['hijri']['month']['ar']  .' '. $yearArabic ;
     }
 
+    public static function DateToHijriSpecificArray($date)
+    {
+        $dateForamte = date('d-m-Y', strtotime($date));
+        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateForamte)->json();
+
+        return [
+            'year' => $date['data']['hijri']['year'],
+            'month' => $date['data']['hijri']['month']['number'],
+            'day' => $date['data']['hijri']['day'],
+            'day-text' => $date['data']['hijri']['weekday']['ar'],
+        ];
+    }
+
     public static function date2object($date)
     {
         $dayText = self::convertDate2ArName($date);

@@ -28,3 +28,52 @@ table {
         font-size: 15px;
     }
 }
+
+.import-writing {
+    min-height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    & main {
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 700px;
+        padding: 10px;
+    }
+    header {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        text-align: center;
+        & > div:first-child {
+            display: grid;
+            justify-content: right;
+            text-align: center;
+        }
+        & .title {
+            grid-column: 1/4;
+        }
+        & img {
+            width: 50px;
+        }
+    }
+
+    article {
+        text-align: justify;
+    }
+    & footer {
+        margin-top: 13.4px;
+        & table {
+            & th  {
+                width: 20%;
+            }
+        }
+    }
+
+}
+.text-center {
+    text-align: center;
+}
+.mt-5 {
+    margin-top: 10px;
+}

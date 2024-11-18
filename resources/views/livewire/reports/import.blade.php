@@ -12,7 +12,10 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($report)
-                    <a href="{{ route('managers.reports.import.print', [$office, $date]) }}" class="mx-1 btn btn-secondary">
+                    <a href="{{ route('managers.reports.import.print-writing', [$office, $date]) }}" class="mx-1 btn btn-secondary">
+                        <i class="fa-solid fa-feather-pointed"></i>
+                    </a>
+                    <a href="{{ route('managers.reports.import.print', [$office, $date]) }}" class="ml-1 btn btn-secondary">
                         <i class="fa-solid fa-print fa-fw"></i>
                     </a>
                     <button wire:click="delete" class="btn btn-danger mx-1">
