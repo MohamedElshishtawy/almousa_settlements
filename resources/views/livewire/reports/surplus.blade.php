@@ -23,7 +23,9 @@
                         <button class="btn btn-danger mx-1" wire:click="delete">
                             <i class="fa fa-trash"></i>
                         </button>
-                        <button class="btn btn-primary" wire:click="reportUpdate">تعديل</button>
+                        <button class="btn btn-primary" wire:click="reportUpdate">
+                            <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                        </button>
 
                 @else
                     <span wire:loading>
@@ -125,21 +127,32 @@
             @foreach($staticProducts as $staticProduct)
                 @php
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
-                    $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
-                    $thisDayAmount = $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
-                    $thisDayImported = $staticProduct->importProductError && $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? $staticProduct->importProductError->error / $hasThisMeal->count() : 0;
-                    $totalSurplus = ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ) +
-                        ($surplusAmount[$staticProduct->id] ?? 0) +
-                        $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0) / $hasThisMeal->count(); // 0 for the wrongs input
-                    $totalSurplus = $totalSurplus >= 0 ?: 0;
-                    $total = $thisDayImported - $totalSurplus;
 
-                    // format
-                    $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
-                    $thisDayAmount = round($thisDayAmount, 4);
-                    $thisDayImported = round($thisDayImported, 4);
-                    $totalSurplus = round($totalSurplus, 4);
-                    $total = round($total, 4);
+                    $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
+                    if ($hasThisMeal->count()) {
+                        $thisDayAmount =  $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
+
+                        $thisDayImported = $staticProduct->importProductError && $hasThisMeal->count() && $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? $staticProduct->importProductError->error / $hasThisMeal->count() : 0;
+
+                        $totalSurplus = $hasThisMeal->count() ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ) +
+                            ($surplusAmount[$staticProduct->id] ?? 0) +
+                            $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0) / $hasThisMeal->count(); // 0 for the wrongs input
+                        $totalSurplus = $totalSurplus >= 0 ?: 0;
+                        $total = $thisDayImported - $totalSurplus;
+
+                        // format
+                        $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
+                        $thisDayAmount = round($thisDayAmount, 4);
+                        $thisDayImported = round($thisDayImported, 4);
+                        $totalSurplus = round($totalSurplus, 4);
+                        $total = round($total, 4);
+                    }
+                    else {
+                        $thisDayAmount = 0;
+                        $thisDayImported = 0;
+                        $totalSurplus = 0;
+                        $total = 0;
+                    }
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
