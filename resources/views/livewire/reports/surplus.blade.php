@@ -134,10 +134,8 @@
 
                         $thisDayImported = $staticProduct->importProductError && $hasThisMeal->count() && $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? $staticProduct->importProductError->error / $hasThisMeal->count() : 0;
 
-                        $totalSurplus =  ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ) +
-                            ($surplusAmount[$staticProduct->id] ?? 0) +
-                            $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0) / $hasThisMeal->count(); // 0 for the wrongs input
-
+                        $totalSurplus =  ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ); // 0 for the wrongs input
+                        dd($totalSurplus, $staticProduct->daily_amount, $surplusBenefit, $hasThisMeal->count());
                         $totalSurplus = $totalSurplus >= 0 ?: 0;
                         $total = $thisDayImported - $totalSurplus;
                         $total = $total >= 0 ?: 0;
