@@ -129,15 +129,15 @@
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
 
                     $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
-                    dd($hasThisMeal);
                     if ($hasThisMeal->count()) {
                         $thisDayAmount =  $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
 
                         $thisDayImported = $staticProduct->importProductError && $hasThisMeal->count() && $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? $staticProduct->importProductError->error / $hasThisMeal->count() : 0;
 
-                        $totalSurplus = $hasThisMeal->count() ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ) +
+                        $totalSurplus =  ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ) +
                             ($surplusAmount[$staticProduct->id] ?? 0) +
                             $staticProduct->daily_amount * ($surplusBenefits[$staticProduct->id] ?? 0) / $hasThisMeal->count(); // 0 for the wrongs input
+
                         $totalSurplus = $totalSurplus >= 0 ?: 0;
                         $total = $thisDayImported - $totalSurplus;
 
