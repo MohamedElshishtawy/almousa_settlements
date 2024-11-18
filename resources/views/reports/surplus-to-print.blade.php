@@ -20,7 +20,7 @@
         rel="stylesheet">
 
     <title>طباعة الوفر</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?2')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?3')}}">
 </head>
 <body dir="rtl">
 <h1>محضر وفر المواد الطازجة و الجافة إعاشة {{$office->living->title}}

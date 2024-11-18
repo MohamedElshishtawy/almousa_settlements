@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200..1000&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
     <title>طباعة التوريد</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?2')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?3')}}">
 </head>
 <body dir="rtl">
 <h1>محضر توريد المواد الطازجة و الجافة إعاشة {{$office->living->title}}
@@ -53,7 +53,7 @@
             $dailyTotalFormatted = is_numeric($dailyTotal) ? round($dailyTotal, 4) : $dailyTotal;
             $realyImportedFormatted = is_numeric($realyImported) ? round($realyImported, 4) : $realyImported;
             $diffrenceFormatted = is_numeric($diffrence) ? round($diffrence, 4) : $diffrence;
-            $diffrenceFormatted =  $diffrenceFormatted >= 0 ?: 0;
+            $diffrenceFormatted =  $diffrenceFormatted >= 0 ? $diffrenceFormatted : 0;
         @endphp
 
         <tr>
