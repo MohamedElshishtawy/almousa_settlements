@@ -26,7 +26,7 @@
                                 <th scope="col">الوفر</th>
                                 <th scope="col">المقر</th>
                                 <th scope="col">المهمة</th>
-                                <th scope="col">المعايش</th>
+                                <th scope="col">نوع الإعاشة</th>
 
                             </tr>
                             </thead>

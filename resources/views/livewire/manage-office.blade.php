@@ -18,9 +18,9 @@
         <!-- Living and Mission -->
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="living_id" class="form-label">المعايش</label>
+                <label for="living_id" class="form-label">نوع الإعاشة</label>
                 <select id="living_id" class="form-select @error('living_id') is-invalid @enderror" wire:model="living_id">
-                    <option value="">اختر المعايش</option>
+                    <option value="">اختر نوع الإعاشة</option>
                     @foreach ($livings as $living)
                         <option value="{{ $living->id }}">{{ $living->title }}</option>
                     @endforeach

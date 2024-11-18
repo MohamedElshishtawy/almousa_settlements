@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('old_id');
             $table->integer('old_product_living_mission_old');
             $table->string('name')->nullable();
-            $table->float('price')->nullable();
-            $table->float('daily_amount')->nullable();
+            $table->float('price', 6, 6)->nullable();
+            $table->float('daily_amount', 6, 6)->nullable();
             $table->foreignIdFor(\App\Product\FoodType::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Product\FoodUnit::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Report\Report::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();

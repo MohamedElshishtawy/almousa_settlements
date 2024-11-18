@@ -69,7 +69,9 @@
                 <th>المقرر اليومى</th>
                 <th>الوحدة</th>
                 <th>الصرف بالاسبوع</th>
-                <th>السعر</th>
+                @if (auth()->user()->isAdmin())
+                    <th>السعر</th>
+                @endif
                 <th>مرات الصرف باليوم</th>
                 <th>الكمية المقررة</th>
                 <th>الكمية الموردة</th>
@@ -108,7 +110,10 @@
                     <td>{{ round($productMissionData->daily_amount, 4) }}</td>
                     <td>{{ $product->foodUnit->title }}</td>
                     <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
-                    <td>{{ number_format($productMissionData->price, 2) . ' ر.س.' }}</td>
+
+                    @if (auth()->user()->isAdmin())
+                        <td>{{ number_format($productMissionData->price, 2) . ' ر.س.' }}</td>
+                    @endif
                     <td>{{ (int)$dailyTotal ? $dayMissionTimes : 'غير مقرر' }}</td>
                     <td>{{ (int)$expectedSupply? $expectedSupply : 'غير مقرر' }}</td>
                     <td>

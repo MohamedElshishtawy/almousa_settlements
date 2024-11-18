@@ -24,7 +24,7 @@
                                 <th scope="col">الترتيب</th>
                                 <th scope="col">الاسم</th>
                                 <th scope="col">المهمة</th>
-                                <th scope="col">المعايش</th>
+                                <th scope="col">نوع الإعاشة</th>
                                 <th colspan="2"> تجهيز</th>
                                 <th colspan="2">الرئيسية</th>
 

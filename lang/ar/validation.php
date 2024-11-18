@@ -182,7 +182,7 @@ return [
 
     'attributes' => [
         'name' => 'اسم المقر',
-        'living_id' => 'المعايش',
+        'living_id' => 'نوع الإعاشة',
         'mission_id' => 'المهمة',
         'getting_ready_start_date' => 'تاريخ بدء التجهيز',
         'getting_ready_end_date' => 'تاريخ إنتهاء التجهيز',
