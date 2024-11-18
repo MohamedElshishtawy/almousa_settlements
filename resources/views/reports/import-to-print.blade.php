@@ -53,6 +53,7 @@
             $dailyTotalFormatted = is_numeric($dailyTotal) ? round($dailyTotal, 4) : $dailyTotal;
             $realyImportedFormatted = is_numeric($realyImported) ? round($realyImported, 4) : $realyImported;
             $diffrenceFormatted = is_numeric($diffrence) ? round($diffrence, 4) : $diffrence;
+            $diffrenceFormatted =  $diffrenceFormatted >= 0 ?: 0;
         @endphp
 
         <tr>

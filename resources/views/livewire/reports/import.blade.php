@@ -13,13 +13,15 @@
             <div class="d-flex">
                 @if($report)
                     <a href="{{ route('managers.reports.import.print', [$office, $date]) }}" class="mx-1 btn btn-secondary">
-                        <i class="fa-solid fa-print"></i>
+                        <i class="fa-solid fa-print fa-fw"></i>
                     </a>
                     <button wire:click="delete" class="btn btn-danger mx-1">
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-trash fa-fw"></i>
                     </button>
 
-                    <button wire:loading.remove class="btn btn-primary" wire:click="reportUpdate">تعديل</button>
+                    <button wire:loading.remove class="btn btn-primary" wire:click="reportUpdate">
+                        <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                    </button>
 
                 @else
                     <span wire:loading>
@@ -100,9 +102,9 @@
 
                 // Format numbers
                 $exactlyImported = round($exactlyImported, 4);
-
                 $expectedSupply = round($expectedSupply, 4);
                 $difference = is_numeric($difference) ? round($difference, 4) : $difference;
+                $difference =  $difference >= 0 ?: 0;
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
