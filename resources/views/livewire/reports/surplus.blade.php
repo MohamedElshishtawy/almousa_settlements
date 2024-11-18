@@ -140,6 +140,7 @@
 
                         $totalSurplus = $totalSurplus >= 0 ?: 0;
                         $total = $thisDayImported - $totalSurplus;
+                        $total = $total >= 0 ?: 0;
 
                         // format
                         $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
