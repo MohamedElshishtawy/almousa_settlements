@@ -129,6 +129,7 @@
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
 
                     $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
+                    dd($hasThisMeal);
                     if ($hasThisMeal->count()) {
                         $thisDayAmount =  $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
 
