@@ -136,12 +136,12 @@
 
                         $totalSurplus =  ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count() ); // 0 for the wrongs input
 
-                        $totalSurplus = $totalSurplus >= 0 ?: 0;
+                        $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
                         $total = $thisDayImported - $totalSurplus;
-                        $total = $total >= 0 ?: 0;
+                        $total = $total >= 0 ? $total : 0;
 
                         // format
-                        // $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
+                        $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
                         $thisDayAmount = round($thisDayAmount, 4);
                         $thisDayImported = round($thisDayImported, 4);
                         $totalSurplus = round($totalSurplus, 4);

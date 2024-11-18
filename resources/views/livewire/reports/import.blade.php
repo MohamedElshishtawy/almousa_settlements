@@ -88,7 +88,7 @@
             @foreach($products as $product)
                 @php
                 $benefits = is_numeric($benefits) ? $benefits : 0;
-                $benefitError = $benefitError ?: 0;
+                $benefitError = $benefitError ? $benefitError : 0;
 
                 // Determine if using report or product data
                 $productMissionData = $report ? $product : \App\Product\Product::getProductMissionData($product, $office, $officeMission);
@@ -104,7 +104,7 @@
                 $exactlyImported = round($exactlyImported, 4);
                 $expectedSupply = round($expectedSupply, 4);
                 $difference = is_numeric($difference) ? round($difference, 4) : $difference;
-                $difference =  $difference >= 0 ?: 0;
+                $difference =  $difference >= 0 ? $difference : 0;
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>

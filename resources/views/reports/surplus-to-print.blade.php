@@ -71,8 +71,9 @@
 
             $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
                 ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
-            $totalSurplus = $totalSurplus >= 0 ?: 0;
+            $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
             $total = $thisDayImported - $totalSurplus;
+            $total = $total >= 0 ? $total : 0;
 
             // format numbers
 
