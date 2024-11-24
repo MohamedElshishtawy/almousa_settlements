@@ -111,7 +111,7 @@ class Import extends Component
                 ->where('living_id', $this->office->living_id)
                 ->where('mission_id', $this->officeMission->mission_id)
                 ->first();
-
+dd($productMissionData->price);
             $staticProduct = $report->staticProducts()->create([
                 'old_id' => $product->id,
                 'old_product_living_mission_old' => $productMissionData->id,
