@@ -100,6 +100,7 @@
                 $dailyTotal = $report ? \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) :
                                          \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
                 $expectedSupply = $dailyTotal && $benefits && is_numeric($benefits) ? $productMissionData->daily_amount * $benefits : 0;
+                dd($expectedSupply, $benefits, $productMissionData->daily_amount, $benefitError, $benefits, $productMissionData->daily_amount, $benefitError);
                 $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
                 $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 'غير مقرر';
 
