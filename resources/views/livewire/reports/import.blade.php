@@ -107,7 +107,7 @@
                 $exactlyImported = round($exactlyImported, 4);
                 $expectedSupply = round($expectedSupply, 4);
                 $difference =  round($difference, 4);
-                $difference =  $difference >= 0 ? $difference : 0;
+                $difference =  $difference >= 0 && $difference != -0 ? $difference : 0;
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
