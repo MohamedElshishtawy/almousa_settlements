@@ -75,7 +75,9 @@
             <td>{{$benefitsTotal ?: 0}}</td>
             @if($showPrices)
                 <th>إجمالى المبالغ المصروفة</th>
-                <td>{{$staticProducts ? $totalPayed : 0}}</td>
+                <td>{{$staticProducts ? number_format($totalPayed, 2) : 0}}</td>
+                <th>إجمالى المبالغ غير المصروفة</th>
+                <td>{{$staticProducts ? number_format($totalNotPayed, 2) : 0}}</td>
             @endif
 
         </tr>

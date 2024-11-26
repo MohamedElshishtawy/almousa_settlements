@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200..1000&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
     <title>طباعة التوريد</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?3')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?5')}}">
 </head>
 <body dir="rtl">
 <h1>محضر توريد المواد الطازجة و الجافة إعاشة {{$office->living->title}}

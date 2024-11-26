@@ -12,7 +12,7 @@ class SurplusAnalytics extends Component
 {
     public Office $office;
     public $showPrices, $startDate, $endDate, $selectedOfficeId, $selectedMissionId, $mission; // inputs
-    public $dates, $staticProducts, $missions, $offices, $benefitsTotal, $surplusTotal, $totalPayed, $daysCount; // outputs
+    public $dates, $staticProducts, $missions, $offices, $benefitsTotal, $surplusTotal, $totalPayed, $totalNotPayed, $daysCount; // outputs
 
 
     protected function getOffice()
@@ -26,7 +26,8 @@ class SurplusAnalytics extends Component
         $this->totalPayed = 0;
         if ($this->staticProducts && count($this->staticProducts) > 0) {
             foreach ($this->staticProducts as $staticProduct) {
-                $this->totalPayed += $staticProduct['imported_total'] * $staticProduct['price'] / $staticProduct['daily_amount'];
+                $this->totalPayed += ($staticProduct['imported_total'] - $staticProduct['total_surplus']) * $staticProduct['price'] / $staticProduct['daily_amount'];
+                $this->totalNotPayed += ($staticProduct['total_surplus']) * $staticProduct['price'] / $staticProduct['daily_amount'];
             }
         }
         return $this->totalPayed;
