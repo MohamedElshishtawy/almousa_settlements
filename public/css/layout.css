@@ -102,8 +102,21 @@ body {
         }
     }
 
+}
+.reports-cards {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
 
-
+    & a {
+        display: grid;
+        gap: 10px;
+        padding: 15px;
+        & i {
+            font-size: 40px;
+        }
+    }
 }
 @media (max-width: 768px) {
 

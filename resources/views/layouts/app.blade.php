@@ -45,7 +45,7 @@
                                 @if(auth()->user()->isAdmin())
                                     <li><a href="{{route('admin.users')}}" class="@if(isset($active) && $active == 'employee') active @endif">الموظفين</a></li>
                                     <li><a href="{{route('admin.offices')}}" class="@if(isset($active) && $active == 'office') active @endif">المقرات</a></li>
-                                    <li><a href="{{route('admin.products')}}" class="@if(isset($active) && $active == 'products') active @endif">الأصناف</a></li>
+                                    <li><a href="{{route('admin.products')}}" class="@if(isset($active) && $active == 'products') active @endif">الأصناف و الوجبات</a></li>
                                     <li><a href="{{route('admin.units')}}" class="@if(isset($active) && $active == 'units') active @endif">الوحدات</a></li>
                                 @endif
                                     <li><a href="{{route('managers.reports')}}" class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>

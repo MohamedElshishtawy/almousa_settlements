@@ -48,4 +48,25 @@ class ReportSurvice
     return $days;
 }
 
+    public function getDaysForOffice($office)
+    {
+        $days = collect();
+
+            foreach($office->OfficeMissions as $officeMission)  {
+                // main mission
+                $currentDate = Carbon::parse($officeMission->start_date);
+                $endDate = Carbon::parse($officeMission->end_date);
+                while ($currentDate <= $endDate) {
+                    $days->push($currentDate->toDateString());
+                    $currentDate = $currentDate->addDay();
+                }
+            }
+
+        // sort days with date
+
+
+        return $days;
+    }
+
+
 }

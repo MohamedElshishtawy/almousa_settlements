@@ -42,7 +42,7 @@ class StaticProduct extends Product
 
     public function surplusProductError()
     {
-        return $this->hasOne(\App\Report\SurplusProductError::class);
+        return $this->hasMany(\App\Report\SurplusProductError::class);
     }
 
     public static function howMealPerDay($productId ,$dayId)
@@ -70,5 +70,17 @@ class StaticProduct extends Product
             return $this->daily_amount / $this->getHowManyPerDay($day);
         }
         return 0;
+    }
+
+    public function getSurplus($mealId=null)
+    {
+        foreach ($this->report->surplus as $surplus) {
+            $surplusFromType = $surplus->surplusFoodTypes->where('food_type_id', $this->food_type_id)->first();
+            $surplusFromTypeValue = $surplusFromType ? $surplusFromType->value * $this->daily_amount : 0;
+            $surplusFromSpecific = $surplus->surplusProductErrors->where('static_product_id', $this->id)->first();
+            $surplusFromSpecificValue = $surplusFromSpecific? $surplusFromSpecific->surplus_amount + $surplusFromSpecific->surplus_benefits * $this->daily_amount : 0;
+        }
+
+        return $surplusFromSpecificValue ?: $surplusFromTypeValue;
     }
 }

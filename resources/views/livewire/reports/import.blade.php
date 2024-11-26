@@ -117,7 +117,7 @@
                     <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
 
                     @if (auth()->user()->isAdmin())
-                        <td>{{ number_format($productMissionData->price, 2) . ' ر.س.' }}</td>
+                        <td>{{ number_format($productMissionData->price, 4) . ' ر.س.' }}</td>
                     @endif
                     <td>{{ (int)$dailyTotal ? $dayMissionTimes : 'غير مقرر' }}</td>
                     <td>{{ (int)$expectedSupply? $expectedSupply : 'غير مقرر' }}</td>

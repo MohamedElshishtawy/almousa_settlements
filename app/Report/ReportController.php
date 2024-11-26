@@ -12,6 +12,7 @@ use App\Office\OfficeController;
 use App\Office\OfficeMission;
 use App\Product\ProductController;
 use Illuminate\Support\Facades\Http;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class ReportController extends Controller
 {
@@ -101,4 +102,13 @@ class ReportController extends Controller
 
     }
 
+    public function AnalyticsImport($showPrices = null)
+    {
+        return view('analytics.import-analytics', compact('showPrices'));
+    }
+
+    public function AnalyticsSurplus($showPrices = null)
+    {
+        return view('analytics.surplus-analytics', compact('showPrices'));
+    }
 }

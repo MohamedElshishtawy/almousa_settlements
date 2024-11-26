@@ -28,7 +28,7 @@ class Surplus extends Component
             return;
         }
         // put all the arrays data for the database
-        foreach ($this->surplus->surplusProductErrors as $surplusProductError) {
+        foreach ($this->surplus->surplusProductErrors ?? [] as $surplusProductError) {
             $this->surplusAmount[$surplusProductError->static_product_id] = $surplusProductError->surplus_amount;
             $this->surplusBenefits[$surplusProductError->static_product_id] = $surplusProductError->surplus_benefits;
         }
@@ -151,7 +151,7 @@ class Surplus extends Component
             }
             // create or update if there is a change
             foreach ($this->staticProducts as $staticProduct) {
-                $surplusProductError = $surplus->surplusProductErrors->where('static_product_id', $staticProduct->id)->first();
+                $surplusProductError = $surplus->surplusProductErrors? $surplus->surplusProductErrors->where('static_product_id', $staticProduct->id)->first() : null;
                 if (!$surplusProductError) {
                     $surplusProductError = new SurplusProductError();
                     $surplusProductError->surplus_id = $surplus->id;
@@ -161,7 +161,6 @@ class Surplus extends Component
                     $surplusProductError->save();
                 } else {
                     if ($surplusProductError->surplus_benefits != $this->surplusBenefits[$staticProduct->id]) {
-
                         $surplusProductError->surplus_benefits = $this->surplusBenefits[$staticProduct->id] ?? 0;
                         $surplusProductError->save();
                     }

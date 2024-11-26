@@ -185,6 +185,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Mccarlosen\LaravelMpdf\LaravelMpdfServiceProvider::class,
 
         /*
          * Application Service Providers...
