@@ -5,6 +5,7 @@ namespace App\Product;
 use App\Models\Day;
 use App\Models\Meal;
 use App\Report\ImportProductError;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -75,12 +76,13 @@ class StaticProduct extends Product
     public function getSurplus($mealId=null)
     {
         foreach ($this->report->surplus as $surplus) {
+            $mealPerDay = $this->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($this->report->for_date)->format('l')])->id)->count();
             $surplusFromType = $surplus->surplusFoodTypes->where('food_type_id', $this->food_type_id)->first();
-            $surplusFromTypeValue = $surplusFromType ? $surplusFromType->value * $this->daily_amount : 0;
+            $surplusFromTypeValue = $surplusFromType ? $surplusFromType->value * $this->daily_amount / $mealPerDay : 0;
             $surplusFromSpecific = $surplus->surplusProductErrors->where('static_product_id', $this->id)->first();
-            $surplusFromSpecificValue = $surplusFromSpecific? $surplusFromSpecific->surplus_amount + $surplusFromSpecific->surplus_benefits * $this->daily_amount : 0;
+            $surplusFromSpecificValue = $surplusFromSpecific? $surplusFromSpecific->surplus_amount + $surplusFromSpecific->surplus_benefits * $this->daily_amount / $mealPerDay : 0;
         }
 
-        return $surplusFromSpecificValue ?: $surplusFromTypeValue;
+        return $surplusFromSpecificValue + $surplusFromTypeValue;
     }
 }

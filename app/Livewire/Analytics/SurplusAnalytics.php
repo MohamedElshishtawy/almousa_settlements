@@ -26,7 +26,7 @@ class SurplusAnalytics extends Component
         $this->totalPayed = 0;
         if ($this->staticProducts && count($this->staticProducts) > 0) {
             foreach ($this->staticProducts as $staticProduct) {
-                $this->totalPayed += $staticProduct['imported_total'] * $staticProduct['price'];
+                $this->totalPayed += $staticProduct['imported_total'] * $staticProduct['price'] / $staticProduct['daily_amount'];
             }
         }
         return $this->totalPayed;
@@ -64,6 +64,7 @@ class SurplusAnalytics extends Component
     protected function getStaticProducts() {
         // get reports between the start and end date
         $this->staticProducts = [];
+        $this->benefitsTotal = 0;
         if (!$this->startDate || !$this->endDate) {
             return;
         }
