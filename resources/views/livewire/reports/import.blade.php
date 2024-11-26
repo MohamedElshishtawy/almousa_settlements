@@ -106,7 +106,7 @@
                 // Format numbers
                 $exactlyImported = round($exactlyImported, 4);
                 $expectedSupply = round($expectedSupply, 4);
-                $difference = is_numeric($difference) ? round($difference, 4) : $difference;
+                $difference =  round($difference, 4);
                 $difference =  $difference >= 0 ? $difference : 0;
                 @endphp
                 <tr>
