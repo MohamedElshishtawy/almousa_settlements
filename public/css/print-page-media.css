@@ -15,3 +15,6 @@ tfoot
 .not-print {
     display: none;
 }
+.no-break {
+    page-break-inside: avoid
+}

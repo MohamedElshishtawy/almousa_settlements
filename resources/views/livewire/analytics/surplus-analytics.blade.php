@@ -103,7 +103,7 @@
     </table>
 
     <footer class="mt-4">
-        <table rules="all">
+        <table rules="all" class="no-break">
             <tbody>
             <tr>
                 <th colspan="2">المورد أو من ينوب عنه</th>
