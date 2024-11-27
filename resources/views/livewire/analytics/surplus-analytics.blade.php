@@ -37,6 +37,7 @@
             </td>
         </tr>
     </table>
+    <h2 class="text-center not-print">ملف الطباعة</h2>
     <hr class="not-print">
     <table rules="all" class="mt-4">
         <tr>
