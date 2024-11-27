@@ -20,7 +20,8 @@
         rel="stylesheet">
 
     <title>طباعة الوفر</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?5')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?6')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page-media.css?5')}}" media="print">
 </head>
 <body dir="rtl">
 <h1>محضر وفر المواد الطازجة و الجافة إعاشة {{$office->living->title}}
@@ -52,6 +53,7 @@
         <th>إجمالى المصروف(الوحدة)</th>
     </tr>
     </thead>
+    <tbody>
     @php
         $index = 0;
         $day = \App\Models\Day::date2object($date);
@@ -90,6 +92,7 @@
             <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($total, 4)) : 'غير مقرر'}}</td>
         </tr>
     @endforeach
+    </tbody>
 </table>
 
 </body>

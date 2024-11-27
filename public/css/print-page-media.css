@@ -1,0 +1,17 @@
+
+@page
+{
+    size: auto;
+    margin: 4mm 5mm 4mm 5mm;
+}
+thead
+{
+    display: table-header-group;
+}
+tfoot
+{
+    display: table-footer-group;
+}
+.not-print {
+    display: none;
+}

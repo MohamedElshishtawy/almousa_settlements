@@ -1,5 +1,45 @@
 <div>
+    <table rules="all" class="mt-4 not-print">
+        <tr>
+            <th colspan="100 d-flex">
+                <h2 class="d-flex text-right">إعدادات التقرير</h2>
+            </th>
+        </tr>
+        <tr>
+            <th>المقر</th>
+            <th colspan="100">
+                <select wire:model.live="selectedOfficeId" class="form-select">
+                    <option value="">إختر المقر</option>
+                    @foreach($offices as $office)
+                        <option value="{{$office->id}}" @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
+                    @endforeach
+                </select>
+            </th>
+        </tr>
+        <tr>
+            <th>الفترة من</th>
+            <td colspan="2">
+                <select wire:model.live="startDate" class="form-select">
+                    <option value="">اليوم</option>
+                    @foreach($dates ?? [] as $date)
+                        <option value="{{$date}}">{{\App\Models\Day::DateToHijri($date)}}</option>
+                    @endforeach
+                </select>
+            </td>
+            <th>الى</th>
+            <td colspan="2">
+                <select wire:model.live="endDate" class="form-select">
+                    <option value="">اليوم</option>
+                    @foreach($dates ?? [] as $date)
+                        <option value="{{$date}}">{{\App\Models\Day::DateToHijri($date)}}</option>
+                    @endforeach
+                </select>
+            </td>
+        </tr>
+    </table>
+    <hr class="not-print">
     <table rules="all" class="mt-4">
+        <thead>
         <tr>
             <th colspan="5">
             <span>
@@ -10,46 +50,29 @@
                 تقرير نموذج رقم (1) محضر توريد الموارد الطازجة و الجافة إعاشة ال{{$office ? $office->living->title : ''}} ب
             </th>
             <th colspan="3">
-                <select wire:model.live="selectedOfficeId" class="form-select">
-                    <option value="">المقر</option>
-                    @foreach($offices as $office)
-                        <option value="{{$office->id}}" @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
-                    @endforeach
-                </select>
+                {{\App\Office\Office::find($selectedOfficeId)->name ?? ''}}
             </th>
         </tr>
         <tr>
             <th>الفترة من</th>
-            <td>
-                <select wire:model.live="startDate" class="form-select">
-                    <option value="">اليوم</option>
-                    @foreach($dates ?? [] as $date)
-                        <option value="{{$date}}">{{\App\Models\Day::DateToHijri($date)}}</option>
-                    @endforeach
-                </select>
-            </td>
+            <td colspan="2">{{\App\Models\Day::DateToHijri($startDate)}}</td>
             <th>الى</th>
-            <td>
-                <select wire:model.live="endDate" class="form-select">
-                    <option value="">اليوم</option>
-                    @foreach($dates ?? [] as $date)
-                        <option value="{{$date}}">{{\App\Models\Day::DateToHijri($date)}}</option>
-                    @endforeach
-                </select>
-            </td>
+            <td colspan="2">{{\App\Models\Day::DateToHijri($endDate)}}</td>
             <th>عدد المستفيدين</th>
-            <td colspan="3">{{$benefitsTotal ?: 0}}</td>
+            <td>{{$benefitsTotal ?: 0}}</td>
         </tr>
         <tr>
             <td>عدد</td>
             <td>اسم الصنف</td>
             <td>مقرر الفرد اليومى</td>
-            <td>عدد مرات تقديم الإسبوع</td>
+            <td class="td-sm">عدد مرات تقديم الإسبوع</td>
             <td>الكمية المقررة</td>
             <td>الكمية الموردة</td>
             <td>الفرق</td>
-            <td>الوحدة</td>
+            <td class="unit">الوحدة</td>
         </tr>
+        </thead>
+        <tbody>
         @foreach($staticProducts ?? [] as $staticProduct)
             <tr>
                 <td>{{$loop->iteration}}</td>
@@ -62,6 +85,7 @@
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
         @endforeach
+        </tbody>
     </table>
 
 

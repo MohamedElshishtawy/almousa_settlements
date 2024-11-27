@@ -16,6 +16,7 @@
 
     <title>طباعة التوريد</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?5')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page-media.css?5')}}" media="print">
 </head>
 <body dir="rtl">
 <h1>محضر توريد المواد الطازجة و الجافة إعاشة {{$office->living->title}}
@@ -34,7 +35,7 @@
         <th>عدد</th>
         <th>اسم الصنف</th>
         <th>مقرر الفرد اليومى</th>
-        <th>عدد مرات التقديم فى الأسبوع</th>
+        <th class="td-sm">عدد مرات التقديم فى الأسبوع</th>
         <th>الكمية المقررة</th>
         <th>الكمية الموردة</th>
         <th>الفرق</th>
@@ -67,6 +68,7 @@
             <td>{{ $product->foodUnit->title }}</td>
         </tr>
     @endforeach
+
 </table>
 
 </body>
