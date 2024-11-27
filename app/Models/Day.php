@@ -71,6 +71,7 @@ class Day extends Model
     public static function date2object($date)
     {
         $dayText = self::convertDate2ArName($date);
+
         return self::text2object($dayText);
     }
 

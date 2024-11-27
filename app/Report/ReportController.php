@@ -48,10 +48,10 @@ class ReportController extends Controller
 
         $import = $report ? $report->import : null ;
 
-        $date = Day::DateToHijri($date);
+        $dateHijry = Day::DateToHijri($date);
 
         return view('reports.import-to-print',
-            compact('office', 'date', 'products', 'import'));
+            compact('office', 'date', 'dateHijry' , 'products', 'import'));
     }
 
     public function importPrintWriting($office, $date)

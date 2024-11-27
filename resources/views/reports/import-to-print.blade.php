@@ -26,7 +26,7 @@
         <th>اليوم</th>
         <td>{{ \App\Models\Day::convertDate2ArName($date) }}</td>
         <th>التاريخ</th>
-        <td colspan="2">{{$date}}</td>
+        <td colspan="2">{{$dateHijry}}</td>
         <th>عدد المستفيدين</th>
         <td colspan="2" class="focus">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($import->benefits)}}</td>
     </tr>
