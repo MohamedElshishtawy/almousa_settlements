@@ -64,6 +64,7 @@ class ImportAnalytics extends Component
     protected function getStaticProducts() {
         // get reports between the start and end date
         $this->staticProducts = [];
+        $this->benefitsTotal = 0;
         if (!$this->startDate || !$this->endDate) {
             return;
         }
