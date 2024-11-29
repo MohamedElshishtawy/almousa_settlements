@@ -82,7 +82,7 @@
                 <td>{{$staticProduct['numberPerWeek']}}</td>
                 <td>{{$staticProduct['totalAmount']}}</td>
                 <td>{{$staticProduct['imported_total']}}</td>
-                <td>{{number_format($staticProduct['totalAmount'] - $staticProduct['imported_total'], 4 )}}</td>
+                <td>{{round($staticProduct['totalAmount'] - $staticProduct['imported_total'], 4 )}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
         @endforeach
