@@ -23,7 +23,7 @@
 
     <title>طباعة تقارير التوريد</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?6')}}">
-   <link rel="stylesheet" href="{{asset('css/print-page-media.css?8')}}" media="print">
+   <link rel="stylesheet" href="{{asset('css/print-page-media.css?10')}}" media="print">
 </head>
 <body dir="rtl">
     <div class="mx-2">

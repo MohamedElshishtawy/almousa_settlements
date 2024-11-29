@@ -113,21 +113,23 @@
             </tr>
             <tr>
                 <th>الاسم</th>
-                <td></td>
+                <td>
+                    <input type="text" class="form-control" value="{{auth()->user()->name}}">
+                </td>
                 <th>الاسم</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
             </tr>
             <tr>
                 <th>المسمى</th>
-                <td></td>
+                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
                 <th>الرتبة</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
             </tr>
             <tr>
                 <th>التوقيع</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
                 <th>التوقيع</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
             </tr>
             </tbody>
         </table>

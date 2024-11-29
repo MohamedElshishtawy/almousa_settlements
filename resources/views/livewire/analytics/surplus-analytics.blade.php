@@ -78,7 +78,7 @@
                 <td>{{$staticProduct['daily_amount']}}</td>
                 <td>{{$staticProduct['totalAmount']}}</td>
                 <td>{{$staticProduct['imported_total']}}</td>
-                <td>{{$staticProduct['imported_total'] - $staticProduct['total_surplus']}}</td>
+                <td>{{round($staticProduct['imported_total'] - $staticProduct['total_surplus'], 4)}}</td>
                 <td>{{$staticProduct['total_surplus']}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
@@ -111,21 +111,23 @@
             </tr>
             <tr>
                 <th>الاسم</th>
-                <td></td>
+                <td>
+                    <input type="text" class="form-control" value="{{auth()->user()->name}}">
+                </td>
                 <th>الاسم</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
             </tr>
             <tr>
                 <th>المسمى</th>
-                <td></td>
+                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
                 <th>الرتبة</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
             </tr>
             <tr>
                 <th>التوقيع</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
                 <th>التوقيع</th>
-                <td></td>
+                <td><input type="text" class="form-control" ></td>
             </tr>
             </tbody>
         </table>

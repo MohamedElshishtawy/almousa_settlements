@@ -18,3 +18,7 @@ tfoot
 .no-break {
     page-break-inside: avoid
 }
+input {
+    background: transparent !important;
+    border: none !important;
+}
