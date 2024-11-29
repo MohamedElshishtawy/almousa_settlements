@@ -20,15 +20,20 @@
         rel="stylesheet">
 
     <title>طباعة الوفر</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?6')}}">
-    <link rel="stylesheet" href="{{asset('css/print-page-media.css?5')}}" media="print">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?7')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page-media.css?7')}}" media="print">
 </head>
 <body dir="rtl">
-<h1>محضر وفر المواد الطازجة و الجافة إعاشة {{$office->living->title}}
-    ({{$office->name}})
-</h1>
+
 <table rules="all">
     <thead>
+  <tr>
+      <th colspan="100">
+          محضر وفر المواد الطازجة و الجافة إعاشة {{$office->living->title}}
+          ({{$office->name}})
+
+      </th>
+  </tr>
     <tr>
         <th>اليوم</th>
         <td>{{ \App\Models\Day::convertDate2ArName($date) }}</td>
