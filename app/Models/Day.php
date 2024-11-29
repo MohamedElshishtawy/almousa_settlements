@@ -49,7 +49,7 @@ class Day extends Model
     public static function DateToHijri($gregorianDate)
     {
         $dateFormat = date('d-m-Y', strtotime($gregorianDate));
-        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateFormat.'/-1')->json();
+        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateFormat.'?adjustment=-1')->json();
         $dayNumber = Numbers::ShowInArabicDigits((int)$date['data']['hijri']['day']);
         $yearArabic = Numbers::ShowInArabicDigits($date['data']['hijri']['year']);
         return $date['data']['hijri']['weekday']['ar'] . ' ' . $dayNumber . ' ' . $date['data']['hijri']['month']['ar']  .' '. $yearArabic ;
