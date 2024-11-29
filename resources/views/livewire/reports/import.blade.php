@@ -51,7 +51,7 @@
                     <select wire:model.live="date" class="form-select" wire:change="dateChanged()">
                         @foreach(\App\Office\OfficeMission::dateRange($officeMission) as $officeDate)
                             <option value="{{ $officeDate }}" @if($officeDate == $date) selected @endif>
-                                {{ $officeDate }}
+                                {{ \App\Models\Day::DateToHijri($officeDate) }}
                             </option>
                         @endforeach
                     </select>
