@@ -48,17 +48,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-success">اليوم</th>
-                    <td>{{ \App\Models\Day::convertDate2ArName($date) }}</td>
-                </tr>
-                <tr>
                     <th class="text-success">عدد المستفيدين</th>
                     <td class="text-danger">{{$report->import->benefits}}</td>
                 </tr>
                 <tr>
                     <th class="text-success">التاريخ</th>
                     <td>
-                        {{$report->for_date}}
+                        {{ \App\Models\Day::DateToHijri($report->for_date)}}
                     </td>
                 </tr>
                 <tr>
