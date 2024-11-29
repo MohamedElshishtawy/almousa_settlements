@@ -54,7 +54,7 @@ class ImportAnalytics extends Component
             'food_unit_id' => $staticProduct->food_unit_id,
             'unit' => $staticProduct->foodUnit->title,
             'numberPerWeek' => $staticProduct->getHowManyDayPerWeekUsed(),
-            'totalAmount' => [$staticProduct->daily_amount * $staticProduct->report->import->benefits],
+            'totalAmount' => [ $staticProduct->report->import->benefits],
             'imported_total' => $totalImported,
 //            'total_surplus' => $staticProduct->getSurplus(),
         ];
