@@ -29,7 +29,7 @@
                 <div>قيادة الإعاشة</div>
             </div>
             <div>
-                <img src="{{asset('images/ramadan.jpg')}}" alt="">
+{{--                <img src="{{asset('images/ramadan.jpg')}}" alt="">--}}
             </div>
             <div></div>
             <div class="title">
