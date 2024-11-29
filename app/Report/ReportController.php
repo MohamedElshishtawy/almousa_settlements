@@ -62,12 +62,15 @@ class ReportController extends Controller
 
         $import = $report ? $report->import : null ;
 
+        $isHasDifferance = $report->import->isDiffrence();
+
         $Hijri = Day::DateToHijriSpecificArray($date);
 
-        return view('reports.import-writing-print',
-            compact('office', 'Hijri', 'products', 'report', 'import'));
-    }
 
+
+        return view('reports.import-writing-print',
+            compact('office', 'Hijri', 'products', 'report', 'import', 'isHasDifferance'));
+    }
 
 
     public function surplus($officeMission, $date, $meal = null)

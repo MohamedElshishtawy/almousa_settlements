@@ -24,4 +24,19 @@ class Import extends Model
     {
         return $this->hasMany(ImportProductError::class);
     }
+
+    public function isDiffrence()
+    {
+        $productErrors = $this->importProductError;
+        $staticProducts = $this->report->staticProducts;
+        $isDifferance = false;
+        foreach ($productErrors as $productError) {
+            $staticProduct = $staticProducts->where('id', $productError->static_product_id)->first();
+            if ($staticProduct->daily_amount * $this->benefits != $productError->error) {
+                $isDifferance = true;
+                break;
+            }
+        }
+        return $isDifferance;
+    }
 }
