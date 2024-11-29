@@ -82,7 +82,7 @@
                 <td>{{$staticProduct['numberPerWeek']}}</td>
                 <td>{{$staticProduct['totalAmount']}}</td>
                 <td>{{$staticProduct['imported_total']}}</td>
-                <td>{{$staticProduct['totalAmount'] - $staticProduct['imported_total']}}</td>
+                <td>{{var_dump($staticProduct['totalAmount']) }} {{var_dump($staticProduct['imported_total'])}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
         @endforeach
