@@ -54,7 +54,7 @@ class ImportAnalytics extends Component
             'food_unit_id' => $staticProduct->food_unit_id,
             'unit' => $staticProduct->foodUnit->title,
             'numberPerWeek' => $staticProduct->getHowManyDayPerWeekUsed(),
-            'totalAmount' => [$staticProduct->daily_amount * $staticProduct->report->import->benefits],
+            'totalAmount' => $staticProduct->daily_amount * $staticProduct->report->import->benefits,
             'imported_total' => $totalImported,
 //            'total_surplus' => $staticProduct->getSurplus(),
         ];
@@ -94,7 +94,7 @@ $x=0;
                          $totalImported = $staticProduct->importProductError ?
                              $staticProduct->importProductError->error :($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
 
-                         $this->staticProducts[$staticProduct->old_id]['totalAmount'][] = $staticProduct->daily_amount * $report->import->benefits;
+                         $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->daily_amount * $report->import->benefits;
                             $this->staticProducts[$staticProduct->old_id]['imported_total'] += $totalImported;
 //                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $staticProduct->getSurplus();
                          $staticProductArr['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
