@@ -46,10 +46,10 @@ class Day extends Model
         return Day::where('name', $dayText)->first();
     }
 
-    public static function DateToHijri($date)
+    public static function DateToHijri($gregorianDate)
     {
-        $dateForamte = date('d-m-Y', strtotime($date));
-        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateForamte)->json();
+        $dateFormat = date('d-m-Y', strtotime($gregorianDate));
+        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateFormat)->json();
         $dayNumber = Numbers::ShowInArabicDigits((int)$date['data']['hijri']['day']);
         $yearArabic = Numbers::ShowInArabicDigits($date['data']['hijri']['year']);
         return $date['data']['hijri']['weekday']['ar'] . ' ' . $dayNumber . ' ' . $date['data']['hijri']['month']['ar']  .' '. $yearArabic ;
