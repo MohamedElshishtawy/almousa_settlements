@@ -42,10 +42,6 @@
                 <td><a href="{{ route('admin.offices') }}#{{ $office->id }}">{{ $office->name }}</a></td>
             </tr>
             <tr>
-                <th>اليوم</th>
-                <td>{{ \App\Models\Day::convertDate2ArName($date) }}</td>
-            </tr>
-            <tr>
                 <th>التاريخ</th>
                 <td>
                     <select wire:model.live="date" class="form-select" wire:change="dateChanged()">
