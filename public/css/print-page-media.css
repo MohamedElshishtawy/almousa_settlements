@@ -2,7 +2,7 @@
 @page
 {
     size: auto;
-    margin: 4mm 5mm 4mm 5mm;
+    margin: 5mm 4mm 5mm 4mm;
 }
 thead
 {
@@ -21,4 +21,6 @@ tfoot
 input {
     background: transparent !important;
     border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }

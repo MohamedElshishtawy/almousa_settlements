@@ -10,6 +10,7 @@
         "barryvdh/laravel-dompdf": "*",
         "carlos-meneses/laravel-mpdf": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
+        "khaled.alshamaa/ar-php": "^6.3",
         "laravel/fortify": "^1.24",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

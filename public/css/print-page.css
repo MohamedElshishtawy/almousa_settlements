@@ -26,31 +26,48 @@ table .focus {
     color: red;
     font-size: 15px;
 }
-
+* {
+    box-sizing: border-box;
+}
 .import-writing {
-    min-height: 100vh;
-    display: table;
-    width: 100%;
-    text-align: center;
+    max-height: 100vh;
+    display: grid;
+    justify-content: center;
+    margin: 0;
+    height: 100vh;
 }
 .import-writing main {
     border: 1px solid black;
     border-radius: 5px;
     width: 700px;
     padding: 10px;
-    margin: auto;
+    display: grid;
+    align-content: space-between;
+    & > div {
+        display: grid;
+        gap: 40px;
+    }
+    & table td, & table th {
+        padding: 5px;
+        & input {
+            padding: 0;
+            margin: 0;
+            padding-right: 5px;
+        }
+    }
 }
 .import-writing header {
-    display: table;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     text-align: center;
 }
-.import-writing header div:first-child {
-    display: table-cell;
-    text-align: right;
+.import-writing header > div:first-child {
+    display: grid;
+    text-align: center;
+    justify-content: start;
 }
 .import-writing header .title {
-    display: block;
+    grid-column: 2/3;
     text-align: center;
 }
 .import-writing header img {
