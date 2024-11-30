@@ -62,7 +62,7 @@
                             </select>
                         </td>
                         <td>
-                            <input type="number" class="form-control"
+                            <input type="number" max="31" min="1" class="form-control"
                                    wire:model="days.{{$date->id}}"
                                    wire:change.debounce.450ms="changeDay({{$date->id}}, $event.target.value)"
                                    value="{{ $date->day }}">
@@ -105,7 +105,7 @@
                         <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </td>
                     <td>
-                        <input type="text" class="form-control @error('day') is-invalid @enderror" wire:model="day">
+                        <input type="number" min="1" max="31" class="form-control @error('day') is-invalid @enderror" wire:model="day">
                         @error('day')
                         <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </td>

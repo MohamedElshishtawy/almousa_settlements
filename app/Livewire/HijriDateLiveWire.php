@@ -20,6 +20,7 @@ class HijriDateLiveWire extends Component
 
     protected function getDates()
     {
+        // use paginate to limit the number of records
         $this->dates = \App\Models\HijriDate::all();
         foreach ($this->dates as $date) {
             $this->gregorianDates[$date->id] = $date->gregorian_date;
