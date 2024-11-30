@@ -55,7 +55,7 @@ class Day extends Model
         }
         $dateFormat = date('d-m-Y', strtotime($gregorianDate));
         $arMonth = HijriDate::$hijryMonths[$day->month];
-        return $day->week_day . ' ' . $day->day . ' ' . $arMonth .' '. $day->year ;
+        return $day->weekday . ' ' . $day->day . ' ' . $arMonth .' '. $day->year ;
     }
 
     public static function DateToHijriSpecificArray($date)
@@ -71,7 +71,7 @@ class Day extends Model
             'year' => $day->year,
             'month' => $day->month,
             'day' => $day->day,
-            'day-text' => $day->week_day,
+            'day-text' => $day->weekday,
         ];
     }
 

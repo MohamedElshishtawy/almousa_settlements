@@ -23,59 +23,59 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // seed the week days
-//        $days = \App\Models\Day::$days;
-//        foreach ($days as $day) {
-//            \App\Models\Day::create([
-//                'name' => $day,
-//            ]);
-//        }
-//
-//        // seed the meals
-//        $meals = \App\Models\Meal::$meals;
-//        foreach ($meals as $meal) {
-//            \App\Models\Meal::create([
-//                'name' => $meal,
-//            ]);
-//        }
-//
-//        // seed the living
-//        $livings = \App\Living\Living::$livings;
-//        foreach ($livings as $living) {
-//            \App\Living\Living::create([
-//                'title' => $living,
-//            ]);
-//        }
-//
-//        $foodType = ['لحم' , 'مطهو' ,'جاف'];
-//        foreach ($foodType as $type) {
-//            \App\Product\FoodType::create([
-//                'title' => $type,
-//            ]);
-//        }
-//
-//        $foodUnits = ['عبوة صغيرة','عبوة وسط' ,'عبوة كبيرة' , 'عبوة' , 'جرام' ,'لتر'];
-//        foreach ($foodUnits as $unit) {
-//            \App\Product\FoodUnit::create([
-//                'title' => $unit,
-//            ]);
-//        }
-//
-//        // seed the missions
-//        $missions = \App\Mission\Mission::$missions;
-//        foreach ($missions as $mission) {
-//            \App\Mission\Mission::create([
-//                'title' => $mission,
-//            ]);
-//        }
-//
-//        // Admin user
-//        \App\Models\User::create([
-//            'name' => 'أستاذ محمد',
-//            'phone' => '01093033115',
-//            'rank' => 'مدير',
-//            'role' => '0',
-//            'password' => Hash::make('123456'),
-//        ]);
+        $days = \App\Models\Day::$days;
+        foreach ($days as $day) {
+            \App\Models\Day::create([
+                'name' => $day,
+            ]);
+        }
+
+        // seed the meals
+        $meals = \App\Models\Meal::$meals;
+        foreach ($meals as $meal) {
+            \App\Models\Meal::create([
+                'name' => $meal,
+            ]);
+        }
+
+        // seed the living
+        $livings = \App\Living\Living::$livings;
+        foreach ($livings as $living) {
+            \App\Living\Living::create([
+                'title' => $living,
+            ]);
+        }
+
+        $foodType = ['لحم' , 'مطهو' ,'جاف'];
+        foreach ($foodType as $type) {
+            \App\Product\FoodType::create([
+                'title' => $type,
+            ]);
+        }
+
+        $foodUnits = ['عبوة صغيرة','عبوة وسط' ,'عبوة كبيرة' , 'عبوة' , 'جرام' ,'لتر'];
+        foreach ($foodUnits as $unit) {
+            \App\Product\FoodUnit::create([
+                'title' => $unit,
+            ]);
+        }
+
+        // seed the missions
+        $missions = \App\Mission\Mission::$missions;
+        foreach ($missions as $mission) {
+            \App\Mission\Mission::create([
+                'title' => $mission,
+            ]);
+        }
+
+        // Admin user
+        \App\Models\User::create([
+            'name' => 'أستاذ محمد',
+            'phone' => '01093033115',
+            'rank' => 'مدير',
+            'role' => '0',
+            'password' => Hash::make('123456'),
+        ]);
 
 
         // insert hijri days
