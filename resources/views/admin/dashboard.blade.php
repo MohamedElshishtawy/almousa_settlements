@@ -19,30 +19,42 @@
                         @endif
 
                         @if(auth()->user()->isAdmin())
-                                <h3>التقريرات</h3>
+                                <section class="mt-2">
+                                    <h3>التقريرات</h3>
 
-                                <div class="d-flex reports-cards">
-                                    <a href="{{route('admin.analytics.imports')}}" class="btn btn-success">
-                                        <i class="fa-solid fa-print"></i>
-                                        <span>تقرير التوريدات</span>
-                                    </a>
-                                    <a href="{{route('admin.analytics.imports', ['showPrices' => true])}}" class="btn btn-warning">
-                                        <div>
+                                    <div class="d-flex reports-cards">
+                                        <a href="{{route('admin.analytics.imports')}}" class="btn btn-success">
                                             <i class="fa-solid fa-print"></i>
+                                            <span>تقرير التوريدات</span>
+                                        </a>
+                                        <a href="{{route('admin.analytics.imports', ['showPrices' => true])}}" class="btn btn-warning">
+                                            <div>
+                                                <i class="fa-solid fa-print"></i>
 
-                                        </div>
-                                        <span>تقرير التوريدات بالأسعار </span>
-                                    </a>
-                                    <a href="{{route('admin.analytics.surplus')}}" class="btn btn-success">
-                                        <i class="fa-solid fa-print"></i>
-                                        <span>تقرير الوفر</span>
-                                    </a>
-                                    <a href="{{route('admin.analytics.surplus', ['showPrices' => true])}}" class="btn btn-warning">
-                                        <div><i class="fa-solid fa-print"></i>
-                                        </div>
-                                        <span>تقرير الوفر بالأسعار  </span>
+                                            </div>
+                                            <span>تقرير التوريدات بالأسعار </span>
+                                        </a>
+                                        <a href="{{route('admin.analytics.surplus')}}" class="btn btn-success">
+                                            <i class="fa-solid fa-print"></i>
+                                            <span>تقرير الوفر</span>
+                                        </a>
+                                        <a href="{{route('admin.analytics.surplus', ['showPrices' => true])}}" class="btn btn-warning">
+                                            <div><i class="fa-solid fa-print"></i>
+                                            </div>
+                                            <span>تقرير الوفر بالأسعار  </span>
+                                        </a>
+                                    </div>
+                                </section>
+                            <section class="mt-5">
+                                <h3><i class="fa-solid fa-"></i> إعدادات</h3>
+                                <div class="d-flex reports-cards">
+                                    <a href="{{route('admin.dates')}}" class="btn btn-primary">
+                                        <i class="fa-regular fa-calendar-days"></i>
+                                        <span>ترجمة التايخ</span>
                                     </a>
                                 </div>
+
+                            </section>
                         @endif
 
                     </div>

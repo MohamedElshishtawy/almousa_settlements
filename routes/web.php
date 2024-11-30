@@ -54,6 +54,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
        Route::get('/surplus/{showPrices?}', [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
     });
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
+    Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
 });
 
 Route::prefix('managers')->middleware(['auth'])->group(function () {

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Alkoumi\LaravelArabicNumbers\Numbers;
 use App\Product\ProductDayMeal;
+use http\Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
@@ -48,23 +49,29 @@ class Day extends Model
 
     public static function DateToHijri($gregorianDate)
     {
+        $day = HijriDate::where('gregorian_date', $gregorianDate)->first();
+        if (!$day->count()) {
+            return $gregorianDate;
+        }
         $dateFormat = date('d-m-Y', strtotime($gregorianDate));
-        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateFormat.'?adjustment=-2')->json();
-        $dayNumber = Numbers::ShowInArabicDigits((int)$date['data']['hijri']['day']);
-        $yearArabic = Numbers::ShowInArabicDigits($date['data']['hijri']['year']);
-        return $date['data']['hijri']['weekday']['ar'] . ' ' . $dayNumber . ' ' . $date['data']['hijri']['month']['ar']  .' '. $yearArabic ;
+        $arMonth = HijriDate::$hijryMonths[$day->month];
+        return $day->week_day . ' ' . $day->day . ' ' . $arMonth .' '. $day->year ;
     }
 
     public static function DateToHijriSpecificArray($date)
     {
-        $dateForamte = date('d-m-Y', strtotime($date));
-        $date = Http::get('http://api.aladhan.com/v1/gToH/' . $dateForamte)->json();
+        $day = HijriDate::where('gregorian_date', $date)->first();
+        if (!$day->count()) {
+            // exception error
+            return null;
+            //throw new Exception('لا يوجد تاريخ فى الترجمة الهجرية | إنتقل الى صفحة ترجمة التاريخ الهجرى وترجم التاريخ أو تواصل مع الأدمن أو المبرمج التاريخ: '.$date);
+        }
 
         return [
-            'year' => $date['data']['hijri']['year'],
-            'month' => $date['data']['hijri']['month']['number'],
-            'day' => $date['data']['hijri']['day'],
-            'day-text' => $date['data']['hijri']['weekday']['ar'],
+            'year' => $day->year,
+            'month' => $day->month,
+            'day' => $day->day,
+            'day-text' => $day->week_day,
         ];
     }
 
