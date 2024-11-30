@@ -36,7 +36,6 @@ class ReportController extends Controller
 
         $products = (new ProductController())->getProducts($officeMission);
 
-        dd(Day::DateToHijri($date));
 
         return view('reports.import',
             compact('office', 'date', 'products', 'officeMission'));
