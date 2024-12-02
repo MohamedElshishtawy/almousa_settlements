@@ -92,15 +92,21 @@ class ReportController extends Controller
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'meals', 'urlMeal'));
     }
 
-    public function surplusPrint($officeMission, $date, $mealId)
+    public function surplusPrint($officeMission, $date, $mealId=null)
     {
 
         $officeMission = OfficeMission::find($officeMission);
         $office = $officeMission->office;
         $report = $office->reports()->where('for_date', $date)->first();
         $staticProducts = $report->staticProducts;
-        $surplus = $report->surplus->where('meal_id', $mealId)->first();
-        $meal = Meal::find($mealId);
+        // if there is no meal id will print for all available meals for this report's surplus
+        if ($mealId) {
+            $meal = Meal::find($mealId);
+            $surplus = $report->surplus->where('meal_id', $mealId)->first();
+        } else {
+            $meal = null;
+            $surplus = null;
+        }
         return view('reports.surplus-to-print',
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal'));
 

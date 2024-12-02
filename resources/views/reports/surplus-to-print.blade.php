@@ -18,12 +18,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200..1000&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <title>طباعة الوفر</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?7')}}">
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?7')}}" media="print">
 </head>
-<body dir="rtl">
+<body dir="rtl" class="m-3">
 
 <table rules="all">
     <thead>
@@ -43,7 +44,7 @@
         <td colspan="1"
             class="focus">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($report->import->benefits)}}</td>
         <th>وقت الوجبة</th>
-        <td>{{$surplus->meal->name}}</td>
+        <td>{{$meal ? $surplus->meal->name : 'كل الوجبات'}}</td>
     </tr>
 
     <tr>
@@ -65,22 +66,44 @@
     @endphp
     @foreach($staticProducts as $staticProduct)
         @php
-            $timesPerDay = $staticProduct->getHowManyPerDay($day);
-            $amountForMeal = $staticProduct->getAmountForMeal($day, $surplus->meal) * $report->import->benefits;
-            $thisDayImported = $timesPerDay && $staticProduct->importProductError ? $staticProduct->importProductError->error / $timesPerDay: 0;
+            if ($meal) {
+                $timesPerDay = $staticProduct->getHowManyPerDay($day);
+                $amountForMeal = $staticProduct->getAmountForMeal($day, $surplus->meal) * $report->import->benefits;
+                $thisDayImported = $timesPerDay && $staticProduct->importProductError ? $staticProduct->importProductError->error / $timesPerDay: 0;
 
-            $surplusProductError = $surplus->surplusProductErrors
-                            ->where('static_product_id', $staticProduct->id)->first();
-            $surplusFoodType = $surplus->surplusFoodTypes->where('food_type_id', $staticProduct->food_type_id)->first();
-            $surplusBenefitFromTypes =  $surplus->surplusFoodTypes
-                            ->where('food_type_id', $staticProduct->food_type_id)->first()->value ?? 0;
-            $surplusBenefit = $surplusBenefitFromTypes + ($surplusProductError ? $surplusProductError->surplus_benefits : 0);
+                $surplusProductError = $surplus->surplusProductErrors
+                                ->where('static_product_id', $staticProduct->id)->first();
+                $surplusFoodType = $surplus->surplusFoodTypes->where('food_type_id', $staticProduct->food_type_id)->first();
+                $surplusBenefitFromTypes =  $surplus->surplusFoodTypes
+                                ->where('food_type_id', $staticProduct->food_type_id)->first()->value ?? 0;
+                $surplusBenefit = $surplusBenefitFromTypes + ($surplusProductError ? $surplusProductError->surplus_benefits : 0);
 
-            $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
-                ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
-            $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
-            $total = $thisDayImported - $totalSurplus;
-            $total = $total >= 0 ? $total : 0;
+                $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
+                    ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
+                $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
+                $total = $thisDayImported - $totalSurplus;
+                $total = $total >= 0 ? $total : 0;
+            } else {
+                //$timesPerDay = $staticProduct->getHowManyPerDay($day);
+
+                $thisDayImported =  $staticProduct->importProductError ? $staticProduct->importProductError->error : 0;
+                 $amountForMeal = $thisDayImported; // this will be for all meals
+                $totalSurplus = 0;
+                foreach ($report->surplus as $surplus) {
+                    $surplusProductError = $surplus->surplusProductErrors
+                       ->where('static_product_id', $staticProduct->id)->first();
+                    $surplusFoodType = $surplus->surplusFoodTypes->where('food_type_id', $staticProduct->food_type_id)->first();
+                    $surplusBenefitFromTypes =  $surplus->surplusFoodTypes
+                                ->where('food_type_id', $staticProduct->food_type_id)->first()->value ?? 0;
+                    $surplusBenefit = $surplusBenefitFromTypes + ($surplusProductError ? $surplusProductError->surplus_benefits : 0);
+                    $totalSurplus += $staticProduct->daily_amount * $surplusBenefit +
+                    ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
+                }
+                $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
+                $total = $thisDayImported - $totalSurplus;
+                $total = $total >= 0 ? $total : 0;
+            }
+
 
             // format numbers
 
@@ -99,6 +122,35 @@
     @endforeach
     </tbody>
 </table>
-
+<footer class="mt-4">
+    <table rules="all" class="no-break">
+        <tbody>
+        <tr>
+            <th colspan="2">المورد أو من ينوب عنه</th>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+        </tr>
+        <tr>
+            <th>الاسم</th>
+            <td>
+                <input type="text" class="form-control" value="{{auth()->user()->name}}">
+            </td>
+            <th>الاسم</th>
+            <td><input type="text" class="form-control" ></td>
+        </tr>
+        <tr>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
+            <th>الرتبة</th>
+            <td><input type="text" class="form-control" ></td>
+        </tr>
+        <tr>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control" ></td>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control" ></td>
+        </tr>
+        </tbody>
+    </table>
+</footer>
 </body>
 </html>

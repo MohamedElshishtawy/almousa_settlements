@@ -22,5 +22,6 @@ input {
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
+    padding-right: 3px !important;
     margin: 0 !important;
 }

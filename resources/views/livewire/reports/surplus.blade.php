@@ -17,9 +17,14 @@
                 @if($surplus)
                         <a href="{{route('managers.reports.surplus.print', [$officeMission, $date, $selectedMeal->id])}}"
                            class="mx-1 btn btn-secondary">
+                            <span>{{$selectedMeal ? $selectedMeal->name : ''}}</span>
                             <i class="fa-solid fa-print"></i>
                         </a>
-
+                        <a href="{{route('managers.reports.surplus.print', [$officeMission, $date])}}"
+                           class="mx-1 btn btn-secondary">
+                            <span>الكل</span>
+                            <i class="fa-solid fa-print"></i>
+                        </a>
                         <button class="btn btn-danger mx-1" wire:click="delete">
                             <i class="fa fa-trash"></i>
                         </button>
