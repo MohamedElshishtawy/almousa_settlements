@@ -24,7 +24,7 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?6')}}">
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?10')}}" media="print">
-    <link href="{{asset('css/layout.css?7')}}" rel="stylesheet"/>
+    <link href="{{asset('css/layout.css?8')}}" rel="stylesheet"/>
 </head>
 <body dir="rtl">
 <x-nav></x-nav>

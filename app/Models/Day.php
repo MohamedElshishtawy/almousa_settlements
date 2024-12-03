@@ -96,4 +96,17 @@ class Day extends Model
 
         return $dates;
     }
+
+    public static function datesBetween($startDate, $endDate): array
+    {
+        $dates = [];
+        $startDate = date('Y-m-d', strtotime($startDate));
+        $endDate = date('Y-m-d', strtotime($endDate));
+        $currentDate = $startDate;
+        while ($currentDate <= $endDate) {
+            $dates[] = $currentDate;
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+        }
+        return $dates;
+    }
 }

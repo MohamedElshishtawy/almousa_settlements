@@ -14,7 +14,9 @@ body {
     font-variation-settings:
         "slnt" 0;
 }
-.gap
+.bold {
+    font-weight: bold;
+}
 .card {
     background: transparent;
     backdrop-filter: blur(1px);

@@ -2,27 +2,29 @@
 
 namespace App\Livewire\Analytics;
 
+use App\Mission\Mission;
 use App\Models\Day;
+use App\Models\HijriDate;
 use App\Office\Office;
 use Livewire\Component;
 
 class BenefitsAnalytics extends Component
 {
-    public $startDate, $endDate, $offices, $dates, $selectedOffices, $benefits;
+    public $startDate, $endDate, $selectedOffices, $selectedMissions, // inputs
+        $missions, $offices, $dates, // data
+        $datesBetween, $mission, $year; // outputs
 
-    protected function benefitsUpdate() {
-        $this->benefits = 0;
-        foreach ($this->selectedOffices as $officeId) {
-            $office = Office::find($officeId);
-            $reports= $office->reports->whereBetween('for_date', [$this->startDate, $this->endDate]);
-            $this->benefits += $reports->map(fn ($report) => $report->import ? $report->import->benefits : 0)->sum();
-        }
+    protected function dataUpdate() {
+        $this->year = HijriDate::where('gregorian_date', $this->startDate)->first()->year;
     }
     public function mount()
     {
         $this->offices = Office::all();
+        $this->missions = Mission::all();
         $this->selectedOffices = [];
+        $this->selectedMissions = [];
         $this->dates = [];
+        $this->benefits = 0;
         foreach ($this->offices as $office) {
             $this->dates += $office->reports->pluck('for_date')->toArray();
         }
@@ -33,21 +35,26 @@ class BenefitsAnalytics extends Component
         $this->startDate = $this->dates[0];
         $this->endDate = $this->dates[count($this->dates) - 1];
 
+        $this->datesBetween = Day::datesBetween($this->startDate, $this->endDate);
+
     }
 
     public function updatedSelectedOffices()
     {
-        $this->benefitsUpdate();
+
+        $this->dataUpdate();
     }
 
     public function updatedStartDate()
     {
-        $this->benefitsUpdate();
+        $this->datesBetween = Day::datesBetween($this->startDate, $this->endDate);
+        $this->dataUpdate();
     }
 
     public function updatedEndDate()
     {
-        $this->benefitsUpdate();
+        $this->datesBetween = Day::datesBetween($this->startDate, $this->endDate);
+        $this->dataUpdate();
     }
 
     public function render()
