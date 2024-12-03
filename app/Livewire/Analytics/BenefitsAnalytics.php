@@ -29,8 +29,9 @@ class BenefitsAnalytics extends Component
             $this->dates += $office->reports->pluck('for_date')->toArray();
         }
 
-        $this->dates = array_unique($this->dates);
-        $this->dates = Day::sortDates($this->dates);
+
+
+        dd( $this->dates, array_unique($this->dates), Day::sortDates($this->dates));
 
         $this->startDate = $this->dates[0];
         $this->endDate = $this->dates[count($this->dates) - 1];
