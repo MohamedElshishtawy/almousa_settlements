@@ -121,4 +121,10 @@ class ReportController extends Controller
     {
         return view('analytics.surplus-analytics', compact('showPrices'));
     }
+
+
+    public function AnalyticsBenefits()
+    {
+        return view('analytics.benefits-analytics');
+    }
 }

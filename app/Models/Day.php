@@ -50,7 +50,7 @@ class Day extends Model
     public static function DateToHijri($gregorianDate)
     {
         $day = HijriDate::where('gregorian_date', $gregorianDate)->first();
-        if (!$day->count()) {
+        if ( !$day ||  !$day->count()) {
             return $gregorianDate;
         }
         $dateFormat = date('d-m-Y', strtotime($gregorianDate));

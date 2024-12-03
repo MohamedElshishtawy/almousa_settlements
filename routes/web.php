@@ -52,9 +52,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('analytics')->group(function () {
        Route::get('/imports/{showPrices?}', [ReportController::class, 'AnalyticsImport'])->name('admin.analytics.imports');
        Route::get('/surplus/{showPrices?}', [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
+       Route::get('/benefits/', [ReportController::class, 'AnalyticsBenefits'])->name('admin.analytics.benefits');
     });
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
     Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
+
 });
 
 Route::prefix('managers')->middleware(['auth'])->group(function () {

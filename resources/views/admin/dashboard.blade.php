@@ -43,6 +43,10 @@
                                             </div>
                                             <span>تقرير الوفر بالأسعار  </span>
                                         </a>
+                                        <a href="{{route('admin.analytics.benefits')}}" class="btn btn-success">
+                                            <i class="fa-solid fa-users"></i>
+                                            <span>بيان المستفيدين</span>
+                                        </a>
                                     </div>
                                 </section>
                             <section class="mt-5">

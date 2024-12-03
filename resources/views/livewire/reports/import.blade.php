@@ -97,7 +97,8 @@
                                          \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
                 $expectedSupply = $dailyTotal && $benefits && is_numeric($benefits) ? $productMissionData->daily_amount * $benefits : 0;
                 $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
-                $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 'غير مقرر';
+                $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 0;
+
 
                 // Format numbers
                 $exactlyImported = round($exactlyImported, 4);
@@ -124,7 +125,7 @@
                                placeholder="0"
                                class="form-control" @if(!(int)$dailyTotal) disabled @endif>
                     </td>
-                    <td>{{ $difference }}</td>
+                    <td>{{ $dailyTotal ? $difference : 'غير مقرر' }}</td>
                 </tr>
             @endforeach
             </tbody>
