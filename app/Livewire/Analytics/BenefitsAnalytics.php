@@ -31,7 +31,7 @@ class BenefitsAnalytics extends Component
 
 
 
-        dd( $this->dates, array_unique($this->dates), Day::sortDates($this->dates));
+        dd($this->offices,  $this->dates, array_unique($this->dates), Day::sortDates($this->dates));
 
         $this->startDate = $this->dates[0];
         $this->endDate = $this->dates[count($this->dates) - 1];
