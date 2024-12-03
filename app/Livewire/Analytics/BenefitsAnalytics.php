@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Analytics;
 
+use App\Models\Day;
 use App\Office\Office;
 use Livewire\Component;
 
@@ -27,6 +28,11 @@ class BenefitsAnalytics extends Component
         }
 
         $this->dates = array_unique($this->dates);
+        $this->dates = Day::sortDates($this->dates);
+
+        $this->startDate = $this->dates[0];
+        $this->endDate = $this->dates[count($this->dates) - 1];
+
     }
 
     public function updatedSelectedOffices()

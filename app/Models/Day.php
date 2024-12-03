@@ -87,4 +87,13 @@ class Day extends Model
     {
         return $this->belongsTo(ProductDayMeal::class);
     }
+
+    public  static  function sortDates(array $dates): array
+    {
+        usort($dates, function ($a, $b) {
+            return strtotime($a) - strtotime($b);
+        });
+
+        return $dates;
+    }
 }
