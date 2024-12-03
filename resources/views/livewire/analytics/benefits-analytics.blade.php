@@ -32,7 +32,7 @@
                     @foreach($offices as $office)
                         <div class="text-lg">
                             <input type="checkbox" wire:model.live="selectedOffices" value="{{$office->id}}" id="office{{$office->id}}">
-                            <label class="" for="office{{$office->id}}">{{$office->name}}</label>
+                            <label class="" for="office{{$office->id}}"><strong>{{$office->name}}</strong></label>
                         </div>
                     @endforeach
                 </div>
