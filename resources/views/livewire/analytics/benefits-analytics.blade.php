@@ -54,8 +54,8 @@
             @elseif(count($selectedOffices) == 1)
                 المقر {{\App\Office\Office::find($selectedOffices[0])->name}}
             @endif
-            خلال الفترة من {{\App\Models\Day::DateToHijri($startDate)}} الى {{\App\Models\Day::DateToHijri($endDate)}}
-            بأنه تم إستفادة {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($benefits)}} مستفيد
+            خلال الفترة من <strong>{{\App\Models\Day::DateToHijri($startDate)}}</strong> الى <strong>{{\App\Models\Day::DateToHijri($endDate)}}</strong>
+            بأنه تم إستفادة <strong{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($benefits)}}</strong> مستفيد
             من الخدمات المقدمة
         </p>
     </article>
