@@ -55,7 +55,7 @@
                 المقر {{\App\Office\Office::find($selectedOffices[0])->name}}
             @endif
             خلال الفترة من <strong>{{\App\Models\Day::DateToHijri($startDate)}}</strong> الى <strong>{{\App\Models\Day::DateToHijri($endDate)}}</strong>
-            بأنه تم إستفادة <strong{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($benefits)}}</strong> مستفيد
+            بأنه تم إستفادة <strong>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($benefits)}}</strong> مستفيد
             من الخدمات المقدمة
         </p>
     </article>
