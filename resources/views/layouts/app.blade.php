@@ -28,77 +28,8 @@
 </head>
 <body dir="rtl">
     <div id="app">
-        @auth
-            <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-                <div class="container">
-                    <a class="navbar-brand" href="{{ url('/home') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
 
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav nav-pages">
-                            @auth
-                                @if(auth()->user()->isAdmin())
-                                    <li><a href="{{route('admin.users')}}" class="@if(isset($active) && $active == 'employee') active @endif">الموظفين</a></li>
-                                    <li><a href="{{route('admin.offices')}}" class="@if(isset($active) && $active == 'office') active @endif">المقرات</a></li>
-                                    <li><a href="{{route('admin.products')}}" class="@if(isset($active) && $active == 'products') active @endif">الأصناف و الوجبات</a></li>
-                                    <li><a href="{{route('admin.units')}}" class="@if(isset($active) && $active == 'units') active @endif">الوحدات</a></li>
-                                @endif
-                                    <li><a href="{{route('managers.reports')}}" class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>
-                            @endauth
-                        </ul>
-
-                        <!-- Right Side Of Navbar -->
-                        <ul class="navbar-nav align-items-center gap-1">
-                            <!-- Authentication Links -->
-                            @guest
-                                @if (Route::has('login'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                    </li>
-                                @endif
-
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    </li>
-                                @endif
-                            @else
-                                <li class="nav-item dropdown notification-li">
-                                    <i class="fa-solid fa-bell fa-lg"></i>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                         {{--first word only--}}
-                                        <span class="mx-2">
-                                            <i class="fa-solid fa-user-circle fa-lg"></i>
-                                        {{ explode(' ', Auth::user()->name)[0]}}
-                                        </span>
-
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </li>
-                            @endguest
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        @endauth
+        <x-nav></x-nav>
 
         <main class="py-4">
 {{--            <p class="alert alert-warning" wire:offline>--}}

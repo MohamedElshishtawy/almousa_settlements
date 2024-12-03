@@ -24,9 +24,10 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?6')}}">
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?10')}}" media="print">
+    <link href="{{asset('css/layout.css?7')}}" rel="stylesheet"/>
 </head>
 <body dir="rtl">
-
+<x-nav></x-nav>
 @yield('content')
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
