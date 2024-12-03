@@ -6,8 +6,8 @@
             </th>
         </tr>
         <tr>
-            <th class="p-2">المهمة</th>
-            <td colspan="100">
+            <th >المهمة</th>
+            <td colspan="100" class="p-2">
                 <div class="d-flex gap-3 align-items-center">
                     @foreach($missions as $mission)
                         <div>
