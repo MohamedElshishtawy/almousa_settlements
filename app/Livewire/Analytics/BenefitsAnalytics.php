@@ -26,13 +26,12 @@ class BenefitsAnalytics extends Component
         $this->dates = [];
         $this->benefits = 0;
         foreach ($this->offices as $office) {
-            $test[] = $office->reports->pluck('for_date')->toArray();
-            $this->dates += $office->reports->pluck('for_date')->toArray();
+            $this->dates = array_merge($this->dates, $office->reports->pluck('for_date')->toArray());
         }
 
 
-
-        dd($test,  $this->dates, array_unique($this->dates), Day::sortDates($this->dates));
+        $this->dates = array_unique($this->dates);
+        $this->dates = Day::sortDates($this->dates);
 
         $this->startDate = $this->dates[0];
         $this->endDate = $this->dates[count($this->dates) - 1];
