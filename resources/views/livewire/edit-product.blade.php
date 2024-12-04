@@ -17,7 +17,7 @@
 
     <!-- Editable dropdown for unit -->
     <td>
-        <select wire:model.live="food_unit_id" class="form-control">
+        <select wire:model.live="food_unit_id" class="form-select">
             <option value="">اختر الوحدة</option>
             @foreach($units as $unit)
                 <option value="{{ $unit->id }}">{{ $unit->title }}</option>
@@ -28,12 +28,16 @@
 
     <!-- Editable dropdown for type -->
     <td>
-        <select wire:model.live="food_type_id" class="form-control">
+        <select wire:model.live="food_type_id" class="form-select">
             <option value="">اختر النوع</option>
             @foreach($types as $type)
                 <option value="{{ $type->id }}">{{ $type->title }}</option>
             @endforeach
         </select>
+    </td>
+
+    <td>
+        <input type="number" wire:model.live.debounce.250ms="carton_value" class="form-control" placeholder="1">
     </td>
 
 

@@ -23,6 +23,7 @@ class StaticProduct extends Product
         'food_type_id',
         'food_unit_id',
         'report_id',
+        'carton_value',
     ];
 
     public function report()

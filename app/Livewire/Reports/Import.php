@@ -121,6 +121,7 @@ class Import extends Component
                 'food_type_id' => $product->food_type_id,
                 'food_unit_id' => $product->food_unit_id,
                 'report_id' => $report->id,
+                'carton_value'  => $product->carton_value,
             ]);
 
             // put the days meals for this product

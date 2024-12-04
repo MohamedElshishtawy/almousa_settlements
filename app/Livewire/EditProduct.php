@@ -12,7 +12,7 @@ class EditProduct extends Component
 {
 
     public Product $product;
-    public $name, $food_type_id, $food_unit_id;
+    public $name, $food_type_id, $food_unit_id, $carton_value;
     public $index, $mission, $living, $units, $types;
 
     public function mount($product)
@@ -21,6 +21,7 @@ class EditProduct extends Component
         $this->name = $product->name;
         $this->food_type_id = $product->food_type_id;
         $this->food_unit_id = $product->food_unit_id;
+        $this->carton_value = $product->carton_value;
     }
 
     // Load the meals for each product into the component's state
@@ -35,6 +36,7 @@ class EditProduct extends Component
             'name' => $this->name,
             'food_type_id' => $this->food_type_id,
             'food_unit_id' => $this->food_unit_id,
+            'carton_value' => $this->carton_value
         ]);
         $this->product->save();
     }
