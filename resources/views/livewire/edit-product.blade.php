@@ -37,7 +37,7 @@
     </td>
 
     <td>
-        <input type="number" wire:model.live.debounce.250ms="carton_value" class="form-control" placeholder="1">
+        <input type="number" wire:model.live.debounce.250ms="carton_value" class="form-control" >
     </td>
 
 
