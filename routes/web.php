@@ -56,6 +56,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     });
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
     Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
+    Route::get('/delegates', [\App\Http\Controllers\DelegateController::class, 'index'])->name('admin.delegates');
 
 });
 

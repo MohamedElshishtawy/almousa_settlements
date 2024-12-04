@@ -29,7 +29,7 @@
 <body dir="rtl">
     <div id="app">
 
-        <x-nav></x-nav>
+        <x-nav :active="$active ?? null"></x-nav>
 
         <main class="py-4">
 {{--            <p class="alert alert-warning" wire:offline>--}}

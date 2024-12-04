@@ -188,6 +188,18 @@ return [
         'getting_ready_end_date' => 'تاريخ إنتهاء التجهيز',
         'start_date' => 'تاريخ بدء المهمة',
         'end_date' => 'تاريخ إنتهاء المهمة',
+        'status' => 'الحالة',
+        'notes' => 'ملاحظات',
+        'created_at' => 'تاريخ الإنشاء',
+        'updated_at' => 'تاريخ التعديل',
+        'deleted_at' => 'تاريخ الحذف',
+        'delegates' => 'المندوبين',
+        'delegates.numbers.*' => 'المندوبين',
+        'number' => 'الرقم',
+        'benefits' => 'المستفيدين',
+        'institution' => 'المؤسسة',
+        'rank' => 'الرتبة',
+
     ],
 
 ];
