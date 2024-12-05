@@ -12,7 +12,7 @@ class EditProduct extends Component
 {
 
     public Product $product;
-    public $name, $food_type_id, $food_unit_id, $carton_value;
+    public $name, $food_type_id, $food_unit_id, $carton_value, $packet_value;
     public $index, $mission, $living, $units, $types;
 
     public function mount($product)
@@ -22,6 +22,7 @@ class EditProduct extends Component
         $this->food_type_id = $product->food_type_id;
         $this->food_unit_id = $product->food_unit_id;
         $this->carton_value = $product->carton_value;
+        $this->packet_value = $product->packet_value;
     }
 
     // Load the meals for each product into the component's state
@@ -36,7 +37,8 @@ class EditProduct extends Component
             'name' => $this->name,
             'food_type_id' => $this->food_type_id,
             'food_unit_id' => $this->food_unit_id,
-            'carton_value' => $this->carton_value
+            'carton_value' => $this->carton_value,
+            'packet_value' => $this->packet_value,
         ]);
         $this->product->save();
     }
@@ -69,17 +71,6 @@ class EditProduct extends Component
         // take action to refresh the data
         $this->dispatch('deleted');
 
-    }
-
-    // Handle saving meals
-    protected function updateMeals()
-    {
-        // Assuming you have a many-to-many relationship for meals on the Product model
-        foreach ($this->meals as $day => $mealValues) {
-            foreach ($mealValues as $meal => $checked) {
-                // Save the meal values for the specific day (implement this logic as needed)
-            }
-        }
     }
 
 

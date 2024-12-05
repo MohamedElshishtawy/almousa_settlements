@@ -14,6 +14,7 @@
             <th rowspan="2">اسم الصنف</th>
             <th rowspan="2">الوحدة</th>
             <th rowspan="2">النوع</th>
+            <th rowspan="2">قيمة العبوة</th>
             <th rowspan="2">قيمة الكرتون</th>
             <th rowspan="2">حذف</th>
         </tr>

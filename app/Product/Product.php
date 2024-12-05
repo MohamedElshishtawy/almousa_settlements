@@ -18,6 +18,7 @@ class Product extends Model
         'food_type_id',
         'food_unit_id',
         'carton_value',
+        'packet_value',
     ];
 
     // Relations Functions -----------------------

@@ -23,8 +23,9 @@
                         <th scope="col">الرقم بالكشف</th>
                         <th scope="col">الاسم</th>
                         <th scope="col">الجهة</th>
-                        <th scope="col">عدد المستفيدين</th>
                         <th scope="col">الرتبة</th>
+                        <th scope="col">عدد المستفيدين</th>
+                        <th scope="col">نوع الصرف</th>
                         <th scope="col">حدث</th>
                     </tr>
                     </thead>
@@ -50,17 +51,27 @@
                                 @enderror
                             </td>
                             <td>
-                                <input type="number" min="0" wire:model="delegatesBenefits.{{ $delegate->id }}" wire:change="changeBenefits({{ $delegate->id }}, $event.target.value)" class="form-control">
-                                @error('delegatesBenefits.' . $delegate->id)
-                                <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </td>
-                            <td>
                                 <input type="text" wire:model="delegatesRanks.{{ $delegate->id }}" wire:change="changeRank({{ $delegate->id }}, $event.target.value)" class="form-control">
                                 @error('delegatesRanks.' . $delegate->id)
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </td>
+                            <td>
+                                <input type="number" min="0" wire:model="delegatesBenefits.{{ $delegate->id }}" wire:change="changeBenefits({{ $delegate->id }}, $event.target.value)" class="form-control">
+                                @error('delegatesBenefits.' . $delegate->id)
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </td>
+
+                            <td>
+                                <select class="form-select"  wire:model="delegatesFoodTypes.{{$delegate->id}}" wire:change="changeFoodType({{$delegate->id}}, $event.target.value)">
+                                    <option value="">اختر نوع الصرف</option>
+                                    @foreach($foodTypes as $foodType)
+                                        <option value="{{ $foodType->id }}" {{ $delegate->food_type_id == $foodType->id ? 'selected' : '' }}>{{ $foodType->title }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+
                             <td>
                                 <button wire:click="delete({{ $delegate->id }})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
                             </td>

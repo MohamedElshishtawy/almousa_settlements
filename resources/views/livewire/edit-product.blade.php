@@ -37,7 +37,12 @@
     </td>
 
     <td>
-        <input type="number" wire:model.live.debounce.250ms="carton_value" class="form-control" >
+        <input type="number" min="1" wire:model.live.debounce.250ms="packet_value" class="form-control" >
+    </td>
+
+
+    <td>
+        <input type="number" min="1" wire:model.live.debounce.250ms="carton_value" class="form-control" >
     </td>
 
 

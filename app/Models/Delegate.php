@@ -14,5 +14,6 @@ class Delegate extends Model
         'benefits',
         'institution',
         'rank',
+        'food_type_id',
     ];
 }
