@@ -22,6 +22,9 @@ class DelegatesManagement extends Component
         'institution' => 'required|string|max:255',
         'rank' => 'nullable|string|max:255',
         'benefits' => 'required|integer|min:0',
+        'food_type_id' => 'required|integer|exists:food_types,id',
+        'office_id' => 'required|integer|exists:offices,id',
+
     ];
 
     /**
@@ -40,6 +43,9 @@ class DelegatesManagement extends Component
     {
         $this->delegates = Delegate::all();
         $this->foodTypes = FoodType::all();
+        $this->offices = Office::all()->filter(function($office) {
+            return $office->living->title == 'ميدان';
+        });
         foreach ($this->delegates as $delegate) {
             $this->delegatesNumbers[$delegate->id] = $delegate->number;
             $this->delegatesNames[$delegate->id] = $delegate->name;

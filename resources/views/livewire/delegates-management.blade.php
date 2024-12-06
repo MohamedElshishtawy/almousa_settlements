@@ -126,17 +126,18 @@
                             @enderror
                         </td>
                         <td>
-                            <input type="number" min="0" wire:model="benefits" class="form-control">
-                            @error('benefits')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </td>
-                        <td>
                             <input type="text" wire:model="rank" class="form-control">
                             @error('rank')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </td>
+                        <td>
+                            <input type="number" min="0" wire:model="benefits" class="form-control">
+                            @error('benefits')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </td>
+
 
                         <td>
                             <select class="form-select" wire:model="food_type_id">
