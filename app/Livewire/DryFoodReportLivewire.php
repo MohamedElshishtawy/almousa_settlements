@@ -65,7 +65,7 @@ class DryFoodReportLivewire extends Component
 
     public function updatedSelectedOfficeId()
     {
-        $this->delegates = Delegate::where('office_id', $this->selectedOfficeId) ?: [];
+        $this->delegates = Delegate::where('office_id', $this->selectedOfficeId)->get() ?: [];
         $this->getProducts();
 
     }
