@@ -17,7 +17,7 @@ class DelegatesManagement extends Component
      * Validation rules.
      */
     protected $rules = [
-        'number' => 'required|integer|min:1|unique:delegates,number',
+        'number' => 'required|integer|min:1',
         'name' => 'required|string|max:255',
         'institution' => 'required|string|max:255',
         'rank' => 'nullable|string|max:255',
