@@ -137,11 +137,25 @@
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </td>
+
                         <td>
-                            <input type="text" wire:model="office_id" class="form-control">
-                            @error('officeDb')
-                            <small class="text-danger">{{ $message }}</small>
-                            @enderror
+                            <select class="form-select" wire:model="food_type_id">
+                                <option value="">اختر نوع الصرف</option>
+                                @foreach($foodTypes as $foodType)
+                                    <option
+                                        value="{{ $foodType->id }}">{{ $foodType->title }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <select class="form-select" wire:model="office_id">
+                                <option value="">اختر المقر</option>
+                                @foreach($offices as $officeDb)
+                                    <option
+                                        value="{{ $officeDb->id }}" {{ $delegate->office_id == $officeDb->id ? 'selected' : '' }}>{{ $officeDb->name }}</option>
+                                @endforeach
+                            </select>
                         </td>
 
 
