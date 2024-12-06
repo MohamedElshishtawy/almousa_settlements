@@ -49,6 +49,16 @@
                                         </a>
                                     </div>
                                 </section>
+                                <section class="mt-5">
+                                    <h3><i class="fa-solid fa-"></i> محاضر</h3>
+                                    <div class="d-flex reports-cards">
+                                        <a href="{{route('dry-food-reports')}}" class="btn btn-primary">
+                                            <i class="fa-solid fa-apple-whole"></i>
+                                            <span>محاضر المواد الجافة</span>
+                                        </a>
+                                    </div>
+
+                                </section>
                             <section class="mt-5">
                                 <h3><i class="fa-solid fa-"></i> إعدادات</h3>
                                 <div class="d-flex reports-cards">

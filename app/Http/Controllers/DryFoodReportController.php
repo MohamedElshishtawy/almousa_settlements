@@ -12,10 +12,6 @@ class DryFoodReportController extends Controller
     public function index()
     {
         $dryFoodReports = DryFoodReport::all();
-        // make array of the reports but the key is the created at
-        $dryFoodReports = $dryFoodReports->groupBy(function($item) {
-            return $item->created_at->format('Y-m-d');
-        });
 
         return view('dry-food-reports.index', compact('dryFoodReports'));
     }
@@ -52,7 +48,8 @@ class DryFoodReportController extends Controller
     public function delete(DryFoodReport $dryFoodReport)
     {
         $dryFoodReport->delete();
-        return redirect()->route('dry-food-reports.index');
+        return redirect()->route('dry-food-reports');
     }
+
 
 }

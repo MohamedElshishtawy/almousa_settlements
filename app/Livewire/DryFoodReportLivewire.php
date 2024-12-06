@@ -42,7 +42,8 @@ class DryFoodReportLivewire extends Component
 
     public function mount(DryFoodReport $dryFoodReport)
     {
-        $this->dryFoodReport = $dryFoodReport;
+
+        $this->dryFoodReport =  isset($dryFoodReport)  ? $dryFoodReport : null;
 
         $this->offices = Office::all()->filter(function($office) {
             return $office->living->title == 'ميدان';
@@ -52,8 +53,7 @@ class DryFoodReportLivewire extends Component
 
         $this->dates = Day::datesBetween(DryFoodReport::$startDate, DryFoodReport::$endDate);
         $this->products = [];
-
-        if ($this->dryFoodReport) {
+        if ($this->dryFoodReport->id) {
             $this->selectedOfficeId = $this->dryFoodReport->delegate->office_id;
             $this->selectedDelegateId = $this->dryFoodReport->delegate_id;
             $this->selectedMissionId = $this->dryFoodReport->mission_id;

@@ -9,7 +9,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex gap-1">
-                @if($dryFoodReport)
+                @if($dryFoodReport->id)
                     <span wire:loading>
                 <span class="spinner-border spinner-border-sm text-success" role="status"></span>
             </span>

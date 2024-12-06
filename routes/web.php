@@ -78,7 +78,7 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/create', [DryFoodReportController::class, 'create'])->name('dry-food-reports.create');
         Route::get('/{dryFoodReport}/edit', [DryFoodReportController::class, 'edit'])->name('dry-food-reports.edit');
         Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
-
+        Route::delete('/{dryFoodReport}', [DryFoodReportController::class, 'delete'])->name('dry-food-reports.destroy');
     });
 
 });
