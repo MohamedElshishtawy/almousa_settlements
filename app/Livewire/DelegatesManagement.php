@@ -3,15 +3,16 @@
 namespace App\Livewire;
 
 use App\Models\Delegate;
+use App\Office\Office;
 use App\Product\FoodType;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
 class DelegatesManagement extends Component
 {
-    public $number, $name, $institution, $rank, $benefits, $food_type_id;
-    public $delegates, $delegatesNumbers, $delegatesNames, $delegatesInstitutions, $delegatesRanks,$delegatesFoodTypes, $delegatesBenefits;
-    public $foodTypes;
+    public $number, $name, $institution, $rank, $benefits, $food_type_id, $office_id;
+    public $delegates, $delegatesNumbers, $delegatesNames, $delegatesInstitutions, $delegatesRanks, $delegatesOffices, $delegatesFoodTypes, $delegatesBenefits;
+    public $foodTypes, $offices;
     /**
      * Validation rules.
      */
@@ -46,6 +47,7 @@ class DelegatesManagement extends Component
             $this->delegatesRanks[$delegate->id] = $delegate->rank;
             $this->delegatesBenefits[$delegate->id] = $delegate->benefits;
             $this->delegatesFoodTypes[$delegate->id] = $delegate->food_type_id;
+            $this->delegatesOffices[$delegate->id] = $delegate->office_id;
         }
     }
 
@@ -53,7 +55,9 @@ class DelegatesManagement extends Component
     {
         $this->changeDelegats();
         $this->delegates->sortBy('number');
-
+        $this->offices = Office::all()->filter(function($office) {
+            return $office->living->title == 'ميدان';
+        });
     }
 
     public function changeNumber($delegateId, $value)
@@ -119,6 +123,14 @@ class DelegatesManagement extends Component
         $this->changeDelegats();
     }
 
+    public function changeOffice($delegateId, $value)
+    {
+        $delegate = Delegate::find($delegateId);
+        $delegate->office_id = $value;
+        $delegate->save();
+        $this->changeDelegats();
+    }
+
     public function store()
     {
         $validatedData = $this->validate();
@@ -132,6 +144,8 @@ class DelegatesManagement extends Component
         Delegate::find($delegateId)->delete();
         $this->changeDelegats();
     }
+
+
 
     public function render()
     {
