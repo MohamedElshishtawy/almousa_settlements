@@ -103,3 +103,18 @@ footer table th {
     min-width: 50px;
 }
 
+.unit {
+    font-size: 11px;
+    color: #6f6f6f;
+    margin-right: 5px;
+
+    display: flex;
+    align-items: center;
+}
+.table-text-right {
+    text-align: right;
+    & td, & th{
+        text-align: right;
+        padding-right: 3px;
+    }
+}

@@ -11,7 +11,6 @@ class ProductDayMeal extends Meal
     use HasFactory;
 
     protected  $table = 'products_day_meal';
-
     protected $fillable = [
         'product_living_mission_id',
         'day_id',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DryFoodReportController;
 use App\Office\OfficeController;
 use App\Report\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,13 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         ->name('managers.reports.surplus.print');
     Route::get('/reports/surplus/{officeMission}/{date}/{meal?}', [ReportController::class, 'surplus'])
         ->name('managers.reports.surplus');
+    Route::prefix('/dry-food-reports')->group(function () {
+        Route::get('/', [DryFoodReportController::class, 'index'])->name('dry-food-reports');
+        Route::get('/create', [DryFoodReportController::class, 'create'])->name('dry-food-reports.create');
+        Route::get('/{dryFoodReport}/edit', [DryFoodReportController::class, 'edit'])->name('dry-food-reports.edit');
+        Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
+
+    });
 
 });
 
