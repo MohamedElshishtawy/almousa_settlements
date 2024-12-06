@@ -23,8 +23,9 @@ class DryFoodReportLivewire extends Component
             'selectedOfficeId' => 'required',
             'selectedDelegateId' => 'required',
             'selectedMissionId' => 'required',
-            'startDate' => 'required|date|before:endDate',
-            'endDate' => 'required|date|after:startDate',
+            //before or at the same day
+            'startDate' => 'required|date|before_or_equal:endDate',
+            'endDate' => 'required|date|after_or_equal:startDate',
         ];
 
     }
