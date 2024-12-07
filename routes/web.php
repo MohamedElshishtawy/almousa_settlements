@@ -80,6 +80,7 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
         Route::delete('/{dryFoodReport}', [DryFoodReportController::class, 'delete'])->name('dry-food-reports.destroy');
     });
+    Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
 
 });
 

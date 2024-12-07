@@ -28,4 +28,9 @@ class Delegate extends Model
     {
         return $this->hasMany(DryFoodReport::class);
     }
+
+    public function deosNotWant()
+    {
+        return view('papers.delegate-do-not-want');
+    }
 }

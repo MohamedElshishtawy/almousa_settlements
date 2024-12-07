@@ -17,16 +17,46 @@ class DryFoodReportLivewire extends Component
     public $products;
     public DryFoodReport $dryFoodReport;
 
+
     protected function rules()
     {
+        $dates = [];
+        if ($this->selectedDelegateId) {
+            $lastReports = DryFoodReport::where('delegate_id', $this->selectedDelegateId)->get();
+            foreach ($lastReports as $report) {
+                $reportDates = Day::datesBetween($report->start_date, $report->end_date);
+                $dates = array_merge($dates, $reportDates);
+            }
+            if ($this->dryFoodReport->id) {
+                $dates = array_diff($dates, Day::datesBetween($this->dryFoodReport->start_date, $this->dryFoodReport->end_date));
+            }
+        }
+        // if start date in the $dates array make validation error message
+
         return [
             'selectedOfficeId' => 'required',
             'selectedDelegateId' => 'required',
             'selectedMissionId' => 'required',
-            'startDate' => 'required|date|before_or_equal:endDate',
-            'endDate' => 'required|date|after_or_equal:startDate',
+            'startDate' => 'required|date|before_or_equal:endDate|not_in:' . implode(',', $dates),
+            'endDate' => 'required|date|after_or_equal:startDate|not_in:' . implode(',', $dates),
         ];
 
+    }
+    public function messages()
+    {
+        return [
+            'selectedOfficeId.required' => 'حقل المقر مطلوب.',
+            'selectedDelegateId.required' => 'حقل المندوب مطلوب.',
+            'selectedMissionId.required' => 'حقل المهمة مطلوب.',
+            'startDate.required' => 'حقل تاريخ البداية مطلوب.',
+            'startDate.date' => 'تاريخ البداية يجب أن يكون تاريخاً صالحاً.',
+            'startDate.before_or_equal' => 'تاريخ البداية يجب أن يكون قبل أو يساوي تاريخ النهاية.',
+            'startDate.not_in' => 'تاريخ البداية المحدد يتداخل مع تقرير موجود مسبقاً.',
+            'endDate.required' => 'حقل تاريخ النهاية مطلوب.',
+            'endDate.date' => 'تاريخ النهاية يجب أن يكون تاريخاً صالحاً.',
+            'endDate.after_or_equal' => 'تاريخ النهاية يجب أن يكون بعد أو يساوي تاريخ البداية.',
+            'endDate.not_in' => 'تاريخ النهاية المحدد يتداخل مع تقرير موجود مسبقاً.',
+        ];
     }
 
 
@@ -58,6 +88,7 @@ class DryFoodReportLivewire extends Component
             $this->selectedMissionId = $this->dryFoodReport->mission_id;
             $this->startDate = $this->dryFoodReport->start_date;
             $this->endDate = $this->dryFoodReport->end_date;
+            $this->delegates = Delegate::where('office_id', $this->selectedOfficeId)->get() ?: [];
             $this->getProducts();
         }
     }

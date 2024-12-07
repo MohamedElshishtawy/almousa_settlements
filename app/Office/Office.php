@@ -37,5 +37,10 @@ class Office extends Model
         return $this->hasMany(\App\Report\Report::class);
     }
 
+    public function delegates()
+    {
+        return $this->hasMany(\App\Models\Delegate::class);
+    }
+
 
 }

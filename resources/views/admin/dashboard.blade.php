@@ -56,7 +56,12 @@
                                             <i class="fa-solid fa-apple-whole"></i>
                                             <span>محاضر المواد الجافة</span>
                                         </a>
+                                        <a href="{{route('papers.doesNotWant')}}" class="btn btn-primary">
+                                            <i class="fa-solid fa-user-xmark "></i>
+                                            <span>بيان رفض المندوب صنف</span>
+                                        </a>
                                     </div>
+
 
                                 </section>
                             <section class="mt-5">

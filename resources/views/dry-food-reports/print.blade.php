@@ -48,7 +48,7 @@
                                     $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
                                 }
                                 $cartonValue = floor($totalAmount / $product->carton_value);
-                                $packetValue = floor($totalAmount - $cartonValue * $product->carton_value);
+                                $packetValue = floor(($totalAmount - $cartonValue * $product->carton_value)/$product->packet_value);
                                 $unitValue = $totalAmount  - $cartonValue * $product->carton_value - $packetValue * $product->packet_value;
                                 $unitValue = round($unitValue, 4);
                             @endphp

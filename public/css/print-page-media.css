@@ -18,7 +18,11 @@ tfoot
 .no-break {
     page-break-inside: avoid
 }
-input {
+.bordered-paper {
+    height: 100vh;
+    margin: 0 !important;
+}
+input, textarea {
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
