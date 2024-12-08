@@ -166,7 +166,7 @@
                 $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
                 $cartonValue = floor($totalPacketValue / $product->carton_value);
                 $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);
-                $unitValue = $totalAmount  - ($totalAmount / $product->packet_value)*$product->packet_value;
+                $unitValue = $totalPacketValue;
                 $unitValue = $unitValue;
                 @endphp
                 <tr>
