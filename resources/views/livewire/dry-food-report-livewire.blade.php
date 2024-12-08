@@ -166,8 +166,8 @@
                 $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
                 $cartonValue = floor($totalPacketValue / $product->carton_value);
                 $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);
-                $unitValue = $totalAmount  - $totalPacketValue * $product->packet_value;
-                $unitValue = round($unitValue, 4);
+                $unitValue = $totalAmount  - $totalPacketValue*$product->packet_value;
+                $unitValue = $unitValue;
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration) }}</td>
