@@ -14,7 +14,7 @@ class DelegateDoesNotWantLivewire extends Component
     public $selectedOfficeId = null;
     public $selectedDelegateId = null;
     public $delegate;
-    public $formatedDate;
+    public $formatedDate, $dateHijri;
 
     public function mount()
     {
@@ -35,6 +35,7 @@ class DelegateDoesNotWantLivewire extends Component
     {
         $hijri  = HijriDate::where('gregorian_date', $this->date)->first();
         if ($hijri) {
+            $this->dateHijri = $hijri;
             $year = Numbers::ShowInArabicDigits($hijri->year);
             $month = Numbers::ShowInArabicDigits($hijri->month);
             $day = Numbers::ShowInArabicDigits($hijri->day);

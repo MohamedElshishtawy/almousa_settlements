@@ -55,7 +55,7 @@
         <article>
             <div>
                 إنه فى يوم
-                {{$dateHijri['day_ar']}}
+                {{$dateHijri['weekday']}}
                 الموافق للتاريخ أعلاه أثناء صرف وجبة
                 <div class="my-1">
                     <textarea class="form-control" placeholder="اكتب هنا ..."></textarea>
@@ -84,9 +84,9 @@
             <tr>
                 <th colspan="2">مندوب الجهة</th>
                 <th colspan="2">
-                    <div class="d-flex gap-1">
+                    <div class="">
                         <span>مشرف صرف وجبة</span>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control text-center">
                     </div>
                 </th>
             </tr>
