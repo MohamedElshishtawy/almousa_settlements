@@ -54,16 +54,20 @@
 
         <article>
             <div>
-                نعم انا
-                    {{$delegate ? $delegate->name : 'اسم المندوب'}}
-                مندوب صرف الإعاشة ل {{$delegate ? $delegate->institution : 'اسم الجهة'}}
-                و الذى عددهم  <strong>{{$delegate ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($delegate->benefits) : 'صفر'}}</strong>
-                صرف الإعاشة ب <strong>{{$delegate ? $delegate->office->name : 'المقر'}}</strong>
-                و أفيدكم بعدك رغبتانا فى إستلام ما يلى:-
+                إنه فى يوم
+                {{$dateHijri['day_ar']}}
+                الموافق للتاريخ أعلاه أثناء صرف وجبة
+                <div class="my-1">
+                    <textarea class="form-control" placeholder="اكتب هنا ..."></textarea>
+                </div>
+                حضر مندوب رقم
+                {{$delegate ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($delegate->number) : '0'}}
+                {{$delegate ? $delegate->institution : 'اسم الجهة'}}.
+                وبناءً على رغبته لم يستلم كامل مخصصهم من الإعاشة المطهية.
+                <br>
+                وحفظُا للواقعة تم إعداد هذا المحضر.
             </div>
-            <div class="mt-1">
-                <textarea class="form-control" placeholder="اكتب هنا ..."></textarea>
-            </div>
+
             <div class="mt-3">
                 وأتعهد بإحضار خطاب من مديرى المباشر يفيد <strong>عدم</strong>
                 رغبتنا بإستلام بعض أصناف مخصصنا من الإعاشة
@@ -78,8 +82,13 @@
         <table rules="all" class="no-break">
             <tbody>
             <tr>
-                <th colspan="2">مندوب الجهة المستفيدة</th>
-                <th colspan="2">مشرف صرف وجبة <input type="text" class="form-control"></th>
+                <th colspan="2">مندوب الجهة</th>
+                <th colspan="2">
+                    <div class="d-flex gap-1">
+                        <span>مشرف صرف وجبة</span>
+                        <input type="text" class="form-control">
+                    </div>
+                </th>
             </tr>
             <tr>
                 <th>الاسم</th>
