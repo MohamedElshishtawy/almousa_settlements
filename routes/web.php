@@ -78,6 +78,7 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/create', [DryFoodReportController::class, 'create'])->name('dry-food-reports.create');
         Route::get('/{dryFoodReport}/edit', [DryFoodReportController::class, 'edit'])->name('dry-food-reports.edit');
         Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
+        Route::get('/{dryFoodReport}/delegate-report', [DryFoodReportController::class, 'delegateReport'])->name('dry-food-reports.delegateReport');
         Route::delete('/{dryFoodReport}', [DryFoodReportController::class, 'delete'])->name('dry-food-reports.destroy');
     });
     Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');

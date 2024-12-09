@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DryFoodReport;
+use App\Models\HijriDate;
 use App\Office\Office;
 use App\Product\ProductLivingMission;
 use Illuminate\Http\Request;
@@ -43,6 +44,17 @@ class DryFoodReportController extends Controller
             ->where('mission_id', $dryFoodReport->mission_id)->get();
         $products = $productMissionLivings->map(fn ($productMissionLiving) => $productMissionLiving->product);
         return view('dry-food-reports.print', compact('dryFoodReport', 'products'));
+    }
+
+    public function delegateReport($dryFoodReport)
+    {
+        $dryFoodReport = DryFoodReport::find($dryFoodReport);
+        $delegate = $dryFoodReport->delegate;
+        $formatedDate = HijriDate::formatedDate($dryFoodReport->created_at->format('Y-m-d'));
+
+
+        return view('dry-food-reports.report-for-delegater', compact('dryFoodReport', 'formatedDate', 'delegate'));
+
     }
 
     public function delete(DryFoodReport $dryFoodReport)

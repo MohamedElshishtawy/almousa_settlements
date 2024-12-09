@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Alkoumi\LaravelArabicNumbers\Numbers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,6 +26,16 @@ class HijriDate extends Model
         '11' => 'ذو القعدة',
         '12' => 'ذو الحجة',
     ];
+
+
+    public static function formatedDate($date)
+    {
+        $higri = HijriDate::where('gregorian_date', $date)->first();
+        $year = Numbers::ShowInArabicDigits($higri->year);
+        $month = Numbers::ShowInArabicDigits($higri->month);
+        $day = Numbers::ShowInArabicDigits($higri->day);
+        return $year . '/' . $month . '/' . $day . ' هـ';
+    }
 
 
 

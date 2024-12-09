@@ -13,9 +13,7 @@
                     <span wire:loading>
                 <span class="spinner-border spinner-border-sm text-success" role="status"></span>
             </span>
-                    <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}" class="btn btn-secondary ">
-                        <i class="fas fa-print"></i>
-                    </a>
+
                     <button wire:click="edit" class="btn btn-primary">
                         <i class="fa-solid fa-edit"></i>
                     </button>
@@ -29,6 +27,24 @@
 
         <table class="table table-borderless">
             <tbody>
+            @if($dryFoodReport->id)
+            <tr>
+                <th>طباعة</th>
+
+                <td>
+                   <div class="grid">
+                       <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}" class="btn btn-secondary ">
+                           <i class="fas fa-print"></i>
+                           التقرير
+                       </a>
+                       <a href="{{ route('dry-food-reports.delegateReport', $dryFoodReport->id) }}" class="btn btn-secondary ">
+                           <i class="fas fa-print"></i>
+                           إقرار المندوب
+                       </a>
+                   </div>
+                </td>
+            </tr>
+            @endif
             <tr>
                 <th>المقر</th>
                 <td>
