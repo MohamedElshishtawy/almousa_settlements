@@ -47,10 +47,10 @@
                                     }
                                     $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
                                 }
-                                $totalPacketValue = floor($totalAmount / $product->packet_value);
-                                $cartonValue = $totalPacketValue / $product->carton_value;
-                                $packetValue = $totalPacketValue - $cartonValue;
-                                $unitValue = $totalAmount  - $totalPacketValue * $product->packet_value;
+                                $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
+                                $cartonValue = floor($totalPacketValue / $product->carton_value);
+                                $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);
+                                $unitValue = $totalAmount / $product->packet_value - $totalPacketValue;
                                 $unitValue = round($unitValue, 4);
                             @endphp
                             <tr>
