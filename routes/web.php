@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DryFoodReportController;
+use App\Obligations\ObligationsController;
 use App\Office\OfficeController;
 use App\Report\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,12 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
         Route::get('/{dryFoodReport}/delegate-report', [DryFoodReportController::class, 'delegateReport'])->name('dry-food-reports.delegateReport');
         Route::delete('/{dryFoodReport}', [DryFoodReportController::class, 'delete'])->name('dry-food-reports.destroy');
+    });
+    Route::prefix('/obligations')->group(function () {
+        Route::get('/', [ObligationsController::class, 'index'])->name('obligations');
+        Route::get('/create', [ObligationsController::class, 'create'])->name('obligations.create');
+        Route::get('/{obligation}/edit', [ObligationsController::class, 'edit'])->name('obligations.edit');
+        Route::delete('/{obligation}', [ObligationsController::class, 'delete'])->name('obligations.destroy');
     });
     Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
 

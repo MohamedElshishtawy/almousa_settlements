@@ -13,6 +13,15 @@ class Employee extends User
     }
 
 
+    // return the office
+    public function office()
+    {
+        $employeeOffice = $this->employeeOffice;
+        return $employeeOffice ? $employeeOffice->office : null;
+    }
+
+
+
 
 
 }

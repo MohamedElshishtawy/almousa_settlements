@@ -42,5 +42,10 @@ class Office extends Model
         return $this->hasMany(\App\Models\Delegate::class);
     }
 
+    public function obligations()
+    {
+        return $this->hasMany(\App\Obligations\Obligations::class);
+    }
+
 
 }

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('obligations', function (Blueprint $table) {
+        Schema::create('bands', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Office\Office::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('company_name');
+            $table->string('head')->nullable();
+            $table->text('description')->nullable();
+            $table->foreignIdFor(\App\Obligations\Obligations::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('obligations');
+        Schema::dropIfExists('bands');
     }
 };

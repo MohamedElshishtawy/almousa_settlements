@@ -60,6 +60,10 @@
                                             <i class="fa-solid fa-user-xmark "></i>
                                             <span>بيان رفض المندوب صنف</span>
                                         </a>
+                                        <a href="{{route('obligations')}}" class="btn btn-primary">
+                                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                                            <span>محضر على المتعهد</span>
+                                        </a>
                                     </div>
 
 
