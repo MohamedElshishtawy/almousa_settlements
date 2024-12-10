@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class DelegatesManagement extends Component
 {
-    public $number, $name, $institution, $rank, $benefits, $food_type_id, $office_id;
-    public $delegates, $delegatesNumbers, $delegatesNames, $delegatesInstitutions, $delegatesRanks, $delegatesOffices, $delegatesFoodTypes, $delegatesBenefits;
+    public $number, $name, $institution, $rank, $benefits, $food_type_id, $office_id, $phone;
+    public $delegates, $delegatesNumbers, $delegatesNames, $delegatesInstitutions, $delegatesPhones, $delegatesRanks, $delegatesOffices, $delegatesFoodTypes, $delegatesBenefits;
     public $foodTypes, $offices;
     /**
      * Validation rules.
@@ -24,7 +24,7 @@ class DelegatesManagement extends Component
         'benefits' => 'required|integer|min:0',
         'food_type_id' => 'required|integer|exists:food_types,id',
         'office_id' => 'required|integer|exists:offices,id',
-
+        'phone' => 'required'
     ];
 
     /**
@@ -54,6 +54,7 @@ class DelegatesManagement extends Component
             $this->delegatesBenefits[$delegate->id] = $delegate->benefits;
             $this->delegatesFoodTypes[$delegate->id] = $delegate->food_type_id;
             $this->delegatesOffices[$delegate->id] = $delegate->office_id;
+            $this->delegatesPhones[$delegate->id] = $delegate->phone;
         }
     }
 
@@ -133,6 +134,16 @@ class DelegatesManagement extends Component
     {
         $delegate = Delegate::find($delegateId);
         $delegate->office_id = $value;
+        $delegate->save();
+        $this->changeDelegats();
+    }
+    public function changePhone($delegateId, $value)
+    {
+        $delegate = Delegate::find($delegateId);
+        $validatedData = $this->validate([
+            "delegatesPhones.$delegateId" => 'nullable|string|max:255',
+        ]);
+        $delegate->phone = $value;
         $delegate->save();
         $this->changeDelegats();
     }

@@ -17,6 +17,7 @@ class Delegate extends Model
         'rank',
         'food_type_id',
         'office_id',
+        'phone'
     ];
 
     public function office()

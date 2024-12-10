@@ -27,6 +27,7 @@
                         <th scope="col">عدد المستفيدين</th>
                         <th scope="col">نوع الصرف</th>
                         <th scope="col">المقر</th>
+                        <th scope="col">التلفون</th>
                         <th scope="col">حدث</th>
                     </tr>
                     </thead>
@@ -97,6 +98,15 @@
                             </td>
 
                             <td>
+                                <input type="text" min="0" wire:model="delegatesPhones.{{ $delegate->id }}"
+                                       wire:change="changePhone({{ $delegate->id }}, $event.target.value)"
+                                       class="form-control">
+                                @error('delegatesPhones.' . $delegate->id)
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </td>
+
+                            <td>
                                 <button wire:click="delete({{ $delegate->id }})" class="btn btn-danger btn-sm"><i
                                         class="fa-solid fa-trash"></i></button>
                             </td>
@@ -157,6 +167,13 @@
                                         value="{{ $officeDb->id }}" {{ $delegate->office_id == $officeDb->id ? 'selected' : '' }}>{{ $officeDb->name }}</option>
                                 @endforeach
                             </select>
+                        </td>
+
+                        <td>
+                            <input type="text" wire:model="phone" class="form-control">
+                            @error('phone')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </td>
 
 

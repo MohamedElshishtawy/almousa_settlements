@@ -10,7 +10,7 @@
     <h4 class="text-center">
         إقرار وتعهد بتاريخ
         <br>
-        {{$formatedDate}}
+
     </h4>
 @endsection
 
