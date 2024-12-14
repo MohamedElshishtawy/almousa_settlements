@@ -10,9 +10,7 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($obligation)
-                    <a href="#" class="mx-1 btn btn-secondary">
-                        <i class="fa-solid fa-feather-pointed"></i>
-                    </a>
+
                     <button wire:click="delete" class="btn btn-danger mx-1">
                         <i class="fa-solid fa-trash fa-fw"></i>
                     </button>
