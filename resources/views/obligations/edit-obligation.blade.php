@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="">
-                    @livewire('obligations-livewire')
+                    @livewire('obligations-livewire', [$obligations])
                 </div>
             </div>
         </div>

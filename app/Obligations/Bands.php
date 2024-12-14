@@ -13,7 +13,7 @@ class Bands extends Model
       'head',
       'description',
         'is_active',
-        'obligation_id',
+        'obligations_id',
     ];
 
     public function obligations()

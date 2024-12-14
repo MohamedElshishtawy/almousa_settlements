@@ -15,4 +15,23 @@ class ObligationsController extends Controller
 
         return view('obligations.index-obligations', compact('obligations'));
     }
+
+    public function create()
+    {
+        return view('obligations.create-obligation');
+    }
+
+    public function edit($obligations)
+    {
+        $obligations = Obligations::find($obligations);
+        return view('obligations.edit-obligation', compact('obligations'));
+    }
+
+    public function delete($obligation)
+    {
+        $obligation = Obligations::find($obligation);
+        $obligation->delete();
+        return redirect()->back()->with('success', 'تم حذف الالتزام بنجاح');
+    }
+
 }

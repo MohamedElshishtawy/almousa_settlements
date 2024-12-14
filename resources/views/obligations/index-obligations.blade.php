@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>محاضر على المتعهد</h2>
-                        <a href="#" class="btn btn-success">إضافة</a>
+                        <a href="{{route('obligations.create')}}" class="btn btn-success">إضافة</a>
                     </div>
                     <div class="card-body table-responsive">
                         @if (session('status'))
@@ -30,9 +30,11 @@
                             @forelse ($obligations as $obligation)
                                 <tr>
                                     <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration)}}</td>
-                                    <td>{{\App\Models\Day::DateToHijri($obligation->created_at->formated('Y-m-d'))}}</td>
+                                    <td>{{\App\Models\Day::DateToHijri($obligation->created_at->format('Y-m-d'))}}</td>
                                     <td>{{$obligation->office->name}}</td>
-                                    <td><a href="{{route('obligations.edit', $obligation->id)}}" </td>
+                                    <td><a href="{{route('obligations.edit', $obligation->id)}}" class="btn btn-primary">
+                                            تعديل
+                                        </a> </td>
                                     <td>
                                         <form action="{{route('obligations.destroy', $obligation->id)}}" method="post" style="display: inline-block">
                                             @csrf
