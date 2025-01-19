@@ -118,3 +118,15 @@ footer table th {
         padding-right: 3px;
     }
 }
+.in-text {
+    display: inline;
+    width: 240px;
+}
+.in-text-sm {
+    width: 180px;
+}
+.centered {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}

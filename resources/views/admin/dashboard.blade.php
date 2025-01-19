@@ -75,6 +75,10 @@
                                         <i class="fa-regular fa-calendar-days"></i>
                                         <span>ترجمة التايخ</span>
                                     </a>
+                                    <a href="{{route('admin.companies')}}" class="btn btn-primary">
+                                        <i class="fa-solid fa-handshake"></i>
+                                        <span>شركة العام</span>
+                                    </a>
                                 </div>
 
                             </section>

@@ -4,6 +4,7 @@ namespace App\Obligations;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\HijriDate;
 
 class ObligationsController extends Controller
 {
@@ -25,6 +26,13 @@ class ObligationsController extends Controller
     {
         $obligations = Obligations::find($obligations);
         return view('obligations.edit-obligation', compact('obligations'));
+    }
+
+    public function printPage(Obligations $obligations)
+    {
+        $dateHijri = HijriDate::where('gregorian_date', $obligations->created_at->format('Y-m-d'))->first();
+        return view('obligations.print-obligation', compact('obligations', 'dateHijri'));
+
     }
 
     public function delete($obligation)

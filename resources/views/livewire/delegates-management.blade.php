@@ -112,9 +112,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="6" class="text-center">لا توجد بيانات</td>
-                        </tr>
+
                     @endforelse
                     <tr>
                         <td>
@@ -164,7 +162,7 @@
                                 <option value="">اختر المقر</option>
                                 @foreach($offices as $officeDb)
                                     <option
-                                        value="{{ $officeDb->id }}" {{ $delegate->office_id == $officeDb->id ? 'selected' : '' }}>{{ $officeDb->name }}</option>
+                                        value="{{ $officeDb->id }}">{{ $officeDb->name }}</option>
                                 @endforeach
                             </select>
                         </td>

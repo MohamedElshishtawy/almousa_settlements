@@ -10,15 +10,17 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($obligation)
-
-                    <button wire:click="delete" class="btn btn-danger mx-1">
+                    <button wire:click="delete" class="btn btn-danger">
                         <i class="fa-solid fa-trash fa-fw"></i>
                     </button>
-                    <button wire:loading.remove class="btn btn-primary" wire:click="edit">
+                    <button wire:loading.attr="disabled" class="btn btn-primary  mx-1" wire:click="edit">
                         <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
                     </button>
+                    <a href="{{route('obligations.print', $obligation->id)}}" class="btn btn-secondary">
+                        <i class="fas fa-print"></i>
+                    </a>
                 @else
-                    <button wire:loading.remove class="btn btn-success mx-1" wire:click="save">حفظ</button>
+                    <button wire:loading.attr="disabled" class="btn btn-success mx-1" wire:click="save">حفظ</button>
                 @endif
             </div>
         </div>

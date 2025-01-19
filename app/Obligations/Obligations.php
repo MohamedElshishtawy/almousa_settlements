@@ -2,6 +2,7 @@
 
 namespace App\Obligations;
 
+use App\Models\Company;
 use App\Office\Office;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ class Obligations extends Model
     use HasFactory;
     protected $fillable = [
         'office_id',
-        'company_name',
+        'company_id',
     ];
 
     public static $headers = [
@@ -32,6 +33,11 @@ class Obligations extends Model
     public function office()
     {
         return $this->belongsTo(Office::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 
 }

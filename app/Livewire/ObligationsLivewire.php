@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Company;
 use App\Models\Employee;
 use App\Obligations\Bands;
 use App\Obligations\Obligations;
@@ -12,7 +13,7 @@ class ObligationsLivewire extends Component
 {
 
     public $bands = [], $contents, $headers, $obligation, $selectedOfficeId, $offices;
-    public $selectedBands = [], $company= 'شركة 2025';
+    public $selectedBands = [], $company;
 
     protected function getData() {
 
@@ -22,6 +23,7 @@ class ObligationsLivewire extends Component
 
     public function mount(Obligations $obligation)
     {
+        $this->company = Company::CompanyOfTheSeason();
         $this->offices = Office::all()->filter(function($office) {
             return $office->living->title == 'ميدان';
         });
@@ -75,7 +77,7 @@ class ObligationsLivewire extends Component
     {
         $this->obligation = Obligations::create([
             'office_id' => $this->selectedOfficeId,
-            'company_name' => $this->company,
+            'company_id' => $this->company->id,
         ]);
         foreach ($this->bands as $bandId => $band) {
             Bands::updateOrCreate(
@@ -97,7 +99,7 @@ class ObligationsLivewire extends Component
         // make the update for all data
         $this->obligation->update([
             'office_id' => $this->selectedOfficeId,
-            'company_name' => $this->company,
+            'company_id' => $this->company,
         ]);
         foreach ($this->bands as $bandId => $band) {
             Bands::updateOrCreate(

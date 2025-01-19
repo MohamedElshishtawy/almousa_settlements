@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        /*// seed the week days
+        // seed the week days
         $days = \App\Models\Day::$days;
         foreach ($days as $day) {
             \App\Models\Day::create([
@@ -114,7 +114,7 @@ class DatabaseSeeder extends Seeder
 
                 $start_date->addDay(); // Increment the date by 1
             }
-        }*/
+        }
 
         // Create a new office for every living
         $livings = \App\Living\Living::all();

@@ -31,6 +31,9 @@ class HijriDate extends Model
     public static function formatedDate($date)
     {
         $higri = HijriDate::where('gregorian_date', $date)->first();
+        if (!$higri) {
+            return $date . ' ميلادي';
+        }
         $year = Numbers::ShowInArabicDigits($higri->year);
         $month = Numbers::ShowInArabicDigits($higri->month);
         $day = Numbers::ShowInArabicDigits($higri->day);

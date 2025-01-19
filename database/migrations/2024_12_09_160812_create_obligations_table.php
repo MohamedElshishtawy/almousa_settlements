@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('obligations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Office\Office::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('company_name');
+            $table->foreignIdFor(\App\Models\Company::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

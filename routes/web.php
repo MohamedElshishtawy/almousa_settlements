@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DryFoodReportController;
 use App\Obligations\ObligationsController;
 use App\Office\OfficeController;
@@ -56,6 +57,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
        Route::get('/surplus/{showPrices?}', [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
        Route::get('/benefits/', [ReportController::class, 'AnalyticsBenefits'])->name('admin.analytics.benefits');
     });
+    // Companies prefix
+    Route::prefix('companies')->group(function () {
+        Route::get('/', [CompanyController::class, 'companies'])->name('admin.companies');
+    });
+
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
     Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
     Route::get('/delegates', [\App\Http\Controllers\DelegateController::class, 'index'])->name('admin.delegates');
@@ -86,6 +92,7 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/', [ObligationsController::class, 'index'])->name('obligations');
         Route::get('/create', [ObligationsController::class, 'create'])->name('obligations.create');
         Route::get('/{obligation}/edit', [ObligationsController::class, 'edit'])->name('obligations.edit');
+        Route::get('/{obligations}/print-page', [ObligationsController::class, 'printPage'])->name('obligations.print');
         Route::delete('/{obligation}', [ObligationsController::class, 'delete'])->name('obligations.destroy');
     });
     Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');

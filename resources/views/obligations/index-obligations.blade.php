@@ -23,6 +23,7 @@
                                 <th>اليوم</th>
                                 <th>المقر</th>
                                 <th>تعديل</th>
+                                <th>طباعة</th>
                                 <th>حذف</th>
                             </tr>
                             </thead>
@@ -32,9 +33,16 @@
                                     <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration)}}</td>
                                     <td>{{\App\Models\Day::DateToHijri($obligation->created_at->format('Y-m-d'))}}</td>
                                     <td>{{$obligation->office->name}}</td>
-                                    <td><a href="{{route('obligations.edit', $obligation->id)}}" class="btn btn-primary">
+                                    <td>
+                                        <a href="{{route('obligations.edit', $obligation->id)}}" class="btn btn-primary">
                                             تعديل
-                                        </a> </td>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('obligations.print', $obligation->id)}}" class="btn btn-primary">
+                                            طباعة
+                                        </a>
+                                    </td>
                                     <td>
                                         <form action="{{route('obligations.destroy', $obligation->id)}}" method="post" style="display: inline-block">
                                             @csrf
