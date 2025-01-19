@@ -76,12 +76,12 @@
                 <tr>
                     <th>الاسم</th>
                     <td>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" value="{{auth()->user()->name}}">
                     </td>
                 </tr>
                 <tr>
                     <th>الرتبة</th>
-                    <td><input type="text" class="form-control"></td>
+                    <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
                 </tr>
                 <tr>
                     <th>التوقيع</th>
