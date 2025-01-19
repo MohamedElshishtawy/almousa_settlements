@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Mission\Mission;
+use App\Office\Office;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +24,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        // seed the week days
+        /*// seed the week days
         $days = \App\Models\Day::$days;
         foreach ($days as $day) {
             \App\Models\Day::create([
@@ -112,6 +114,27 @@ class DatabaseSeeder extends Seeder
 
                 $start_date->addDay(); // Increment the date by 1
             }
+        }*/
+
+        // Create a new office for every living
+        $livings = \App\Living\Living::all();
+        foreach ($livings as $living) {
+            $office = $living->office()->create([
+                'name' => 'مكتب ' . $living->title,
+            ]);
+            // add the getting ready date start and end
+            $office->OfficeMissions()->create([
+                'start_date' => now()->startOfMonth()->toDateString(),
+                'end_date' => now()->startOfMonth()->addDays(4)->toDateString(),
+                'mission_id' => Mission::gettingReadyMissionsIds()[0],
+            ]);
+            // the mission date start and end
+            $office->OfficeMissions()->create([
+                'start_date' => now()->startOfMonth()->addDays(5)->toDateString(),
+                'end_date' => now()->endOfMonth()->toDateString(),
+                'mission_id' => Mission::gettingMainMissionsIds()[0],
+            ]);
+
         }
     }
 
@@ -131,6 +154,7 @@ class DatabaseSeeder extends Seeder
         ];
         return $weekdays[$weekdayIndex];
     }
+
 
 
 

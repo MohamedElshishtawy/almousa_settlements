@@ -27,6 +27,11 @@ class Mission extends Model
         return Mission::whereIn('title', ['حج تجهيز', 'رمضان تجهيز'])->pluck('id')->toArray();
     }
 
+    public static function gettingMainMissionsIds()
+    {
+        return Mission::whereIn('title', ['حج', 'رمضان'])->pluck('id')->toArray();
+    }
+
     public static function syncMainWithReady($mainMissionId)
     {
 
