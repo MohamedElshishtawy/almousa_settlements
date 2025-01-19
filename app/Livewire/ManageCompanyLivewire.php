@@ -16,7 +16,7 @@ class ManageCompanyLivewire extends Component
 
     protected array $rules = [
         'name' => 'required|string|max:255',
-        'date' => 'required|date|unique:companies,date',
+        'date' => 'require|unique:companies,date',
         'names.*' => 'string|max:255',
         'dates.*' => 'date|unique:companies,date',
     ];
