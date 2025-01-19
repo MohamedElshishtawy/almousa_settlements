@@ -99,7 +99,7 @@ class ObligationsLivewire extends Component
         // make the update for all data
         $this->obligation->update([
             'office_id' => $this->selectedOfficeId,
-            'company_id' => $this->company,
+            'company_id' => $this->company->id,
         ]);
         foreach ($this->bands as $bandId => $band) {
             Bands::updateOrCreate(
