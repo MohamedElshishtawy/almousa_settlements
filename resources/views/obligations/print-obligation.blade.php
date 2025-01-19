@@ -43,9 +43,7 @@
                     إنه فى يوم
                     {{$dateHijri['weekday']}}
                     الموافق للتاريخ أعلاه انه بمعرفتى انا رئيس لجنة الإستلام الفرعية
-                    <input class="form-control in-text in-text-sm" placeholder="الرتبة">
-                    /
-                    <input class="form-control in-text " placeholder="الاسم">
+                    {{auth()->user()->rank}}/{{auth()->user()->name}}
                     ومن خلال مباشرة أعمال الإعاشة بمقر
                     {{$obligations->office->name}}
                     {{$obligations->office->living->title}}
