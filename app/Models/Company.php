@@ -26,7 +26,7 @@ class Company extends Model
 
     public static function CompanyOfTheSeason(): Company
     {
-        return Company::whereYear('date', now()->year)->first() ?: Company::create([
+        return Company::where('is_active' , true)->first() ?: Company::create([
             'name' => 'شركة عام' . now()->year,
             'date' => now()->format('Y-m-d'),
             'delegate_name' => 'ممثل الشركة',

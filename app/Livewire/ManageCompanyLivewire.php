@@ -63,7 +63,7 @@ class ManageCompanyLivewire extends Component
         if ($company) {
             $company->$field = $value ?? '';
             if ($field === 'is_active') {
-                $comps = Company::where('is_active', '>', 0)->update(['is_active' => false]);
+                $comps = Company::where('is_active', true)->update(['is_active' => false]);
                 $company->is_active = true;
             }
             $company->save();
