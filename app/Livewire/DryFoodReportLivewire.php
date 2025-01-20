@@ -67,6 +67,10 @@ class DryFoodReportLivewire extends Component
             $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
                 ->where('mission_id', $this->selectedMissionId)->get();
             $this->products = $productMissionLivings->map(fn ($productMissionLiving) => $productMissionLiving->product);
+            // get only products that have both carton and packet values
+            $this->products = $this->products->filter(function($product) {
+                return $product->carton_value && $product->packet_value;
+            });
         }
     }
 

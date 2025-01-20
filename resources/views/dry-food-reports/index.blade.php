@@ -34,7 +34,7 @@
                             </thead>
                             <tbody>
                             @php($n = 1)
-                                @foreach ($dryFoodReports as $dryFoodReport)
+                                @forelse ($dryFoodReports as $dryFoodReport)
                                     <tr>
                                         <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($n++)}}</td>
                                         <td>{{$dryFoodReport->delegate->name}}</td>
@@ -54,7 +54,11 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="100" class="text-center">لا يوجد محاضر</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
 
                         </table>
