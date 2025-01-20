@@ -20,10 +20,10 @@
                         </thead>
                         <tbody>
                         @php
-                        $startDate = date('Y-m-d', strtotime($dryFoodReport->start_date));
-                        $endDate = date('Y-m-d', strtotime($dryFoodReport->end_date));
-                        $benefits =  $dryFoodReport->delegate->benefits;
-                        $office = $dryFoodReport->delegate->office;
+                            $startDate = date('Y-m-d', strtotime($dryFoodReport->start_date));
+                            $endDate = date('Y-m-d', strtotime($dryFoodReport->end_date));
+                            $benefits =  $dryFoodReport->delegate->benefits;
+                            $office = $dryFoodReport->delegate->office;
                         @endphp
                         @foreach($products as $product)
                             @php
@@ -47,10 +47,10 @@
                                     }
                                     $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
                                 }
-                                $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
-                                $cartonValue = floor($totalPacketValue / $product->carton_value);
-                                $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);
-                                $unitValue = $totalAmount / $product->packet_value - $totalPacketValue;
+                                $totalPacketValue = ($product->packet_value != 0) ? floor($totalAmount / $product->packet_value) : 0;
+                                $cartonValue = ($product->carton_value != 0) ? floor($totalPacketValue / $product->carton_value) : 0;
+                                $packetValue = ($product->carton_value != 0) ? floor($totalPacketValue - $cartonValue * $product->carton_value) : 0;
+                                $unitValue = ($product->packet_value != 0) ? $totalAmount / $product->packet_value - $totalPacketValue : 0;
                                 $unitValue = round($unitValue, 4);
                             @endphp
                             <tr>
