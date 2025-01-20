@@ -5,6 +5,7 @@ namespace App\Livewire\Papers;
 use Alkoumi\LaravelArabicNumbers\Numbers;
 use App\Models\Delegate;
 use App\Models\HijriDate;
+use App\Models\Meal;
 use App\Office\Office;
 use Livewire\Component;
 
@@ -15,6 +16,7 @@ class DelegateDoesNotWantLivewire extends Component
     public $selectedDelegateId = null;
     public $delegate;
     public $formatedDate, $dateHijri;
+    public $meals = [], $selectedMeal, $selectedMealId;
 
     public function mount()
     {
@@ -23,6 +25,7 @@ class DelegateDoesNotWantLivewire extends Component
         $this->offices = Office::all()->filter(function($office) {
             return $office->living->title == 'ميدان';
         });
+        $this->meals = Meal::all();
 
     }
 
@@ -50,6 +53,11 @@ class DelegateDoesNotWantLivewire extends Component
         $this->delegate = $this->selectedDelegateId ? Delegate::find($this->selectedDelegateId) : null;
     }
 
+    public function updatedSelectedMealId()
+    {
+        $this->selectedMeal = $this->selectedMealId ? Meal::find($this->selectedMealId) : null;
+
+    }
 
     public function render()
     {

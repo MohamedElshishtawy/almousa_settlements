@@ -26,6 +26,17 @@
             </td>
         </tr>
         <tr>
+            <th>الوجبة</th>
+            <td colspan="100">
+                <select wire:model.live="selectedMealId" class="form-select">
+                    <option value="">إختر الوجبة</option>
+                    @foreach($meals as $meal)
+                        <option value="{{$meal->id}}" @if($meal->id == $selectedMealId) selected @endif>{{$meal->name}}</option>
+                    @endforeach
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th>التاريخ ميلادى</th>
             <td>
                 <input type="date" wire:model.live="date" class="form-control">
@@ -57,9 +68,7 @@
                 إنه فى يوم
                 {{$dateHijri['weekday']}}
                 الموافق للتاريخ أعلاه أثناء صرف وجبة
-                <div class="my-1">
-                    <textarea class="form-control" placeholder="اكتب هنا ..."></textarea>
-                </div>
+                {{$selectedMeal ? $selectedMeal->name : ''}}
                 حضر مندوب رقم
                 {{$delegate ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($delegate->number) : '0'}}
                 {{$delegate ? $delegate->institution : 'اسم الجهة'}}.
@@ -86,23 +95,23 @@
                 <th colspan="2">
                     <div class="">
                         <span>مشرف صرف وجبة</span>
-                        <input type="text" class="form-control text-center">
+                        {{$selectedMeal ? $selectedMeal->name : ''}}
                     </div>
                 </th>
             </tr>
             <tr>
                 <th>الاسم</th>
                 <td>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" value="{{auth()->user()->name}}">
                 </td>
                 <th>الاسم</th>
-                <td><input type="text" class="form-control"></td>
+                <td><input type="text" class="form-control" value="{{$delegate ? $delegate->name : ''}}"></td>
             </tr>
             <tr>
                 <th>الرتبة</th>
-                <td><input type="text" class="form-control"></td>
+                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
                 <th>الرتبة</th>
-                <td><input type="text" class="form-control"></td>
+                <td><input type="text" class="form-control" value="{{$delegate ? $delegate->rank : ''}}"></td>
             </tr>
             <tr>
                 <th>التوقيع</th>
