@@ -11,7 +11,13 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'date'];
+    protected $fillable = [
+        'name',
+        'delegate_name',
+        'delegate_rank',
+        'delegate_phone',
+        'is_active',
+    ];
 
     public function obligations(): HasMany
     {
@@ -23,6 +29,10 @@ class Company extends Model
         return Company::whereYear('date', now()->year)->first() ?: Company::create([
             'name' => 'شركة عام' . now()->year,
             'date' => now()->format('Y-m-d'),
+            'delegate_name' => 'ممثل الشركة',
+            'delegate_rank' => 'مدير',
+            'delegate_phone' => '01000000000',
+            'is_active' => true,
         ]);
     }
 }

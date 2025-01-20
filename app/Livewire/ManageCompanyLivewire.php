@@ -4,21 +4,30 @@ namespace App\Livewire;
 
 use App\Models\Company;
 use Livewire\Component;
-use mysql_xdevapi\Collection;
 
 class ManageCompanyLivewire extends Component
 {
     public string $name = '';
-    public string $date = '';
+    public string $delegate_name = '';
+    public string $delegate_rank = '';
+    public string $delegate_phone = '';
+    public bool $is_active = false;
+
     public array $names = [];
-    public array $dates = [];
-    public $companies   = [];
+    public array $delegate_names = [];
+    public array $delegate_ranks = [];
+    public array $delegate_phones = [];
+    public array $is_actives = [];
+    public $companies = [];
 
     protected array $rules = [
         'name' => 'required|string|max:255',
-        'date' => 'required|unique:companies,date',
+        'delegate_name' => 'string|max:255',
+        'delegate_rank' => 'string|max:255',
+        'delegate_phone' => 'string|max:255',
+        'is_active' => 'boolean',
         'names.*' => 'string|max:255',
-        'dates.*' => 'date|unique:companies,date',
+        'is_actives.*' => 'boolean',
     ];
 
     public function mount(): void
@@ -30,38 +39,33 @@ class ManageCompanyLivewire extends Component
     {
         $this->companies = Company::all();
         foreach ($this->companies as $company) {
-            $this->names[$company['id']] = $company['name'];
-            $this->dates[$company['id']] = $company['date'];
+            $this->names[$company->id] = $company->name;
+            $this->delegate_names[$company->id] = $company->delegate_name;
+            $this->delegate_ranks[$company->id] = $company->delegate_rank;
+            $this->delegate_phones[$company->id] = $company->delegate_phone;
+            $this->is_actives[$company->id] = $company->is_active;
         }
     }
 
     public function delete(int $id): void
     {
         $company = Company::find($id);
-        if ($company && $company->obligations()->count() == 0) {
+        if ($company && $company->obligations()->count() === 0) {
             $company->delete();
             $this->getCompanies();
         }
     }
 
-    public function editName(int $id): void
+    public function editField(int $id, string $field, $value): void
     {
-        $this->validateOnly('names.' . $id);
-
+//        $this->validateOnly("$field.$id");
         $company = Company::find($id);
         if ($company) {
-            $company->name = $this->names[$id] ?: 'غير معروف';
-            $company->save();
-        }
-    }
-
-    public function editDate(int $id): void
-    {
-        $this->validateOnly('dates.' . $id);
-
-        $company = Company::find($id);
-        if ($company) {
-            $company->date = $this->dates[$id];
+            $company->$field = $value ?? '';
+            if ($field === 'is_active') {
+                $comps = Company::where('is_active', '>', 0)->update(['is_active' => false]);
+                $company->is_active = true;
+            }
             $company->save();
         }
     }
@@ -70,10 +74,17 @@ class ManageCompanyLivewire extends Component
     {
         $this->validate();
 
-        Company::create([
+        $company = Company::create([
             'name' => $this->name,
-            'date' => $this->date,
+            'delegate_name' => $this->delegate_name,
+            'delegate_rank' => $this->delegate_rank,
+            'delegate_phone' => $this->delegate_phone,
+            'is_active' => $this->is_active,
         ]);
+
+        if ($this->is_active) {
+            Company::where('id', '!=', $company->id)->update(['is_active' => false]);
+        }
 
         $this->resetForm();
         $this->getCompanies();
@@ -82,7 +93,10 @@ class ManageCompanyLivewire extends Component
     protected function resetForm(): void
     {
         $this->name = '';
-        $this->date = '';
+        $this->delegate_name = '';
+        $this->delegate_rank = '';
+        $this->delegate_phone = '';
+        $this->is_active = false;
     }
 
     public function render()

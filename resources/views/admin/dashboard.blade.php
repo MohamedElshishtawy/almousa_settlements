@@ -77,7 +77,7 @@
                                     </a>
                                     <a href="{{route('admin.companies')}}" class="btn btn-primary">
                                         <i class="fa-solid fa-handshake"></i>
-                                        <span>شركة العام</span>
+                                        <span>شركة الموسم</span>
                                     </a>
                                 </div>
 
