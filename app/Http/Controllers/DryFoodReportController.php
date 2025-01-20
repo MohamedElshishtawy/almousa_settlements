@@ -43,6 +43,10 @@ class DryFoodReportController extends Controller
         $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
             ->where('mission_id', $dryFoodReport->mission_id)->get();
         $products = $productMissionLivings->map(fn ($productMissionLiving) => $productMissionLiving->product);
+        // filter only products that have both carton and packet values
+        $products = $products->filter(function ($product) {
+            return $product->carton_value && $product->packet_value;
+        });
         return view('dry-food-reports.print', compact('dryFoodReport', 'products'));
     }
 
