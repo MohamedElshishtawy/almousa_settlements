@@ -53,7 +53,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center">لا يوجد محاضر</td>
+                                    <td colspan="100" class="text-center">لا يوجد محاضر</td>
                                 </tr>
                             @endforelse
                             </tbody>
