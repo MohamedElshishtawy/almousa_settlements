@@ -11,43 +11,44 @@ use Livewire\Component;
 
 class ObligationsLivewire extends Component
 {
-
-    public $bands = [], $contents, $headers, $obligation, $selectedOfficeId, $offices;
-    public $selectedBands = [], $company;
-
-    protected function getData() {
-
-
-
-    }
+    public $bands = [];
+    public $contents = [];
+    public $headers;
+    public $obligation;
+    public $selectedOfficeId;
+    public $offices;
+    public $selectedBands = [];
+    public $company;
 
     public function mount(Obligations $obligation)
     {
+        // Load the company and offices for initialization
         $this->company = Company::CompanyOfTheSeason();
-        $this->offices = Office::all()->filter(function($office) {
-            return $office->living->title == 'ميدان';
-        });
-        $this->selectedOfficeId = auth()->user()->isAdmin() ? $this->offices->first()->id :
-        Employee::find(auth()->user()->id)->office()->id;
+        $this->offices = Office::all()->filter(fn($office) => $office->living->title === 'ميدان');
 
+        // Determine the selected office
+        $this->selectedOfficeId = auth()->user()->isAdmin()
+            ? $this->offices->first()->id
+            : Employee::find(auth()->user()->id)->office()->id;
+
+        // Initialize obligation and bands
         if ($obligation->id) {
-            $this->obligation = $obligation;
-            $dbBands = Bands::where('obligations_id', $obligation->id)->get();
-            // sort by getting is active first
-            $dbBands = $dbBands->sortByDesc('is_active');
-            // pluck but make the key to be the band id
-            $this->bands = $dbBands->pluck('head', 'id')->toArray();
-            $this->contents = $dbBands->pluck('description', 'id')->toArray();
-            $this->selectedBands = $dbBands->filter(function($band) {
-                return $band->is_active;
-            })->pluck('id')->toArray();
+            $this->initializeExistingObligation($obligation);
         } else {
             $this->bands = Obligations::$headers;
             $this->contents = [];
         }
+    }
 
+    private function initializeExistingObligation(Obligations $obligation)
+    {
+        $this->obligation = $obligation;
 
-
+        // Retrieve bands sorted by active status
+        $dbBands = Bands::where('obligations_id', $obligation->id)->get()->sortByDesc('is_active');
+        $this->bands = $dbBands->pluck('head', 'id')->toArray();
+        $this->contents = $dbBands->pluck('description', 'id')->toArray();
+        $this->selectedBands = $dbBands->filter(fn($band) => $band->is_active)->pluck('id')->toArray();
     }
 
     public function toggleActivated($bandId)
@@ -56,6 +57,8 @@ class ObligationsLivewire extends Component
         if ($band) {
             $band->update(['is_active' => !$band->is_active]);
         }
+
+        // Toggle the band's selection state
         if (in_array($bandId, $this->selectedBands)) {
             $this->selectedBands = array_diff($this->selectedBands, [$bandId]);
         } else {
@@ -79,40 +82,46 @@ class ObligationsLivewire extends Component
             'office_id' => $this->selectedOfficeId,
             'company_id' => $this->company->id,
         ]);
-        foreach ($this->bands as $bandId => $band) {
-            Bands::updateOrCreate(
-                ['id' => $bandId],
-                [
-                    'head' => $band,
-                    'description' => $this->contents[$bandId] ?? null,
-                    'is_active' => in_array($bandId, $this->selectedBands),
-                    'obligations_id' => $this->obligation->id
-                ]
-            );
-        }
 
+        $this->saveBands();
         $this->redirect(route('obligations.edit', $this->obligation->id));
     }
 
     public function edit()
     {
-        // make the update for all data
         $this->obligation->update([
             'office_id' => $this->selectedOfficeId,
             'company_id' => $this->company->id,
         ]);
+
+        $this->editBands();
+    }
+
+    private function saveBands()
+    {
         foreach ($this->bands as $bandId => $band) {
-            Bands::updateOrCreate(
-                ['id' => $bandId],
+            Bands::create(
                 [
                     'head' => $band,
                     'description' => $this->contents[$bandId] ?? null,
                     'is_active' => in_array($bandId, $this->selectedBands),
-                    'obligations_id' => $this->obligation->id
+                    'obligations_id' => $this->obligation->id,
                 ]
             );
         }
     }
+
+    //edit bands
+    private function editBands()
+    {
+        // delete all bands
+        Bands::where('obligations_id', $this->obligation->id)->delete();
+
+        // save bands
+        $this->saveBands();
+    }
+
+
 
     public function delete()
     {
