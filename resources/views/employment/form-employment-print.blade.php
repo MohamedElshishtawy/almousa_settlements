@@ -15,7 +15,6 @@
                 و حالتهم
             </th>
         </tr>
-
         <!-- Split Titles into Rows -->
         @foreach(collect($titleAndCountsArr)->chunk(5) as $titleAndCountsArrChunked)
             <tr>
