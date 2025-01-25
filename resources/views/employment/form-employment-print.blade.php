@@ -18,19 +18,23 @@
 
         <!-- Split Titles into Rows -->
         @foreach(collect($titleAndCountsArr)->chunk(5) as $titleAndCountsArrChunked)
-            @foreach($titleAndCountsArrChunked as $titleAndCounts)
-                <tr>
-                    <td colspan="10">{{$titleAndCounts['title']}}</td>
-                </tr>
-                <tr>
+            <tr>
+                @foreach($titleAndCountsArrChunked as $titleAndCounts)
+                    <td colspan="2">{{$titleAndCounts['title']}}</td>
+                @endforeach
+            </tr>
+            <tr>
+                @foreach($titleAndCountsArrChunked as $titleAndCounts)
                     <td>المقرر</td>
                     <td>الموجود</td>
-                </tr>
-                <tr>
+                @endforeach
+            </tr>
+            <tr>
+                @foreach($titleAndCountsArrChunked as $titleAndCounts)
                     <td>{{$titleAndCounts['expected']}}</td>
                     <td>{{$titleAndCounts['real']}}</td>
-                </tr>
-            @endforeach
+                @endforeach
+            </tr>
         @endforeach
     </table>
 

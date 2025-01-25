@@ -21,31 +21,23 @@ class EmploymentController extends Controller
     {
         $formEmployment = $import->formEmployment;
         $formEmploymentElements = $formEmployment->formEmploymentElements;
-        $titles = $formEmploymentElements->pluck('title')->toArray();
-        $ealCounts = $formEmploymentElements->pluck('count')->toArray();
-        $counts = [];
-        foreach ($ealCounts as $id => $realCount) {
-            $counts[$id]['real'] = $realCount;
-            $formEmploymentElement = $formEmploymentElements->where('id', $id)->first();
-            $counts[$id]['expected'] = $formEmploymentElement
-                ->getEmploymentRealCount($formEmploymentElement->benefits,
-                    $formEmploymentElement->main_count,$import->getBenefits());
-        }
-        $titleAndCountsArr = [];
-        foreach ($titles as $index => $title) {
-            $titleAndCountsArr[] = [
-                'title' => $title,
-                'real' => $counts[$index]['real'],
-                'expected' => $counts[$index]['expected'],
+
+        $titleAndCountsArr = $formEmploymentElements->map(function ($formEmploymentElement) use ($import) {
+            return [
+                'title' => $formEmploymentElement->title,
+                'real' => $formEmploymentElement->count,
+                'expected' => $formEmploymentElement->getEmploymentRealCount(
+                    $formEmploymentElement->benefits,
+                    $formEmploymentElement->main_count,
+                    $import->getBenefits()
+                ),
             ];
-        }
+        })->toArray();
+
         return view('employment.form-employment-print', compact(
             'import',
             'formEmployment',
-            'titles',
-            'counts',
             'titleAndCountsArr'
         ));
-
     }
 }
