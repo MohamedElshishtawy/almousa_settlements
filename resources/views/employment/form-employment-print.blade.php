@@ -79,7 +79,7 @@
             <th colspan="2">المشرف على موقع صرف الإعاشة ب{{$formEmployment->import->report->office->name}}</th>
         </tr>
         <tr>
-            <th >">الاسم</th>
+            <th >الاسم</th>
             <td>
                 <input type="text" class="form-control" value="{{auth()->user()->name}}">
             </td>
