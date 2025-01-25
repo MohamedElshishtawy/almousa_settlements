@@ -15,26 +15,40 @@
                 و حالتهم
             </th>
         </tr>
-        <tr>
-            @foreach($titles as $title)
-                <th colspan="2">{{$title}}</th>
-            @endforeach
-            <th colspan="2">الملاحظات</th>
-        </tr>
-        <tr>
-            @for($i=0; $i<count($counts); $i++)
-                <th>المقرر</th>
-                <th>الموجود</th>
-            @endfor
-            <td colspan="2" rowspan="2"></td>
-        </tr>
-        <tr>
-            @foreach($counts as $count)
-                <td>{{$count['expected']}}</td>
-                <td>{{$count['real']}}</td>
-            @endforeach
-        </tr>
+
+        <!-- Split Titles into Rows -->
+        @foreach($titles->chunk(5) as $chunkedTitles)
+            <tr>
+                @foreach($chunkedTitles as $title)
+                    <th colspan="2">{{$title}}</th>
+                @endforeach
+                @if($loop->last)
+                    <th colspan="2">الملاحظات</th>
+                @endif
+            </tr>
+            <tr>
+                @foreach($chunkedTitles as $index => $title)
+                    <th>المقرر</th>
+                    <th>الموجود</th>
+                @endforeach
+                @if($loop->last)
+                    <td colspan="2" rowspan="{{ ceil(count($titles) / 5) }}"></td>
+                @endif
+            </tr>
+        @endforeach
+
+        <!-- Display Counts -->
+        @foreach($counts->chunk(5) as $chunkedCounts)
+            <tr>
+                @foreach($chunkedCounts as $count)
+                    <td>{{$count['expected']}}</td>
+                    <td>{{$count['real']}}</td>
+                @endforeach
+            </tr>
+        @endforeach
     </table>
+
+
 
     <p class="mt-3">
         السلام عليكم ورحمة الله وبركاته،
