@@ -31,11 +31,20 @@ class EmploymentController extends Controller
                 ->getEmploymentRealCount($formEmploymentElement->benefits,
                     $formEmploymentElement->main_count,$import->getBenefits());
         }
+        $titleAndCountsArr = [];
+        foreach ($titles as $index => $title) {
+            $titleAndCountsArr[] = [
+                'title' => $title,
+                'real' => $counts[$index]['real'],
+                'expected' => $counts[$index]['expected'],
+            ];
+        }
         return view('employment.form-employment-print', compact(
             'import',
             'formEmployment',
             'titles',
             'counts',
+            'titleAndCountsArr'
         ));
 
     }

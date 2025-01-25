@@ -17,34 +17,20 @@
         </tr>
 
         <!-- Split Titles into Rows -->
-        @foreach(collect($titles)->chunk(5) as $chunkedTitles)
-            <tr>
-                @foreach($chunkedTitles as $title)
-                    <th colspan="2">{{$title}}</th>
-                @endforeach
-                @if($loop->last)
-                    <th colspan="2">الملاحظات</th>
-                @endif
-            </tr>
-            <tr>
-                @foreach($chunkedTitles as $title)
-                    <th>المقرر</th>
-                    <th>الموجود</th>
-                @endforeach
-                @if($loop->last)
-                    <td colspan="2" rowspan="{{ ceil(count($titles) / 5) }}"></td>
-                @endif
-            </tr>
-        @endforeach
-
-        <!-- Display Counts -->
-        @foreach(collect($counts)->chunk(5) as $chunkedCounts)
-            <tr>
-                @foreach($chunkedCounts as $count)
-                    <td>{{$count['expected']}}</td>
-                    <td>{{$count['real']}}</td>
-                @endforeach
-            </tr>
+        @foreach(collect($titleAndCountsArr)->chunk(5) as $titleAndCountsArrChunked)
+            @foreach($titleAndCountsArrChunked as $titleAndCounts)
+                <tr>
+                    <td colspan="10">{{$titleAndCounts['title']}}</td>
+                </tr>
+                <tr>
+                    <td>المقرر</td>
+                    <td>الموجود</td>
+                </tr>
+                <tr>
+                    <td>{{$titleAndCounts['expected']}}</td>
+                    <td>{{$titleAndCounts['real']}}</td>
+                </tr>
+            @endforeach
         @endforeach
     </table>
 
