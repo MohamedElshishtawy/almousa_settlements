@@ -2,6 +2,7 @@
 
 namespace App\Report;
 
+use App\Employment\FormEmployment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,5 +39,15 @@ class Import extends Model
             }
         }
         return $isDifferance;
+    }
+
+    public function getBenefits()
+    {
+        return $this->benefits - $this->benefits_error;
+    }
+
+    public function formEmployment()
+    {
+        return $this->hasOne(FormEmployment::class);
     }
 }

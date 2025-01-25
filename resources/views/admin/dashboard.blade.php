@@ -79,6 +79,10 @@
                                         <i class="fa-solid fa-handshake"></i>
                                         <span>شركة الموسم</span>
                                     </a>
+                                    <a href="{{route('admin.employment')}}" class="btn btn-primary">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span>إعدادات العمالة</span>
+                                    </a>
                                 </div>
 
                             </section>

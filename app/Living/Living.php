@@ -2,6 +2,7 @@
 
 namespace App\Living;
 
+use App\Employment\Employment;
 use App\Office\Office;
 use App\Product\ProductLivingMission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,5 +26,10 @@ class Living extends Model
     public function office()
     {
         return $this->hasMany(Office::class);
+    }
+
+    public function employments()
+    {
+        return $this->hasMany(Employment::class);
     }
 }

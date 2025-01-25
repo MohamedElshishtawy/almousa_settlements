@@ -1,5 +1,6 @@
 <?php
 
+use App\Employment\EmploymentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DryFoodReportController;
@@ -61,6 +62,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'companies'])->name('admin.companies');
     });
+    // employment prefix
+    Route::prefix('employment')->group(function () {
+        Route::get('/', [EmploymentController::class, 'employment'])->name('admin.employment');
+    });
 
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
     Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
@@ -94,6 +99,12 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/{obligation}/edit', [ObligationsController::class, 'edit'])->name('obligations.edit');
         Route::get('/{obligations}/print-page', [ObligationsController::class, 'printPage'])->name('obligations.print');
         Route::delete('/{obligation}', [ObligationsController::class, 'delete'])->name('obligations.destroy');
+    });
+    Route::prefix('employment-form/{import}')->group(function () {
+        Route::get('/', [EmploymentController::class, 'employmentForm'])
+            ->name('managers.employment');
+        Route::get('/print', [EmploymentController::class, 'employmentFormPrint'])
+            ->name('managers.employment.print');
     });
     Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
 

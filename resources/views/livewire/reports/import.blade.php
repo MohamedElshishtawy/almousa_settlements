@@ -37,6 +37,12 @@
 
         <table class="table table-borderless">
             <tbody>
+            @if($report && $report->import)
+                <tr>
+                    <th>تقييم العمالة</th>
+                    <td><a href="{{ route('managers.employment', ['import' => $report->import]) }}">عمل التقييم</a></td>
+                </tr>
+            @endif
             <tr>
                 <th>اسم المقر</th>
                 <td><a href="{{ route('admin.offices') }}#{{ $office->id }}">{{ $office->name }}</a></td>
