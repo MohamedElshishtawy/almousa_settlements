@@ -22,7 +22,7 @@ class EmploymentController extends Controller
         $formEmployment = $import->formEmployment;
         $formEmploymentElements = $formEmployment->formEmploymentElements;
         $titles = $formEmploymentElements->pluck('title')->toArray();
-        $ealCounts = $formEmploymentElements->pluck('count', 'id')->toArray();
+        $ealCounts = $formEmploymentElements->pluck('count')->toArray();
         $counts = [];
         foreach ($ealCounts as $id => $realCount) {
             $counts[$id]['real'] = $realCount;
