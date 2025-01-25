@@ -17,7 +17,7 @@
         </tr>
 
         <!-- Split Titles into Rows -->
-        @foreach($titles->chunk(5) as $chunkedTitles)
+        @foreach(collect($titles)->chunk(5) as $chunkedTitles)
             <tr>
                 @foreach($chunkedTitles as $title)
                     <th colspan="2">{{$title}}</th>
@@ -27,7 +27,7 @@
                 @endif
             </tr>
             <tr>
-                @foreach($chunkedTitles as $index => $title)
+                @foreach($chunkedTitles as $title)
                     <th>المقرر</th>
                     <th>الموجود</th>
                 @endforeach
@@ -38,7 +38,7 @@
         @endforeach
 
         <!-- Display Counts -->
-        @foreach($counts->chunk(5) as $chunkedCounts)
+        @foreach(collect($counts)->chunk(5) as $chunkedCounts)
             <tr>
                 @foreach($chunkedCounts as $count)
                     <td>{{$count['expected']}}</td>
@@ -47,6 +47,7 @@
             </tr>
         @endforeach
     </table>
+
 
 
 
