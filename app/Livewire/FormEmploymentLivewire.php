@@ -133,6 +133,32 @@ class FormEmploymentLivewire extends Component
     public function updateCounts($formEmploymentElementId, $value)
     {
         $this->counts[$formEmploymentElementId] = $value;
+        $this->checkCounts();
+    }
+
+
+    protected function checkCounts()
+    {
+        $check = true;
+        if ($this->formEmployment) {
+            $this->formEmployment->formEmploymentElements->each(function ($element) use (&$check) {
+                if ($element->main_count > $this->counts[$element->id]) {
+                    $check = false;
+                }
+            });
+        } else {
+            foreach ($this->counts as $index => $count) {
+                if ($count != $this->mainCounts[$index]) {
+                    $check = false;
+                }
+            }
+        }
+
+        if ($check) {
+            $this->countState = 'مكتملة';
+        } else {
+            $this->countState = 'غير مكتملة';
+        }
     }
 
     public function render()
