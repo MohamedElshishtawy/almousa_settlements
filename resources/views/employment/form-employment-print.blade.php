@@ -17,25 +17,44 @@
         </tr>
 
         <!-- Split Titles into Rows -->
-        @foreach(collect($titleAndCountsArr)->chunk(5) as $titleAndCountsArrChunked)
+        <table class="text-center">
             <tr>
-                @foreach($titleAndCountsArrChunked as $titleAndCounts)
-                    <td colspan="2">{{$titleAndCounts['title']}}</td>
-                @endforeach
+                <th colspan="100">
+                    بيان بأعداد العمالة الموجودة بموقع صرف الإعاشة ب
+                    {{$formEmployment->import->report->office->name}}
+                    و حالتهم
+                </th>
             </tr>
-            <tr>
-                @foreach($titleAndCountsArrChunked as $titleAndCounts)
-                    <td>المقرر</td>
-                    <td>الموجود</td>
-                @endforeach
-            </tr>
-            <tr>
-                @foreach($titleAndCountsArrChunked as $titleAndCounts)
-                    <td>{{$titleAndCounts['expected']}}</td>
-                    <td>{{$titleAndCounts['real']}}</td>
-                @endforeach
-            </tr>
-        @endforeach
+            @foreach(collect($titleAndCountsArr)->chunk(5) as $titleAndCountsArrChunked)
+                <tr>
+                    @foreach($titleAndCountsArrChunked as $titleAndCounts)
+                        <th colspan="2">{{$titleAndCounts['title']}}</th>
+                    @endforeach
+                    @if(count($titleAndCountsArrChunked) < 5)
+                        <th colspan="{{ (5 - count($titleAndCountsArrChunked)) * 2 }}"></th>
+                    @endif
+                </tr>
+                <tr>
+                    @foreach($titleAndCountsArrChunked as $titleAndCounts)
+                        <td>المقرر</td>
+                        <td>الموجود</td>
+                    @endforeach
+                    @if(count($titleAndCountsArrChunked) < 5)
+                        <td colspan="{{ (5 - count($titleAndCountsArrChunked)) * 2 }}"></td>
+                    @endif
+                </tr>
+                <tr>
+                    @foreach($titleAndCountsArrChunked as $titleAndCounts)
+                        <td>{{$titleAndCounts['expected']}}</td>
+                        <td>{{$titleAndCounts['real']}}</td>
+                    @endforeach
+                    @if(count($titleAndCountsArrChunked) < 5)
+                        <td colspan="{{ (5 - count($titleAndCountsArrChunked)) * 2 }}"></td>
+                    @endif
+                </tr>
+            @endforeach
+        </table>
+
     </table>
 
 
