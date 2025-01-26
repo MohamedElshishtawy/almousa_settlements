@@ -43,7 +43,7 @@
             <tr>
                 <td>#</td>
                 <td>
-                    <select wire:model="delegate_id" class="form-control @error('delegate_id') is-invalid @enderror">
+                    <select wire:model="delegate_id" class="form-select @error('delegate_id') is-invalid @enderror">
                         <option value="">اختر المندوب</option>
                         @foreach($delegates as $delegate)
                             <option value="{{ $delegate->id }}">{{ $delegate->name }}</option>
@@ -60,7 +60,7 @@
                     @error('meals_count') <span class="text-danger">{{ $message }}</span> @enderror
                 </td>
                 <td>
-                    <select wire:model="meal_id" class="form-control @error('meal_id') is-invalid @enderror">
+                    <select wire:model="meal_id" class="form-select @error('meal_id') is-invalid @enderror">
                         <option value="">اختر الوجبة</option>
                         @foreach($meals as $meal)
                             <option value="{{ $meal->id }}">{{ $meal->name }}</option>
