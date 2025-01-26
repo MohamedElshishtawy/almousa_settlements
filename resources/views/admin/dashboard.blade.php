@@ -64,6 +64,11 @@
                                             <i class="fa-solid fa-screwdriver-wrench"></i>
                                             <span>محضر على المتعهد</span>
                                         </a>
+
+                                        <a href="{{route('delegate-absence')}}" class="btn btn-primary">
+                                            <i class="fa-solid fa-user-xmark "></i>
+                                            <span>غياب مندوب (قابل للحفظ)</span>
+                                        </a>
                                     </div>
 
 

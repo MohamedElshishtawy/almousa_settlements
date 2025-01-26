@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\DelegateAbcence\DelegateAbsence;
 use App\Office\Office;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,4 +35,10 @@ class Delegate extends Model
     {
         return view('papers.delegate-do-not-want');
     }
+
+    public function delegateAbsences()
+    {
+        return $this->hasMany(DelegateAbsence::class);
+    }
+
 }

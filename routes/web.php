@@ -1,5 +1,6 @@
 <?php
 
+use App\DelegateAbcence\DelegateAbsenceController;
 use App\Employment\EmploymentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
@@ -107,6 +108,11 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
             ->name('managers.employment.print');
     });
     Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
+
+    Route::prefix('delegate-abcence')->group(function () {
+        Route::get('/', [DelegateAbsenceController::class, 'index'])->name('delegate-absence');
+        Route::get('/{delegateAbcence}', [DelegateAbsenceController::class, 'printPage'])->name('delegate-absence.print');
+    });
 
 });
 

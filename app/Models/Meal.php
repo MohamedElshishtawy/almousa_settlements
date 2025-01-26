@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\DelegateAbcence\DelegateAbsence;
 use App\Mission\Mission;
 use App\Product\ProductDayMeal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -67,5 +68,10 @@ class Meal extends Model
     public function surplus_meals()
     {
         return $this->hasMany(\App\Report\SurplusMeal::class);
+    }
+
+    public function delegateAbsences()
+    {
+        return $this->hasMany(DelegateAbsence::class);
     }
 }
