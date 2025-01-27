@@ -12,7 +12,6 @@ class DelegateAbsence extends Model
     use HasFactory;
 
     protected $fillable = [
-        'meals_count',
         'meal_id',
         'delegate_id',
         'for_date',

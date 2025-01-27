@@ -18,7 +18,7 @@
         لمندوب الإعاشة رقم
         <strong>{{ $delegateAbcence->delegate->name }}</strong>
         وعددهم
-        <strong>{{ $delegateAbcence->meals_count }}</strong>
+        <strong>{{ $delegateAbcence->delegate->benefits }}</strong>
     </p>
     <p class="text-right">
         نأمل الإطلاع والتوجيه حيال ذلك.

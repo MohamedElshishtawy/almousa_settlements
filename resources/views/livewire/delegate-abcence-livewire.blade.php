@@ -18,8 +18,8 @@
                 <th>التسلسل</th>
                 <th>اسم المندوب</th>
                 <th>تاريخ الغياب</th>
-                <th>عدد الوجبات</th>
                 <th>الوجبة</th>
+                <th>عدد الوجبات</th>
                 <th>طباعة</th>
                 <th>حذف</th>
             </tr>
@@ -30,10 +30,10 @@
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration) }}</td>
                     <td>{{ $absence->delegate->name }}</td>
                     <td>{{ $absence->for_date }}</td>
-                    <td>{{ $absence->meals_count }}</td>
                     <td>{{ $absence->meal->name }}</td>
+                    <td>{{ $absence->delegate->benefits }}</td>
                     <td>
-                        <a href="{{ route('delegate-absence.print', $absence->id) }}" class="btn btn-primary">طباعة</a>
+                        <a href="{{ route('delegate-absence.print', $absence->id) }}" class="btn btn-secondary">طباعة</a>
                     </td>
                     <td>
                         <button class="btn btn-danger" wire:click="delete({{ $absence->id }})">حذف</button>
@@ -56,10 +56,6 @@
                     @error('for_date') <span class="text-danger">{{ $message }}</span> @enderror
                 </td>
                 <td>
-                    <input type="text" wire:model="meals_count" class="form-control @error('meals_count') is-invalid @enderror" placeholder="أكتب هنا">
-                    @error('meals_count') <span class="text-danger">{{ $message }}</span> @enderror
-                </td>
-                <td>
                     <select wire:model="meal_id" class="form-select @error('meal_id') is-invalid @enderror">
                         <option value="">اختر الوجبة</option>
                         @foreach($meals as $meal)
@@ -68,7 +64,7 @@
                     </select>
                     @error('meal_id') <span class="text-danger">{{ $message }}</span> @enderror
                 </td>
-                <td colspan="2">
+                <td colspan="3">
                     <button class="btn btn-primary" wire:click="save">إضافة</button>
                 </td>
             </tr>

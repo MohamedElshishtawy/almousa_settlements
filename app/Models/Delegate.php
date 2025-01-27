@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\DelegateAbcence\DelegateAbsence;
 use App\Office\Office;
+use App\Product\FoodType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,6 +40,11 @@ class Delegate extends Model
     public function delegateAbsences()
     {
         return $this->hasMany(DelegateAbsence::class);
+    }
+
+    public function foodType()
+    {
+        return $this->belongsTo(FoodType::class);
     }
 
 }
