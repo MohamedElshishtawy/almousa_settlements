@@ -18,8 +18,12 @@
                             <li><a href="{{route('admin.offices')}}" class="@if(isset($active) && $active == 'office') active @endif">المقرات</a></li>
                             <li><a href="{{route('admin.products')}}" class="@if(isset($active) && $active == 'products') active @endif">الأصناف و الوجبات</a></li>
                             <li><a href="{{route('admin.units')}}" class="@if(isset($active) && $active == 'units') active @endif">الوحدات</a></li>
+                            <li><a href="{{route('admin.tasks')}}" class="@if(isset($active) && $active == 'tasks') active @endif">المهام</a></li>
+                        @else
+                            <li><a href="{{route('managers.tasks')}}" class="@if(isset($active) && $active == 'tasks') active @endif">المهام</a></li>
+
                         @endif
-                        <li><a href="{{route('managers.reports')}}" class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>
+                            <li><a href="{{route('managers.reports')}}" class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>
                     @endauth
                 </ul>
 

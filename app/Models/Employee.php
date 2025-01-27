@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Office\Office;
+
 class Employee extends User
 {
 

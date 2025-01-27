@@ -8,6 +8,7 @@ use App\Http\Controllers\DryFoodReportController;
 use App\Obligations\ObligationsController;
 use App\Office\OfficeController;
 use App\Report\ReportController;
+use App\Task\TaskController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -71,7 +72,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
     Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
     Route::get('/delegates', [\App\Http\Controllers\DelegateController::class, 'index'])->name('admin.delegates');
-
+    Route::get('/tasks', [\App\Task\TaskController::class, 'index'])->name('admin.tasks');
 });
 
 Route::prefix('managers')->middleware(['auth'])->group(function () {
@@ -114,6 +115,11 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/{delegateAbcence}', [DelegateAbsenceController::class, 'printPage'])->name('delegate-absence.print');
     });
 
+    Route::get('/tasks', [TaskController::class, 'managers'])
+        ->name('managers.tasks')->middleware('managersOnly');
+
 });
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

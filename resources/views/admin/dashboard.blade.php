@@ -88,8 +88,11 @@
                                         <i class="fa-solid fa-users"></i>
                                         <span>إعدادات العمالة</span>
                                     </a>
+                                    <a href="{{route('admin.units')}}" class="btn btn-primary">
+                                        <i class="fa-solid fa-ruler"></i>
+                                        <span>وحدات العد</span>
+                                    </a>
                                 </div>
-
                             </section>
                         @endif
 

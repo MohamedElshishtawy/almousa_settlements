@@ -47,5 +47,10 @@ class Office extends Model
         return $this->hasMany(\App\Obligations\Obligations::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(\App\Task\Task::class);
+    }
+
 
 }
