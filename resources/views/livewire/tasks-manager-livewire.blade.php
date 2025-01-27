@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">
+    <div class="card-header  d-flex justify-content-right align-items-center gap-2">
         <h2>مهام المكتب</h2>
         <span wire:loading>
             <span class="spinner-border spinner-border-sm text-success" role="status"></span>
