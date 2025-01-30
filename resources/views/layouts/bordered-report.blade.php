@@ -24,6 +24,9 @@
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?9')}}" media="print">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?8')}}">
+    @if(isset($landScape) && $landScape)
+        <link rel="stylesheet" href="{{asset('css/landscape.css')}}">
+    @endif
 </head>
 <body dir="rtl" class="import-writing m-3">
 <main>

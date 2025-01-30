@@ -16,6 +16,12 @@
                             </a>
                         </div>
 
+                        <div class="all-products">
+                            <a href="{{route('admin.breakfast-products')}}">
+                                <h3>إدارة أصناف الفطور</h3>
+                            </a>
+                        </div>
+
                         @foreach(\App\Mission\Mission::all()->sortBy('title') as $mission)
                             @foreach(\App\Living\Living::all() as $living)
                                 <div>

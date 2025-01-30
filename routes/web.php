@@ -3,6 +3,7 @@
 use App\DelegateAbcence\DelegateAbsenceController;
 use App\Employment\EmploymentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BreakFastProductController;
 use App\Http\Controllers\BreakFastReportController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DryFoodReportController;
@@ -63,33 +64,39 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
         Route::get('/benefits/', [ReportController::class, 'AnalyticsBenefits'])->name('admin.analytics.benefits');
     });
-    // Companies prefix
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'companies'])->name('admin.companies');
     });
-    // employment prefix
     Route::prefix('employment')->group(function () {
         Route::get('/', [EmploymentController::class, 'employment'])->name('admin.employment');
     });
-
     Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
     Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
     Route::get('/delegates', [\App\Http\Controllers\DelegateController::class, 'index'])->name('admin.delegates');
     Route::get('/tasks', [\App\Task\TaskController::class, 'index'])->name('admin.tasks');
+    Route::get('/breakfast-products', [BreakFastProductController::class, 'index'])->name('admin.breakfast-products');
 });
 
 Route::prefix('managers')->middleware(['auth'])->group(function () {
-    Route::get('/reports', [ReportController::class, 'reports'])->name('managers.reports');
-    Route::get('/reports/import/{officeMission}/{date}', [ReportController::class, 'import'])
-        ->name('managers.reports.import');
-    Route::get('/reports/import/{office}/{date}/print', [ReportController::class, 'importPrint'])
-        ->name('managers.reports.import.print');
-    Route::get('/reports/import/{office}/{date}/print-writing', [ReportController::class, 'importPrintWriting'])
-        ->name('managers.reports.import.print-writing');
-    Route::get('/reports/surplus/print/{officeMission}/{date}/{meal?}', [ReportController::class, 'surplusPrint'])
-        ->name('managers.reports.surplus.print');
-    Route::get('/reports/surplus/{officeMission}/{date}/{meal?}', [ReportController::class, 'surplus'])
-        ->name('managers.reports.surplus');
+    Route::resource('breakfast', BreakFastReportController::class);
+    Route::get('/breakfast/{breakFastReport}/print', [BreakFastReportController::class, 'print'])
+        ->name('breakfast.print');
+    Route::prefix('/reports')->group(function () {
+        Route::get('/', [ReportController::class, 'reports'])->name('managers.reports');
+        Route::prefix('/import')->group(function () {
+            Route::get('/{officeMission}/{date}', [ReportController::class, 'import'])->name('managers.reports.import');
+            Route::get('/{office}/{date}/print',
+                [ReportController::class, 'importPrint'])->name('managers.reports.import.print');
+            Route::get('/{office}/{date}/print-writing',
+                [ReportController::class, 'importPrintWriting'])->name('managers.reports.import.print-writing');
+        });
+        Route::prefix('/surplus')->group(function () {
+            Route::get('/print/{officeMission}/{date}/{meal?}',
+                [ReportController::class, 'surplusPrint'])->name('managers.reports.surplus.print');
+            Route::get('/{officeMission}/{date}/{meal?}',
+                [ReportController::class, 'surplus'])->name('managers.reports.surplus');
+        });
+    });
     Route::prefix('/dry-food-reports')->group(function () {
         Route::get('/', [DryFoodReportController::class, 'index'])->name('dry-food-reports');
         Route::get('/create', [DryFoodReportController::class, 'create'])->name('dry-food-reports.create');
@@ -107,11 +114,6 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::delete('/{obligation}', [ObligationsController::class, 'delete'])->name('obligations.destroy');
     });
 
-    Route::resource('breakfast-reports', BreakFastReportController::class);
-
-    Route::get('/breakfast-reports-reports/{breakFastReport}/print', [BreakFastReportController::class, 'print'])
-        ->name('breakfast-reports-reports.print');
-
     Route::prefix('employment-form/{import}')->group(function () {
         Route::get('/', [EmploymentController::class, 'employmentForm'])
             ->name('managers.employment');
@@ -120,13 +122,11 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
     });
     Route::get('/papers/delegate-does-not-want',
         [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
-
     Route::prefix('delegate-abcence')->group(function () {
         Route::get('/', [DelegateAbsenceController::class, 'index'])->name('delegate-absence');
         Route::get('/{delegateAbcence}',
             [DelegateAbsenceController::class, 'printPage'])->name('delegate-absence.print');
     });
-
     Route::get('/tasks', [TaskController::class, 'managers'])
         ->name('managers.tasks')->middleware('managersOnly');
 

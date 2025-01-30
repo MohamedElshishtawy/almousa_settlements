@@ -9,7 +9,7 @@ use App\Office\Office;
 use App\Office\OfficeMission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -21,6 +21,7 @@ class Product extends Model
         'food_unit_id',
         'carton_value',
         'packet_value',
+        'is_break_fast',
     ];
 
     // Relations Functions -----------------------
@@ -67,9 +68,9 @@ class Product extends Model
         return $productLivingMission->getHowManyPerDay($day);
     }
 
-    public function breakFastProducts(): HasMany
+    public function breakFastProduct(): HasOne
     {
-        return $this->hasMany(BreakFastProduct::class);
+        return $this->hasOne(BreakFastProduct::class);
     }
 
 

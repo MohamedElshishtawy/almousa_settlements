@@ -1,0 +1,29 @@
+
+.import-writing main {
+    width: 1000px;
+    padding: 5px;
+    display: grid;
+    align-content: space-between;
+
+    & > div {
+        display: grid;
+        gap: 40px;
+    }
+
+    & table td, & table th {
+        padding: 1px;
+
+        & input {
+            padding: 0;
+            margin: 0;
+            padding-right: 5px;
+        }
+    }
+}
+
+
+@page {
+    size: auto;
+    margin: 3mm 2mm 3mm 2mm !important;
+}
+

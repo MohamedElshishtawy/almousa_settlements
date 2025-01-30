@@ -72,7 +72,7 @@
                                         <span>غياب مندوب (قابل للحفظ)</span>
                                     </a>
 
-                                    <a href="{{route('breakfast-reports.index')}}" class="btn btn-primary">
+                                    <a href="{{route('breakfast.index')}}" class="btn btn-primary">
                                         <i class="fa-solid fa-bread-slice"></i>
                                         <span>محضر الإفطار</span>
                                     </a>
@@ -98,6 +98,10 @@
                                     <a href="{{route('admin.units')}}" class="btn btn-primary">
                                         <i class="fa-solid fa-ruler"></i>
                                         <span>وحدات العد</span>
+                                    </a>
+                                    <a href="{{route('admin.breakfast-products')}}" class="btn btn-primary">
+                                        <i class="fa-solid fa-products"></i>
+                                        <span>أصناف الإفطار</span>
                                     </a>
                                 </div>
                             </section>

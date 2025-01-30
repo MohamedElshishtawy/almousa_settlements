@@ -21,7 +21,7 @@
                             @endif
 
                             <form
-                                action="{{ $breakFastReport->exists ? route('breakfast-reports.update', $breakFastReport->id) : route('breakfast-reports.store') }}"
+                                action="{{ $breakFastReport->exists ? route('breakfast.update', $breakFastReport->id) : route('breakfast.store') }}"
                                 method="POST">
                                 @csrf
                                 @if($breakFastReport->exists)
@@ -52,10 +52,13 @@
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <label for="delegates" class="form-label">اختر المندوبين</label>
-                                        @foreach($delegates as $delegate)
-                                            <div class="form-check d-flex gap-1">
-                                                <input class="form-check" type="checkbox" name="delegates[]"
-                                                       value="{{ $delegate->id }}" {{ in_array($delegate->id, old('delegates', $breakFastReport->delegates ? $breakFastReport->delegates->pluck('id')->toArray():[])) ? 'checked' : '' }}>
+
+                                        @foreach($delegatesAll as $delegate)
+                                            <div class=" d-flex gap-2">
+                                                <input class="form-check-input" type="checkbox" name="delegates[]"
+                                                       value="{{ $delegate->id }}"
+                                                    {{ in_array($delegate->id,
+                                                        old('delegates', $breakFastReport->breakFastReportDelegates ? $breakFastReport->breakFastReportDelegates->pluck('delegate_id')->toArray() :[])) ? 'checked' : '' }}>
                                                 <label class="form-check" for="delegates">({{$delegate->number}}
                                                     ) {{ $delegate->name }}</label>
                                             </div>

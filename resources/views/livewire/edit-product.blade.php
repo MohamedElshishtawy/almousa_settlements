@@ -45,6 +45,12 @@
         <input type="number" min="1" wire:model.live.debounce.250ms="carton_value" class="form-control">
     </td>
 
+    <td>
+        <input type="checkbox" class="form-check-input"
+               wire:click="ToggleIsBreakFast"
+               @if($isBreakFast) checked @endif>
+    </td>
+
 
     <td>
         <button wire:click="deleteProduct({{$product->id}})" class="text-danger delete-btn">
