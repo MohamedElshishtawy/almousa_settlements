@@ -13,7 +13,8 @@
         </ul>
     </div>
     <div class="col-md-10 table-responsive ">
-        <table class="table text-center border table-hover table-bordered" data-toggle="table" data-sticky-header="true">
+        <table class="table text-center border table-hover table-bordered" data-toggle="table"
+               data-sticky-header="true">
             <thead>
             <tr>
                 <th colspan="100%" class="main-title">
@@ -44,11 +45,11 @@
             @php($index=0)
             @foreach($missionProducts as $productLivingMission)
                 <livewire:product-mission-edit wire:key="product-{{ $productLivingMission->product->id }}"
-                           :product="$productLivingMission->product"
-                            :productLivingMission="$productLivingMission"
-                           :index="++$index"
-                           :mission="$mission"
-                           :living="$living" :key="$productLivingMission->product->id"/>
+                                               :product="$productLivingMission->product"
+                                               :productLivingMission="$productLivingMission"
+                                               :index="++$index"
+                                               :mission="$mission"
+                                               :living="$living" :key="$productLivingMission->product->id"/>
             @endforeach
 
             </tbody>

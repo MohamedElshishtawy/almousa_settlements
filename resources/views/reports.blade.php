@@ -41,14 +41,16 @@
 
                                     @if($day['import'])
                                         <td>
-                                            <a href="{{route('managers.reports.import', [$day['officeMission']->id, $day['date']])}}"  class="btn btn-success">
+                                            <a href="{{route('managers.reports.import', [$day['officeMission']->id, $day['date']])}}"
+                                               class="btn btn-success">
                                                 <span>التوريد</span>
                                                 <span><i class="fa-regular fa-circle-check fa-sm"></i></span>
                                             </a>
                                         </td>
                                     @else
                                         <td>
-                                            <a href="{{route('managers.reports.import', [$day['officeMission']->id, $day['date']])}}" class="btn btn-primary">
+                                            <a href="{{route('managers.reports.import', [$day['officeMission']->id, $day['date']])}}"
+                                               class="btn btn-primary">
                                                 <span>التوريد</span>
                                             </a>
                                         </td>
@@ -56,14 +58,16 @@
 
                                     @if($day['surplus'])
                                         <td>
-                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}"  class="btn btn-success">
+                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}"
+                                               class="btn btn-success">
                                                 <span>الوفر</span>
                                                 <span><i class="fa-regular fa-circle-check fa-sm"></i></span>
                                             </a>
                                         </td>
                                     @else
                                         <td>
-                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}" class="btn btn-primary @if(!$day['import']) disabled  @endif"  >
+                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}"
+                                               class="btn btn-primary @if(!$day['import']) disabled  @endif">
                                                 <span>الوفر</span>
                                             </a>
                                         </td>

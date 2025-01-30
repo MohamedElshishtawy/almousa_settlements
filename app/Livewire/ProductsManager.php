@@ -15,20 +15,21 @@ class ProductsManager extends Component
     public $products;
     public $mission, $living, $units, $types, $index = 0;
 
-    protected function getProducts() {
-        // Retrieve products specific to the mission and living
-        return ProductLivingMission::where('living_id', $this->living->id)
-            ->where('mission_id', $this->mission->id)
-            ->with('product')
-            ->get();
-    }
-
     public function mount()
     {
         // Initial data loading
         $this->products = $this->getProducts();
         $this->units = FoodUnit::all();
         $this->types = FoodType::all();
+    }
+
+    protected function getProducts()
+    {
+        // Retrieve products specific to the mission and living
+        return ProductLivingMission::where('living_id', $this->living->id)
+            ->where('mission_id', $this->mission->id)
+            ->with('product')
+            ->get();
     }
 
     public function addProduct()

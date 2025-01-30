@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>إدارة الموظفين</h2>

@@ -33,7 +33,8 @@
                     <td>{{ $absence->meal->name }}</td>
                     <td>{{ $absence->delegate->benefits }}</td>
                     <td>
-                        <a href="{{ route('delegate-absence.print', $absence->id) }}" class="btn btn-secondary">طباعة</a>
+                        <a href="{{ route('delegate-absence.print', $absence->id) }}"
+                           class="btn btn-secondary">طباعة</a>
                     </td>
                     <td>
                         <button class="btn btn-danger" wire:click="delete({{ $absence->id }})">حذف</button>
@@ -52,7 +53,8 @@
                     @error('delegate_id') <span class="text-danger">{{ $message }}</span> @enderror
                 </td>
                 <td>
-                    <input type="date" wire:model="for_date" class="form-control @error('for_date') is-invalid @enderror">
+                    <input type="date" wire:model="for_date"
+                           class="form-control @error('for_date') is-invalid @enderror">
                     @error('for_date') <span class="text-danger">{{ $message }}</span> @enderror
                 </td>
                 <td>

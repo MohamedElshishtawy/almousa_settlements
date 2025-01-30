@@ -11,15 +11,14 @@ class Mission extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-    ];
-
-    public static $missions = [
+public static $missions = [
         'حج',
         'رمضان',
         'حج تجهيز',
         'رمضان تجهيز',
+    ];
+    protected $fillable = [
+        'title',
     ]; // [0,1] we are using indexes of these values
 
     public static function gettingReadyMissionsIds()

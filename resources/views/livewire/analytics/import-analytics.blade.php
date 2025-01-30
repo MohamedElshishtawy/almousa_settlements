@@ -11,7 +11,8 @@
                 <select wire:model.live="selectedOfficeId" class="form-select">
                     <option value="">إختر المقر</option>
                     @foreach($offices as $office)
-                        <option value="{{$office->id}}" @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
+                        <option value="{{$office->id}}"
+                                @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
                     @endforeach
                 </select>
             </th>
@@ -48,7 +49,8 @@
                         <span class="spinner-border spinner-border-sm text-success" role="status"></span>
                     </span>
             </span>
-                تقرير نموذج رقم (1) محضر توريد الموارد الطازجة و الجافة إعاشة ال{{$office ? $office->living->title : ''}} ب
+                تقرير نموذج رقم (1) محضر توريد الموارد الطازجة و الجافة إعاشة
+                ال{{$office ? $office->living->title : ''}} ب
             </th>
             <th colspan="3">
                 {{\App\Office\Office::find($selectedOfficeId)->name ?? ''}}
@@ -90,19 +92,19 @@
     </table>
 
 
-        <table rules="all" class="mt-4 td-15">
-            <tr>
-                <th>عدد الأيام</th>
-                <td>{{$daysCount}}</td>
-                <th>إجمالى عدد المستفيدين</th>
-                <td>{{$benefitsTotal ?: 0}}</td>
-                @if($showPrices)
-                    <th>إجمالى المبالغ المصروفة</th>
-                    <td>{{$staticProducts ? $totalPayed : 0}}</td>
-                @endif
+    <table rules="all" class="mt-4 td-15">
+        <tr>
+            <th>عدد الأيام</th>
+            <td>{{$daysCount}}</td>
+            <th>إجمالى عدد المستفيدين</th>
+            <td>{{$benefitsTotal ?: 0}}</td>
+            @if($showPrices)
+                <th>إجمالى المبالغ المصروفة</th>
+                <td>{{$staticProducts ? $totalPayed : 0}}</td>
+            @endif
 
-            </tr>
-        </table>
+        </tr>
+    </table>
 
     <footer class="mt-4">
         <table rules="all" class="no-break">
@@ -117,19 +119,19 @@
                     <input type="text" class="form-control" value="{{auth()->user()->name}}">
                 </td>
                 <th>الاسم</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>المسمى</th>
                 <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
                 <th>الرتبة</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>التوقيع</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
                 <th>التوقيع</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
             </tr>
             </tbody>
         </table>

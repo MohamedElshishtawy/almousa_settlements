@@ -14,9 +14,6 @@ class BenefitsAnalytics extends Component
         $missions, $offices, $dates, // data
         $datesBetween, $mission, $year; // outputs
 
-    protected function dataUpdate() {
-        $this->year = HijriDate::where('gregorian_date', $this->startDate)->first()->year;
-    }
     public function mount()
     {
         $this->offices = Office::all();
@@ -44,6 +41,11 @@ class BenefitsAnalytics extends Component
     {
 
         $this->dataUpdate();
+    }
+
+    protected function dataUpdate()
+    {
+        $this->year = HijriDate::where('gregorian_date', $this->startDate)->first()->year;
     }
 
     public function updatedStartDate()

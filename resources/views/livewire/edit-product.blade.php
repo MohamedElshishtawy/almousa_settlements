@@ -1,4 +1,4 @@
-<tr >
+<tr>
     <td>
         <span wire:loading.remove>
             {{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($index) }}
@@ -37,12 +37,12 @@
     </td>
 
     <td>
-        <input type="number" min="1" wire:model.live.debounce.250ms="packet_value" step="0.1" class="form-control" >
+        <input type="number" min="1" wire:model.live.debounce.250ms="packet_value" step="0.1" class="form-control">
     </td>
 
 
     <td>
-        <input type="number" min="1" wire:model.live.debounce.250ms="carton_value" class="form-control" >
+        <input type="number" min="1" wire:model.live.debounce.250ms="carton_value" class="form-control">
     </td>
 
 

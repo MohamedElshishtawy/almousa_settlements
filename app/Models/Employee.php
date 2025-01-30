@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Office\Office;
-
 class Employee extends User
 {
 
@@ -21,9 +19,6 @@ class Employee extends User
         $employeeOffice = $this->employeeOffice;
         return $employeeOffice ? $employeeOffice->office : null;
     }
-
-
-
 
 
 }

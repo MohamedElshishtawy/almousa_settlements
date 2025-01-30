@@ -9,8 +9,6 @@ use Livewire\Component;
 class FormEmploymentLivewire extends Component
 {
     public $import;
-    protected $employments;
-    protected $fromEmploymentElements;
     public $formEmployment;
     public $countState, $cleaningState, $healthState;
     public $formEmploymentArr = [];
@@ -18,6 +16,8 @@ class FormEmploymentLivewire extends Component
     public $titles = [];
     public $benefits = [];
     public $mainCounts = [];
+    protected $employments;
+    protected $fromEmploymentElements;
 
     // rules
     protected $rules = [
@@ -27,6 +27,7 @@ class FormEmploymentLivewire extends Component
         'counts.*' => 'required|numeric',
         'titles.*' => 'required',
     ];
+
     public function mount($import)
     {
         $this->import = $import;
@@ -81,6 +82,14 @@ class FormEmploymentLivewire extends Component
         }
     }
 
+    public function updateWrittenState($filed, $snakeCase, $value)
+    {
+        $this->$filed = $value;
+        if ($this->formEmployment) {
+            $this->formEmployment->$snakeCase = $value;
+            $this->formEmployment->save();
+        }
+    }
 
     public function save()
     {
@@ -91,79 +100,6 @@ class FormEmploymentLivewire extends Component
 
         $this->createEmploymentElementElemnts();
 
-    }
-
-    public function updateWrittenState($filed, $snakeCase, $value)
-    {
-        $this->$filed = $value;
-        if ($this->formEmployment) {
-            $this->formEmployment->$snakeCase = $value;
-            $this->formEmployment->save();
-        }
-    }
-
-    public function delete()
-    {
-        if ($this->formEmployment) {
-            $this->formEmployment->delete();
-            $this->formEmployment->formEmploymentElements()->delete();
-        }
-        $for_date = $this->import->report->for_date;
-        $importId = $this->import->report->id;
-        $this->redirect(route('managers.reports.import', [$importId, $for_date]));
-
-    }
-
-    public function edit()
-    {
-
-        $this->validate();
-
-       foreach ( $this->formEmploymentArr as $id => $element) {
-            $formEmploymentElement = FormEmploymentElement::find($element['id']);
-            $formEmploymentElement->delete();
-        }
-
-        $this->createFormEmployment();
-
-        $this->createEmploymentElementElemnts();
-
-    }
-
-    public function updateCounts($formEmploymentElementId, $value)
-    {
-        $this->counts[$formEmploymentElementId] = $value;
-        $this->checkCounts();
-    }
-
-
-    protected function checkCounts()
-    {
-        $check = true;
-        if ($this->formEmployment) {
-            $this->formEmployment->formEmploymentElements->each(function ($element) use (&$check) {
-                if ($element->main_count > $this->counts[$element->id]) {
-                    $check = false;
-                }
-            });
-        } else {
-            foreach ($this->counts as $index => $count) {
-                if ($count != $this->mainCounts[$index]) {
-                    $check = false;
-                }
-            }
-        }
-
-        if ($check) {
-            $this->countState = 'مكتملة';
-        } else {
-            $this->countState = 'غير مكتملة';
-        }
-    }
-
-    public function render()
-    {
-        return view('livewire.form-employment-livewire');
     }
 
     /**
@@ -193,6 +129,69 @@ class FormEmploymentLivewire extends Component
             $formEmploymentElement->form_employment_id = $this->formEmployment->id;
             $formEmploymentElement->save();
         }
+    }
+
+    public function edit()
+    {
+
+        $this->validate();
+
+        foreach ($this->formEmploymentArr as $id => $element) {
+            $formEmploymentElement = FormEmploymentElement::find($element['id']);
+            $formEmploymentElement->delete();
+        }
+
+        $this->createFormEmployment();
+
+        $this->createEmploymentElementElemnts();
+
+    }
+
+    public function delete()
+    {
+        if ($this->formEmployment) {
+            $this->formEmployment->delete();
+            $this->formEmployment->formEmploymentElements()->delete();
+        }
+        $for_date = $this->import->report->for_date;
+        $importId = $this->import->report->id;
+        $this->redirect(route('managers.reports.import', [$importId, $for_date]));
+
+    }
+
+    public function updateCounts($formEmploymentElementId, $value)
+    {
+        $this->counts[$formEmploymentElementId] = $value;
+        $this->checkCounts();
+    }
+
+    protected function checkCounts()
+    {
+        $check = true;
+        if ($this->formEmployment) {
+            $this->formEmployment->formEmploymentElements->each(function ($element) use (&$check) {
+                if ($element->main_count > $this->counts[$element->id]) {
+                    $check = false;
+                }
+            });
+        } else {
+            foreach ($this->counts as $index => $count) {
+                if ($count != $this->mainCounts[$index]) {
+                    $check = false;
+                }
+            }
+        }
+
+        if ($check) {
+            $this->countState = 'مكتملة';
+        } else {
+            $this->countState = 'غير مكتملة';
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.form-employment-livewire');
     }
 
 }

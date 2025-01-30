@@ -30,13 +30,13 @@ class SurplusProductError extends Model
     /* will get the surplus for the day if null */
     public function getSurplus()
     {
-        $surplusFoodType = $this->surplus->surplusFoodTypes ?$this->surplus->surplusFoodTypes->where('food_type_id', $this->static_product->food_type_id)->first() : null;
+        $surplusFoodType = $this->surplus->surplusFoodTypes ? $this->surplus->surplusFoodTypes->where('food_type_id',
+            $this->static_product->food_type_id)->first() : null;
 
         return $this->surplus_amount || $this->surplus_benefits ?
             $this->surplus_amount + ($this->surplus_benefits * $this->static_product->daily_amount / $this->static_product->getHowManyPerDay(Day::date2object($this->surplus->report->for_date))) :
             ($surplusFoodType ? $surplusFoodType->value * $this->static_product->daily_amount : 0);
     }
-
 
 
 }

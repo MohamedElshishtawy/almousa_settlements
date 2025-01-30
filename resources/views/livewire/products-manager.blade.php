@@ -30,7 +30,9 @@
         </thead>
         <tbody>
         @foreach($products as $productLivingMission)
-            <livewire:edit-product wire:key="product-{{ $product->id }}" :product="$productLivingMission->product" :index="++$index" :mission="$mission" :living="$living" :units="$units" :types="$types" :key="$productLivingMission->product->id"/>
+            <livewire:edit-product wire:key="product-{{ $product->id }}" :product="$productLivingMission->product"
+                                   :index="++$index" :mission="$mission" :living="$living" :units="$units"
+                                   :types="$types" :key="$productLivingMission->product->id"/>
         @endforeach
         </tbody>
     </table>

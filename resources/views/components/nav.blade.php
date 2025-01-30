@@ -1,10 +1,12 @@
 @auth
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm not-print" >
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm not-print">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/home') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -13,17 +15,26 @@
                 <ul class="navbar-nav nav-pages">
                     @auth
                         @if(auth()->user()->isAdmin())
-                            <li><a href="{{route('admin.users')}}" class="@if(isset($active) && $active == 'employee') active @endif">الموظفين</a></li>
-                            <li><a href="{{route('admin.delegates')}}" class="@if(isset($active) && $active == 'delegates') active @endif">المناديب</a></li>
-                            <li><a href="{{route('admin.offices')}}" class="@if(isset($active) && $active == 'office') active @endif">المقرات</a></li>
-                            <li><a href="{{route('admin.products')}}" class="@if(isset($active) && $active == 'products') active @endif">الأصناف و الوجبات</a></li>
-                            <li><a href="{{route('admin.units')}}" class="@if(isset($active) && $active == 'units') active @endif">الوحدات</a></li>
-                            <li><a href="{{route('admin.tasks')}}" class="@if(isset($active) && $active == 'tasks') active @endif">المهام</a></li>
+                            <li><a href="{{route('admin.users')}}"
+                                   class="@if(isset($active) && $active == 'employee') active @endif">الموظفين</a></li>
+                            <li><a href="{{route('admin.delegates')}}"
+                                   class="@if(isset($active) && $active == 'delegates') active @endif">المناديب</a></li>
+                            <li><a href="{{route('admin.offices')}}"
+                                   class="@if(isset($active) && $active == 'office') active @endif">المقرات</a></li>
+                            <li><a href="{{route('admin.products')}}"
+                                   class="@if(isset($active) && $active == 'products') active @endif">الأصناف و
+                                    الوجبات</a></li>
+                            <li><a href="{{route('admin.units')}}"
+                                   class="@if(isset($active) && $active == 'units') active @endif">الوحدات</a></li>
+                            <li><a href="{{route('admin.tasks')}}"
+                                   class="@if(isset($active) && $active == 'tasks') active @endif">المهام</a></li>
                         @else
-                            <li><a href="{{route('managers.tasks')}}" class="@if(isset($active) && $active == 'tasks') active @endif">المهام</a></li>
+                            <li><a href="{{route('managers.tasks')}}"
+                                   class="@if(isset($active) && $active == 'tasks') active @endif">المهام</a></li>
 
                         @endif
-                            <li><a href="{{route('managers.reports')}}" class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>
+                        <li><a href="{{route('managers.reports')}}"
+                               class="@if(isset($active) && $active == 'reports') active @endif">المحاضر</a></li>
                     @endauth
                 </ul>
 
@@ -47,7 +58,8 @@
                             <i class="fa-solid fa-bell fa-lg"></i>
                         </li>
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{--first word only--}}
                                 <span class="mx-2">
                                             <i class="fa-solid fa-user-circle fa-lg"></i>

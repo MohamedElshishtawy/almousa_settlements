@@ -12,10 +12,12 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($report)
-                    <a href="{{ route('managers.reports.import.print-writing', [$office, $date]) }}" class="mx-1 btn btn-secondary">
+                    <a href="{{ route('managers.reports.import.print-writing', [$office, $date]) }}"
+                       class="mx-1 btn btn-secondary">
                         <i class="fa-solid fa-feather-pointed"></i>
                     </a>
-                    <a href="{{ route('managers.reports.import.print', [$office, $date]) }}" class="ml-1 btn btn-secondary">
+                    <a href="{{ route('managers.reports.import.print', [$office, $date]) }}"
+                       class="ml-1 btn btn-secondary">
                         <i class="fa-solid fa-print fa-fw"></i>
                     </a>
                     <button wire:click="delete" class="btn btn-danger mx-1">
@@ -61,7 +63,9 @@
             </tr>
             <tr>
                 <th class="text-success">عدد المستفيدين</th>
-                <td><input type="text" wire:model.live.debounce.450ms="benefits" wire:input.debounce.450ms="benefitChanged($event.target.value)" placeholder="0" class="form-control" autofocus></td>
+                <td><input type="text" wire:model.live.debounce.450ms="benefits"
+                           wire:input.debounce.450ms="benefitChanged($event.target.value)" placeholder="0"
+                           class="form-control" autofocus></td>
             </tr>
             </tbody>
         </table>
@@ -87,30 +91,30 @@
             </thead>
             <tbody>
             @php
-            $index = 0;
-            $day = \App\Models\Day::date2object($date);
+                $index = 0;
+                $day = \App\Models\Day::date2object($date);
             @endphp
             @foreach($products as $product)
                 @php
-                $benefits = is_numeric($benefits) ? $benefits : 0;
-                $benefitError = $benefitError ? $benefitError : 0;
+                    $benefits = is_numeric($benefits) ? $benefits : 0;
+                    $benefitError = $benefitError ? $benefitError : 0;
 
-                // Determine if using report or product data
-                $productMissionData = $report ? $product : \App\Product\Product::getProductMissionData($product, $office, $officeMission);
-                $dayMissionTimes = $product->getHowManyPerDay($day, !$report?$productMissionData:null);
+                    // Determine if using report or product data
+                    $productMissionData = $report ? $product : \App\Product\Product::getProductMissionData($product, $office, $officeMission);
+                    $dayMissionTimes = $product->getHowManyPerDay($day, !$report?$productMissionData:null);
 
-                $dailyTotal = $report ? \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) :
-                                         \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
-                $expectedSupply = $dailyTotal && $benefits && is_numeric($benefits) ? $productMissionData->daily_amount * $benefits : 0;
-                $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
-                $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 0;
+                    $dailyTotal = $report ? \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($date)->id) :
+                                             \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($date)->id);
+                    $expectedSupply = $dailyTotal && $benefits && is_numeric($benefits) ? $productMissionData->daily_amount * $benefits : 0;
+                    $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
+                    $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 0;
 
 
-                // Format numbers
-                $exactlyImported = round($exactlyImported, 4);
-                $expectedSupply = round($expectedSupply, 4);
-                $difference =  round($difference, 4);
-                $difference =  $difference >= 0 && $difference != -0 ? $difference : 0;
+                    // Format numbers
+                    $exactlyImported = round($exactlyImported, 4);
+                    $expectedSupply = round($expectedSupply, 4);
+                    $difference =  round($difference, 4);
+                    $difference =  $difference >= 0 && $difference != -0 ? $difference : 0;
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>

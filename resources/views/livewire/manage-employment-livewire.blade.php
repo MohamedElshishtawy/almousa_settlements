@@ -43,22 +43,28 @@
                     <tr wire:key="employment-{{ $employment->id }}">
                         <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration) }}</td>
                         <td>
-                            <input type="text" class="form-control @error('titles.{{ $employment->id }}') is-invalid @enderror"
+                            <input type="text"
+                                   class="form-control @error('titles.{{ $employment->id }}') is-invalid @enderror"
                                    wire:model.live="titles.{{ $employment->id }}"
                                    wire:keyup.debounce.240="editField({{ $employment->id }}, 'title', $event.target.value)">
-                            @error('titles.{{ $employment->id }}') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('titles.{{ $employment->id }}') <span
+                                class="text-danger">{{ $message }}</span> @enderror
                         </td>
                         <td>
-                            <input type="number" min="0" class="form-control @error('benefitses.{{ $employment->id }}') is-invalid @enderror"
+                            <input type="number" min="0"
+                                   class="form-control @error('benefitses.{{ $employment->id }}') is-invalid @enderror"
                                    wire:model.live="benefitses.{{ $employment->id }}"
                                    wire:keyup.debounce.240="editField({{ $employment->id }}, 'benefits', $event.target.value)">
-                            @error('benefitses.{{ $employment->id }}') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('benefitses.{{ $employment->id }}') <span
+                                class="text-danger">{{ $message }}</span> @enderror
                         </td>
                         <td>
-                            <input type="number" min="0" class="form-control @error('counts.{{ $employment->id }}') is-invalid @enderror"
+                            <input type="number" min="0"
+                                   class="form-control @error('counts.{{ $employment->id }}') is-invalid @enderror"
                                    wire:model.live="counts.{{ $employment->id }}"
                                    wire:keyup.debounce.240="editField({{ $employment->id }}, 'count', $event.target.value)">
-                            @error('counts.{{ $employment->id }}') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('counts.{{ $employment->id }}') <span
+                                class="text-danger">{{ $message }}</span> @enderror
                         </td>
                         <td>
                             <button class="btn btn-danger" wire:click="delete({{ $employment->id }})">
@@ -70,15 +76,19 @@
                 <tr>
                     <td class="td-15">#</td>
                     <td>
-                        <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror" placeholder="أكتب العنوان هنا">
+                        <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror"
+                               placeholder="أكتب العنوان هنا">
                         @error('title') <span class="text-danger">{{ $message }}</span> @enderror
                     </td>
                     <td>
-                        <input type="text" wire:model="benefits" class="form-control @error('benefits') is-invalid @enderror" placeholder="أكتب العنوان هنا">
+                        <input type="text" wire:model="benefits"
+                               class="form-control @error('benefits') is-invalid @enderror"
+                               placeholder="أكتب العنوان هنا">
                         @error('benefits') <span class="text-danger">{{ $message }}</span> @enderror
                     </td>
                     <td>
-                        <input type="number" min="0" wire:model="count" class="form-control @error('count') is-invalid @enderror" placeholder="أكتب العدد هنا">
+                        <input type="number" min="0" wire:model="count"
+                               class="form-control @error('count') is-invalid @enderror" placeholder="أكتب العدد هنا">
                         @error('count') <span class="text-danger">{{ $message }}</span> @enderror
                     </td>
                     <td>

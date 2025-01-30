@@ -6,7 +6,6 @@ use App\Models\Day;
 use App\Models\Delegate;
 use App\Models\DryFoodReport;
 use App\Office\Office;
-use App\Product\Product;
 use App\Product\ProductLivingMission;
 use Livewire\Component;
 
@@ -17,31 +16,6 @@ class DryFoodReportLivewire extends Component
     public $products;
     public DryFoodReport $dryFoodReport;
 
-
-    protected function rules()
-    {
-        $dates = [];
-        if ($this->selectedDelegateId) {
-            $lastReports = DryFoodReport::where('delegate_id', $this->selectedDelegateId)->get();
-            foreach ($lastReports as $report) {
-                $reportDates = Day::datesBetween($report->start_date, $report->end_date);
-                $dates = array_merge($dates, $reportDates);
-            }
-            if ($this->dryFoodReport->id) {
-                $dates = array_diff($dates, Day::datesBetween($this->dryFoodReport->start_date, $this->dryFoodReport->end_date));
-            }
-        }
-        // if start date in the $dates array make validation error message
-
-        return [
-            'selectedOfficeId' => 'required',
-            'selectedDelegateId' => 'required',
-            'selectedMissionId' => 'required',
-            'startDate' => 'required|date|before_or_equal:endDate|not_in:' . implode(',', $dates),
-            'endDate' => 'required|date|after_or_equal:startDate|not_in:' . implode(',', $dates),
-        ];
-
-    }
     public function messages()
     {
         return [
@@ -59,32 +33,17 @@ class DryFoodReportLivewire extends Component
         ];
     }
 
-
-    public function getProducts() {
-        if ($this->selectedOfficeId && $this->selectedMissionId) {
-            $office = Office::find($this->selectedOfficeId);
-
-            $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
-                ->where('mission_id', $this->selectedMissionId)->get();
-            $this->products = $productMissionLivings->map(fn ($productMissionLiving) => $productMissionLiving->product);
-            // get only products that have both carton and packet values
-            $this->products = $this->products->filter(function($product) {
-                return $product->carton_value && $product->packet_value;
-            });
-        }
-    }
-
     public function mount(DryFoodReport $dryFoodReport)
     {
         $this->dryFoodReport = $dryFoodReport;
 
-        $this->offices = Office::all()->filter(function($office) {
+        $this->offices = Office::all()->filter(function ($office) {
             return $office->living->title == 'ميدان';
         });
 
         $this->delegates = [];
-        $this->products  = [];
-        $this->dates     = Day::datesBetween(DryFoodReport::$startDate, DryFoodReport::$endDate);
+        $this->products = [];
+        $this->dates = Day::datesBetween(DryFoodReport::$startDate, DryFoodReport::$endDate);
 
         if ($this->dryFoodReport->id) {
             $this->selectedOfficeId = $this->dryFoodReport->delegate->office_id;
@@ -97,6 +56,20 @@ class DryFoodReportLivewire extends Component
         }
     }
 
+    public function getProducts()
+    {
+        if ($this->selectedOfficeId && $this->selectedMissionId) {
+            $office = Office::find($this->selectedOfficeId);
+
+            $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
+                ->where('mission_id', $this->selectedMissionId)->get();
+            $this->products = $productMissionLivings->map(fn($productMissionLiving) => $productMissionLiving->product);
+            // get only products that have both carton and packet values
+            $this->products = $this->products->filter(function ($product) {
+                return $product->carton_value && $product->packet_value;
+            });
+        }
+    }
 
     public function updatedSelectedOfficeId()
     {
@@ -129,7 +102,6 @@ class DryFoodReportLivewire extends Component
 
     }
 
-
     public function save()
     {
         $this->validate();
@@ -155,9 +127,34 @@ class DryFoodReportLivewire extends Component
         ]);
     }
 
-
     public function render()
     {
         return view('livewire.dry-food-report-livewire');
+    }
+
+    protected function rules()
+    {
+        $dates = [];
+        if ($this->selectedDelegateId) {
+            $lastReports = DryFoodReport::where('delegate_id', $this->selectedDelegateId)->get();
+            foreach ($lastReports as $report) {
+                $reportDates = Day::datesBetween($report->start_date, $report->end_date);
+                $dates = array_merge($dates, $reportDates);
+            }
+            if ($this->dryFoodReport->id) {
+                $dates = array_diff($dates,
+                    Day::datesBetween($this->dryFoodReport->start_date, $this->dryFoodReport->end_date));
+            }
+        }
+        // if start date in the $dates array make validation error message
+
+        return [
+            'selectedOfficeId' => 'required',
+            'selectedDelegateId' => 'required',
+            'selectedMissionId' => 'required',
+            'startDate' => 'required|date|before_or_equal:endDate|not_in:'.implode(',', $dates),
+            'endDate' => 'required|date|after_or_equal:startDate|not_in:'.implode(',', $dates),
+        ];
+
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>محاضر على المتعهد</h2>
@@ -34,17 +34,20 @@
                                     <td>{{\App\Models\Day::DateToHijri($obligation->created_at->format('Y-m-d'))}}</td>
                                     <td>{{$obligation->office->name}}</td>
                                     <td>
-                                        <a href="{{route('obligations.edit', $obligation->id)}}" class="btn btn-primary">
+                                        <a href="{{route('obligations.edit', $obligation->id)}}"
+                                           class="btn btn-primary">
                                             تعديل
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{route('obligations.print', $obligation->id)}}" class="btn btn-primary">
+                                        <a href="{{route('obligations.print', $obligation->id)}}"
+                                           class="btn btn-primary">
                                             طباعة
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{route('obligations.destroy', $obligation->id)}}" method="post" style="display: inline-block">
+                                        <form action="{{route('obligations.destroy', $obligation->id)}}" method="post"
+                                              style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">حذف</button>

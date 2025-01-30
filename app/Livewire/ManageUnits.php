@@ -3,8 +3,6 @@
 namespace App\Livewire;
 
 use App\Product\FoodUnit;
-use Livewire\Attributes\On;
-use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
 class ManageUnits extends Component
@@ -16,19 +14,20 @@ class ManageUnits extends Component
     public $units;
     public $titles = [];
 
-    protected function getUnites() {
-        $this->units = FoodUnit::all();
-        foreach ($this->units as $unit) {
-            $this->titles[$unit->id] = $unit->title;
-        }
-    }
-
     public function delete($id)
     {
         $unit = FoodUnit::find($id);
         $unit->delete();
         $this->getUnites();
 
+    }
+
+    protected function getUnites()
+    {
+        $this->units = FoodUnit::all();
+        foreach ($this->units as $unit) {
+            $this->titles[$unit->id] = $unit->title;
+        }
     }
 
     public function editTitle($unitId)
@@ -42,13 +41,6 @@ class ManageUnits extends Component
         $unit->save();
     }
 
-    public function mount()
-    {
-        $this->getUnites();
-    }
-
-
-
     public function save()
     {
         if ($this->name) {
@@ -56,6 +48,11 @@ class ManageUnits extends Component
             $this->units = FoodUnit::all();
             $this->name = '';
         }
+        $this->getUnites();
+    }
+
+    public function mount()
+    {
         $this->getUnites();
     }
 

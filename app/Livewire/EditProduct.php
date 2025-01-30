@@ -1,10 +1,9 @@
 <?php
+
 namespace App\Livewire;
 
 use App\Product\Product;
-use App\Product\ProductController;
 use App\Product\ProductDayMeal;
-use App\Product\ProductLivingMission;
 use Livewire\Component;
 
 
@@ -51,8 +50,7 @@ class EditProduct extends Component
             ->first();
         if ($check) {
             $check->delete();
-        }
-        else {
+        } else {
             ProductDayMeal::create([
                 'product_id' => $this->product->id,
                 'day_id' => $dayId,
@@ -72,7 +70,6 @@ class EditProduct extends Component
         $this->dispatch('deleted');
 
     }
-
 
 
     public function render()

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class SurplusFoodType extends Model
 {
     use HasFactory;
-    protected  $fillable = [
+
+    protected $fillable = [
         'surplus_id',
         'food_type_id',
         'value',

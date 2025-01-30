@@ -29,6 +29,4 @@ class DelegateAbsence extends Model
     }
 
 
-
-
 }

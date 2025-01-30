@@ -3,6 +3,7 @@
 use App\DelegateAbcence\DelegateAbsenceController;
 use App\Employment\EmploymentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BreakFastReportController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DryFoodReportController;
 use App\Obligations\ObligationsController;
@@ -56,9 +57,11 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
             ->name('admin.products.specific');
     });
     Route::prefix('analytics')->group(function () {
-       Route::get('/imports/{showPrices?}', [ReportController::class, 'AnalyticsImport'])->name('admin.analytics.imports');
-       Route::get('/surplus/{showPrices?}', [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
-       Route::get('/benefits/', [ReportController::class, 'AnalyticsBenefits'])->name('admin.analytics.benefits');
+        Route::get('/imports/{showPrices?}',
+            [ReportController::class, 'AnalyticsImport'])->name('admin.analytics.imports');
+        Route::get('/surplus/{showPrices?}',
+            [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
+        Route::get('/benefits/', [ReportController::class, 'AnalyticsBenefits'])->name('admin.analytics.benefits');
     });
     // Companies prefix
     Route::prefix('companies')->group(function () {
@@ -92,7 +95,8 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/create', [DryFoodReportController::class, 'create'])->name('dry-food-reports.create');
         Route::get('/{dryFoodReport}/edit', [DryFoodReportController::class, 'edit'])->name('dry-food-reports.edit');
         Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
-        Route::get('/{dryFoodReport}/delegate-report', [DryFoodReportController::class, 'delegateReport'])->name('dry-food-reports.delegateReport');
+        Route::get('/{dryFoodReport}/delegate-report',
+            [DryFoodReportController::class, 'delegateReport'])->name('dry-food-reports.delegateReport');
         Route::delete('/{dryFoodReport}', [DryFoodReportController::class, 'delete'])->name('dry-food-reports.destroy');
     });
     Route::prefix('/obligations')->group(function () {
@@ -102,24 +106,31 @@ Route::prefix('managers')->middleware(['auth'])->group(function () {
         Route::get('/{obligations}/print-page', [ObligationsController::class, 'printPage'])->name('obligations.print');
         Route::delete('/{obligation}', [ObligationsController::class, 'delete'])->name('obligations.destroy');
     });
+
+    Route::resource('breakfast-reports', BreakFastReportController::class);
+
+    Route::get('/breakfast-reports-reports/{breakFastReport}/print', [BreakFastReportController::class, 'print'])
+        ->name('breakfast-reports-reports.print');
+
     Route::prefix('employment-form/{import}')->group(function () {
         Route::get('/', [EmploymentController::class, 'employmentForm'])
             ->name('managers.employment');
         Route::get('/print', [EmploymentController::class, 'employmentFormPrint'])
             ->name('managers.employment.print');
     });
-    Route::get('/papers/delegate-does-not-want', [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
+    Route::get('/papers/delegate-does-not-want',
+        [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
 
     Route::prefix('delegate-abcence')->group(function () {
         Route::get('/', [DelegateAbsenceController::class, 'index'])->name('delegate-absence');
-        Route::get('/{delegateAbcence}', [DelegateAbsenceController::class, 'printPage'])->name('delegate-absence.print');
+        Route::get('/{delegateAbcence}',
+            [DelegateAbsenceController::class, 'printPage'])->name('delegate-absence.print');
     });
 
     Route::get('/tasks', [TaskController::class, 'managers'])
         ->name('managers.tasks')->middleware('managersOnly');
 
 });
-
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

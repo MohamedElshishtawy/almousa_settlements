@@ -7,7 +7,7 @@
 @section('content')
     <div class="mx-2">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="card">
                     @livewire('all-products-manager')
                 </div>

@@ -2,12 +2,14 @@
 
 namespace App\Product;
 
+use App\BreakFast\BreakFastProduct;
 use App\Models\Day;
 use App\Models\Meal;
 use App\Office\Office;
 use App\Office\OfficeMission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -22,6 +24,13 @@ class Product extends Model
     ];
 
     // Relations Functions -----------------------
+
+    public static function getProductMissionData(Product $product, Office $office, OfficeMission $officeMission)
+    {
+        return $product->productsLivingMission->where('living_id', $office->living_id)->where('mission_id',
+            $officeMission->mission_id)->first();
+    }
+
     public function foodType()
     {
         return $this->belongsTo(FoodType::class);
@@ -32,26 +41,16 @@ class Product extends Model
         return $this->belongsTo(FoodUnit::class);
     }
 
+    // Get Functions -----------------------
+
     public function productsLivingMission()
     {
         return $this->hasMany(ProductLivingMission::class);
     }
 
-    // Get Functions -----------------------
-    public static function getProductMissionData(Product $product, Office $office,  OfficeMission $officeMission)
-    {
-        return $product->productsLivingMission->where('living_id', $office->living_id)->where('mission_id', $officeMission->mission_id)->first();
-    }
-
-
     public function getHowManyDayPerWeekUsed(ProductLivingMission $productLivingMission)
     {
         return $productLivingMission->getHowManyPerWeek();
-    }
-
-    public function getHowManyPerDay(Day $day, ProductLivingMission $productLivingMission)
-    {
-        return $productLivingMission->getHowManyPerDay($day);
     }
 
     public function getAmountForMeal(Day $day, Meal $meal, ProductLivingMission $productLivingMission)
@@ -61,6 +60,16 @@ class Product extends Model
             return $productLivingMission->daily_amount / $productLivingMission->getHowManyPerDay($day);
         }
         return 0;
+    }
+
+    public function getHowManyPerDay(Day $day, ProductLivingMission $productLivingMission)
+    {
+        return $productLivingMission->getHowManyPerDay($day);
+    }
+
+    public function breakFastProducts(): HasMany
+    {
+        return $this->hasMany(BreakFastProduct::class);
     }
 
 

@@ -2,10 +2,6 @@
 
 namespace App\Livewire;
 
-use App\Models\Day;
-use App\Models\Meal;
-use App\Product\Product;
-use App\Product\ProductController;
 use App\Product\ProductDayMeal;
 use App\Product\ProductLivingMission;
 use Livewire\Component;
@@ -45,8 +41,7 @@ class ProductMissionEdit extends Component
 
         if ($check) {
             $check->delete();
-        }
-        else {
+        } else {
             ProductDayMeal::create([
                 'product_living_mission_id' => $this->productLivingMission->id,
                 'day_id' => $dayId,
@@ -56,7 +51,6 @@ class ProductMissionEdit extends Component
 
         $this->times_per_week = $this->product->getHowManyDayPerWeekUsed($this->productLivingMission);
     }
-
 
 
     public function render()

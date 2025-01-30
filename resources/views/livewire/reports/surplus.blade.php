@@ -15,22 +15,22 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($surplus)
-                        <a href="{{route('managers.reports.surplus.print', [$officeMission, $date, $selectedMeal->id])}}"
-                           class="mx-1 btn btn-secondary">
-                            <span>{{$selectedMeal ? $selectedMeal->name : ''}}</span>
-                            <i class="fa-solid fa-print"></i>
-                        </a>
-                        <a href="{{route('managers.reports.surplus.print', [$officeMission, $date])}}"
-                           class="mx-1 btn btn-secondary">
-                            <span>الكل</span>
-                            <i class="fa-solid fa-print"></i>
-                        </a>
-                        <button class="btn btn-danger mx-1" wire:click="delete">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                        <button class="btn btn-primary" wire:click="reportUpdate">
-                            <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
-                        </button>
+                    <a href="{{route('managers.reports.surplus.print', [$officeMission, $date, $selectedMeal->id])}}"
+                       class="mx-1 btn btn-secondary">
+                        <span>{{$selectedMeal ? $selectedMeal->name : ''}}</span>
+                        <i class="fa-solid fa-print"></i>
+                    </a>
+                    <a href="{{route('managers.reports.surplus.print', [$officeMission, $date])}}"
+                       class="mx-1 btn btn-secondary">
+                        <span>الكل</span>
+                        <i class="fa-solid fa-print"></i>
+                    </a>
+                    <button class="btn btn-danger mx-1" wire:click="delete">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                    <button class="btn btn-primary" wire:click="reportUpdate">
+                        <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                    </button>
 
                 @else
                     <span wire:loading>
@@ -67,7 +67,8 @@
                     <td>
                         <select class="form-select" wire:change="changeMeal($event.target.value)">
                             @foreach($meals as $meal)
-                                <option value="{{ $meal->id }}" @if($selectedMeal && $meal->id == $selectedMeal->id) selected @endif>
+                                <option value="{{ $meal->id }}"
+                                        @if($selectedMeal && $meal->id == $selectedMeal->id) selected @endif>
                                     {{ $meal->name }}
                                 </option>
                             @endforeach
@@ -81,7 +82,9 @@
                         <td class="d-flex gap-1">
                             @foreach($meals->where('id','!=', $selectedMeal->id) as $meal)
                                 <div>
-                                    <input type="checkbox" wire:model="sameReportMeals[]" wire:click="sameReportMealsChanged({{$meal->id}})" id="mealSame{{$meal->id}}">
+                                    <input type="checkbox" wire:model="sameReportMeals[]"
+                                           wire:click="sameReportMealsChanged({{$meal->id}})"
+                                           id="mealSame{{$meal->id}}">
                                     <label for="mealSame{{$meal->id}}">{{$meal->name}}</label>
                                 </div>
                             @endforeach
@@ -185,7 +188,8 @@
                             <input type="text"
                                    wire:input.debounce.450ms="surplusAmountUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
-                                  wire:model.defer="surplusAmount.{{$staticProduct->id}}" @if(!(int)$thisDayAmount) disabled @endif>
+                                   wire:model.defer="surplusAmount.{{$staticProduct->id}}"
+                                   @if(!(int)$thisDayAmount) disabled @endif>
                             <span class="unit">{{ $staticProduct->foodUnit->title }}</span>
                         </div>
                     </td>
@@ -194,7 +198,8 @@
                             <input type="text"
                                    wire:input.debounce.450ms="surplusBenefitsUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
-                                    wire:model.defer="surplusBenefits.{{$staticProduct->id}}" @if(!(int)$thisDayAmount) disabled @endif>
+                                   wire:model.defer="surplusBenefits.{{$staticProduct->id}}"
+                                   @if(!(int)$thisDayAmount) disabled @endif>
                             <span class="unit">{{'شخص'}}</span>
                         </div>
                     </td>

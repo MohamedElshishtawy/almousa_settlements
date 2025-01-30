@@ -33,7 +33,8 @@
                                 wire:change="editField({{ $task->id }}, 'state', $event.target.value)">
                             <option value="">اختر الحالة</option>
                             @foreach($tasksStates as $state)
-                                <option value="{{ $state }}" @if($state == $task->$state) selected @endif>{{ $state }}</option>
+                                <option value="{{ $state }}"
+                                        @if($state == $task->$state) selected @endif>{{ $state }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -41,7 +42,7 @@
                         <input type="text" class="form-control"
                                wire:model.live="notesArr.{{ $task->id }}"
                                wire:keyup.debounce.240="editField({{ $task->id }}, 'notes', $event.target.value)"
-                        placeholder="-">
+                               placeholder="-">
                     </td>
                     <td>
                         <select class="form-select"
@@ -61,7 +62,8 @@
             <tr>
                 <td>#</td>
                 <td>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" wire:model="title" placeholder="عنوان جديد">
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" wire:model="title"
+                           placeholder="عنوان جديد">
                     @error('title')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -78,7 +80,8 @@
                     @enderror
                 </td>
                 <td>
-                    <input type="text" class="form-control @error('notes') is-invalid @enderror" wire:model="notes" placeholder="ملاحظات">
+                    <input type="text" class="form-control @error('notes') is-invalid @enderror" wire:model="notes"
+                           placeholder="ملاحظات">
                     @error('notes')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

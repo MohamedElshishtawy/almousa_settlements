@@ -28,27 +28,30 @@
         <table class="table table-borderless">
             <tbody>
             @if($dryFoodReport->id)
-            <tr>
-                <th>طباعة</th>
+                <tr>
+                    <th>طباعة</th>
 
-                <td>
-                   <div class="grid">
-                       <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}" class="btn btn-secondary ">
-                           <i class="fas fa-print"></i>
-                           التقرير
-                       </a>
-                       <a href="{{ route('dry-food-reports.delegateReport', $dryFoodReport->id) }}" class="btn btn-secondary ">
-                           <i class="fas fa-print"></i>
-                           إقرار المندوب
-                       </a>
-                   </div>
-                </td>
-            </tr>
+                    <td>
+                        <div class="grid">
+                            <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}"
+                               class="btn btn-secondary ">
+                                <i class="fas fa-print"></i>
+                                التقرير
+                            </a>
+                            <a href="{{ route('dry-food-reports.delegateReport', $dryFoodReport->id) }}"
+                               class="btn btn-secondary ">
+                                <i class="fas fa-print"></i>
+                                إقرار المندوب
+                            </a>
+                        </div>
+                    </td>
+                </tr>
             @endif
             <tr>
                 <th>المقر</th>
                 <td>
-                    <select wire:model.live="selectedOfficeId" class="form-select @error('selectedOfficeId') is-invalid @enderror">
+                    <select wire:model.live="selectedOfficeId"
+                            class="form-select @error('selectedOfficeId') is-invalid @enderror">
                         <option value="">اختر المقر</option>
                         @foreach($offices as $office)
                             <option value="{{ $office->id }}" @if($selectedOfficeId == $office->id) selected @endif>
@@ -64,10 +67,12 @@
             <tr>
                 <th>المهمة</th>
                 <td>
-                    <select wire:model.live="selectedMissionId" class="form-select @error('selectedMissionId') is-invalid @enderror">
+                    <select wire:model.live="selectedMissionId"
+                            class="form-select @error('selectedMissionId') is-invalid @enderror">
                         <option value="">اختر المهمة</option>
                         @foreach($selectedOfficeId ? \App\Office\Office::find($selectedOfficeId)->OfficeMissions : [] as $officeMission)
-                            <option value="{{ $officeMission->mission->id }}" @if($selectedMissionId == $officeMission->mission->id) selected @endif>
+                            <option value="{{ $officeMission->mission->id }}"
+                                    @if($selectedMissionId == $officeMission->mission->id) selected @endif>
                                 {{ $officeMission->mission->title }}
                             </option>
                         @endforeach
@@ -112,10 +117,12 @@
             <tr>
                 <th>المندوب</th>
                 <td>
-                    <select wire:model.live="selectedDelegateId" class="form-select @error('selectedDelegateId') is-invalid @enderror">
+                    <select wire:model.live="selectedDelegateId"
+                            class="form-select @error('selectedDelegateId') is-invalid @enderror">
                         <option value="">اختر المندوب</option>
                         @foreach($delegates as $delegate)
-                            <option value="{{ $delegate->id }}" @if($selectedDelegateId == $delegate->id) selected @endif>
+                            <option value="{{ $delegate->id }}"
+                                    @if($selectedDelegateId == $delegate->id) selected @endif>
                                 {{ $delegate->name }}
                             </option>
                         @endforeach
@@ -150,48 +157,58 @@
             @php
 
 
-            $startDate = date('Y-m-d', strtotime($startDate));
-            $endDate = date('Y-m-d', strtotime($endDate));
-            $benefits = $selectedDelegateId ? \App\Models\Delegate::find($selectedDelegateId)->benefits : 0;
-            $office = $selectedOfficeId ? \App\Office\Office::find($selectedOfficeId) : null;
+                $startDate = date('Y-m-d', strtotime($startDate));
+                $endDate = date('Y-m-d', strtotime($endDate));
+                $benefits = $selectedDelegateId ? \App\Models\Delegate::find($selectedDelegateId)->benefits : 0;
+                $office = $selectedOfficeId ? \App\Office\Office::find($selectedOfficeId) : null;
             @endphp
 
             @foreach($products as $product)
                 @php
 
-                $totalAmount = 0;
-                $currentDate = $startDate;
-                while ($currentDate <= $endDate) {
+                    $totalAmount = 0;
+                    $currentDate = $startDate;
+                    while ($currentDate <= $endDate) {
 
-                    $day = \App\Models\Day::date2object($currentDate);
-                    if ($day) {
-                        $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $product->id)
-                            ->where('living_id', $office->living_id)->where('mission_id', $selectedMissionId)
-                            ->first();
+                        $day = \App\Models\Day::date2object($currentDate);
+                        if ($day) {
+                            $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $product->id)
+                                ->where('living_id', $office->living_id)->where('mission_id', $selectedMissionId)
+                                ->first();
 
-                        $productMissionData = \App\Product\ProductDayMeal::where('product_living_mission_id', $productLivingMission->id)
-                            ->where('day_id', $day->id)
-                            ->first();
+                            $productMissionData = \App\Product\ProductDayMeal::where('product_living_mission_id', $productLivingMission->id)
+                                ->where('day_id', $day->id)
+                                ->first();
 
-                        if ($productMissionData) {
-                            $totalAmount += $productMissionData->ProductLivingMission->daily_amount * $benefits;
+                            if ($productMissionData) {
+                                $totalAmount += $productMissionData->ProductLivingMission->daily_amount * $benefits;
+                            }
                         }
+                        $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
                     }
-                    $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
-                }
-                $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
-                $cartonValue = floor($totalPacketValue / $product->carton_value);
-                $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);
-                $unitValue = $totalAmount / $product->packet_value - $totalPacketValue;
-                $unitValue = round($unitValue, 4);
+                    $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
+                    $cartonValue = floor($totalPacketValue / $product->carton_value);
+                    $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);
+                    $unitValue = $totalAmount / $product->packet_value - $totalPacketValue;
+                    $unitValue = round($unitValue, 4);
                 @endphp
                 <tr>
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration) }}</td>
                     <td>{{ $product->name }}</td>
-                    <td><div class="d-flex">{{ $totalAmount }} <span class="unit">{{ $product->foodUnit->title }}</span></div></td>
-                    <td><div class="d-flex">{{$cartonValue}} <span class="unit">كرتون</span></div></td>
-                    <td><div class="d-flex">{{$packetValue}} <span class="unit">عبوة</span></div></td>
-                    <td><div class="d-flex">{{$unitValue}} <span class="unit">{{ $product->foodUnit->title }}</span></div></td>
+                    <td>
+                        <div class="d-flex">{{ $totalAmount }} <span class="unit">{{ $product->foodUnit->title }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex">{{$cartonValue}} <span class="unit">كرتون</span></div>
+                    </td>
+                    <td>
+                        <div class="d-flex">{{$packetValue}} <span class="unit">عبوة</span></div>
+                    </td>
+                    <td>
+                        <div class="d-flex">{{$unitValue}} <span class="unit">{{ $product->foodUnit->title }}</span>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

@@ -62,6 +62,4 @@ class ProductLivingMission extends Model
     }
 
 
-
-
 }

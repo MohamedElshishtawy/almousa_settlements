@@ -6,7 +6,6 @@ use App\Models\DryFoodReport;
 use App\Models\HijriDate;
 use App\Office\Office;
 use App\Product\ProductLivingMission;
-use Illuminate\Http\Request;
 
 class DryFoodReportController extends Controller
 {
@@ -42,7 +41,7 @@ class DryFoodReportController extends Controller
         $office = Office::find($dryFoodReport->delegate->office_id);
         $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
             ->where('mission_id', $dryFoodReport->mission_id)->get();
-        $products = $productMissionLivings->map(fn ($productMissionLiving) => $productMissionLiving->product);
+        $products = $productMissionLivings->map(fn($productMissionLiving) => $productMissionLiving->product);
         // filter only products that have both carton and packet values
         $products = $products->filter(function ($product) {
             return $product->carton_value && $product->packet_value;

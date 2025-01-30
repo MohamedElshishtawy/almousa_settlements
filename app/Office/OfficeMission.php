@@ -2,7 +2,6 @@
 
 namespace App\Office;
 
-use App\Models\EmployeeOffice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,16 +16,8 @@ class OfficeMission extends Model
         'mission_id'
     ];
 
-
-    public function office(){
-        return $this->belongsTo(Office::class);
-    }
-
-    public function mission(){
-        return $this->belongsTo(\App\Mission\Mission::class);
-    }
-
-    public static function getMissionAtDate($officeId, $date){
+    public static function getMissionAtDate($officeId, $date)
+    {
         return self::where('office_id', $officeId)
             ->where('start_date', '<=', $date)
             ->where('end_date', '>=', $date)
@@ -35,7 +26,7 @@ class OfficeMission extends Model
 
     public static function dateRange($officeMission)
     {
-        if (!is_object($officeMission)){
+        if (!is_object($officeMission)) {
             $officeMission = OfficeMission::find($officeMission);
         }
         $dateRange = [];
@@ -48,6 +39,16 @@ class OfficeMission extends Model
         }
 
         return $dateRange;
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
+    public function mission()
+    {
+        return $this->belongsTo(\App\Mission\Mission::class);
     }
 
 }

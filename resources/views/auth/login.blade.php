@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}"/>
 @endsection
 
 @section('content')
@@ -19,7 +19,9 @@
                             <div class="row mb-3 justify-content-center">
                                 <div class="col-md-6 text-right">
                                     <label for="phone" class="form-label">رقم الهاتف</label>
-                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+                                    <input id="phone" type="text"
+                                           class="form-control @error('phone') is-invalid @enderror" name="phone"
+                                           value="{{ old('phone') }}" required autocomplete="phone" autofocus>
                                     @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -32,7 +34,9 @@
                             <div class="row mb-3 justify-content-center">
                                 <div class="col-md-6 text-right">
                                     <label for="password" class="form-label">الباسورد</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <input id="password" type="password"
+                                           class="form-control @error('password') is-invalid @enderror" name="password"
+                                           required autocomplete="current-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -8,12 +8,17 @@
     {{--Google Font--}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200..1000&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200..1000&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <title>طباعة التوريد</title>
     <link rel="stylesheet" href="{{asset('css/print-page.css?7')}}">
@@ -25,7 +30,8 @@
     <thead>
     <tr>
         <th colspan="100">محضر توريد المواد الطازجة و الجافة إعاشة {{$office->living->title}}
-            ({{$office->name}})</th>
+            ({{$office->name}})
+        </th>
     </tr>
     <tr>
         <th>اليوم</th>
@@ -33,7 +39,8 @@
         <th>التاريخ</th>
         <td colspan="2">{{$dateHijry}}</td>
         <th>عدد المستفيدين</th>
-        <td colspan="2" class="focus">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($import->benefits)}}</td>
+        <td colspan="2"
+            class="focus">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($import->benefits)}}</td>
     </tr>
     <tr>
         <th>عدد</th>
@@ -88,19 +95,19 @@
                 <input type="text" class="form-control" value="{{auth()->user()->name}}">
             </td>
             <th>الاسم</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
         </tr>
         <tr>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
             <th>الرتبة</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
             <th>التوقيع</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
         </tr>
         </tbody>
     </table>

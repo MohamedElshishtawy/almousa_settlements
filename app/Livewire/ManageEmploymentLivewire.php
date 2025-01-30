@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Employment\Employment;
 use App\Living\Living;
 use Livewire\Component;
-use Mpdf\Tag\Li;
 
 class ManageEmploymentLivewire extends Component
 {
@@ -35,12 +34,6 @@ class ManageEmploymentLivewire extends Component
         $this->getEmployments();
     }
 
-    public function updatedLivingId($value): void
-    {
-        $this->livingId = $value;
-        $this->getEmployments();
-    }
-
     protected function getEmployments(): void
     {
         $this->employments = Employment::where('living_id', $this->livingId)->get();
@@ -49,6 +42,12 @@ class ManageEmploymentLivewire extends Component
             $this->counts[$employment->id] = $employment->count;
             $this->benefitses[$employment->id] = $employment->benefits;
         }
+    }
+
+    public function updatedLivingId($value): void
+    {
+        $this->livingId = $value;
+        $this->getEmployments();
     }
 
     public function delete(int $id): void

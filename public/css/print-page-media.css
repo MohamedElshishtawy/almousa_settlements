@@ -1,27 +1,29 @@
-
-@page
-{
+@page {
     size: auto;
     margin: 5mm 4mm 5mm 4mm;
 }
-thead
-{
+
+thead {
     display: table-header-group;
 }
-tfoot
-{
+
+tfoot {
     display: table-footer-group;
 }
+
 .not-print {
     display: none;
 }
+
 .no-break {
     page-break-inside: avoid
 }
+
 .bordered-paper {
     height: 100vh;
     margin: 0 !important;
 }
+
 input, textarea {
     background: transparent !important;
     border: none !important;

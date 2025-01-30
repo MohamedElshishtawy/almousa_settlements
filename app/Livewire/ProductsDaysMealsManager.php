@@ -11,16 +11,6 @@ class ProductsDaysMealsManager extends Component
     public $missionProducts, $allProducts;
     public $mission, $living, $units, $types, $index = 0;
 
-
-
-    protected function getProducts() {
-        // Retrieve products specific to the mission and living
-        return ProductLivingMission::where('living_id', $this->living->id)
-            ->where('mission_id', $this->mission->id)
-            ->with('product')
-            ->get();
-    }
-
     public function mount()
     {
         // Initial data loading
@@ -28,6 +18,14 @@ class ProductsDaysMealsManager extends Component
         $this->allProducts = Product::all();
     }
 
+    protected function getProducts()
+    {
+        // Retrieve products specific to the mission and living
+        return ProductLivingMission::where('living_id', $this->living->id)
+            ->where('mission_id', $this->mission->id)
+            ->with('product')
+            ->get();
+    }
 
     public function toggleProduct($productId)
     {
@@ -46,7 +44,6 @@ class ProductsDaysMealsManager extends Component
         }
         $this->missionProducts = $this->getProducts();
     }
-
 
 
     public function render()

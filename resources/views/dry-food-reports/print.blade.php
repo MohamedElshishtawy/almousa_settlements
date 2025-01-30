@@ -57,24 +57,39 @@
                                 <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration) }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>
-                                    <div class="d-flex">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($totalAmount)}}  <span
+                                    <div
+                                        class="d-flex">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($totalAmount)}}
+                                        <span
                                             class="unit"> {{ $product->foodUnit->title }}</span></div>
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        @if ($cartonValue) {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($cartonValue)}} <span class="unit">كرتون </span>
-                                        @else {{ '-' }} @endif
+                                        @if ($cartonValue)
+                                            {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($cartonValue)}}
+                                            <span class="unit">كرتون </span>
+                                        @else
+                                            {{ '-' }}
+                                        @endif
                                     </div>
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        @if($packetValue){{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($packetValue)}} <span class="unit">عبوة </span>
-                                        @else {{ '-' }} @endif
+                                        @if($packetValue)
+                                            {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($packetValue)}}
+                                            <span class="unit">عبوة </span>
+                                        @else
+                                            {{ '-' }}
+                                        @endif
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex"> @if ($unitValue) {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($unitValue)}} <span
-                                            class="unit"> {{ $product->foodUnit->title }}</span> @else {{ '-' }} @endif</div>
+                                    <div class="d-flex"> @if ($unitValue)
+                                            {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($unitValue)}}
+                                            <span
+                                                class="unit"> {{ $product->foodUnit->title }}</span>
+                                        @else
+                                            {{ '-' }}
+                                        @endif</div>
                                 </td>
                             </tr>
                         @endforeach

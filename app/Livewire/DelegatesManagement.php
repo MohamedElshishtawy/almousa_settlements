@@ -5,8 +5,8 @@ namespace App\Livewire;
 use App\Models\Delegate;
 use App\Office\Office;
 use App\Product\FoodType;
-use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 
 class DelegatesManagement extends Component
 {
@@ -27,23 +27,20 @@ class DelegatesManagement extends Component
         'phone' => 'required'
     ];
 
-    /**
-     * Check if the user has the necessary role to perform an action.
-     *
-     * @param string $role
-     * @return bool
-     */
-    protected function roles(string $role): bool
+    public function mount()
     {
-        $user = Auth::user();
-        return $user && $user->hasRole($role);
+        $this->changeDelegats();
+        $this->delegates->sortBy('number');
+        $this->offices = Office::all()->filter(function ($office) {
+            return $office->living->title == 'ميدان';
+        });
     }
 
     protected function changeDelegats()
     {
         $this->delegates = Delegate::all();
         $this->foodTypes = FoodType::all();
-        $this->offices = Office::all()->filter(function($office) {
+        $this->offices = Office::all()->filter(function ($office) {
             return $office->living->title == 'ميدان';
         });
         foreach ($this->delegates as $delegate) {
@@ -56,15 +53,6 @@ class DelegatesManagement extends Component
             $this->delegatesOffices[$delegate->id] = $delegate->office_id;
             $this->delegatesPhones[$delegate->id] = $delegate->phone;
         }
-    }
-
-    public function mount()
-    {
-        $this->changeDelegats();
-        $this->delegates->sortBy('number');
-        $this->offices = Office::all()->filter(function($office) {
-            return $office->living->title == 'ميدان';
-        });
     }
 
     public function changeNumber($delegateId, $value)
@@ -125,7 +113,7 @@ class DelegatesManagement extends Component
     public function changeFoodType($delegateId, $value)
     {
         $delegate = Delegate::find($delegateId);
-        $delegate->food_type_id= $value;
+        $delegate->food_type_id = $value;
         $delegate->save();
         $this->changeDelegats();
     }
@@ -137,6 +125,7 @@ class DelegatesManagement extends Component
         $delegate->save();
         $this->changeDelegats();
     }
+
     public function changePhone($delegateId, $value)
     {
         $delegate = Delegate::find($delegateId);
@@ -162,10 +151,20 @@ class DelegatesManagement extends Component
         $this->changeDelegats();
     }
 
-
-
     public function render()
     {
         return view('livewire.delegates-management');
+    }
+
+    /**
+     * Check if the user has the necessary role to perform an action.
+     *
+     * @param  string  $role
+     * @return bool
+     */
+    protected function roles(string $role): bool
+    {
+        $user = Auth::user();
+        return $user && $user->hasRole($role);
     }
 }

@@ -10,10 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class Obligations extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'office_id',
-        'company_id',
-    ];
 
     public static $headers = [
         "تأمين بعض أنواع المواد ذات النوعية الرديئة أو غير المطابقة للشروط",
@@ -23,7 +19,10 @@ class Obligations extends Model
         "عدم توفير الشهادات الصحية لكل/بعض العمالة حتى تاريخ",
         "",
     ];
-
+    protected $fillable = [
+        'office_id',
+        'company_id',
+    ];
 
     public function bands()
     {

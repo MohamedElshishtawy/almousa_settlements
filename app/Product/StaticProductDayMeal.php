@@ -10,7 +10,7 @@ class StaticProductDayMeal extends ProductDayMeal
 {
     use HasFactory;
 
-    protected  $table = 'static_products_day_meal';
+    protected $table = 'static_products_day_meal';
 
     protected $fillable = [
         'static_product_id',

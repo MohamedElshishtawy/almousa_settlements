@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class HijriDateLiveWire extends Component
 {
-    public $dates, $gregorianDates, $years , $months, $days, $weekDays;
+    public $dates, $gregorianDates, $years, $months, $days, $weekDays;
     public $gregorianDate, $year = '1446', $month, $monthName, $day, $weekDay;
 
     // rules
@@ -17,6 +17,12 @@ class HijriDateLiveWire extends Component
         'day' => 'required',
         'weekDay' => 'required',
     ];
+
+    public function mount()
+    {
+        $this->getDates();
+
+    }
 
     protected function getDates()
     {
@@ -31,12 +37,6 @@ class HijriDateLiveWire extends Component
         }
     }
 
-    public function mount()
-    {
-        $this->getDates();
-
-    }
-
     public function add()
     {
         $this->validate();
@@ -47,7 +47,6 @@ class HijriDateLiveWire extends Component
             'day' => $this->day,
             'weekday' => $this->weekDay,
         ]);
-
 
 
         $this->reset();

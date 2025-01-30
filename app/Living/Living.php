@@ -12,11 +12,10 @@ class Living extends Model
 {
     use HasFactory;
 
+    public static $livings = ['قيادة', 'ميدان'];
     protected $fillable = [
         'title',
     ];
-
-    public static $livings = ['قيادة', 'ميدان'];
 
     public function productsLivingMission()
     {

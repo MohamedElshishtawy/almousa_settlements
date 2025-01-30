@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Office\Office;
 use App\Living\Living;
 use App\Mission\Mission;
+use App\Office\Office;
 use Livewire\Component;
 
 class ManageOffice extends Component
@@ -16,22 +16,6 @@ class ManageOffice extends Component
 
     public $livings; // To store available living options
     public $missions; // To store available mission options
-
-
-
-    protected function rules()
-    {
-        return [
-            'name' => ['required'],
-            'living_id' => 'required|exists:livings,id',
-            'mission_id' => 'required|exists:missions,id',
-            'getting_ready_start_date' => 'required|date|before:start_date|before_or_equal:getting_ready_end_date',
-            'getting_ready_end_date' => 'required|date|after_or_equal:getting_ready_start_date|before:start_date',
-            'start_date' => 'required|date|after:getting_ready_start_date|after:getting_ready_end_date',
-            'end_date' => 'required|date|after_or_equal:start_date|after:getting_ready_start_date|after:getting_ready_end_date',
-        ];
-
-    }
 
     public function mount(Office $office)
     {
@@ -50,7 +34,7 @@ class ManageOffice extends Component
             $this->getting_ready_end_date = $gettingReadyMission->end_date;
         }
         $this->livings = Living::all();
-        $this->missions = Mission::all()->slice(0,2); // Fetch only hajj and ramadan missions
+        $this->missions = Mission::all()->slice(0, 2); // Fetch only hajj and ramadan missions
     }
 
     public function save()
@@ -88,11 +72,26 @@ class ManageOffice extends Component
         }
 
         // Redirect to the offices list or any other appropriate route
-        return redirect()->route('admin.offices')->with('message', $this->office->exists ? 'تم تحديث المقر بنجاح' : 'تم إنشاء المقر بنجاح');
+        return redirect()->route('admin.offices')->with('message',
+            $this->office->exists ? 'تم تحديث المقر بنجاح' : 'تم إنشاء المقر بنجاح');
     }
 
     public function render()
     {
         return view('livewire.manage-office');
+    }
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required'],
+            'living_id' => 'required|exists:livings,id',
+            'mission_id' => 'required|exists:missions,id',
+            'getting_ready_start_date' => 'required|date|before:start_date|before_or_equal:getting_ready_end_date',
+            'getting_ready_end_date' => 'required|date|after_or_equal:getting_ready_start_date|before:start_date',
+            'start_date' => 'required|date|after:getting_ready_start_date|after:getting_ready_end_date',
+            'end_date' => 'required|date|after_or_equal:start_date|after:getting_ready_start_date|after:getting_ready_end_date',
+        ];
+
     }
 }

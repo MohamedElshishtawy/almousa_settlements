@@ -24,7 +24,7 @@
 
                 @else
                     <button wire:loading.remove class="btn btn-success mx-1" wire:click="save">حفظ
-                        </button>
+                    </button>
                 @endif
             </div>
         </div>
@@ -33,7 +33,9 @@
             <tbody>
             <tr>
                 <th>اسم المقر</th>
-                <td><a href="{{ route('admin.offices') }}#{{ $import->report->office->id }}">{{ $import->report->office->name }}</a></td>
+                <td>
+                    <a href="{{ route('admin.offices') }}#{{ $import->report->office->id }}">{{ $import->report->office->name }}</a>
+                </td>
             </tr>
             <tr>
                 <th>التاريخ</th>

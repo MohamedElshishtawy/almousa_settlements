@@ -19,6 +19,24 @@ class Import extends Component
     public $products;
     public $reallyImported = []; // Holds each product’s imported supply data
 
+    public function updatedBenefits()
+    {
+        foreach ($this->products as $product) {
+            $dailyTotal = $this->report ? StaticProduct::howMealPerDay($product->id,
+                \App\Models\Day::date2object($this->date)->id) :
+                ProductDayMeal::howMealPerDay($product->id, \App\Models\Day::date2object($this->date)->id);
+            if ($dailyTotal && is_numeric($this->benefits)) {
+                $this->reallyImported[$product->id] = round($product->daily_amount * $this->benefits, 4);
+            }
+        }
+    }
+
+    public function mount()
+    {
+        $this->office = is_object($this->office) ? $this->office : Office::find($this->office);
+        $this->setData();
+    }
+
     protected function setData()
     {
         $this->report = Report::where('office_id', $this->office->id)->where('for_date', $this->date)->first();
@@ -40,23 +58,6 @@ class Import extends Component
         }
     }
 
-    public function updatedBenefits()
-    {
-        foreach ($this->products as $product) {
-            $dailyTotal = $this->report ? StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($this->date)->id) :
-                ProductDayMeal::howMealPerDay($product->id, \App\Models\Day::date2object($this->date)->id);
-            if ($dailyTotal && is_numeric($this->benefits)) {
-                $this->reallyImported[$product->id] = round($product->daily_amount * $this->benefits, 4);
-            }
-        }
-    }
-
-    public function mount()
-    {
-        $this->office = is_object($this->office) ? $this->office : Office::find($this->office);
-        $this->setData();
-    }
-
     public function dateChanged()
     {
         $this->reset(['benefits', 'benefitError', 'reallyImported', 'report']);
@@ -66,17 +67,20 @@ class Import extends Component
 
     public function importedChanged($id, $value)
     {
-        $this->reallyImported[$id] = (float)$value;
+        $this->reallyImported[$id] = (float) $value;
     }
 
     public function benefitChanged($value)
     {
         // edit the reallyImported array
         foreach ($this->products as $product) {
-            $productMissionData = $this->report ? $product : \App\Product\Product::getProductMissionData($product, $this->office, $this->officeMission);
+            $productMissionData = $this->report ? $product : \App\Product\Product::getProductMissionData($product,
+                $this->office, $this->officeMission);
 
-            $dailyTotal = $this->report ? \App\Product\StaticProduct::howMealPerDay($product->id, \App\Models\Day::date2object($this->date)->id) :
-                \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id, \App\Models\Day::date2object($this->date)->id);
+            $dailyTotal = $this->report ? \App\Product\StaticProduct::howMealPerDay($product->id,
+                \App\Models\Day::date2object($this->date)->id) :
+                \App\Product\ProductDayMeal::howMealPerDay($productMissionData->id,
+                    \App\Models\Day::date2object($this->date)->id);
 
             if ($dailyTotal && is_numeric($value)) {
                 $this->reallyImported[$product->id] = round($productMissionData->daily_amount * $value, 4);
@@ -86,10 +90,36 @@ class Import extends Component
 
     }
 
+    public function reportUpdate()
+    {
+
+        $import = $this->report->import;
+        $import->benefits = $this->benefits;
+        $import->benefits_error = $this->benefitError;
+        $import->save();
+
+        // create static product asssigned with product for this office mission and living
+        foreach ($this->products as $staticProduct) {
+            if ($staticProduct->importProductError) {
+                $staticProduct->importProductError->delete();
+            }
+            if (isset($this->reallyImported[$staticProduct->id])) {
+                ImportProductError::create([
+                    'static_product_id' => $staticProduct->id,
+                    'import_id' => $import->id,
+                    'error' => $this->reallyImported[$staticProduct->id],
+                ]);
+            }
+        }
+        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date])->with('success',
+            'تم الحفظ بنجاح;');
+    }
+
     public function save()
     {
         // Check if benefits is a valid number, greater than 0, and that no report exists for the date and office
-        if (!is_numeric($this->benefits) || $this->benefits <= 0 || Report::where('for_date', $this->date)->where('office_id', $this->office->id)->exists()) {
+        if (!is_numeric($this->benefits) || $this->benefits <= 0 || Report::where('for_date',
+                $this->date)->where('office_id', $this->office->id)->exists()) {
             return;
         }
 
@@ -117,16 +147,16 @@ class Import extends Component
                 'old_product_living_mission_old' => $productMissionData->id,
                 'name' => $product->name,
                 'price' => $productMissionData->price,
-                'daily_amount'  => $productMissionData->daily_amount,
+                'daily_amount' => $productMissionData->daily_amount,
                 'food_type_id' => $product->food_type_id,
                 'food_unit_id' => $product->food_unit_id,
                 'report_id' => $report->id,
-                'carton_value'  => $product->carton_value,
-                'packet_value'  => $product->packet_value,
+                'carton_value' => $product->carton_value,
+                'packet_value' => $product->packet_value,
             ]);
 
             // put the days meals for this product
-            foreach ($productMissionData->productsDayMeal  as $dayMeal) {
+            foreach ($productMissionData->productsDayMeal as $dayMeal) {
                 $staticProduct->productsDayMeal()->create([
                     'day_id' => $dayMeal->day_id,
                     'meal_id' => $dayMeal->meal_id,
@@ -141,37 +171,15 @@ class Import extends Component
                 $importProductError->save();
             }
         }
-        return redirect()->route('managers.reports.import', [$this->officeMission->id , $this->date])->with('success', 'تم الحفظ بنجاح;');
+        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date])->with('success',
+            'تم الحفظ بنجاح;');
     }
+
     public function delete()
     {
         $this->report->delete();
         $this->reset(['benefits', 'benefitError', 'reallyImported', 'report']);
         $this->setData();
-    }
-
-    public function reportUpdate()
-    {
-
-        $import = $this->report->import;
-        $import->benefits = $this->benefits;
-        $import->benefits_error = $this->benefitError;
-        $import->save();
-
-        // create static product asssigned with product for this office mission and living
-        foreach ($this->products as $staticProduct) {
-            if($staticProduct->importProductError) {
-                $staticProduct->importProductError->delete();
-            }
-            if (isset($this->reallyImported[$staticProduct->id])) {
-                ImportProductError::create([
-                    'static_product_id' => $staticProduct->id,
-                    'import_id' => $import->id,
-                    'error' => $this->reallyImported[$staticProduct->id],
-                ]);
-            }
-        }
-        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date])->with('success', 'تم الحفظ بنجاح;');
     }
 
     public function render()

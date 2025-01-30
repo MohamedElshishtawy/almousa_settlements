@@ -28,7 +28,8 @@
                                 wire:change="editField({{ $task->id }}, 'state', $event.target.value)">
                             <option value="">اختر الحالة</option>
                             @foreach($tasksStates as $state)
-                                <option value="{{ $state }}" @if($state == $task->state) selected @endif>{{ $state }}</option>
+                                <option value="{{ $state }}"
+                                        @if($state == $task->state) selected @endif>{{ $state }}</option>
                             @endforeach
                         </select>
                     </td>

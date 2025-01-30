@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OfficeTask extends Model
 {
     use HasFactory;
+
     protected $fillable = ['office_id', 'task_id'];
 
     protected $table = 'office_task';

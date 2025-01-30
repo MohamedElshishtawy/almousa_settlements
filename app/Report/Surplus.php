@@ -35,7 +35,4 @@ class Surplus extends Model
     }
 
 
-
-
-
 }

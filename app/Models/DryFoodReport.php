@@ -9,15 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 class DryFoodReport extends Model
 {
     use HasFactory;
+
+    public static $startDate = '2025-01-18';
+    public static $endDate = '2025-03-31';
     protected $fillable = [
         'delegate_id',
         'mission_id',
         'start_date',
         'end_date',
     ];
-
-    public static $startDate = '2025-01-18';
-    public static $endDate = '2025-03-31';
 
     public function delegate()
     {

@@ -11,7 +11,8 @@
                 <select wire:model.live="selectedOfficeId" class="form-select">
                     <option value="">إختر المقر</option>
                     @foreach($offices as $office)
-                        <option value="{{$office->id}}" @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
+                        <option value="{{$office->id}}"
+                                @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
                     @endforeach
                 </select>
             </th>
@@ -47,7 +48,8 @@
                         <span class="spinner-border spinner-border-sm text-success" role="status"></span>
                     </span>
             </span>
-                تقرير نموذج رقم (2) (تقرير وفر) خاص بالجان الإستلام الفرعية إعاشة ال{{$office ? $office->living->title : ''}} ب
+                تقرير نموذج رقم (2) (تقرير وفر) خاص بالجان الإستلام الفرعية إعاشة
+                ال{{$office ? $office->living->title : ''}} ب
             </th>
             <th colspan="3">
                 {{\App\Office\Office::find($selectedOfficeId)->name ?? ''}}
@@ -115,19 +117,19 @@
                     <input type="text" class="form-control" value="{{auth()->user()->name}}">
                 </td>
                 <th>الاسم</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>المسمى</th>
                 <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
                 <th>الرتبة</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>التوقيع</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
                 <th>التوقيع</th>
-                <td><input type="text" class="form-control" ></td>
+                <td><input type="text" class="form-control"></td>
             </tr>
             </tbody>
         </table>

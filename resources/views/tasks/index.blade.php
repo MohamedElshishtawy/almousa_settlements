@@ -3,6 +3,6 @@
 
 @section('content')
     <div class="container">
-        <livewire:tasks-admin-livewire />
+        <livewire:tasks-admin-livewire/>
     </div>
 @endsection

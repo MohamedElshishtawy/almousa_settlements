@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Alkoumi\LaravelArabicNumbers\Numbers;
 use App\Product\ProductDayMeal;
-use http\Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Http;
 
 class Day extends Model
 {
@@ -22,8 +20,6 @@ class Day extends Model
         'الخميس',
         'الجمعة',
     ];
-    protected $fillable = ['name'];
-
     public static $daysTranslteEn2Ar = [
         'Saturday' => 'السبت',
         'Sunday' => 'الأحد',
@@ -33,30 +29,18 @@ class Day extends Model
         'Thursday' => 'الخميس',
         'Friday' => 'الجمعة',
     ];
-
-    public static function convertDate2ArName($date)
-    {
-        return self::$daysTranslteEn2Ar[date('l', strtotime($date))];
-    }
-
-    public static function text2object($dayText)
-    {
-        if (!in_array($dayText, self::$days)) {
-            return null;
-        }
-        return Day::where('name', $dayText)->first();
-    }
+    protected $fillable = ['name'];
 
     public static function DateToHijri($gregorianDate)
     {
         $day = HijriDate::where('gregorian_date', $gregorianDate)->first();
-        if ( !$day ||  !$day->count()) {
+        if (!$day || !$day->count()) {
             return $gregorianDate;
         }
         $dateFormat = date('d-m-Y', strtotime($gregorianDate));
         $arMonth = HijriDate::$hijryMonths[$day->month];
         $dayInt = Numbers::ShowInArabicDigits($day->day);
-        return $day->weekday . ' ' . $dayInt . ' ' . $arMonth .' '. $day->year ;
+        return $day->weekday.' '.$dayInt.' '.$arMonth.' '.$day->year;
     }
 
     public static function DateToHijriSpecificArray($date)
@@ -83,13 +67,20 @@ class Day extends Model
         return self::text2object($dayText);
     }
 
-
-    public function products_day_meal()
+    public static function convertDate2ArName($date)
     {
-        return $this->belongsTo(ProductDayMeal::class);
+        return self::$daysTranslteEn2Ar[date('l', strtotime($date))];
     }
 
-    public  static  function sortDates(array $dates): array
+    public static function text2object($dayText)
+    {
+        if (!in_array($dayText, self::$days)) {
+            return null;
+        }
+        return Day::where('name', $dayText)->first();
+    }
+
+    public static function sortDates(array $dates): array
     {
         usort($dates, function ($a, $b) {
             return strtotime($a) - strtotime($b);
@@ -106,8 +97,13 @@ class Day extends Model
         $currentDate = $startDate;
         while ($currentDate <= $endDate) {
             $dates[] = $currentDate;
-            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+            $currentDate = date('Y-m-d', strtotime($currentDate.' +1 day'));
         }
         return $dates;
+    }
+
+    public function products_day_meal()
+    {
+        return $this->belongsTo(ProductDayMeal::class);
     }
 }

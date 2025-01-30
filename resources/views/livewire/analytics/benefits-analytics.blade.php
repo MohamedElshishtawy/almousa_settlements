@@ -6,12 +6,13 @@
             </th>
         </tr>
         <tr>
-            <th >المهمة</th>
+            <th>المهمة</th>
             <td colspan="100" class="p-2">
                 <div class="d-flex gap-3 align-items-center">
                     @foreach($missions as $mission)
                         <div>
-                            <input type="checkbox" wire:model.live="selectedMissions" value="{{$mission->id}}" id="mission{{$mission->id}}">
+                            <input type="checkbox" wire:model.live="selectedMissions" value="{{$mission->id}}"
+                                   id="mission{{$mission->id}}">
                             <label class="" for="mission{{$mission->id}}"><strong>{{$mission->title}}</strong></label>
                         </div>
                     @endforeach
@@ -21,7 +22,7 @@
         </tr>
         <tr>
             <th>الفترة من</th>
-            <td >
+            <td>
                 <select wire:model.live="startDate" class="form-select">
                     <option value="">اليوم</option>
                     @foreach($dates ?? [] as $date)
@@ -30,7 +31,7 @@
                 </select>
             </td>
             <th>الى</th>
-            <td >
+            <td>
                 <select wire:model.live="endDate" class="form-select">
                     <option value="">اليوم</option>
                     @foreach($dates ?? [] as $date)
@@ -45,7 +46,8 @@
                 <div class="d-flex gap-3">
                     @foreach($offices as $office)
                         <div class="text-lg">
-                            <input type="checkbox" wire:model.live="selectedOffices" value="{{$office->id}}" id="office{{$office->id}}">
+                            <input type="checkbox" wire:model.live="selectedOffices" value="{{$office->id}}"
+                                   id="office{{$office->id}}">
                             <label class="" for="office{{$office->id}}"><strong>{{$office->name}}</strong></label>
                         </div>
                     @endforeach

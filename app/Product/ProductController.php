@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function countProducts()
     {
-        $counts  = [];
+        $counts = [];
         $missions = Mission::all();
         $livings = Living::all();
 
@@ -29,7 +29,6 @@ class ProductController extends Controller
 
         return $counts;
     }
-
 
 
     public function getProducts($officeMission)

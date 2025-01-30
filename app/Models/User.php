@@ -12,13 +12,13 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    static $roles = ['admin' => 0, 'employee' => 1];
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $table = 'users';
-
     protected $fillable = [
         'name',
         'phone',
@@ -26,7 +26,6 @@ class User extends Authenticatable
         'role',
         'password',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -36,7 +35,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -46,9 +44,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    static $roles = ['admin' => 0, 'employee' => 1];
-
-    function isAdmin() {
+    function isAdmin()
+    {
         return $this->role == User::$roles['admin'];
     }
 

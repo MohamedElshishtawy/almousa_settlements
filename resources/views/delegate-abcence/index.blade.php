@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container">
-        <livewire:delegate-abcence-livewire />
+        <livewire:delegate-abcence-livewire/>
     </div>
 @endsection
 

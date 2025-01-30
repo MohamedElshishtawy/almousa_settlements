@@ -5,11 +5,11 @@ namespace App\Employment;
 use App\Living\Living;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Monolog\Level;
 
 class Employment extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title',
         'benefits',

@@ -10,8 +10,6 @@ class HijriDate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['gregorian_date', 'year', 'month', 'month_name', 'day', 'weekday'];
-
     public static $hijryMonths = [
         '1' => 'محرم',
         '2' => 'صفر',
@@ -26,20 +24,19 @@ class HijriDate extends Model
         '11' => 'ذو القعدة',
         '12' => 'ذو الحجة',
     ];
-
+    protected $fillable = ['gregorian_date', 'year', 'month', 'month_name', 'day', 'weekday'];
 
     public static function formatedDate($date)
     {
         $higri = HijriDate::where('gregorian_date', $date)->first();
         if (!$higri) {
-            return $date . ' ميلادي';
+            return $date.' ميلادي';
         }
         $year = Numbers::ShowInArabicDigits($higri->year);
         $month = Numbers::ShowInArabicDigits($higri->month);
         $day = Numbers::ShowInArabicDigits($higri->day);
-        return $year . '/' . $month . '/' . $day . ' هـ';
+        return $year.'/'.$month.'/'.$day.' هـ';
     }
-
 
 
 }

@@ -47,7 +47,7 @@
         {{\App\Models\Day::convertDate2ArName($formEmployment->import->report->for_date)}}
         و الموضح أعدادهم فى الجدول أعلاه وأتضح ما يلى:
     </p>
-        <table>
+    <table>
         <tr>
             <th class="w-25">الأعداد</th>
             <td>{{$formEmployment->count_state}}</td>
@@ -64,7 +64,7 @@
     <p class="mt-3">
         علما بأنه تم إبلاغ المتعهد بذلك وأخذ توقيعه أدناه.
         <br>
-    لذا نأمل الإحاطة بذلك.
+        لذا نأمل الإحاطة بذلك.
     </p>
     <p class="text-center">
         <strong>ولسعادتكم تحياتى و تقديرى</strong>
@@ -79,24 +79,24 @@
             <th colspan="2">المشرف على موقع صرف الإعاشة ب{{$formEmployment->import->report->office->name}}</th>
         </tr>
         <tr>
-            <th >الاسم</th>
+            <th>الاسم</th>
             <td>
                 <input type="text" class="form-control" value="{{auth()->user()->name}}">
             </td>
             <th>الاسم</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
         </tr>
         <tr>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
             <th>الرتبة</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
             <th>التوقيع</th>
-            <td><input type="text" class="form-control" ></td>
+            <td><input type="text" class="form-control"></td>
         </tr>
         </tbody>
     </table>

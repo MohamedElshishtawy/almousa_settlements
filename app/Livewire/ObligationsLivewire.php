@@ -87,16 +87,6 @@ class ObligationsLivewire extends Component
         $this->redirect(route('obligations.edit', $this->obligation->id));
     }
 
-    public function edit()
-    {
-        $this->obligation->update([
-            'office_id' => $this->selectedOfficeId,
-            'company_id' => $this->company->id,
-        ]);
-
-        $this->editBands();
-    }
-
     private function saveBands()
     {
         foreach ($this->bands as $bandId => $band) {
@@ -111,7 +101,18 @@ class ObligationsLivewire extends Component
         }
     }
 
+    public function edit()
+    {
+        $this->obligation->update([
+            'office_id' => $this->selectedOfficeId,
+            'company_id' => $this->company->id,
+        ]);
+
+        $this->editBands();
+    }
+
     //edit bands
+
     private function editBands()
     {
         // delete all bands
@@ -120,7 +121,6 @@ class ObligationsLivewire extends Component
         // save bands
         $this->saveBands();
     }
-
 
 
     public function delete()

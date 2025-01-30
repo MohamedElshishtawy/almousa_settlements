@@ -2,7 +2,6 @@
 
 namespace App\Product;
 
-use App\Office\Office;
 use App\Office\OfficeMission;
 
 class ProductQuery
@@ -51,7 +50,6 @@ class ProductQuery
         }
         return $products;
     }
-
 
 
 }

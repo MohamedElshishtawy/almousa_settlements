@@ -1,10 +1,9 @@
-
 @extends('layouts.app')
 @php($active = 'units')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>إدارة الوحدات</h2>
@@ -19,9 +18,7 @@
                             </div>
                         @endif
 
-                        <livewire:manage-units />
-
-
+                        <livewire:manage-units/>
 
 
                     </div>

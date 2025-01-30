@@ -3,6 +3,6 @@
 
 @section('content')
     <div class="container">
-        <livewire:delegates-management />
+        <livewire:delegates-management/>
     </div>
 @endsection

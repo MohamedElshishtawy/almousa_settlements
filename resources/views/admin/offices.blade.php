@@ -3,11 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>إدارة المقرات</h2>
-                        <a href="{{ route('admin.office.create') }}" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i> إضافة مقر</a>
+                        <a href="{{ route('admin.office.create') }}" class="btn btn-success btn-sm"><i
+                                class="fa-solid fa-plus"></i> إضافة مقر</a>
                     </div>
 
 
@@ -47,13 +48,16 @@
                                     <td>{{ $mainOfficeMission->start_date }}</td>
                                     <td>{{ $mainOfficeMission->end_date }}</td>
                                     <td>
-                                        <a href="{{ route('admin.office.edit', $office->id) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-edit"></i> تعديل</a>
+                                        <a href="{{ route('admin.office.edit', $office->id) }}"
+                                           class="btn btn-primary btn-sm"><i class="fa-solid fa-edit"></i> تعديل</a>
                                     </td>
                                     <td>
                                         <form action="{{route('admin.office.delete', $office->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> حذف</button>
+                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                    class="fa-solid fa-trash"></i> حذف
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

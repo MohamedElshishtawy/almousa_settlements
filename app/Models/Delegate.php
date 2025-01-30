@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Delegate extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'number',
         'name',

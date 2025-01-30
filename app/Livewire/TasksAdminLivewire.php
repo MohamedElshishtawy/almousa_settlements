@@ -2,9 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Living\Living;
 use App\Office\Office;
-use App\Task\OfficeTask;
 use App\Task\Task;
 use Livewire\Component;
 
@@ -18,7 +16,7 @@ class TasksAdminLivewire extends Component
     public $livingOptions = [];
     public $titles = [], $states = [], $notesArr = [], $office_ids = [];
     public $officesOptions = [];
-    public $tasksStates ;
+    public $tasksStates;
 
     protected $rules = [
         'title' => 'required|string|max:255',

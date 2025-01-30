@@ -19,20 +19,20 @@ class Company extends Model
         'is_active',
     ];
 
-    public function obligations(): HasMany
-    {
-        return $this->hasMany(Obligations::class);
-    }
-
     public static function CompanyOfTheSeason(): Company
     {
-        return Company::where('is_active' , true)->first() ?: Company::create([
-            'name' => 'شركة عام' . now()->year,
+        return Company::where('is_active', true)->first() ?: Company::create([
+            'name' => 'شركة عام'.now()->year,
             'date' => now()->format('Y-m-d'),
             'delegate_name' => 'ممثل الشركة',
             'delegate_rank' => 'مدير',
             'delegate_phone' => '01000000000',
             'is_active' => true,
         ]);
+    }
+
+    public function obligations(): HasMany
+    {
+        return $this->hasMany(Obligations::class);
     }
 }

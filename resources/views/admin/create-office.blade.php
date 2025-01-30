@@ -1,10 +1,9 @@
-
 @extends('layouts.app')
 @php($active = 'office')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>إدارة المقرات</h2>
@@ -16,10 +15,10 @@
                             </div>
                         @endif
                         @isset($office)
-                                @livewire('manage-office', ['office' => $office ])
-                            @else
-                                @livewire('manage-office')
-                            @endisset
+                            @livewire('manage-office', ['office' => $office ])
+                        @else
+                            @livewire('manage-office')
+                        @endisset
                     </div>
                 </div>
             </div>

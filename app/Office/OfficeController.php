@@ -17,7 +17,7 @@ class OfficeController extends Controller
         $offices = Office::all();
         if (!auth()->user()->isAdmin()) {
             $employee = Employee::find(auth()->id());
-            $offices = $offices->filter(fn ($office) => $employee->employeeOffice->office_id == $office->id );
+            $offices = $offices->filter(fn($office) => $employee->employeeOffice->office_id == $office->id);
         }
         return $offices;
     }

@@ -4,7 +4,7 @@
 @section('content')
     <div class="mx-2">
         <div class="row justify-content-center">
-            <div >
+            <div>
                 <div class="">
                     @livewire('analytics.benefits-analytics')
                 </div>

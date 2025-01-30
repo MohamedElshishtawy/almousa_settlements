@@ -20,25 +20,25 @@ class Meal extends Model
     ];
 
     static $translateSmaller = [
-            'فطور' => 'ف',
-            'غداء' => 'غ',
-            'عشاء' => 'ع',
-            'سحور' => 'س',
-        ];
+        'فطور' => 'ف',
+        'غداء' => 'غ',
+        'عشاء' => 'ع',
+        'سحور' => 'س',
+    ];
 
     protected $fillable = ['name'];
+
+    public static function getMealsFor(Mission $mission)
+    {
+        if ($mission->title == 'رمضان') {
+            return Meal::whereNot('name', 'غداء')->get();
+        }
+        return Meal::whereNot('name', 'سحور')->get();
+    }
 
     public function products_day_meal()
     {
         return $this->belongsTo(ProductDayMeal::class);
-    }
-
-    public function meals($for)
-    {
-        if (in_array($for, Mission::$missions)) {
-            return $for == 'رمضان' ? ['عشاء' ,'سحور', 'فطور'] : [ 'عشاء' ,'غداء','فطور'];
-        }
-        return null;
     }
 
     public function getMeals($for)
@@ -52,12 +52,20 @@ class Meal extends Model
         return $meals;
     }
 
-    public static function getMealsFor(Mission $mission)
+    public function meals($for)
     {
-        if ($mission->title == 'رمضان') {
-            return Meal::whereNot('name', 'غداء')->get();
+        if (in_array($for, Mission::$missions)) {
+            if ($for == 'رمضان') {
+                return ['عشاء', 'سحور', 'فطور'];
+            } else {
+                if ($for == 'إفطار') {
+                    return [];
+                } else {
+                    return ['عشاء', 'غداء', 'فطور'];
+                }
+            }
         }
-        return Meal::whereNot('name', 'سحور')->get();
+        return null;
     }
 
     public function surpluses()

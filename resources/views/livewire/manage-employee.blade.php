@@ -25,7 +25,8 @@
 
             <div class="col-md-6">
                 <label for="password" class="form-label">الباسورد</label>
-                <input type="text" id="password" class="form-control" wire:model="password" placeholder="{{$employee->exists() ? 'اكتب الباسورد الجديد' : 'أكتب هنا'}}">
+                <input type="text" id="password" class="form-control" wire:model="password"
+                       placeholder="{{$employee->exists() ? 'اكتب الباسورد الجديد' : 'أكتب هنا'}}">
                 @error('employee.password') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
         </div>

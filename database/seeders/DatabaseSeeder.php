@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Mission\Mission;
-use App\Office\Office;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -48,14 +47,14 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $foodType = ['لحم' , 'مطهو' ,'جاف'];
+        $foodType = ['لحم', 'مطهو', 'جاف'];
         foreach ($foodType as $type) {
             \App\Product\FoodType::create([
                 'title' => $type,
             ]);
         }
 
-        $foodUnits = ['عبوة صغيرة','عبوة وسط' ,'عبوة كبيرة' , 'عبوة' , 'جرام' ,'لتر'];
+        $foodUnits = ['عبوة صغيرة', 'عبوة وسط', 'عبوة كبيرة', 'عبوة', 'جرام', 'لتر'];
         foreach ($foodUnits as $unit) {
             \App\Product\FoodUnit::create([
                 'title' => $unit,
@@ -120,7 +119,7 @@ class DatabaseSeeder extends Seeder
         $livings = \App\Living\Living::all();
         foreach ($livings as $living) {
             $office = $living->office()->create([
-                'name' => 'مكتب ' . $living->title,
+                'name' => 'مكتب '.$living->title,
             ]);
             // add the getting ready date start and end
             $office->OfficeMissions()->create([
@@ -154,8 +153,6 @@ class DatabaseSeeder extends Seeder
         ];
         return $weekdays[$weekdayIndex];
     }
-
-
 
 
 }

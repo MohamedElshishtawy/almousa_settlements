@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Product\FoodType;
 use App\Product\FoodUnit;
 use App\Product\Product;
-use App\Product\ProductLivingMission;
 use Livewire\Component;
 
 class AllProductsManager extends Component
@@ -20,7 +19,9 @@ class AllProductsManager extends Component
     {
         $this->products = $this->getProducts();
     }
-    protected function getProducts() {
+
+    protected function getProducts()
+    {
         // Retrieve products specific to the mission and living
         return Product::all();
     }
@@ -40,10 +41,10 @@ class AllProductsManager extends Component
         $newProduct->save();
 
 
-
         // Refresh the products list
         $this->products = $this->getProducts();
     }
+
     public function render()
     {
         return view('livewire.all-products-manager', [

@@ -10,8 +10,8 @@ class Bands extends Model
     use HasFactory;
 
     protected $fillable = [
-      'head',
-      'description',
+        'head',
+        'description',
         'is_active',
         'obligations_id',
     ];

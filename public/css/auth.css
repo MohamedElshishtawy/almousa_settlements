@@ -10,19 +10,23 @@ body {
         border: none;
         backdrop-filter: contrast(0.4);
         border-radius: 2px !important;
-        & h1  {
+
+        & h1 {
             color: white;
         }
+
         & label {
             color: white;
             font-size: 22px;
             font-weight: 500;
         }
+
         & input {
             background: transparent;
             border-width: 3px;
+
             &:focus {
-                background: transparent ;
+                background: transparent;
             }
         }
     }

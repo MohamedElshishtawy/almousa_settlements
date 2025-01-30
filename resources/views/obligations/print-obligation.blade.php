@@ -21,76 +21,77 @@
     <link rel="stylesheet" href="{{asset('css/print-page.css?9')}}">
 </head>
 <body dir="rtl" class="import-writing m-3 ">
-    <main class="bordered-paper mt-4  ">
-        <div >
-            <header>
-                <div>
-                    <div>إعاشة الميدان</div>
-                    <div>{{$obligations->office->name}}</div>
-                </div>
-                <div></div>
-                <div>
-                    <div>رقم التسلسل</div>
-                </div>
-                <div class="title">
-                    <h4>إقرار بتاريخ
-                        {{\App\Models\HijriDate::formatedDate($obligations->created_at->format('Y-m-d'))}}</h4>
-                </div>
-            </header>
+<main class="bordered-paper mt-4  ">
+    <div>
+        <header>
+            <div>
+                <div>إعاشة الميدان</div>
+                <div>{{$obligations->office->name}}</div>
+            </div>
+            <div></div>
+            <div>
+                <div>رقم التسلسل</div>
+            </div>
+            <div class="title">
+                <h4>إقرار بتاريخ
+                    {{\App\Models\HijriDate::formatedDate($obligations->created_at->format('Y-m-d'))}}</h4>
+            </div>
+        </header>
 
-            <article class="centered">
-                <div>
-                    إنه فى يوم
-                    {{$dateHijri['weekday']}}
-                    الموافق للتاريخ أعلاه انه بمعرفتى انا رئيس لجنة الإستلام الفرعية
-                    {{auth()->user()->rank}}/{{auth()->user()->name}}
-                    ومن خلال مباشرة أعمال الإعاشة بمقر
-                    {{$obligations->office->name}}
-                    {{$obligations->office->living->title}}
-                    حيث رصد عدة ملاحظات على متعهد الإعاشة وهى كالأتى:-
-                    <ul class="my-4">
-                        @foreach($obligations->bands as $band)
-                            @if($band->is_active)
-                                <li>{{$band->head}}</li>
-                                @if($band->description)
-                                    <ul class="mb-2">
-                                        <li>{{$band->description}}</li>
-                                    </ul>
-                                @endif
+        <article class="centered">
+            <div>
+                إنه فى يوم
+                {{$dateHijri['weekday']}}
+                الموافق للتاريخ أعلاه انه بمعرفتى انا رئيس لجنة الإستلام الفرعية
+                {{auth()->user()->rank}}/{{auth()->user()->name}}
+                ومن خلال مباشرة أعمال الإعاشة بمقر
+                {{$obligations->office->name}}
+                {{$obligations->office->living->title}}
+                حيث رصد عدة ملاحظات على متعهد الإعاشة وهى كالأتى:-
+                <ul class="my-4">
+                    @foreach($obligations->bands as $band)
+                        @if($band->is_active)
+                            <li>{{$band->head}}</li>
+                            @if($band->description)
+                                <ul class="mb-2">
+                                    <li>{{$band->description}}</li>
+                                </ul>
                             @endif
-                        @endforeach
-                    </ul>
-                    وبناء عليه قد تم إبلاغ متعهد الشركة بوجود هذه الملاحظات وحتى تاريخه لم يقم بمعالجتها وعليه تم إعداد هذا المحضر حفظا بالواقعة.
-                </div>
+                        @endif
+                    @endforeach
+                </ul>
+                وبناء عليه قد تم إبلاغ متعهد الشركة بوجود هذه الملاحظات وحتى تاريخه لم يقم بمعالجتها وعليه تم إعداد هذا
+                المحضر حفظا بالواقعة.
+            </div>
 
 
-                <div class="text-center">
-                    وعلى ذلك جرى التوقيع،،،
-                </div>
-            </article>
-        </div>
+            <div class="text-center">
+                وعلى ذلك جرى التوقيع،،،
+            </div>
+        </article>
+    </div>
 
-        <footer>
-            <table rules="all" class="no-break">
-                <tbody>
-                <tr>
-                    <th>الاسم</th>
-                    <td>
-                        <input type="text" class="form-control" value="{{auth()->user()->name}}">
-                    </td>
-                </tr>
-                <tr>
-                    <th>الرتبة</th>
-                    <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
-                </tr>
-                <tr>
-                    <th>التوقيع</th>
-                    <td><input type="text" class="form-control"></td>
-                </tr>
-                </tbody>
-            </table>
-        </footer>
-    </main>
+    <footer>
+        <table rules="all" class="no-break">
+            <tbody>
+            <tr>
+                <th>الاسم</th>
+                <td>
+                    <input type="text" class="form-control" value="{{auth()->user()->name}}">
+                </td>
+            </tr>
+            <tr>
+                <th>الرتبة</th>
+                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
+            </tr>
+            <tr>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            </tbody>
+        </table>
+    </footer>
+</main>
 
 
 </body>

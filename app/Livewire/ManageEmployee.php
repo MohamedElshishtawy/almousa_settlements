@@ -36,7 +36,7 @@ class ManageEmployee extends Component
 
         $this->validate([
             'employee.name' => 'required',
-            'employee.phone' => 'required|unique:users,phone,' . $this->employee->id,
+            'employee.phone' => 'required|unique:users,phone,'.$this->employee->id,
             'employee.rank' => 'required',
             'office_id' => 'required|exists:offices,id',
         ]);

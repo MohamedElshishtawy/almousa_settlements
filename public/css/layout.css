@@ -9,37 +9,42 @@ body {
     /*font-style: normal;*/
     font-family: "Cairo", sans-serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
+    font-weight: < weight >;
     font-style: normal;
-    font-variation-settings:
-        "slnt" 0;
+    font-variation-settings: "slnt" 0;
 }
+
 .bold {
     font-weight: bold;
 }
+
 .card {
     background: transparent;
     backdrop-filter: blur(1px);
     box-shadow: 3px 5px 5px #aaa;
+
     & .card-header {
         & h2 {
             color: var(--bs-green);
         }
     }
 }
+
 .navbar {
     padding: 0;
 
     & .nav-pages {
-        &  li {
+        & li {
             display: flex;
         }
+
         & a {
             color: #232323;
             text-decoration: none;
             padding: 10px;
             transition: all 0.3s;
             position: relative;
+
             &:after {
                 position: absolute;
                 content: '';
@@ -47,24 +52,29 @@ body {
                 height: 0;
                 right: 0;
                 bottom: 0;
-                transition: all 0.3s ;
+                transition: all 0.3s;
                 width: 100%;
             }
+
             &:hover {
                 background: #e2e2e2;
+
                 &:after {
                     height: 2px;
                 }
             }
+
             &.active {
                 background: #e2e2e2;
                 font-weight: 600;
+
                 &:after {
                     height: 2px;
                 }
             }
         }
     }
+
     & .notification-li {
         cursor: pointer;
     }
@@ -80,17 +90,21 @@ body {
     grid-gap: 20px;
     overflow: hidden;
     padding: 10px;
+
     & > div {
         display: grid;
         width: 100%;
+
         &.all-products {
             grid-column: 1 / 3;
 
         }
+
         & a {
             & h3 {
                 font-size: 21px;
             }
+
             background: var(--bs-green);
             color: white;
             text-decoration: none;
@@ -98,6 +112,7 @@ body {
             padding: 30px 10px;
             border-radius: 5px;
             transition: all 0.5s;
+
             &:hover {
                 background: #19563a;
             }
@@ -105,6 +120,7 @@ body {
     }
 
 }
+
 .reports-cards {
     display: flex !important;
     flex-direction: row;
@@ -115,17 +131,20 @@ body {
         display: grid;
         gap: 10px;
         padding: 15px;
+
         & i {
             font-size: 40px;
         }
     }
 }
+
 @media (max-width: 768px) {
 
     & .tours {
         grid-template-columns: repeat(1, 1fr);
         width: 90%;
         margin: auto;
+
         & .tour-info {
             padding: 5px;
         }

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'state', 'notes', 'office_id'];
 
     public static $states = ['لم يبدأ', 'تم إنجازها', 'توفر الى حد ما'];
+    protected $fillable = ['title', 'state', 'notes', 'office_id'];
 
     public function office()
     {

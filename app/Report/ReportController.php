@@ -2,31 +2,16 @@
 
 namespace App\Report;
 
-use Alkoumi\LaravelArabicNumbers\Numbers;
 use App\Http\Controllers\Controller;
 use App\Models\Day;
-use App\Models\Employee;
 use App\Models\Meal;
 use App\Office\Office;
 use App\Office\OfficeController;
 use App\Office\OfficeMission;
 use App\Product\ProductController;
-use Illuminate\Support\Facades\Http;
-use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class ReportController extends Controller
 {
-
-    public function reports()
-    {
-        $offices = (new OfficeController())->getOfficesForUser();
-
-
-        $days = (new ReportSurvice())->getDays($offices);
-
-        return view('reports', compact('days'));
-
-    }
 
     public function import($officeMission, $date)
     {
@@ -47,12 +32,23 @@ class ReportController extends Controller
         $report = $office->reports()->where('for_date', $date)->first();
         $products = $report->staticProducts;
 
-        $import = $report ? $report->import : null ;
+        $import = $report ? $report->import : null;
 
         $dateHijry = Day::DateToHijri($date);
 
         return view('reports.import-to-print',
-            compact('office', 'date', 'dateHijry' , 'products', 'import'));
+            compact('office', 'date', 'dateHijry', 'products', 'import'));
+    }
+
+    public function reports()
+    {
+        $offices = (new OfficeController())->getOfficesForUser();
+
+
+        $days = (new ReportSurvice())->getDays($offices);
+
+        return view('reports', compact('days'));
+
     }
 
     public function importPrintWriting($office, $date)
@@ -61,12 +57,11 @@ class ReportController extends Controller
         $report = $office->reports()->where('for_date', $date)->first();
         $products = $report->staticProducts;
 
-        $import = $report ? $report->import : null ;
+        $import = $report ? $report->import : null;
 
         $isHasDifferance = $report->import->isDiffrence();
 
         $Hijri = Day::DateToHijriSpecificArray($date);
-
 
 
         return view('reports.import-writing-print',
@@ -92,7 +87,7 @@ class ReportController extends Controller
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'meals', 'urlMeal'));
     }
 
-    public function surplusPrint($officeMission, $date, $mealId=null)
+    public function surplusPrint($officeMission, $date, $mealId = null)
     {
 
         $officeMission = OfficeMission::find($officeMission);
