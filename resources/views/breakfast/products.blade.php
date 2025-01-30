@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div>
                 <div class="card">
-                    @livewire('breakfast-products-livewire')
+                    @livewire('break-fast-products-livewire')
                 </div>
             </div>
         </div>
