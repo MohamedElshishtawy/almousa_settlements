@@ -16,6 +16,7 @@
             <th rowspan="2">الوحدة</th>
         </tr>
         </thead>
+
         <tbody>
         @foreach($breakfastProducts as $breakfastProduct)
             <tr>
