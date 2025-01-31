@@ -63,6 +63,7 @@ class BreakFastReportController extends Controller
     {
         $breakFastReport = BreakFastReport::with('breakFastReportDelegates')->findOrFail($id);
         $delegatesAll = Delegate::all();
+        dd($delegatesAll);
 
         return view('breakfast.form', compact('breakFastReport', 'delegatesAll'));
     }
