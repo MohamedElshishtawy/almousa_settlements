@@ -110,9 +110,10 @@ class BreakFastReportController extends Controller
             compact('breakfastReportDelegates', 'breakfastReportProducts', 'breakfastReport'));
     }
 
-    public function destroy(BreakFastReport $id)
+    public function destroy($id)
     {
-        $id->delete();
+        $breakFastReport = BreakFastReport::find($id);
+        $breakFastReport->delete();
 
         return redirect()->route('breakfast.index')->with('message', 'تم حذف التقرير بنجاح');
     }
