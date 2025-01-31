@@ -112,6 +112,7 @@ class BreakFastReportController extends Controller
 
     public function destroy(BreakFastReport $breakFastReport)
     {
+        dd($breakFastReport);
         $breakFastReport->delete();
 
         return redirect()->route('breakfast.index')->with('message', 'تم حذف التقرير بنجاح');
