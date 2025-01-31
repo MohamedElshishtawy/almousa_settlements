@@ -55,7 +55,6 @@ class BreakFastReportController extends Controller
     {
         $breakFastReport = new BreakFastReport();
         $delegatesAll = Delegate::all();
-        dd($delegatesAll);
         return view('breakfast.form', compact('breakFastReport', 'delegatesAll'));
     }
 
