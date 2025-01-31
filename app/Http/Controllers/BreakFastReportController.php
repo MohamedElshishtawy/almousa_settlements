@@ -33,6 +33,7 @@ class BreakFastReportController extends Controller
             BreakFastReportDelegate::create([
                 'break_fast_report_id' => $breakFastReport->id,
                 'delegate_id' => $delegateId,
+                'benefits' => Delegate::find($delegateId)->benefits,
             ]);
         }
 

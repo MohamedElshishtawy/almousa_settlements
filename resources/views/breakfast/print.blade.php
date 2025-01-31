@@ -29,12 +29,12 @@
         @foreach($breakfastReportDelegates as $breakfastReportDelegate)
             <tr>
                 <td>{{ $breakfastReportDelegate->delegate->number }}</td>
-                <td>{{ $breakfastReportDelegate->delegate->benefits }}</td>
+                <td>{{ $breakfastReportDelegate->benefits }}</td>
 
                 @foreach($breakfastReportProducts as $breakfastReportProduct)
                     @php
                         $product = $breakfastReportProduct->breakFastProduct->product;
-                        $totalAmount = $breakfastReportDelegate->delegate->benefits * $breakfastReportProduct->daily_amount;
+                        $totalAmount = $breakfastReportDelegate->benefits * $breakfastReportProduct->daily_amount;
                         $totalPacketValue = floor($totalAmount / $product->packet_value); // packet
                         $cartonValue = floor($totalPacketValue / $product->carton_value);
                         $packetValue = floor($totalPacketValue - $cartonValue*$product->carton_value);

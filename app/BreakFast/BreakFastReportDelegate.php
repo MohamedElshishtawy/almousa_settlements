@@ -11,7 +11,7 @@ class BreakFastReportDelegate extends Model
     use HasFactory;
 
     protected $fillable = [
-        'delegate_id', 'break_fast_report_id',
+        'delegate_id', 'break_fast_report_id', 'benefits',
     ];
 
 
