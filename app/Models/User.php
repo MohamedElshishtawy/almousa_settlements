@@ -3,27 +3,32 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Office\Office;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    static $roles = ['admin' => 0, 'employee' => 1];
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
+     * @name      <string>
+     * @phone     <string>
+     * @password  <string>
+     * @role      <string>
+     * @role_ar   <string>
+     * @office_id <int>
      */
     protected $table = 'users';
     protected $fillable = [
         'name',
         'phone',
-        'rank',
-        'role',
         'password',
     ];
     /**
@@ -46,7 +51,32 @@ class User extends Authenticatable
 
     function isAdmin()
     {
-        return $this->role == User::$roles['admin'];
+        return $this->hasRole('admin');
+    }
+
+    public function office(): BelongsTo
+    {
+        return $this->belongsTo(Office::class);
+    }
+
+    public function getRoleArAttribute()
+    {
+        $enRole = $this->getRoleNames()->first();
+        return $enRole ? __('roles_permissions.'.$enRole) : '';
+    }
+
+    public function getRoleAttribute(): Role
+    {
+        $enRole = $this->getRoleNames()->first();
+        return Role::findByName($enRole);
+    }
+
+    public function isBelongsToOffice($officeId)
+    {
+        if (!$this->office) {
+            return true;
+        }
+        return $this->office->id === $officeId;
     }
 
 }

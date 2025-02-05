@@ -38,7 +38,7 @@
         </tr>
         <tr>
             <th>الرتبة</th>
-            <td><input type="text" class="form-control" value="{{$delegate->rank}}"></td>
+            <td><input type="text" class="form-control" value="{{$delegate->role_ar}}"></td>
         </tr>
         <tr>
             <th>رقم التلفون</th>

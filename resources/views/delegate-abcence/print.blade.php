@@ -45,7 +45,7 @@
         </tr>
         <tr>
             <td>الرتبة:</td>
-            <td><input type="text" class="form-control" value="{{ auth()->user()->rank }}"></td>
+            <td><input type="text" class="form-control" value="{{ auth()->user()->role_ar }}"></td>
             <td>الرتبة:</td>
             <td><input type="text" class="form-control"></td>
         </tr>

@@ -151,6 +151,17 @@ return [
     'url' => 'يجب أن يكون حقل :attribute رابطًا صالحًا.',
     'ulid' => 'يجب أن يكون حقل :attribute ULID صالحًا.',
     'uuid' => 'يجب أن يكون حقل :attribute UUID صالحًا.',
+    'selectedOfficeId.required' => 'حقل المقر مطلوب.',
+    'selectedDelegateId.required' => 'حقل المندوب مطلوب.',
+    'selectedMissionId.required' => 'حقل المهمة مطلوب.',
+    'startDate.required' => 'حقل تاريخ البداية مطلوب.',
+    'startDate.date' => 'تاريخ البداية يجب أن يكون تاريخاً صالحاً.',
+    'startDate.before_or_equal' => 'تاريخ البداية يجب أن يكون قبل أو يساوي تاريخ النهاية.',
+    'startDate.not_in' => 'تاريخ البداية المحدد يتداخل مع تقرير موجود مسبقاً.',
+    'endDate.required' => 'حقل تاريخ النهاية مطلوب.',
+    'endDate.date' => 'تاريخ النهاية يجب أن يكون تاريخاً صالحاً.',
+    'endDate.after_or_equal' => 'تاريخ النهاية يجب أن يكون بعد أو يساوي تاريخ البداية.',
+    'endDate.not_in' => 'تاريخ النهاية المحدد يتداخل مع تقرير موجود مسبقاً.',
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +210,13 @@ return [
         'benefits' => 'المستفيدين',
         'institution' => 'المؤسسة',
         'rank' => 'الرتبة',
-
+        'phone' => 'رقم الهاتف',
+        'office_id' => 'المقر',
+        'email' => 'البريد الإلكتروني',
+        'user_id' => 'المستخدم',
+        'selected_office_id' => 'المقر',
+        'selected_mission_id' => 'المهمة',
+        'selected_delegate_id' => 'المندوب',
     ],
 
 ];

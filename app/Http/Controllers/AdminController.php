@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Living\Living;
 use App\Mission\Mission;
-use App\Models\Employee;
-use App\Models\User;
 use App\Product\FoodUnit;
 use App\Product\ProductController;
 
@@ -16,33 +14,6 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
-
-    public function users()
-    {
-        return view('admin.users', [
-            'employees' => Employee::where('role', User::$roles['employee'])->get()
-        ]);
-    }
-
-
-    public function createUser()
-    {
-        return view('admin.create_user');
-    }
-
-    public function editUser(Employee $id)
-    {
-        return view('admin.create_user', [
-            'employee' => $id
-        ]);
-    }
-
-    public function deleteUser(Employee $id)
-    {
-        $id->delete();
-        return redirect()->route('admin.users')->with('message', 'تم حذف الموظف بنجاح');
-    }
-
 
     public function products()
     {

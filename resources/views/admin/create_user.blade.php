@@ -18,8 +18,8 @@
                             </div>
                         @endif
 
-                        @isset($employee)
-                            @livewire('manage-employee', ['employee' => $employee ])
+                        @isset($user)
+                            @livewire('manage-employee', ['user' => $user ])
                         @else
                             @livewire('manage-employee')
                         @endisset

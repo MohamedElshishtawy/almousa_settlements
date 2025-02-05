@@ -36,7 +36,7 @@
                                         إن شاء الله
                                     </li>
                                     <li>انت حاليا مسؤل عن مقر
-                                        <strong>{{\App\Models\Employee::find(auth()->id())->employeeOffice->office->name}}</strong>
+                                        <strong>{{ optional(auth()->user()->office)->name ?: 'لا يوجد'}}</strong>
                                         , وفى حالة وجود خطأ فى المقر إرجع لأدمن الموقع
                                     </li>
                                     <li>يمكنك الدخول الى صفحة المحاضر لتملأ محضر التوريد أو الوفر</li>

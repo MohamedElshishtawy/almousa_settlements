@@ -10,6 +10,7 @@
                     </div>
 
                     <div class="categories tours">
+                        @role('admin')
                         <div class="all-products">
                             <a href="{{route('admin.products.all')}}">
                                 <h3>إدارة جميع الأصناف</h3>
@@ -21,6 +22,7 @@
                                 <h3>إدارة أصناف الفطور</h3>
                             </a>
                         </div>
+                        @endrole
 
                         @foreach(\App\Mission\Mission::all()->sortBy('title') as $mission)
                             @foreach(\App\Living\Living::all() as $living)

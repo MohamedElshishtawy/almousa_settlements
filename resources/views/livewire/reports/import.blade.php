@@ -123,7 +123,7 @@
                     <td>{{ $product->foodUnit->title }}</td>
                     <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
 
-                    @if (auth()->user()->isAdmin())
+                    @if (auth()->user()->role->hasPermissionTo('import_show_price'))
                         <td>{{ number_format($productMissionData->price, 4) . ' ر.س.' }}</td>
                     @endif
                     <td>{{ (int)$dailyTotal ? $dayMissionTimes : 'غير مقرر' }}</td>

@@ -4,25 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div>
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h2>إدارة الوحدات</h2>
-
-                    </div>
-
-
-                    <div class="card-body table-responsive">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        <livewire:manage-units/>
-
-
-                    </div>
-                </div>
+                <livewire:manage-units/>
             </div>
         </div>
     </div>

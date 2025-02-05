@@ -13,6 +13,12 @@ class DryFoodReportController extends Controller
     {
         $dryFoodReports = DryFoodReport::all();
 
+        if (auth()->user()->office()) {
+            $dryFoodReports = $dryFoodReports->filter(function ($dryFoodReport) {
+                return auth()->user()->isBelongsToOffice($dryFoodReport->delegate->office->id);
+            });
+        }
+
         return view('dry-food-reports.index', compact('dryFoodReports'));
     }
 
@@ -24,6 +30,12 @@ class DryFoodReportController extends Controller
     public function edit($dryFoodReport)
     {
         $dryFoodReport = DryFoodReport::find($dryFoodReport);
+
+        // check if user is in the office
+        if (auth()->user()->office() && !auth()->user()->isBelongsToOffice($dryFoodReport->delegate->office->id)) {
+            abort(403);
+        }
+
         if (!$dryFoodReport) {
             return redirect()->route('dry-food-reports.create');
         }
@@ -33,6 +45,10 @@ class DryFoodReportController extends Controller
     public function print($dryFoodReport)
     {
         $dryFoodReport = DryFoodReport::find($dryFoodReport);
+        // check if user is in the office
+        if (auth()->user()->office() && !auth()->user()->isBelongsToOffice($dryFoodReport->delegate->office->id)) {
+            abort(403);
+        }
 
         if (!$dryFoodReport) {
             return redirect()->route('dry-food-reports.create');
@@ -52,6 +68,10 @@ class DryFoodReportController extends Controller
     public function delegateReport($dryFoodReport)
     {
         $dryFoodReport = DryFoodReport::find($dryFoodReport);
+        // check if user is in the office
+        if (auth()->user()->office() && !auth()->user()->isBelongsToOffice($dryFoodReport->delegate->office->id)) {
+            abort(403);
+        }
         $delegate = $dryFoodReport->delegate;
         $formatedDate = HijriDate::formatedDate($dryFoodReport->created_at->format('Y-m-d'));
 
@@ -62,6 +82,10 @@ class DryFoodReportController extends Controller
 
     public function delete(DryFoodReport $dryFoodReport)
     {
+        // check if user is in the office
+        if (auth()->user()->office() && !auth()->user()->isBelongsToOffice($dryFoodReport->delegate->office->id)) {
+            abort(403);
+        }
         $dryFoodReport->delete();
         return redirect()->route('dry-food-reports');
     }

@@ -16,46 +16,53 @@ class DryFoodReportLivewire extends Component
     public $products;
     public DryFoodReport $dryFoodReport;
 
-    public function messages()
-    {
-        return [
-            'selectedOfficeId.required' => 'حقل المقر مطلوب.',
-            'selectedDelegateId.required' => 'حقل المندوب مطلوب.',
-            'selectedMissionId.required' => 'حقل المهمة مطلوب.',
-            'startDate.required' => 'حقل تاريخ البداية مطلوب.',
-            'startDate.date' => 'تاريخ البداية يجب أن يكون تاريخاً صالحاً.',
-            'startDate.before_or_equal' => 'تاريخ البداية يجب أن يكون قبل أو يساوي تاريخ النهاية.',
-            'startDate.not_in' => 'تاريخ البداية المحدد يتداخل مع تقرير موجود مسبقاً.',
-            'endDate.required' => 'حقل تاريخ النهاية مطلوب.',
-            'endDate.date' => 'تاريخ النهاية يجب أن يكون تاريخاً صالحاً.',
-            'endDate.after_or_equal' => 'تاريخ النهاية يجب أن يكون بعد أو يساوي تاريخ البداية.',
-            'endDate.not_in' => 'تاريخ النهاية المحدد يتداخل مع تقرير موجود مسبقاً.',
-        ];
-    }
-
+    // Mount the component
     public function mount(DryFoodReport $dryFoodReport)
     {
         $this->dryFoodReport = $dryFoodReport;
+        $this->initializeOffices();
+        $this->initializeDelegatesAndProducts();
+        $this->dates = Day::datesBetween(DryFoodReport::$startDate, DryFoodReport::$endDate);
 
+        if ($this->dryFoodReport->exists) {
+            $this->initializeExistingReport();
+        }
+    }
+
+    // Initialize offices based on user permissions
+    protected function initializeOffices()
+    {
         $this->offices = Office::all()->filter(function ($office) {
             return $office->living->title == 'ميدان';
         });
 
-        $this->delegates = [];
-        $this->products = [];
-        $this->dates = Day::datesBetween(DryFoodReport::$startDate, DryFoodReport::$endDate);
-
-        if ($this->dryFoodReport->id) {
-            $this->selectedOfficeId = $this->dryFoodReport->delegate->office_id;
-            $this->selectedDelegateId = $this->dryFoodReport->delegate_id;
-            $this->selectedMissionId = $this->dryFoodReport->mission_id;
-            $this->startDate = $this->dryFoodReport->start_date;
-            $this->endDate = $this->dryFoodReport->end_date;
-            $this->delegates = Delegate::where('office_id', $this->selectedOfficeId)->get() ?: [];
-            $this->getProducts();
+        if (auth()->user()->office) {
+            $this->offices = $this->offices->filter(function ($office) {
+                return auth()->user()->isBelongsToOffice($office->id);
+            });
         }
     }
 
+    // Initialize delegates and products
+    protected function initializeDelegatesAndProducts()
+    {
+        $this->delegates = [];
+        $this->products = [];
+    }
+
+    // Initialize fields for an existing report
+    protected function initializeExistingReport()
+    {
+        $this->selectedOfficeId = $this->dryFoodReport->delegate->office_id;
+        $this->selectedDelegateId = $this->dryFoodReport->delegate_id;
+        $this->selectedMissionId = $this->dryFoodReport->mission_id;
+        $this->startDate = $this->dryFoodReport->start_date;
+        $this->endDate = $this->dryFoodReport->end_date;
+        $this->delegates = Delegate::where('office_id', $this->selectedOfficeId)->get() ?: [];
+        $this->getProducts();
+    }
+
+    // Fetch products based on selected office and mission
     public function getProducts()
     {
         if ($this->selectedOfficeId && $this->selectedMissionId) {
@@ -63,45 +70,46 @@ class DryFoodReportLivewire extends Component
 
             $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
                 ->where('mission_id', $this->selectedMissionId)->get();
-            $this->products = $productMissionLivings->map(fn($productMissionLiving) => $productMissionLiving->product);
-            // get only products that have both carton and packet values
-            $this->products = $this->products->filter(function ($product) {
-                return $product->carton_value && $product->packet_value;
-            });
+
+            $this->products = $productMissionLivings->map(fn($productMissionLiving) => $productMissionLiving->product)
+                ->filter(function ($product) {
+                    return $product->carton_value && $product->packet_value;
+                });
         }
     }
 
+    // Handle office selection change
     public function updatedSelectedOfficeId()
     {
         $this->delegates = Delegate::where('office_id', $this->selectedOfficeId)->get() ?: [];
         $this->getProducts();
-
     }
 
+    // Handle mission selection change
     public function updatedSelectedMissionId()
     {
         $this->getProducts();
-
     }
 
+    // Handle delegate selection change
     public function updatedSelectedDelegateId()
     {
         $this->getProducts();
-
     }
 
+    // Handle start date change
     public function updatedStartDate()
     {
         $this->getProducts();
-
     }
 
+    // Handle end date change
     public function updatedEndDate()
     {
         $this->getProducts();
-
     }
 
+    // Save a new report
     public function save()
     {
         $this->validate();
@@ -113,9 +121,9 @@ class DryFoodReportLivewire extends Component
         ]);
 
         $this->redirect(route('dry-food-reports.edit', $this->dryFoodReport));
-
     }
 
+    // Update an existing report
     public function edit()
     {
         $this->validate();
@@ -127,12 +135,21 @@ class DryFoodReportLivewire extends Component
         ]);
     }
 
-    public function render()
+    // Define validation rules
+    protected function rules()
     {
-        return view('livewire.dry-food-report-livewire');
+        $dates = $this->getOverlappingDates();
+        return [
+            'selectedOfficeId' => 'required',
+            'selectedDelegateId' => 'required',
+            'selectedMissionId' => 'required',
+            'startDate' => 'required|date|before_or_equal:endDate|not_in:'.implode(',', $dates),
+            'endDate' => 'required|date|after_or_equal:startDate|not_in:'.implode(',', $dates),
+        ];
     }
 
-    protected function rules()
+    // Get overlapping dates for validation
+    protected function getOverlappingDates()
     {
         $dates = [];
         if ($this->selectedDelegateId) {
@@ -141,20 +158,17 @@ class DryFoodReportLivewire extends Component
                 $reportDates = Day::datesBetween($report->start_date, $report->end_date);
                 $dates = array_merge($dates, $reportDates);
             }
-            if ($this->dryFoodReport->id) {
+            if ($this->dryFoodReport->exists) {
                 $dates = array_diff($dates,
                     Day::datesBetween($this->dryFoodReport->start_date, $this->dryFoodReport->end_date));
             }
         }
-        // if start date in the $dates array make validation error message
+        return $dates;
+    }
 
-        return [
-            'selectedOfficeId' => 'required',
-            'selectedDelegateId' => 'required',
-            'selectedMissionId' => 'required',
-            'startDate' => 'required|date|before_or_equal:endDate|not_in:'.implode(',', $dates),
-            'endDate' => 'required|date|after_or_equal:startDate|not_in:'.implode(',', $dates),
-        ];
-
+    // Render the view
+    public function render()
+    {
+        return view('livewire.dry-food-report-livewire');
     }
 }

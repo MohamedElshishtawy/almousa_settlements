@@ -6,7 +6,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BreakFastProductController;
 use App\Http\Controllers\BreakFastReportController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DryFoodReportController;
+use App\Http\Controllers\HijriDateController;
+use App\Http\Controllers\UserController;
 use App\Obligations\ObligationsController;
 use App\Office\OfficeController;
 use App\Report\ReportController;
@@ -36,99 +39,167 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::middleware('auth')->group(function () {
+
     Route::prefix('users')->group(function () {
-        Route::get('/', [AdminController::class, 'users'])->name('admin.users');
-        Route::get('/create', [AdminController::class, 'createUser'])->name('admin.users.create');
-        Route::get('/{id}', [AdminController::class, 'editUser'])->name('admin.users.edit');
-        Route::delete('/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-    });
+        Route::get('/', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
+        Route::get('/{user}', [UserController::class, 'edit'])->name('admin.users.edit');
+        Route::delete('/{user}', [UserController::class, 'delete'])->name('admin.users.delete');
+    })->middleware('permission:users_management');
+
     Route::prefix('offices')->group(function () {
-        Route::get('/offices', [OfficeController::class, 'offices'])->name('admin.offices');
-        Route::get('/offices/create', [OfficeController::class, 'CreateOffice'])->name('admin.office.create');
-        Route::get('/offices/{id}', [OfficeController::class, 'EditOffice'])->name('admin.office.edit');
-        Route::delete('/offices/{id}', [OfficeController::class, 'DeleteOffice'])->name('admin.office.delete');
-    });
+        Route::get('/', [OfficeController::class, 'offices'])->name('admin.offices');
+        Route::get('/create', [OfficeController::class, 'CreateOffice'])->name('admin.office.create');
+        Route::get('/{id}', [OfficeController::class, 'EditOffice'])->name('admin.office.edit');
+        Route::delete('/{id}', [OfficeController::class, 'DeleteOffice'])->name('admin.office.delete');
+    })->middleware('permission:offices_management');
+
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminController::class, 'products'])->name('admin.products');
-        Route::get('/all', [AdminController::class, 'all'])->name('admin.products.all');
-        Route::get('/{mission}/{living}', [AdminController::class, 'productsSpecific'])
-            ->name('admin.products.specific');
-    });
+        Route::get('/all',
+            [AdminController::class, 'all'])->name('admin.products.all')->middleware('permission:manage_all_products');
+        Route::get('/{mission}/{living}', [
+            AdminController::class, 'productsSpecific'
+        ])->name('admin.products.specific')->middleware('permission:manage_mission_products');
+        Route::get('/breakfast-products', [
+            BreakFastProductController::class, 'index'
+        ])->name('admin.breakfast-products')->middleware('permission:break_fast_products_manage');
+    })->middleware('permission:manage_all_products|manage_mission_products|break_fast_products_manage');
+
     Route::prefix('analytics')->group(function () {
-        Route::get('/imports/{showPrices?}',
-            [ReportController::class, 'AnalyticsImport'])->name('admin.analytics.imports');
-        Route::get('/surplus/{showPrices?}',
-            [ReportController::class, 'AnalyticsSurplus'])->name('admin.analytics.surplus');
-        Route::get('/benefits/', [ReportController::class, 'AnalyticsBenefits'])->name('admin.analytics.benefits');
+        Route::get('/imports/{showPrices?}', [
+            ReportController::class, 'AnalyticsImport'
+        ])->name('admin.analytics.imports')->middleware('permission:import_model2_create');
+        Route::get('/surplus/{showPrices?}', [
+            ReportController::class, 'AnalyticsSurplus'
+        ])->name('admin.analytics.surplus')->middleware('permission:surplus_model2_create');
+        Route::get('/benefits/', [
+            ReportController::class, 'AnalyticsBenefits'
+        ])->name('admin.analytics.benefits')->middleware('permission:beneficiaries_report_manage');
     });
+
     Route::prefix('companies')->group(function () {
-        Route::get('/', [CompanyController::class, 'companies'])->name('admin.companies');
+        Route::get('/', [
+            CompanyController::class, 'companies'
+        ])->name('admin.companies')->middleware('permission:manage_companies');
     });
+
     Route::prefix('employment')->group(function () {
         Route::get('/', [EmploymentController::class, 'employment'])->name('admin.employment');
-    });
-    Route::get('/units', [AdminController::class, 'units'])->name('admin.units');
-    Route::get('/dates', [\App\Http\Controllers\HijriDateController::class, 'index'])->name('admin.dates');
-    Route::get('/delegates', [\App\Http\Controllers\DelegateController::class, 'index'])->name('admin.delegates');
-    Route::get('/tasks', [\App\Task\TaskController::class, 'index'])->name('admin.tasks');
-    Route::get('/breakfast-products', [BreakFastProductController::class, 'index'])->name('admin.breakfast-products');
-});
+    })->middleware('permission:employment_create|employment_edit|employment_delete');
 
-Route::prefix('managers')->middleware(['auth'])->group(function () {
-    Route::resource('breakfast', BreakFastReportController::class);
+    Route::get('/units',
+        [AdminController::class, 'units'])->name('admin.units')->middleware('permission:unites_management');
+    Route::get('/dates',
+        [HijriDateController::class, 'index'])->name('admin.dates')->middleware('permission:manage_dates');
+    Route::get('/tasks', [
+        TaskController::class, 'index'
+    ])->name('admin.tasks')->middleware('permission:tasks_create|tasks_edit|tasks_delete');
+
+    Route::get('/delegates', [
+        DelegateController::class, 'index'
+    ])->name('admin.delegates')->middleware('permission:delegate_create|delegate_edit|delegate_delete');
+
+    Route::resource('breakfast',
+        BreakFastReportController::class)->middleware('permission:break_fast_create|break_fast_edit|break_fast_delete|break_fast_print');
+
     Route::get('/breakfast/{breakFastReport}/print', [BreakFastReportController::class, 'print'])
-        ->name('breakfast.print');
+        ->name('breakfast.print')->middleware('permission:break_fast_print');
+
     Route::prefix('/reports')->group(function () {
         Route::get('/', [ReportController::class, 'reports'])->name('managers.reports');
         Route::prefix('/import')->group(function () {
-            Route::get('/{officeMission}/{date}', [ReportController::class, 'import'])->name('managers.reports.import');
+            Route::get('/{officeMission}/{date}', [
+                ReportController::class, 'import'
+            ])->name('managers.reports.import')->middleware('permission:import_create|import_edit|import_delete');
             Route::get('/{office}/{date}/print',
-                [ReportController::class, 'importPrint'])->name('managers.reports.import.print');
+                [
+                    ReportController::class, 'importPrint'
+                ])->name('managers.reports.import.print')->middleware('permission:import_print');
             Route::get('/{office}/{date}/print-writing',
                 [ReportController::class, 'importPrintWriting'])->name('managers.reports.import.print-writing');
         });
         Route::prefix('/surplus')->group(function () {
             Route::get('/print/{officeMission}/{date}/{meal?}',
-                [ReportController::class, 'surplusPrint'])->name('managers.reports.surplus.print');
+                [
+                    ReportController::class, 'surplusPrint'
+                ])->name('managers.reports.surplus.print')->middleware('permission:surplus_print');
             Route::get('/{officeMission}/{date}/{meal?}',
-                [ReportController::class, 'surplus'])->name('managers.reports.surplus');
+                [
+                    ReportController::class, 'surplus'
+                ])->name('managers.reports.surplus')->middleware('permission:surplus_create|surplus_edit|surplus_delete');
         });
-    });
-    Route::prefix('/dry-food-reports')->group(function () {
-        Route::get('/', [DryFoodReportController::class, 'index'])->name('dry-food-reports');
-        Route::get('/create', [DryFoodReportController::class, 'create'])->name('dry-food-reports.create');
-        Route::get('/{dryFoodReport}/edit', [DryFoodReportController::class, 'edit'])->name('dry-food-reports.edit');
-        Route::get('/{dryFoodReport}/show', [DryFoodReportController::class, 'print'])->name('dry-food-reports.print');
-        Route::get('/{dryFoodReport}/delegate-report',
-            [DryFoodReportController::class, 'delegateReport'])->name('dry-food-reports.delegateReport');
-        Route::delete('/{dryFoodReport}', [DryFoodReportController::class, 'delete'])->name('dry-food-reports.destroy');
-    });
+    })->middleware('permission:import_create|import_edit|import_delete|import_print|surplus_create|surplus_edit|surplus_delete|surplus_print');
+
     Route::prefix('/obligations')->group(function () {
         Route::get('/', [ObligationsController::class, 'index'])->name('obligations');
-        Route::get('/create', [ObligationsController::class, 'create'])->name('obligations.create');
-        Route::get('/{obligation}/edit', [ObligationsController::class, 'edit'])->name('obligations.edit');
-        Route::get('/{obligations}/print-page', [ObligationsController::class, 'printPage'])->name('obligations.print');
-        Route::delete('/{obligation}', [ObligationsController::class, 'delete'])->name('obligations.destroy');
-    });
+        Route::get('/create', [
+            ObligationsController::class, 'create'
+        ])->name('obligations.create')->middleware('permission:obligations_create');
+        Route::get('/{obligation}/edit', [
+            ObligationsController::class, 'edit'
+        ])->name('obligations.edit')->middleware('permission:obligations_edit');
+        Route::get('/{obligations}/print-page', [
+            ObligationsController::class, 'printPage'
+        ])->name('obligations.print')->middleware('permission:obligations_print');
+        Route::delete('/{obligation}', [
+            ObligationsController::class, 'delete'
+        ])->name('obligations.destroy')->middleware('permission:obligations_delete');
+    })->middleware('permission:obligations_create|obligations_edit|obligations_delete|obligations_print');
 
     Route::prefix('employment-form/{import}')->group(function () {
         Route::get('/', [EmploymentController::class, 'employmentForm'])
             ->name('managers.employment');
         Route::get('/print', [EmploymentController::class, 'employmentFormPrint'])
-            ->name('managers.employment.print');
-    });
-    Route::get('/papers/delegate-does-not-want',
-        [\App\Models\Delegate::class, 'deosNotWant'])->name('papers.doesNotWant');
+            ->name('managers.employment.print')->middleware('permission:employment_print');
+    })->middleware('permission:employment_create|employment_edit|employment_delete');
+
+
+    Route::get('/papers/delegate-rejects',
+        [
+            \App\Models\Delegate::class, 'rejects'
+        ])->name('papers.doesNotWant')->middleware('permission:delegate_rejects_management');
+
     Route::prefix('delegate-abcence')->group(function () {
         Route::get('/', [DelegateAbsenceController::class, 'index'])->name('delegate-absence');
         Route::get('/{delegateAbcence}',
-            [DelegateAbsenceController::class, 'printPage'])->name('delegate-absence.print');
+            [
+                DelegateAbsenceController::class, 'printPage'
+            ])->name('delegate-absence.print')->middleware('permission:delegate_absence_print');
+    })->middleware('permission:delegate_absence_create|delegate_absence_edit|delegate_absence_delete|delegate_absence_print');
+
+
+    Route::middleware('permission:dry_food_create|dry_food_edit|dry_food_delete|dry_food_print')->group(function () {
+        Route::prefix('/dry-food-reports')->group(function () {
+            Route::get('/', [DryFoodReportController::class, 'index'])->name('dry-food-reports');
+            Route::get('/create', [
+                DryFoodReportController::class, 'create'
+            ])->name('dry-food-reports.create')->middleware('permission:dry_food_create');
+            Route::get('/{dryFoodReport}/edit',
+                [
+                    DryFoodReportController::class, 'edit'
+                ])->name('dry-food-reports.edit')->middleware('permission:dry_food_edit');
+            Route::get('/{dryFoodReport}/show',
+                [
+                    DryFoodReportController::class, 'print'
+                ])->name('dry-food-reports.print')->middleware('permission:dry_food_print');
+            Route::get('/{dryFoodReport}/delegate-report',
+                [
+                    DryFoodReportController::class, 'delegateReport'
+                ])->name('dry-food-reports.delegateReport')->middleware('permission:confirm_dry_food_reception');
+            Route::delete('/{dryFoodReport}',
+                [
+                    DryFoodReportController::class, 'delete'
+                ])->name('dry-food-reports.destroy')->middleware('permission:dry_food_delete');
+        });
+
     });
+
     Route::get('/tasks', [TaskController::class, 'managers'])
-        ->name('managers.tasks')->middleware('managersOnly');
+        ->name('managers.tasks')->middleware('permission:tasks_create|tasks_edit|tasks_delete');
 
 });
 

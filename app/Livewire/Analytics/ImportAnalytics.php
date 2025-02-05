@@ -11,12 +11,15 @@ use Livewire\Component;
 class ImportAnalytics extends Component
 {
     public Office $office;
-    public $showPrices, $startDate, $endDate, $selectedOfficeId, $selectedMissionId, $mission; // inputs
+    public $showPrices = null, $startDate, $endDate, $selectedOfficeId, $selectedMissionId, $mission; // inputs
     public $dates, $staticProducts, $missions, $offices, $benefitsTotal, $totalPayed, $daysCount; // outputs
 
     public function mount($showPrices)
     {
-        $this->showPrices = $showPrices;
+        if (auth()->user()->role->hasPermissionTo('import_model2_create_price')) {
+            $this->showPrices = $showPrices;
+        }
+
         $this->offices = (new OfficeController())->getOfficesForUser();
 
         if ($this->offices->count() > 0) {

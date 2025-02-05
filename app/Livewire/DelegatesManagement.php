@@ -47,7 +47,7 @@ class DelegatesManagement extends Component
             $this->delegatesNumbers[$delegate->id] = $delegate->number;
             $this->delegatesNames[$delegate->id] = $delegate->name;
             $this->delegatesInstitutions[$delegate->id] = $delegate->institution;
-            $this->delegatesRanks[$delegate->id] = $delegate->rank;
+            $this->delegatesRanks[$delegate->id] = $delegate->role_ar;
             $this->delegatesBenefits[$delegate->id] = $delegate->benefits;
             $this->delegatesFoodTypes[$delegate->id] = $delegate->food_type_id;
             $this->delegatesOffices[$delegate->id] = $delegate->office_id;
@@ -94,7 +94,7 @@ class DelegatesManagement extends Component
         $validatedData = $this->validate([
             "delegatesRanks.$delegateId" => 'nullable|string|max:255',
         ]);
-        $delegate->rank = $value;
+        $delegate->role_ar = $value;
         $delegate->save();
         $this->changeDelegats();
     }

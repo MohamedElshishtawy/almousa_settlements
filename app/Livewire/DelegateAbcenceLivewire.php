@@ -21,8 +21,17 @@ class DelegateAbcenceLivewire extends Component
 
     public function render()
     {
-        $delegateAbsences = DelegateAbsence::with('delegate', 'meal')->get();
-        $delegates = Delegate::all();
+        $user = auth()->user();
+        $allDelegateAbsence = DelegateAbsence::with('delegate', 'meal')->get();
+        if ($user->office) {
+            $delegateAbsences = $allDelegateAbsence->filter(fn($delegateAbsence
+            ) => $delegateAbsence->delegate->office_id === $user->office->id);
+            $delegates = Delegate::where('office_id', $user->office->id)->get();
+        } else {
+            $delegateAbsences = $allDelegateAbsence;
+            $delegates = Delegate::all();
+        }
+
         $meals = Meal::all();
 
         return view('livewire.delegate-abcence-livewire', [
@@ -35,6 +44,13 @@ class DelegateAbcenceLivewire extends Component
     public function save()
     {
         $this->validate();
+
+        // check if the user is in the office choiced
+        $delegate = Delegate::find($this->delegate_id);
+        $user = auth()->user();
+        if ($user->office && auth()->user()->office_id !== $delegate->office_id) {
+            abort(403);
+        }
 
         DelegateAbsence::create([
             'for_date' => $this->for_date,

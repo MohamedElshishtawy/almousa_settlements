@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-
 class HomeController extends Controller
 {
     /**
@@ -18,7 +16,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (auth()->user()->role == User::$roles['admin']) {
+        if (auth()->user()->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         }
 

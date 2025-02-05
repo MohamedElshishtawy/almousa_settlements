@@ -94,7 +94,7 @@
             <td>{{$daysCount}}</td>
             <th>إجمالى عدد المستفيدين</th>
             <td>{{$benefitsTotal ?: 0}}</td>
-            @if($showPrices)
+            @if($showPrices && auth()->user()->role->hasPermissionTo('import_model2_create_price'))
                 <th>إجمالى المبالغ المصروفة</th>
                 <td>{{$staticProducts ? number_format($totalPayed, 2) : 0}}</td>
                 <th>إجمالى المبالغ غير المصروفة</th>
@@ -121,7 +121,7 @@
             </tr>
             <tr>
                 <th>المسمى</th>
-                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
+                <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
                 <th>الرتبة</th>
                 <td><input type="text" class="form-control"></td>
             </tr>

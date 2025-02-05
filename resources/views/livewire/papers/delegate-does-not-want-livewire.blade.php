@@ -112,9 +112,9 @@
                 </tr>
                 <tr>
                     <th>الرتبة</th>
-                    <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
+                    <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
                     <th>الرتبة</th>
-                    <td><input type="text" class="form-control" value="{{$delegate ? $delegate->rank : ''}}"></td>
+                    <td><input type="text" class="form-control" value="{{$delegate ? $delegate->role_ar : ''}}"></td>
                 </tr>
                 <tr>
                     <th>التوقيع</th>

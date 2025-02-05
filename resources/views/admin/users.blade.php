@@ -12,11 +12,7 @@
                     </div>
 
                     <div class="card-body table-responsive">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        <x-message/>
 
                         <table class="table">
                             <thead>
@@ -32,19 +28,19 @@
                             </thead>
                             <tbody>
                             @php($n = 0)
-                            @forelse ($employees as $employee)
+                            @forelse ($users as $user)
                                 <tr>
                                     <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
-                                    <td>{{ $employee->name }}</td>
-                                    <td>{{ $employee->phone }}</td>
-                                    <td>{{ $employee->rank }}</td>
-                                    <td>{{ $employee->employeeOffice ? $employee->employeeOffice->office->name : 'لا يوجد' }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->phone }}</td>
+                                    <td>{{ $user->role_ar ?: 'لا يوجد' }}</td>
+                                    <td>{{ $user->office ? $user->office->name : 'لا يوجد' }}</td>
                                     <td>
-                                        <a href="{{ route('admin.users.edit', $employee->id) }}"
+                                        <a href="{{ route('admin.users.edit', $user->id) }}"
                                            class="btn btn-primary btn-sm"><i class="fa-solid fa-edit"></i> تعديل</a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.users.delete', $employee->id) }}"
+                                        <form action="{{ route('admin.users.delete', $user->id) }}"
                                               method="post">
                                             @csrf
                                             @method('DELETE')

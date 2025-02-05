@@ -80,7 +80,7 @@
             </tr>
             <tr>
                 <th>المسمى</th>
-                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
+                <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
                 <th>الرتبة</th>
                 <td><input type="text" class="form-control"></td>
             </tr>

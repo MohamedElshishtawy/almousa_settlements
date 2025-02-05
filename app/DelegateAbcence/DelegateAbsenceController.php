@@ -14,6 +14,9 @@ class DelegateAbsenceController extends Controller
 
     public function printPage(DelegateAbsence $delegateAbcence)
     {
+        if (!auth()->user()->isBelongsToOffice($delegateAbcence->delegate->office->id)) {
+            abort(403);
+        }
         return view('delegate-abcence.print', compact('delegateAbcence'));
     }
 

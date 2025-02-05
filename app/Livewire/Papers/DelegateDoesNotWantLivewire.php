@@ -22,9 +22,14 @@ class DelegateDoesNotWantLivewire extends Component
     {
         $this->date = now()->format('Y-m-d');
         $this->updatedDate();
-        $this->offices = Office::all()->filter(function ($office) {
-            return $office->living->title == 'ميدان';
-        });
+        $userOffice = auth()->user()->office;
+        if ($userOffice) {
+            $this->offices = collect([$userOffice]);
+            $this->selectedOfficeId = $userOffice->id;
+        } else {
+            $this->offices = Office::all()->filter(fn($office) => $office->living->title == 'ميدان');
+        }
+
         $this->meals = Meal::all();
 
     }

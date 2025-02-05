@@ -2,54 +2,64 @@
 
 namespace App\Livewire;
 
-use App\Models\Employee;
-use App\Models\EmployeeOffice;
+use App\Models\User;
 use App\Office\Office;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Spatie\Permission\Models\Role;
 
 class ManageEmployee extends Component
 {
-
-    public Employee $employee;
-    public $name, $phone, $rank, $office_id, $password;
+    public User $user;
+    public $name, $phone, $office_id, $password, $role;
     public $offices;
+    public $roles;
 
-    public function mount(Employee $employee)
+    public function mount(User $user)
     {
-        $this->employee = $employee;
-        if ($employee->exists) {
-            $this->name = $employee->name;
-            $this->phone = $employee->phone;
-            $this->rank = $employee->rank;
-            $this->office_id = $employee->employeeOffice->office_id;
+        $this->user = $user;
+        $this->roles = Role::all();
+        if ($user->exists) {
+            $this->name = $user->name;
+            $this->phone = $user->phone;
+            $this->role = $user->role->name;
+            $this->office_id = $user->office ? $user->office->id : null;
         }
         $this->offices = Office::all();
     }
 
     public function save()
     {
-        $this->employee->name = $this->name;
-        $this->employee->phone = $this->phone;
-        $this->employee->rank = $this->rank;
-        $this->employee->password = Hash::make($this->password);
-
+        // Validate input data
         $this->validate([
-            'employee.name' => 'required',
-            'employee.phone' => 'required|unique:users,phone,'.$this->employee->id,
-            'employee.rank' => 'required',
-            'office_id' => 'required|exists:offices,id',
+            'name' => 'required|string|max:255',
+            'phone' => [
+                'required',
+                'string',
+                Rule::unique('users', 'phone')->ignore($this->user->id),
+            ],
+            'role' => 'required|string|exists:roles,name',
+            'office_id' => 'nullable|exists:offices,id',
+            'password' => 'nullable|string|min:6', // Password is optional but must be at least 8 characters if provided
         ]);
 
-        $this->employee->save();
+        // Update user attributes
+        $this->user->name = $this->name;
+        $this->user->phone = $this->phone;
+        $this->user->office_id = $this->office_id ?: null;
 
-        EmployeeOffice::create([
-            'office_id' => $this->office_id,
-            'user_id' => $this->employee->id
-        ]);
+        // Only update the password if it's provided
+        if ($this->password) {
+            $this->user->password = Hash::make($this->password);
+        }
+
+        $this->user->save();
 
 
-        return redirect()->route('admin.users');
+        $this->user->syncRoles($this->role);
+
+        return redirect()->route('admin.users')->with('success', 'تم حفظ الموظف بنجاح');
     }
 
     public function render()

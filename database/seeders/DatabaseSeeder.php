@@ -16,12 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // permission seeding
+        $this->call(UsersPermissionsSeeder::class);
 
         // seed the week days
         $days = \App\Models\Day::$days;
@@ -70,13 +66,13 @@ class DatabaseSeeder extends Seeder
         }
 
         // Admin user
-        \App\Models\User::create([
+        $admin = \App\Models\User::create([
             'name' => 'أستاذ محمد',
             'phone' => '01093033115',
-            'rank' => 'مدير',
-            'role' => '0',
             'password' => Hash::make('123456'),
         ]);
+
+        $admin->assignRole('admin');
 
 
         // insert hijri days
@@ -135,6 +131,7 @@ class DatabaseSeeder extends Seeder
             ]);
 
         }
+
     }
 
     /**

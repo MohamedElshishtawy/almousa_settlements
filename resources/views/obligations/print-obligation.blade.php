@@ -43,7 +43,7 @@
                 إنه فى يوم
                 {{$dateHijri['weekday']}}
                 الموافق للتاريخ أعلاه انه بمعرفتى انا رئيس لجنة الإستلام الفرعية
-                {{auth()->user()->rank}}/{{auth()->user()->name}}
+                {{auth()->user()->role_ar}}/{{auth()->user()->name}}
                 ومن خلال مباشرة أعمال الإعاشة بمقر
                 {{$obligations->office->name}}
                 {{$obligations->office->living->title}}
@@ -82,7 +82,7 @@
             </tr>
             <tr>
                 <th>الرتبة</th>
-                <td><input type="text" class="form-control" value="{{auth()->user()->rank}}"></td>
+                <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
             </tr>
             <tr>
                 <th>التوقيع</th>

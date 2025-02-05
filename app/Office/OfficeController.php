@@ -3,7 +3,6 @@
 namespace App\Office;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
 
 class OfficeController extends Controller
 {
@@ -15,9 +14,9 @@ class OfficeController extends Controller
     public function getOfficesForUser()
     {
         $offices = Office::all();
-        if (!auth()->user()->isAdmin()) {
-            $employee = Employee::find(auth()->id());
-            $offices = $offices->filter(fn($office) => $employee->employeeOffice->office_id == $office->id);
+        $user = auth()->user();
+        if (!$user->hasRole('admin') && $user->office) {
+            $offices = $offices->filter(fn($office) => $user->office->id == $office->id);
         }
         return $offices;
     }
