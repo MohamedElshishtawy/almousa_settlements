@@ -70,4 +70,20 @@ class ReportSurvice
     }
 
 
+    public function days2groupOffices($days)
+    {
+        /*
+         * This fuction used to group the array of days to offices groups
+         * it makes the array easer to be read to the front end for users multeble offices*/
+        $officeReports = [];
+
+        // Group by office name
+        foreach ($days as $day) {
+            $officeReports[$day['office']->name][] = $day;
+        }
+        return $officeReports;
+
+    }
+
+
 }

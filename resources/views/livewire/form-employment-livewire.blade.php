@@ -1,10 +1,12 @@
+@php use App\Models\Day; @endphp
+@php use App\Employment\FormEmploymentElement; @endphp
 <div class="report-page">
     <div class="header">
         <h1 class="text-center text-success">
             تقييم العمالة
         </h1>
     </div>
-
+    <x-message></x-message>
     <div class="report-details">
         <div class="d-flex justify-content-between align-items-center">
             <div class="justify-content-right">
@@ -12,25 +14,41 @@
             </div>
             <div class="d-flex">
                 @if($formEmployment)
-                    <button wire:click="delete" class="btn btn-danger ">
-                        <i class="fa-solid fa-trash fa-fw"></i>
-                    </button>
-                    <a href="{{route('managers.employment.print', [$import])}}" class="btn btn-secondary mx-1">
-                        <i class="fa-solid fa-print"></i>
-                    </a>
-                    <button class="btn btn-primary" wire:click="edit">
-                        <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
-                    </button>
-
+                    @can('employment_delete')
+                        <button wire:click="delete" class="btn btn-danger btn-sm mx-1">
+                            <i class="fa-solid fa-trash fa-fw"></i>
+                        </button>
+                    @endcan
+                    @can('employment_edit')
+                        <button class="btn btn-primary btn-sm" wire:click="edit">
+                            <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                        </button>
+                    @endcan
                 @else
-                    <button wire:loading.remove class="btn btn-success mx-1" wire:click="save">حفظ
-                    </button>
+                    @can('employment_create')
+                        <button wire:loading.remove class="btn btn-success mx-1 btn-sm" wire:click="save">
+                            حفظ
+                        </button>
+                    @endcan
                 @endif
             </div>
         </div>
 
         <table class="table table-borderless">
             <tbody>
+            @if($formEmployment)
+                @can('employment_print')
+                    <tr>
+                        <th>محضر التقييم</th>
+                        <td>
+                            <a href="{{route('managers.employment.print', [$import])}}">
+                                طباعة
+                                <i class="fa-solid fa-print"></i>
+                            </a></td>
+                    </tr>
+
+                @endcan
+            @endif
             <tr>
                 <th>اسم المقر</th>
                 <td>
@@ -40,7 +58,7 @@
             <tr>
                 <th>التاريخ</th>
                 <td>
-                    {{ \App\Models\Day::DateToHijri($import->report->for_date) }}
+                    {{ Day::DateToHijri($import->report->for_date) }}
                 </td>
             </tr>
             <tr>
@@ -74,7 +92,7 @@
                     <select class="form-select @error('countState') is-invalid @enderror"
                             wire:change="updateWrittenState('countState', 'count_state',$event.target.value)">
                         <option value="0">إختر</option>
-                        @foreach(\App\Employment\FormEmploymentElement::COUNT_STATUS as $key => $value)
+                        @foreach(FormEmploymentElement::COUNT_STATUS as $key => $value)
                             <option value="{{$value}}" @if($countState == $value) selected @endif>{{$value}}</option>
                         @endforeach
                     </select>
@@ -89,7 +107,7 @@
                     <select class="form-select @error('cleaningState') is-invalid @enderror"
                             wire:change="updateWrittenState('cleaningState', 'cleaning_state',$event.target.value)">
                         <option value="0">إختر</option>
-                        @foreach(\App\Employment\FormEmploymentElement::CLEAN_STATUS as $key => $value)
+                        @foreach(FormEmploymentElement::CLEAN_STATUS as $key => $value)
                             <option value="{{$value}}" @if($cleaningState == $value) selected @endif>{{$value}}</option>
                         @endforeach
                     </select>
@@ -104,7 +122,7 @@
                     <select class="form-select @error('healthState') is-invalid @enderror"
                             wire:change="updateWrittenState('healthState', 'health_state',$event.target.value)">
                         <option value="0">إختر</option>
-                        @foreach(\App\Employment\FormEmploymentElement::HEALTH_STATUS as $key => $value)
+                        @foreach(FormEmploymentElement::HEALTH_STATUS as $key => $value)
                             <option value="{{$value}}" @if($healthState == $value) selected @endif>{{$value}}</option>
                         @endforeach
                     </select>

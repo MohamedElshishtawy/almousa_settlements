@@ -1,7 +1,14 @@
 @props(['type' => 'success', 'message' => 'تم'])
 
 @if(session('success'))
-    <div class="alert alert-success text-right my-4">{{session('success')}}</div>
+    <div class="alert alert-success float-message" role="alert">
+        <div>
+            {{session('success')}}
+        </div>
+        <button type="button" class="close-message">
+            <i class="fa fa-xmark"></i>
+        </button>
+    </div>
 @endif
 
 @if(session('error'))

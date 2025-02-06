@@ -14,7 +14,7 @@ return [
     'group_head' => 'رئيس المجموعة',
     'supplier' => 'المورد',
     'deputy_supplier' => 'نائب المورد',
-    'company_representative' => 'مندوب الشركة',
+    'company_representative' => 'المتعهد',
     'meal_dispenser' => 'عضو صرف الوجبات',
     'admin' => 'الأدمن', // or مسؤول النظام
     'delegate' => 'مندوب',

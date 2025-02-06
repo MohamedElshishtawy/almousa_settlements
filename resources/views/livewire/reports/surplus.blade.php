@@ -1,4 +1,4 @@
-@php use Carbon\Carbon; @endphp
+@php use App\Models\Day;use App\Product\FoodType;use Carbon\Carbon; @endphp
 <div class="report-page ">
 
     <div class="header ">
@@ -11,34 +11,43 @@
     </div>
 
     <div class="report-details ">
+        <x-message/>
+        <x-calc-loading/>
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($surplus)
-                    <a href="{{route('managers.reports.surplus.print', [$officeMission, $date, $selectedMeal->id])}}"
-                       class="mx-1 btn btn-secondary">
-                        <span>{{$selectedMeal ? $selectedMeal->name : ''}}</span>
-                        <i class="fa-solid fa-print"></i>
-                    </a>
-                    <a href="{{route('managers.reports.surplus.print', [$officeMission, $date])}}"
-                       class="mx-1 btn btn-secondary">
-                        <span>الكل</span>
-                        <i class="fa-solid fa-print"></i>
-                    </a>
-                    <button class="btn btn-danger mx-1" wire:click="delete">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                    <button class="btn btn-primary" wire:click="reportUpdate">
-                        <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
-                    </button>
+                    @can('surplus_print')
+                        <a href="{{route('managers.reports.surplus.print', [$officeMission, $date, $selectedMeal->id])}}"
+                           class="mx-1 btn btn-secondary btn-sm">
+                            <span>{{$selectedMeal ? $selectedMeal->name : ''}}</span>
+                            <i class="fa-solid fa-print"></i>
+                        </a>
+                    @endcan
+                    @can('surplus_print')
+                        <a href="{{route('managers.reports.surplus.print', [$officeMission, $date])}}"
+                           class="mx-1 btn btn-secondary btn-sm">
+                            <span>الكل</span>
+                            <i class="fa-solid fa-print"></i>
+                        </a>
+                    @endcan
+                    @can('surplus_delete')
+                        <button class="btn btn-danger mx-1 btn-sm" wire:click="delete">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    @endcan
+                    @can('surplus_edit')
+                        <button class="btn btn-primary btn-sm" wire:click="reportUpdate">
+                            <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                        </button>
+                    @endcan
 
                 @else
-                    <span wire:loading>
-                    <span class="spinner-border  text-success" role="status"></span>
-                </span>
-                    <div class="mx-1">
-                        <button class="btn btn-success" wire:click="save">حفظ</button>
-                    </div>
+                    @can('surplus_create')
+                        <div class="mx-1">
+                            <button class="btn btn-success btn-sm" wire:click="save">حفظ</button>
+                        </div>
+                    @endcan
                 @endif
             </div>
         </div>
@@ -59,7 +68,7 @@
                 <tr>
                     <th class="text-success">التاريخ</th>
                     <td>
-                        {{ \App\Models\Day::DateToHijri($report->for_date)}}
+                        {{ Day::DateToHijri($report->for_date)}}
                     </td>
                 </tr>
                 <tr>
@@ -92,7 +101,7 @@
                     </tr>
                 @endif
 
-                @foreach(\App\Product\FoodType::all() as $foodType)
+                @foreach(FoodType::all() as $foodType)
                     <tr>
                         <th class="text-success">قوة وفر {{$foodType->title}}</th>
                         <td>
@@ -132,7 +141,7 @@
                 @php
                     $surplusBenefit = $this->surplusfoodTypeValues[$staticProduct->food_type_id] ?? 0;
 
-                    $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
+                    $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', Day::text2object(Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
                     if ($hasThisMeal->count()) {
                         $thisDayAmount =  $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
 

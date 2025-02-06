@@ -13,11 +13,27 @@ use App\Product\ProductController;
 class ReportController extends Controller
 {
 
+    // The page for showing the reports
+    public function reports()
+    {
+        $offices = (new OfficeController())->getOfficesForUser();
+
+        $days = (new ReportSurvice())->getDays($offices);
+
+        $officesReports = (new ReportSurvice())->days2groupOffices($days);
+
+        return view('reports', compact('officesReports'));
+
+    }
+
+    // The page for creating or editing or printing import
     public function import($officeMission, $date)
     {
         $officeMission = OfficeMission::find($officeMission);
 
         $office = $officeMission->office;
+
+        auth()->user()->AuthorizeOffice($office->id);
 
         $products = (new ProductController())->getProducts($officeMission);
 
@@ -29,6 +45,7 @@ class ReportController extends Controller
     public function importPrint($office, $date)
     {
         $office = is_object($office) ?: Office::find($office);
+        auth()->user()->AuthorizeOffice($office->id);
         $report = $office->reports()->where('for_date', $date)->first();
         $products = $report->staticProducts;
 
@@ -40,16 +57,6 @@ class ReportController extends Controller
             compact('office', 'date', 'dateHijry', 'products', 'import'));
     }
 
-    public function reports()
-    {
-        $offices = (new OfficeController())->getOfficesForUser();
-
-
-        $days = (new ReportSurvice())->getDays($offices);
-
-        return view('reports', compact('days'));
-
-    }
 
     public function importPrintWriting($office, $date)
     {

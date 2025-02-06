@@ -79,4 +79,12 @@ class User extends Authenticatable
         return $this->office->id === $officeId;
     }
 
+    public function AuthorizeOffice($officeId)
+    {
+        if (!$this->office || $this->office->id === $officeId) {
+            return true;
+        }
+        abort(403, 'You are not authorized to access this page');
+    }
+
 }

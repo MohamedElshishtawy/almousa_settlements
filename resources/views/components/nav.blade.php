@@ -65,7 +65,7 @@
                             </li>
                         @endcanany
 
-                        @can(['import_writing_print', 'import_create', 'import_edit', 'import_delete', 'import_show_price','import_model2_create','surplus_create', 'surplus_edit', 'surplus_delete','surplus_model2_create','employment_create', 'employment_edit', 'employment_delete'])
+                        @canany(['import_writing_print', 'import_create', 'import_edit', 'import_delete', 'import_show_price','import_model2_create','surplus_create', 'surplus_edit', 'surplus_delete','surplus_model2_create','employment_create', 'employment_edit', 'employment_delete'])
                             {{-- Report Viewing Permission --}}
                             <li>
                                 <a href="{{route('managers.reports')}}"
@@ -73,7 +73,7 @@
                                     المحاضر
                                 </a>
                             </li>
-                        @endcan
+                        @endcanany
                     @endauth
                 </ul>
 

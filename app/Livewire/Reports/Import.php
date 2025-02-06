@@ -19,6 +19,16 @@ class Import extends Component
     public $products;
     public $reallyImported = []; // Holds each product’s imported supply data
 
+    // rules for validation
+    protected function rules()
+    {
+        return [
+            'benefits' => 'required|numeric|min:1',
+            'benefitError' => 'numeric|min:0',
+            'date' => 'required|date',
+        ];
+    }
+
     public function updatedBenefits()
     {
         foreach ($this->products as $product) {
@@ -39,7 +49,10 @@ class Import extends Component
 
     protected function setData()
     {
-        $this->report = Report::where('office_id', $this->office->id)->where('for_date', $this->date)->first();
+        $this->report = Report::with(['import', 'staticProducts.importProductError'])
+            ->where('office_id', $this->office->id)
+            ->where('for_date', $this->date)
+            ->first();
 
         if ($this->report) {
             $this->benefits = $this->report->import->benefits ?? 0;
@@ -52,7 +65,7 @@ class Import extends Component
             }
         } else {
             // reset
-            $this->benefits = 0;
+            $this->benefits = null;
             $this->benefitError = 0;
             $this->products = (new ProductController())->getProducts($this->officeMission);
         }
@@ -86,13 +99,10 @@ class Import extends Component
                 $this->reallyImported[$product->id] = round($productMissionData->daily_amount * $value, 4);
             }
         }
-
-
     }
 
     public function reportUpdate()
     {
-
         $import = $this->report->import;
         $import->benefits = $this->benefits;
         $import->benefits_error = $this->benefitError;
@@ -111,17 +121,21 @@ class Import extends Component
                 ]);
             }
         }
-        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date])->with('success',
-            'تم الحفظ بنجاح;');
+
+        activity('import')->causedBy(auth()->user())->performedOn($import)->withProperties([
+            'office' => $this->office->name,
+            'date' => $this->date,
+            'import' => $import->id,
+        ])->log('تم تحديث المحضر توريد');
+
+        session()->flash('success', 'تم تحديث المحضر بنجاح.');
+        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date]);
     }
 
     public function save()
     {
         // Check if benefits is a valid number, greater than 0, and that no report exists for the date and office
-        if (!is_numeric($this->benefits) || $this->benefits <= 0 || Report::where('for_date',
-                $this->date)->where('office_id', $this->office->id)->exists()) {
-            return;
-        }
+        $this->validate();
 
         // Create the report for the specified office and date
         $report = Report::create([
@@ -171,15 +185,36 @@ class Import extends Component
                 $importProductError->save();
             }
         }
-        return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date])->with('success',
-            'تم الحفظ بنجاح;');
+
+        activity('import')->causedBy(auth()->user())->performedOn($import)->withProperties([
+            'office' => $this->office->name,
+            'date' => $this->date,
+            'import' => $import->id,
+        ])->log('تم إضافة محضر توريد');
+
+        session()->flash('success', 'تم إضافة المحضر. يتم توجيهك لتقيم العمالة..');
+
+        sleep(2);
+
+        session()->forget('success');
+
+        return redirect()->route('managers.employment', ['import' => $import->id]);
     }
 
     public function delete()
     {
+        $import = $this->report->import;
         $this->report->delete();
+
+        activity('import')->causedBy(auth()->user())->performedOn($import)->withProperties([
+            'office' => $this->office->name,
+            'date' => $this->date,
+            'import' => $import->id,
+        ])->log('تم حذف تقرير توريد');
+
         $this->reset(['benefits', 'benefitError', 'reallyImported', 'report']);
         $this->setData();
+        session()->flash('success', 'تم الحذف بنجاح.');
     }
 
     public function render()

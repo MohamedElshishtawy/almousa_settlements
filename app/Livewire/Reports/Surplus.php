@@ -136,6 +136,14 @@ class Surplus extends Component
                 }
             }
         }
+
+        activity('surplus')
+            ->causedBy(auth()->user())
+            ->performedOn($this->report)->withProperties([
+                'surplus' => $this->surplus,
+            ])
+            ->log('تم تعديل محضر الوفر');
+
         return redirect()->route('managers.reports.surplus',
             [$this->officeMission->id, $this->date, $this->selectedMeal])->with('success', 'تم الحفظ بنجاح;');
     }
@@ -174,6 +182,13 @@ class Surplus extends Component
             $this->save(Meal::find(array_pop($this->sameReportMeals)));
         }
 
+        activity('surplus')
+            ->causedBy(auth()->user())
+            ->performedOn($this->report)->withProperties([
+                'surplus' => $surplus,
+            ])
+            ->log('تم اضافة محضر الوفر');
+
         return redirect()->route('managers.reports.surplus',
             [$this->officeMission->id, $this->date, $this->selectedMeal])->with('success', 'تم الحفظ بنجاح;');
     }
@@ -194,6 +209,14 @@ class Surplus extends Component
     {
         if ($this->surplus) {
             $this->surplus->delete();
+
+            activity('surplus')
+                ->causedBy(auth()->user())
+                ->performedOn($this->report)->withProperties([
+                    'surplus' => $this->surplus,
+                ])
+                ->log('تم حذف محضر الوفر');
+
             return redirect()->route('managers.reports.surplus',
                 [$this->officeMission->id, $this->date, $this->selectedMeal])->with('success', 'تم الحذف بنجاح;');
         }

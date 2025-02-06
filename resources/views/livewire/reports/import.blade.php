@@ -7,71 +7,120 @@
         </h1>
     </div>
 
-    <div class="report-details">
+    <x-message/>
+
+    <div class="report-details" style="position: relative">
+        <x-calc-loading/>
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if($report)
-                    <a href="{{ route('managers.reports.import.print-writing', [$office, $date]) }}"
-                       class="mx-1 btn btn-secondary">
-                        <i class="fa-solid fa-feather-pointed"></i>
-                    </a>
-                    <a href="{{ route('managers.reports.import.print', [$office, $date]) }}"
-                       class="ml-1 btn btn-secondary">
-                        <i class="fa-solid fa-print fa-fw"></i>
-                    </a>
-                    <button wire:click="delete" class="btn btn-danger mx-1">
-                        <i class="fa-solid fa-trash fa-fw"></i>
-                    </button>
+                    @can('import_delete')
+                        <button wire:click="delete" class="btn btn-danger btn-sm mx-1" wire:loading.attr="disabled">
+                            <i class="fa-solid fa-trash fa-lg fa-fw"></i>
+                        </button>
+                    @endcan
 
-                    <button wire:loading.remove class="btn btn-primary" wire:click="reportUpdate">
-                        <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
-                    </button>
-
+                    @can('import_edit')
+                        <button wire:click="reportUpdate" class="btn btn-primary btn-sm mx-1"
+                                wire:loading.attr="disabled">
+                            <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                        </button>
+                    @endcan
                 @else
-                    <span wire:loading>
-                        <span class="spinner-border text-success" role="status"></span>
-                    </span>
-                    <button wire:loading.remove class="btn btn-success mx-1" wire:click="save">حفظ</button>
+                    @can('import_create')
+                        <button wire:click="save" class="btn btn-success btn-sm mx-1" wire:loading.attr="disabled">حفظ
+                        </button>
+                    @endcan
                 @endif
             </div>
         </div>
+        <div wire:loading wire:target="delete, reportUpdate, save" class="text-center">
+            <x-calc-loading/>
+        </div>
 
-        <table class="table table-borderless">
-            <tbody>
-            @if($report && $report->import)
+        <div>
+            <table class="table table-borderless">
+                <tbody>
+                @if($report && $report->import)
+                    @can('import_print')
+                        <tr>
+                            <th>المحضر</th>
+                            <td><a href="{{ route('managers.reports.import.print', [$office, $date]) }}">
+                                    <i class="fa-solid fa-feather-pointed"></i> طباعة
+                                </a></td>
+                        </tr>
+                    @endcan
+                    @can('import_writing_print')
+                        <tr>
+                            <th>المحضر الكتابى</th>
+                            <td><a href="{{ route('managers.reports.import.print-writing', [$office, $date]) }}">
+                                    <i class="fa-solid fa-feather-pointed"></i> طباعة
+                                </a></td>
+                        </tr>
+                    @endcan
+
+                    @canany(['employment_create', 'employment_edit', 'employment_delete', 'employment_print'])
+                        <tr>
+                            <th>تقييم العمالة</th>
+                            <td><a href="{{ route('managers.employment', ['import' => $report->import]) }}">
+                                    @if($report->import->formEmployment)
+                                        <span><i class="fa-regular fa-circle-check fa-sm "></i></span>
+                                        عرض وطباعة
+                                    @else
+                                        عمل التقييم
+                                    @endif
+
+                                </a>
+
+                            </td>
+                        </tr>
+                    @endcan
+                @endif
                 <tr>
-                    <th>تقييم العمالة</th>
-                    <td><a href="{{ route('managers.employment', ['import' => $report->import]) }}">عمل التقييم</a></td>
+                    <th>اسم المقر</th>
+                    <td><a href="{{ route('admin.offices') }}#{{ $office->id }}">{{ $office->name }}</a></td>
                 </tr>
-            @endif
-            <tr>
-                <th>اسم المقر</th>
-                <td><a href="{{ route('admin.offices') }}#{{ $office->id }}">{{ $office->name }}</a></td>
-            </tr>
-            <tr>
-                <th>التاريخ</th>
-                <td>
-                    <select wire:model.live="date" class="form-select" wire:change="dateChanged()">
-                        @foreach(\App\Office\OfficeMission::dateRange($officeMission) as $officeDate)
-                            <option value="{{ $officeDate }}" @if($officeDate == $date) selected @endif>
-                                {{ \App\Models\Day::DateToHijri($officeDate) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th class="text-success">عدد المستفيدين</th>
-                <td><input type="text" wire:model.live.debounce.450ms="benefits"
-                           wire:input.debounce.450ms="benefitChanged($event.target.value)" placeholder="0"
-                           class="form-control" autofocus></td>
-            </tr>
-            </tbody>
-        </table>
+                <tr>
+                    <th>التاريخ</th>
+                    <td>
+                        <select wire:model.live="date" class="form-select" wire:change="dateChanged()">
+                            @foreach(\App\Office\OfficeMission::dateRange($officeMission) as $officeDate)
+                                <option value="{{ $officeDate }}" @if($officeDate == $date) selected @endif>
+                                    {{ \App\Models\Day::DateToHijri($officeDate) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-success">عدد المستفيدين</th>
+                    <td>
+                        <input type="text" wire:model.live.debounce.450ms="benefits"
+                               wire:input.debounce.450ms="benefitChanged($event.target.value)"
+                               placeholder="اكتب هنا.."
+                               class="form-control @error('benefits') is-invalid @enderror"
+                               autofocus>
+                        @error('benefits')
+                        <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                        @enderror
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="products-details">
+        <div>
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
         <table class="table">
             <thead>
             <tr>
@@ -109,7 +158,6 @@
                     $exactlyImported = isset($reallyImported[$product->id]) && is_numeric($reallyImported[$product->id]) ? $reallyImported[$product->id] : $expectedSupply;
                     $difference = $dailyTotal ? $expectedSupply - $exactlyImported : 0;
 
-
                     // Format numbers
                     $exactlyImported = round($exactlyImported, 4);
                     $expectedSupply = round($expectedSupply, 4);
@@ -122,7 +170,6 @@
                     <td>{{ number_format($productMissionData->daily_amount, 4) }}</td>
                     <td>{{ $product->foodUnit->title }}</td>
                     <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
-
                     @if (auth()->user()->role->hasPermissionTo('import_show_price'))
                         <td>{{ number_format($productMissionData->price, 4) . ' ر.س.' }}</td>
                     @endif

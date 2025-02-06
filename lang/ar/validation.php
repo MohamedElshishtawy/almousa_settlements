@@ -178,6 +178,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'رسالة مخصصة',
         ],
+        ''
     ],
 
     /*
@@ -217,6 +218,7 @@ return [
         'selected_office_id' => 'المقر',
         'selected_mission_id' => 'المهمة',
         'selected_delegate_id' => 'المندوب',
+        'count_statement' => 'العدد',
     ],
 
 ];

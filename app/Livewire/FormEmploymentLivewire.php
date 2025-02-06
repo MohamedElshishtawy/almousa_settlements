@@ -30,9 +30,122 @@ class FormEmploymentLivewire extends Component
 
     public function mount($import)
     {
+
         $this->import = $import;
         $this->employments = $import->report->office->living->employments;
         $this->getEmployment();
+    }
+
+
+    // makes the values live
+    public function updateWrittenState($filed, $snakeCase, $value)
+    {
+        $this->$filed = $value;
+    }
+
+    public function save()
+    {
+
+        $this->validate();
+
+        $this->createFormEmployment();
+
+        $this->createEmploymentElementElemnts();
+
+
+        activity('employment')->causedBy(auth()->user())->performedOn($this->formEmployment)->withProperties([
+            'import' => $this->import->id,
+        ])->log('تم اضافة تقييم العمال');
+
+        session()->flash('success', 'تم الحفظ بنجاح');
+
+    }
+
+    public function edit()
+    {
+
+        $this->validate();
+
+        $this->formEmployment->count_state = $this->countState;
+        $this->formEmployment->cleaning_state = $this->cleaningState;
+        $this->formEmployment->health_state = $this->healthState;
+        $this->formEmployment->save();
+
+        activity('employment')->causedBy(auth()->user())->performedOn($this->formEmployment)->withProperties([
+            'import' => $this->import->id,
+        ])->log('تم تعديل تقييم العمالة');
+
+        session()->flash('success', 'تم التعديل بنجاح');
+
+    }
+
+    public function delete()
+    {
+        if ($this->formEmployment) {
+            $this->formEmployment->delete();
+            $this->formEmployment->formEmploymentElements()->delete();
+        }
+
+        activity('employment')->causedBy(auth()->user())->performedOn($this->formEmployment)->withProperties([
+            'import' => $this->import->id,
+        ])->log('تم حذف تقييم العمالة');
+
+        return redirect()->route('managers.employment', ['import' => $this->import->id])->with('success',
+            'تم الحذف بنجاح يمكنك إعادة التقييم');
+    }
+
+    protected function createFormEmployment(): void
+    {
+        $this->formEmployment = $this->import->formEmployment ?? new FormEmployment();
+        $this->formEmployment->count_state = $this->countState;
+        $this->formEmployment->cleaning_state = $this->cleaningState;
+        $this->formEmployment->health_state = $this->healthState;
+        $this->formEmployment->import_id = $this->import->id;
+        $this->formEmployment->save();
+    }
+
+    protected function createEmploymentElementElemnts(): void
+    {
+        foreach ($this->counts as $index => $count) {
+            $formEmploymentElement = new FormEmploymentElement();
+            $formEmploymentElement->title = $this->titles[$index];
+            $formEmploymentElement->count = $count;
+            $formEmploymentElement->benefits = $this->benefits[$index];
+            $formEmploymentElement->main_count = $this->mainCounts[$index];
+            $formEmploymentElement->form_employment_id = $this->formEmployment->id;
+            $formEmploymentElement->save();
+        }
+    }
+
+
+    public function updateCounts($formEmploymentElementId, $value)
+    {
+        $this->counts[$formEmploymentElementId] = $value;
+        $this->checkCounts();
+    }
+
+    protected function checkCounts()
+    {
+        $check = true;
+        if ($this->formEmployment) {
+            $this->formEmployment->formEmploymentElements->each(function ($element) use (&$check) {
+                if ($element->main_count > $this->counts[$element->id]) {
+                    $check = false;
+                }
+            });
+        } else {
+            foreach ($this->counts as $index => $count) {
+                if ($count != $this->mainCounts[$index]) {
+                    $check = false;
+                }
+            }
+        }
+
+        if ($check) {
+            $this->countState = 'مكتملة';
+        } else {
+            $this->countState = 'غير مكتملة';
+        }
     }
 
     protected function getEmployment()
@@ -79,113 +192,6 @@ class FormEmploymentLivewire extends Component
             $this->titles[] = $element->title;
             $this->benefits[] = $element->benefits;
             $this->mainCounts[] = $element->count;
-        }
-    }
-
-    public function updateWrittenState($filed, $snakeCase, $value)
-    {
-        $this->$filed = $value;
-        if ($this->formEmployment) {
-            $this->formEmployment->$snakeCase = $value;
-            $this->formEmployment->save();
-        }
-    }
-
-    public function save()
-    {
-
-        $this->validate();
-
-        $this->createFormEmployment();
-
-        $this->createEmploymentElementElemnts();
-
-    }
-
-    /**
-     * @return void
-     */
-    protected function createFormEmployment(): void
-    {
-        $this->formEmployment = $this->import->formEmployment ?? new FormEmployment();
-        $this->formEmployment->count_state = $this->countState;
-        $this->formEmployment->cleaning_state = $this->cleaningState;
-        $this->formEmployment->health_state = $this->healthState;
-        $this->formEmployment->import_id = $this->import->id;
-        $this->formEmployment->save();
-    }
-
-    /**
-     * @return void
-     */
-    protected function createEmploymentElementElemnts(): void
-    {
-        foreach ($this->counts as $index => $count) {
-            $formEmploymentElement = new FormEmploymentElement();
-            $formEmploymentElement->title = $this->titles[$index];
-            $formEmploymentElement->count = $count;
-            $formEmploymentElement->benefits = $this->benefits[$index];
-            $formEmploymentElement->main_count = $this->mainCounts[$index];
-            $formEmploymentElement->form_employment_id = $this->formEmployment->id;
-            $formEmploymentElement->save();
-        }
-    }
-
-    public function edit()
-    {
-
-        $this->validate();
-
-        foreach ($this->formEmploymentArr as $id => $element) {
-            $formEmploymentElement = FormEmploymentElement::find($element['id']);
-            $formEmploymentElement->delete();
-        }
-
-        $this->createFormEmployment();
-
-        $this->createEmploymentElementElemnts();
-
-    }
-
-    public function delete()
-    {
-        if ($this->formEmployment) {
-            $this->formEmployment->delete();
-            $this->formEmployment->formEmploymentElements()->delete();
-        }
-        $for_date = $this->import->report->for_date;
-        $importId = $this->import->report->id;
-        $this->redirect(route('managers.reports.import', [$importId, $for_date]));
-
-    }
-
-    public function updateCounts($formEmploymentElementId, $value)
-    {
-        $this->counts[$formEmploymentElementId] = $value;
-        $this->checkCounts();
-    }
-
-    protected function checkCounts()
-    {
-        $check = true;
-        if ($this->formEmployment) {
-            $this->formEmployment->formEmploymentElements->each(function ($element) use (&$check) {
-                if ($element->main_count > $this->counts[$element->id]) {
-                    $check = false;
-                }
-            });
-        } else {
-            foreach ($this->counts as $index => $count) {
-                if ($count != $this->mainCounts[$index]) {
-                    $check = false;
-                }
-            }
-        }
-
-        if ($check) {
-            $this->countState = 'مكتملة';
-        } else {
-            $this->countState = 'غير مكتملة';
         }
     }
 

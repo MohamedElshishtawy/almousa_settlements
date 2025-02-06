@@ -17,6 +17,18 @@ body {
     font-weight: bold;
 }
 
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
 .card {
     background: transparent;
     backdrop-filter: blur(1px);
@@ -29,8 +41,25 @@ body {
     }
 }
 
+.float-message {
+    width: 245px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 15px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+
+    & button {
+        background: transparent;
+        border: none;
+        outline: 0;
+    }
+}
+
 .navbar {
     padding: 0;
+    border-radius: 0 0 10px 10px;
 
     & .nav-pages {
         & li {

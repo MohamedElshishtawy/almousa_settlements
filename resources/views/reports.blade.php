@@ -1,3 +1,4 @@
+@php use App\Models\Day; @endphp
 @extends('layouts.app')
 @php($active = 'reports')
 @section('content')
@@ -9,6 +10,7 @@
                         <h2>المحاضر</h2>
                     </div>
 
+                    <x-message/>
 
                     <div class="card-body table-responsive">
                         @if (session('status'))
@@ -17,73 +19,77 @@
                             </div>q
                         @endif
 
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">تسلسل</th>
-                                <th scope="col">التاريخ</th>
-                                <th scope="col">الإرادات</th>
-                                <th scope="col">الوفر</th>
-                                <th scope="col">المقر</th>
-                                <th scope="col">المهمة</th>
-                                <th scope="col">نوع الإعاشة</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @php($n = 0)
-
-                            @forelse ($days as $day)
-
-                                <tr>
-                                    <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
-                                    <td>{{ \App\Models\Day::DateToHijri($day['date']) }}</td>
-
-                                    @if($day['import'])
-                                        <td>
-                                            <a href="{{route('managers.reports.import', [$day['officeMission']->id, $day['date']])}}"
-                                               class="btn btn-success">
-                                                <span>التوريد</span>
-                                                <span><i class="fa-regular fa-circle-check fa-sm"></i></span>
-                                            </a>
-                                        </td>
-                                    @else
-                                        <td>
-                                            <a href="{{route('managers.reports.import', [$day['officeMission']->id, $day['date']])}}"
-                                               class="btn btn-primary">
-                                                <span>التوريد</span>
-                                            </a>
-                                        </td>
-                                    @endif
-
-                                    @if($day['surplus'])
-                                        <td>
-                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}"
-                                               class="btn btn-success">
-                                                <span>الوفر</span>
-                                                <span><i class="fa-regular fa-circle-check fa-sm"></i></span>
-                                            </a>
-                                        </td>
-                                    @else
-                                        <td>
-                                            <a href="{{route('managers.reports.surplus', [$day['officeMission']->id, $day['date']])}}"
-                                               class="btn btn-primary @if(!$day['import']) disabled  @endif">
-                                                <span>الوفر</span>
-                                            </a>
-                                        </td>
-                                    @endif
 
 
-                                    <td>{{ $day['office']->name }}</td>
-                                    <td>{{ $day['officeMission']->mission->title }}</td>
-                                    <td>{{ $day['office']->living->title }}</td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="7" class="text-center">لا يوجد محاضر</td>
-                            @endforelse
-                            </tbody>
 
+                        @forelse ($officesReports as $officeName => $reports)
+                            <div class="office-container">
+                                <table
+                                    class="table table-hover table-bordered table-small rounded-3 thead-light office-table @if(count($officesReports) == 1) show-table @endif">
+                                    <thead>
+                                    <tr class="thead-dark">
+                                        <th colspan="100" class="text-center">{{$officeName}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">تسلسل</th>
+                                        <th scope="col">التاريخ</th>
+                                        @canany(['import_create', 'import_edit', 'import_delete', 'import_writing_print', 'import_print'])
+                                            <th scope="col">التوريد</th>
+                                        @endcanany
+                                        @canany(['surplus_create', 'surplus_edit', 'surplus_delete', 'surplus_print'])
+                                            <th scope="col">الوفر</th>
+                                        @endcanany
+                                        <th scope="col">المهمة</th>
+                                        <th scope="col">نوع الإعاشة</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @php($n = 0)
+                                        @forelse($reports as $report)
+                                            <tr>
+                                                <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
+                                                <td>{{ Day::DateToHijri($report['date']) }}</td>
+
+                                                @canany(['import_create', 'import_edit', 'import_delete', 'import_writing_print', 'import_print'])
+                                                    <td>
+                                                        <a href="{{route('managers.reports.import', [$report['officeMission']->id, $report['date']])}}"
+                                                           class="btn {{ $report['import'] ? 'btn-success' : 'btn-primary' }}">
+                                                            <span>التوريد</span>
+                                                            @if($report['import'])
+                                                                <span><i
+                                                                        class="fa-regular fa-circle-check fa-sm"></i></span>
+                                                            @endif
+                                                        </a>
+                                                    </td>
+                                                @endcanany
+
+                                                @canany(['surplus_create', 'surplus_edit', 'surplus_delete', 'surplus_print'])
+                                                    <td>
+                                                        <a href="{{route('managers.reports.surplus', [$report['officeMission']->id, $report['date']])}}"
+                                                           class="btn {{ $report['surplus'] ? 'btn-success' : 'btn-primary' }} @if(!$report['import']) disabled @endif">
+                                                            <span>الوفر</span>
+                                                            @if($report['surplus'])
+                                                                <span><i
+                                                                        class="fa-regular fa-circle-check fa-sm"></i></span>
+                                                            @endif
+                                                        </a>
+                                                    </td>
+                                                @endcanany
+
+                                                <td>{{ $report['officeMission']->mission->title }}</td>
+                                                <td>{{ $report['office']->living->title }}</td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="7" class="text-center">لا يوجد محاضر</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        @empty
+                            <div class="alert alert-warning text-center">لا يوجد محاضر</div>
+                        @endforelse
                     </div>
                 </div>
             </div>

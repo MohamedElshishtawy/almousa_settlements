@@ -10,6 +10,7 @@ use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DryFoodReportController;
 use App\Http\Controllers\HijriDateController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WhatsAppController;
 use App\Obligations\ObligationsController;
 use App\Office\OfficeController;
 use App\Report\ReportController;
@@ -38,6 +39,9 @@ Livewire::setScriptRoute(function ($handle) {
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::get('/send-whatsapp', [WhatsAppController::class, 'sendWhatsAppMessage']);
+
 
 Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard')->middleware('auth');
 
