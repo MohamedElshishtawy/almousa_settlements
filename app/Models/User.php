@@ -87,4 +87,9 @@ class User extends Authenticatable
         abort(403, 'You are not authorized to access this page');
     }
 
+    public function lastReadedLog()
+    {
+        return $this->hasOne(LastReadedLog::class);
+    }
+
 }

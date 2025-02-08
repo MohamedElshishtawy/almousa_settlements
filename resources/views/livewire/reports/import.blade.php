@@ -16,14 +16,15 @@
             <div class="d-flex">
                 @if($report)
                     @can('import_delete')
-                        <button wire:click="delete" class="btn btn-danger btn-sm mx-1" wire:loading.attr="disabled">
+                        <button wire:click="delete" class="btn btn-danger btn-sm mx-1" wire:loading.attr="disabled"
+                                wire:confirm="هل انت متأكد">
                             <i class="fa-solid fa-trash fa-lg fa-fw"></i>
                         </button>
                     @endcan
 
                     @can('import_edit')
                         <button wire:click="reportUpdate" class="btn btn-primary btn-sm mx-1"
-                                wire:loading.attr="disabled">
+                                wire:loading.attr="disabled" wire:confirm="هل انت متأكد">
                             <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
                         </button>
                     @endcan
@@ -47,7 +48,7 @@
                         <tr>
                             <th>المحضر</th>
                             <td><a href="{{ route('managers.reports.import.print', [$office, $date]) }}">
-                                    <i class="fa-solid fa-feather-pointed"></i> طباعة
+                                    <i class="fa-solid fa-print"></i> طباعة
                                 </a></td>
                         </tr>
                     @endcan

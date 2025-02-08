@@ -98,6 +98,16 @@ class Surplus extends Component
     {
         $surplus = $this->surplus;
 
+        activity('surplus')
+            ->causedBy(auth()->user())
+            ->performedOn($this->report)->withProperties([
+                'surplus' => $this->surplus,
+                'old_data' => [
+                    'surplus' => $surplus,
+                ]
+            ])
+            ->log('تم تعديل محضر الوفر');
+
         foreach (FoodType::all() as $foodType) {
             // create or update the surplusFoodType if there is a change
             $surplusFoodType = $surplus->surplusFoodTypes->where('food_type_id', $foodType->id)->first();
@@ -137,12 +147,6 @@ class Surplus extends Component
             }
         }
 
-        activity('surplus')
-            ->causedBy(auth()->user())
-            ->performedOn($this->report)->withProperties([
-                'surplus' => $this->surplus,
-            ])
-            ->log('تم تعديل محضر الوفر');
 
         return redirect()->route('managers.reports.surplus',
             [$this->officeMission->id, $this->date, $this->selectedMeal])->with('success', 'تم الحفظ بنجاح;');

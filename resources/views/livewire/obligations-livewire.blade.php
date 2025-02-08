@@ -2,23 +2,33 @@
     <div class="header">
         <h1 class="text-center text-success">محضر على المتعهد عليه</h1>
     </div>
-
+    <x-message/>
     <div class="report-details">
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex">
                 @if ($obligation)
-                    <button wire:click="delete" class="btn btn-danger">
-                        <i class="fa-solid fa-trash fa-fw"></i>
-                    </button>
-                    <button wire:click="edit" wire:loading.attr="disabled" class="btn btn-primary mx-1">
-                        <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
-                    </button>
-                    <a href="{{ route('obligations.print', $obligation->id) }}" class="btn btn-secondary">
-                        <i class="fas fa-print"></i>
-                    </a>
+                    @can('obligations_delete')
+                        <button wire:click="delete" class="btn btn-danger btn-sm" wire:confirm="هل انت متأكد من الحذف">
+                            <i class="fa-solid fa-trash fa-fw"></i>
+                        </button>
+                    @endcan
+                    @can('obligations_edit')
+                        <button wire:click="edit" wire:loading.attr="disabled" class="btn btn-primary mx-1 btn-sm"
+                                wire:confirm="هل انت متأكد من التعديل">
+                            <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
+                        </button>
+                    @endcan
+                    @can('obligations_print')
+                        <a href="{{ route('obligations.print', $obligation->id) }}" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-print"></i>
+                        </a>
+                    @endcan
                 @else
-                    <button wire:click="save" wire:loading.attr="disabled" class="btn btn-success mx-1">حفظ</button>
+                    @can('obligations_create')
+                        <button wire:click="save" wire:loading.attr="disabled" class="btn btn-success mx-1 btn-sm">حفظ
+                        </button>
+                    @endcan
                 @endif
             </div>
         </div>

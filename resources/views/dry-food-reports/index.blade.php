@@ -7,7 +7,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>محاضر الأصناف الجافة</h2>
-                        <a href="{{route('dry-food-reports.create')}}" class="btn btn-success">إضافة</a>
+                        @can('dry_food_create')
+                            <a href="{{route('dry-food-reports.create')}}" class="btn btn-success">إضافة</a>
+                        @endcan
                     </div>
 
 
@@ -53,7 +55,7 @@
                                               method="post" style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">حذف</button>
+                                            <button type="submit" class="btn btn-danger confirm-btn">حذف</button>
                                         </form>
                                     </td>
                                 </tr>

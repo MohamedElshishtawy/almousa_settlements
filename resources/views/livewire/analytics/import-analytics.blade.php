@@ -10,9 +10,9 @@
             <th colspan="100">
                 <select wire:model.live="selectedOfficeId" class="form-select">
                     <option value="">إختر المقر</option>
-                    @foreach($offices as $office)
-                        <option value="{{$office->id}}"
-                                @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
+                    @foreach($offices as $officeDb)
+                        <option value="{{$officeDb->id}}"
+                                @if($selectedOfficeId == $officeDb->id) selected @endif>{{$officeDb->name}}</option>
                     @endforeach
                 </select>
             </th>
@@ -49,8 +49,9 @@
                         <span class="spinner-border spinner-border-sm text-success" role="status"></span>
                     </span>
             </span>
+
                 تقرير نموذج رقم (1) محضر توريد الموارد الطازجة و الجافة إعاشة
-                ال{{$office ? $office->living->title : ''}} ب
+                ال{{ $office->living->title ?? ''}} ب
             </th>
             <th colspan="3">
                 {{\App\Office\Office::find($selectedOfficeId)->name ?? ''}}
@@ -72,7 +73,7 @@
             <td>الكمية المقررة</td>
             <td>الكمية الموردة</td>
             <td>الفرق</td>
-            <td class="unit">الوحدة</td>
+            <td>الوحدة</td>
         </tr>
         </thead>
         <tbody>

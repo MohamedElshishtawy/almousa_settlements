@@ -7,6 +7,7 @@ use App\Models\Delegate;
 use App\Models\DryFoodReport;
 use App\Office\Office;
 use App\Product\ProductLivingMission;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class DryFoodReportLivewire extends Component
@@ -16,7 +17,6 @@ class DryFoodReportLivewire extends Component
     public $products;
     public DryFoodReport $dryFoodReport;
 
-    // Mount the component
     public function mount(DryFoodReport $dryFoodReport)
     {
         $this->dryFoodReport = $dryFoodReport;
@@ -29,28 +29,20 @@ class DryFoodReportLivewire extends Component
         }
     }
 
-    // Initialize offices based on user permissions
     protected function initializeOffices()
     {
-        $this->offices = Office::all()->filter(function ($office) {
-            return $office->living->title == 'ميدان';
-        });
-
+        $this->offices = Office::all()->filter(fn($office) => $office->living->title == 'ميدان');
         if (auth()->user()->office) {
-            $this->offices = $this->offices->filter(function ($office) {
-                return auth()->user()->isBelongsToOffice($office->id);
-            });
+            $this->offices = $this->offices->filter(fn($office) => auth()->user()->isBelongsToOffice($office->id));
         }
     }
 
-    // Initialize delegates and products
     protected function initializeDelegatesAndProducts()
     {
         $this->delegates = [];
         $this->products = [];
     }
 
-    // Initialize fields for an existing report
     protected function initializeExistingReport()
     {
         $this->selectedOfficeId = $this->dryFoodReport->delegate->office_id;
@@ -62,54 +54,17 @@ class DryFoodReportLivewire extends Component
         $this->getProducts();
     }
 
-    // Fetch products based on selected office and mission
     public function getProducts()
     {
         if ($this->selectedOfficeId && $this->selectedMissionId) {
             $office = Office::find($this->selectedOfficeId);
-
             $productMissionLivings = ProductLivingMission::where('living_id', $office->living_id)
                 ->where('mission_id', $this->selectedMissionId)->get();
-
             $this->products = $productMissionLivings->map(fn($productMissionLiving) => $productMissionLiving->product)
-                ->filter(function ($product) {
-                    return $product->carton_value && $product->packet_value;
-                });
+                ->filter(fn($product) => $product->carton_value && $product->packet_value);
         }
     }
 
-    // Handle office selection change
-    public function updatedSelectedOfficeId()
-    {
-        $this->delegates = Delegate::where('office_id', $this->selectedOfficeId)->get() ?: [];
-        $this->getProducts();
-    }
-
-    // Handle mission selection change
-    public function updatedSelectedMissionId()
-    {
-        $this->getProducts();
-    }
-
-    // Handle delegate selection change
-    public function updatedSelectedDelegateId()
-    {
-        $this->getProducts();
-    }
-
-    // Handle start date change
-    public function updatedStartDate()
-    {
-        $this->getProducts();
-    }
-
-    // Handle end date change
-    public function updatedEndDate()
-    {
-        $this->getProducts();
-    }
-
-    // Save a new report
     public function save()
     {
         $this->validate();
@@ -120,10 +75,16 @@ class DryFoodReportLivewire extends Component
             'end_date' => $this->endDate,
         ]);
 
-        $this->redirect(route('dry-food-reports.edit', $this->dryFoodReport));
+        activity('dry_food')
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'dry_food_report_id' => $this->dryFoodReport->id,
+            ])
+            ->performedOn($this->dryFoodReport)->log('تم إنشاء تقرير إعاشة');
+        session()->flash('success', 'تم حفظ المحضر بنجاح');
+        return redirect()->route('dry-food-reports.edit', $this->dryFoodReport);
     }
 
-    // Update an existing report
     public function edit()
     {
         $this->validate();
@@ -133,9 +94,34 @@ class DryFoodReportLivewire extends Component
             'start_date' => $this->startDate,
             'end_date' => $this->endDate,
         ]);
+
+
+        activity('dry_food')
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'dry_food_report_id' => $this->dryFoodReport->id,
+                'old' => $this->dryFoodReport->getOriginal(),
+                'new' => $this->dryFoodReport->getAttributes(),
+            ])
+            ->performedOn($this->dryFoodReport)->log('تم تعديل تقرير إعاشة');
+        Session::flash('success', 'تم تعديل المحضر بنجاح');
     }
 
-    // Define validation rules
+    public function delete()
+    {
+        $this->dryFoodReport->delete();
+        activity('dry_food')
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'dry_food_report_id' => $this->dryFoodReport->id,
+                'old' => $this->dryFoodReport->getOriginal(),
+            ])
+            ->performedOn($this->dryFoodReport)->log('تم حذف تقرير إعاشة');
+
+        Session::flash('success', 'تم حذف المحضر بنجاح');
+        return redirect()->route('dry-food-reports.index');
+    }
+
     protected function rules()
     {
         $dates = $this->getOverlappingDates();
@@ -148,7 +134,6 @@ class DryFoodReportLivewire extends Component
         ];
     }
 
-    // Get overlapping dates for validation
     protected function getOverlappingDates()
     {
         $dates = [];
@@ -166,7 +151,6 @@ class DryFoodReportLivewire extends Component
         return $dates;
     }
 
-    // Render the view
     public function render()
     {
         return view('livewire.dry-food-report-livewire');

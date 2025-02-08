@@ -1,24 +1,42 @@
 @extends('layouts.bordered-report')
 
 @section('titlePaper')
-    <h1 class="text-center bold">محضر غياب مندوب</h1>
-@endsection
 
+@endsection
+@section('header-right')
+    الإمداد و التموين
+    <br>
+    قيادة الإعاشة
+    <br>
+    إعاشة
+    {{$delegateAbcence->delegate->office->living->title}}
+    <br>
+    {{$delegateAbcence->delegate->office->name}}
+@endsection
+@section('header-left')
+    <span class="text-center align-items-center">محضر غياب مندوب</span>
+@endsection
 @section('article')
-    <p class="text-right mt-5">
-        سعادة المشرف على موقع صرف الإعاشة ب
-        <strong>{{ $delegateAbcence->delegate->office->name }}</strong>
-    </p>
+    <div class="text-right my-2 text-center">
+        <strong>سعادة المشرف على موقع صرف الإعاشة ب
+            <span>{{ $delegateAbcence->delegate->office->name }}</span></strong>
+    </div>
     <p class="text-right">
         السلام عليكم ورحمة الله وبركاته
     </p>
     <p class="text-right">
-        نرفع لكم محضر غياب عن استلام وجبة ليوم
-        <strong>{{ \App\Models\Day::DateToHijri($delegateAbcence->for_date) }}</strong>
+        نرفع لكم محضر غياب عن استلام وجبة
+        ال{{$delegateAbcence->meal->name}}
+        ليوم
+        <span>{{ \App\Models\Day::DateToHijri($delegateAbcence->for_date) }}</span>
         لمندوب الإعاشة رقم
-        <strong>{{ $delegateAbcence->delegate->name }}</strong>
+        ({{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($delegateAbcence->delegate->number)}})
+        مندوب إعاشة
+        {{$delegateAbcence->delegate->institution}}
         وعددهم
-        <strong>{{ $delegateAbcence->delegate->benefits }}</strong>
+        <span>({{ $delegateAbcence->delegate->benefits }})</span>
+        مستفيد
+
     </p>
     <p class="text-right">
         نأمل الإطلاع والتوجيه حيال ذلك.
@@ -32,8 +50,8 @@
     <table class="table text-center" style="width: 100%; border: 1px solid black;">
         <thead>
         <tr>
-            <th colspan="2">رئيس المجموعة</th>
-            <th colspan="2">تصديق الضابط المناوب</th>
+            <th colspan="2">معد المحضر</th>
+            <th colspan="2">تصديق رئيس المجموعة</th>
         </tr>
         </thead>
         <tbody>

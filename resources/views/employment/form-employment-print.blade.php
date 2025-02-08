@@ -2,7 +2,7 @@
 
 
 @section('titlePaper')
-    <h1>تقرير التفتيش</h1>
+    <h1>تقرير أعداد العاملة وحالتهم</h1>
 @endsection
 
 @section('article')
@@ -10,7 +10,7 @@
     <table class="text-center">
         <tr>
             <th colspan="100">
-                بيان بأعداد العمالة الموجودة بموقع صرف الإعاشة ب
+                بيان بأعداد العمالة الموجودة بمقر صرف الإعاشة ب
                 {{$formEmployment->import->report->office->name}}
                 و حالتهم
             </th>
@@ -43,8 +43,10 @@
     <p class="mt-3">
         السلام عليكم ورحمة الله وبركاته،
         <br>
-        نفيدكم أنه جرى التفتيش على كافة العمالة لهذا اليوم الجمعة الموافق
+        نفيدكم أنه جرى التفتيش على كافة العمالة لهذا اليوم
         {{\App\Models\Day::convertDate2ArName($formEmployment->import->report->for_date)}}
+        الموافق
+        {{\App\Models\Day::DateToHijri($formEmployment->import->report->for_date)}}
         و الموضح أعدادهم فى الجدول أعلاه وأتضح ما يلى:
     </p>
     <table>
@@ -76,7 +78,7 @@
         <tbody>
         <tr>
             <th colspan="2">المتعهد أو من ينوب عنه</th>
-            <th colspan="2">المشرف على موقع صرف الإعاشة ب{{$formEmployment->import->report->office->name}}</th>
+            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
             <th>الاسم</th>
@@ -95,6 +97,29 @@
         <tr>
             <th>التوقيع</th>
             <td><input type="text" class="form-control"></td>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table rules="all" class="no-break mt-2">
+        <tbody>
+        <tr>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+
+        </tr>
+        <tr>
+            <th>الاسم</th>
+            <td>
+                <input type="text" class="form-control" value="{{auth()->user()->name}}">
+            </td>
+        </tr>
+        <tr>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+        </tr>
+        <tr>
             <th>التوقيع</th>
             <td><input type="text" class="form-control"></td>
         </tr>

@@ -83,12 +83,12 @@
                                         <span>محضر الإفطار</span>
                                     </a>
                                 @endcan
-                                @can('view_supplier_record')
+                                @canany(['obligations_create', 'obligations_edit', 'obligations_delete', 'obligations_print'])
                                     <a href="{{route('obligations')}}" class="btn btn-primary">
                                         <i class="fa-solid fa-screwdriver-wrench"></i>
                                         <span>محضر على المتعهد</span>
                                     </a>
-                                @endcan
+                                @endcanany
                             </div>
                         </section>
 

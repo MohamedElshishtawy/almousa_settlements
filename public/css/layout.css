@@ -185,4 +185,60 @@ input.number-input {
     padding: 5px 0;
 }
 
+.notification-li {
+    position: relative;
+
+    & .logs {
+        display: none;
+        position: absolute;
+        background: #ffffff;
+        color: #232323;
+        z-index: 100;
+        top: 34px;
+        right: -70px;
+        list-style: none;
+        padding: 0px 0;
+        font-size: 13px;
+        width: 180px;
+        border-bottom: 1px solid var(--bs-success);
+        border-radius: 0 0 4px 4px;
+        box-shadow: 1px 4px 5px #AAA;
+
+        & li {
+            padding: 3px;
+            transition: all 0.3s;
+            margin: 3px 0;
+            border-bottom: 1px solid #d5d5d5;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background: #e2e2e2;
+            }
+
+            &.unreaded {
+                background: #ffef5e59;
+            }
+
+            & .by-user, .since {
+                font-size: 10px;
+                padding-right: 7px;
+            }
+        }
+
+    }
+
+    .badge {
+        background: red;
+        color: white;
+        position: absolute;
+        right: -3px;
+        top: -2px;
+        padding: 3px 3px;
+        font-size: 9px;
+
+    }
+}
 

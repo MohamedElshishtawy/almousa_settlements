@@ -27,7 +27,7 @@
                         <th scope="col">عدد المستفيدين</th>
                         <th scope="col">نوع الصرف</th>
                         <th scope="col">المقر</th>
-                        <th scope="col">التلفون</th>
+                        <th scope="col">الجوال</th>
                         <th scope="col">حدث</th>
                     </tr>
                     </thead>
@@ -36,6 +36,7 @@
                         <tr>
                             <td>
                                 <input type="number" min="0" wire:model="delegatesNumbers.{{ $delegate->id }}"
+                                       wire:keyup.debounce.240="changeNumber({{ $delegate->id }}, $event.target.value)"
                                        wire:change="changeNumber({{ $delegate->id }}, $event.target.value)"
                                        class="form-control">
                                 @error('delegatesNumbers.' . $delegate->id)
@@ -44,7 +45,7 @@
                             </td>
                             <td>
                                 <input type="text" wire:model="delegatesNames.{{ $delegate->id }}"
-                                       wire:change="changeName({{ $delegate->id }}, $event.target.value)"
+                                       wire:keyup.debounce.240="changeName({{ $delegate->id }}, $event.target.value)"
                                        class="form-control">
                                 @error('delegatesNames.' . $delegate->id)
                                 <small class="text-danger">{{ $message }}</small>
@@ -52,7 +53,7 @@
                             </td>
                             <td>
                                 <input type="text" wire:model="delegatesInstitutions.{{ $delegate->id }}"
-                                       wire:change="changeInstitution({{ $delegate->id }}, $event.target.value)"
+                                       wire:keyup.debounce.240="changeInstitution({{ $delegate->id }}, $event.target.value)"
                                        class="form-control">
                                 @error('delegatesInstitutions.' . $delegate->id)
                                 <small class="text-danger">{{ $message }}</small>
@@ -60,7 +61,7 @@
                             </td>
                             <td>
                                 <input type="text" wire:model="delegatesRanks.{{ $delegate->id }}"
-                                       wire:change="changeRank({{ $delegate->id }}, $event.target.value)"
+                                       wire:keyup.debounce.240="changeRank({{ $delegate->id }}, $event.target.value)"
                                        class="form-control">
                                 @error('delegatesRanks.' . $delegate->id)
                                 <small class="text-danger">{{ $message }}</small>
@@ -68,6 +69,7 @@
                             </td>
                             <td>
                                 <input type="number" min="0" wire:model="delegatesBenefits.{{ $delegate->id }}"
+                                       wire:keyup.debounce.240="changeBenefits({{ $delegate->id }}, $event.target.value)"
                                        wire:change="changeBenefits({{ $delegate->id }}, $event.target.value)"
                                        class="form-control">
                                 @error('delegatesBenefits.' . $delegate->id)
@@ -77,7 +79,7 @@
 
                             <td>
                                 <select class="form-select" wire:model="delegatesFoodTypes.{{$delegate->id}}"
-                                        wire:change="changeFoodType({{$delegate->id}}, $event.target.value)">
+                                        wire:keyup.debounce.240="changeFoodType({{$delegate->id}}, $event.target.value)">
                                     <option value="">اختر نوع الصرف</option>
                                     @foreach($foodTypes as $foodType)
                                         <option
@@ -88,7 +90,7 @@
 
                             <td>
                                 <select class="form-select" wire:model="delegatesOffices.{{$delegate->id}}"
-                                        wire:change="changeOffice({{$delegate->id}}, $event.target.value)">
+                                        wire:keyup.debounce.240="changeOffice({{$delegate->id}}, $event.target.value)">
                                     <option value="">اختر المقر</option>
                                     @foreach($offices as $officeDb)
                                         <option
@@ -99,7 +101,7 @@
 
                             <td>
                                 <input type="text" min="0" wire:model="delegatesPhones.{{ $delegate->id }}"
-                                       wire:change="changePhone({{ $delegate->id }}, $event.target.value)"
+                                       wire:keyup.debounce.240="changePhone({{ $delegate->id }}, $event.target.value)"
                                        class="form-control">
                                 @error('delegatesPhones.' . $delegate->id)
                                 <small class="text-danger">{{ $message }}</small>

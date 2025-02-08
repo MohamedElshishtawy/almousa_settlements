@@ -55,6 +55,8 @@ class UsersPermissionsSeeder extends Seeder
             // products
             'manage_all_products',
             'manage_mission_products',
+            // view_beneficiaries_report
+            'view_beneficiaries_report',
         ];
 
         // Create permissions

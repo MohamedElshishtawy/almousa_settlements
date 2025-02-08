@@ -31,7 +31,10 @@
     <thead>
     <tr>
         <th colspan="100">
-            محضر وفر المواد الطازجة و الجافة إعاشة {{$office->living->title}}
+            محضر وفر نموذج رقم (
+            {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(2)}}
+            ) المواد الطازجة و الجافة إعاشة {{$office->living->title}}
+            ال
             ({{$office->name}})
 
         </th>
@@ -141,6 +144,35 @@
         <tr>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+            <th>الرتبة</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control"></td>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table rules="all" class="no-break mt-2">
+        <tbody>
+        <tr>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
+        </tr>
+        <tr>
+            <th>الاسم</th>
+            <td>
+                <input type="text" class="form-control" value="">
+            </td>
+            <th>الاسم</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value=""></td>
             <th>الرتبة</th>
             <td><input type="text" class="form-control"></td>
         </tr>

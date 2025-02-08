@@ -47,7 +47,7 @@ class DelegatesManagement extends Component
             $this->delegatesNumbers[$delegate->id] = $delegate->number;
             $this->delegatesNames[$delegate->id] = $delegate->name;
             $this->delegatesInstitutions[$delegate->id] = $delegate->institution;
-            $this->delegatesRanks[$delegate->id] = $delegate->role_ar;
+            $this->delegatesRanks[$delegate->id] = $delegate->rank;
             $this->delegatesBenefits[$delegate->id] = $delegate->benefits;
             $this->delegatesFoodTypes[$delegate->id] = $delegate->food_type_id;
             $this->delegatesOffices[$delegate->id] = $delegate->office_id;
@@ -91,10 +91,10 @@ class DelegatesManagement extends Component
     public function changeRank($delegateId, $value)
     {
         $delegate = Delegate::find($delegateId);
-        $validatedData = $this->validate([
-            "delegatesRanks.$delegateId" => 'nullable|string|max:255',
-        ]);
-        $delegate->role_ar = $value;
+//        $validatedData = $this->validate([
+//            "delegatesRanks.$delegateId" => 'nullable|string|max:255',
+//        ]);
+        $delegate->rank = $value;
         $delegate->save();
         $this->changeDelegats();
     }

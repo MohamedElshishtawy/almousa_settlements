@@ -10,9 +10,9 @@
             <th colspan="100">
                 <select wire:model.live="selectedOfficeId" class="form-select">
                     <option value="">إختر المقر</option>
-                    @foreach($offices as $office)
-                        <option value="{{$office->id}}"
-                                @if($selectedOfficeId == $office->id) selected @endif>{{$office->name}}</option>
+                    @foreach($offices as $officeDB)
+                        <option value="{{$officeDB->id}}"
+                                @if($selectedOfficeId == $officeDB->id) selected @endif>{{$officeDB->name}}</option>
                     @endforeach
                 </select>
             </th>
@@ -48,7 +48,7 @@
                         <span class="spinner-border spinner-border-sm text-success" role="status"></span>
                     </span>
             </span>
-                تقرير نموذج رقم (2) (تقرير وفر) خاص بالجان الإستلام الفرعية إعاشة
+                تقرير نموذج رقم (2) (تقرير وفر) خاص بلجان الإستلام الفرعية إعاشة
                 ال{{$office ? $office->living->title : ''}} ب
             </th>
             <th colspan="3">
@@ -69,9 +69,9 @@
             <td>مقرر الفرد اليومى</td>
             <td>الكمية المقررة</td>
             <td>الكمية الموردة</td>
-            <td>كمية المصروف</td>
+            <td>الكمية المصروف</td>
             <td>كمية الوفر</td>
-            <td class="unit">الوحدة</td>
+            <td>الوحدة</td>
         </tr>
         @foreach($staticProducts ?? [] as $staticProduct)
             <tr>
@@ -122,6 +122,36 @@
             <tr>
                 <th>المسمى</th>
                 <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+                <th>الرتبة</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <table rules="all" class="no-break mt-2">
+            <tbody>
+            <tr>
+                <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+                <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
+            </tr>
+            <tr>
+                <th>الاسم</th>
+                <td>
+                    <input type="text" class="form-control" value="">
+                </td>
+                <th>الاسم</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>المسمى</th>
+                <td><input type="text" class="form-control" value=""></td>
                 <th>الرتبة</th>
                 <td><input type="text" class="form-control"></td>
             </tr>

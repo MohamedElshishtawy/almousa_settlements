@@ -42,7 +42,7 @@ class DelegateDoesNotWantLivewire extends Component
             $year = Numbers::ShowInArabicDigits($hijri->year);
             $month = Numbers::ShowInArabicDigits($hijri->month);
             $day = Numbers::ShowInArabicDigits($hijri->day);
-            $this->formatedDate = $day.'/'.$month.'/'.$year.' هـ';
+            $this->formatedDate = $year.'/'.$month.'/'.$day.'هـ';
         } else {
             $this->formatedDate = $this->date.' ميلادي';
         }

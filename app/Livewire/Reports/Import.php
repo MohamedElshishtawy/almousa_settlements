@@ -122,13 +122,8 @@ class Import extends Component
             }
         }
 
-        activity('import')->causedBy(auth()->user())->performedOn($import)->withProperties([
-            'office' => $this->office->name,
-            'date' => $this->date,
-            'import' => $import->id,
-        ])->log('تم تحديث المحضر توريد');
-
         session()->flash('success', 'تم تحديث المحضر بنجاح.');
+        
         return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date]);
     }
 
@@ -186,12 +181,6 @@ class Import extends Component
             }
         }
 
-        activity('import')->causedBy(auth()->user())->performedOn($import)->withProperties([
-            'office' => $this->office->name,
-            'date' => $this->date,
-            'import' => $import->id,
-        ])->log('تم إضافة محضر توريد');
-
         session()->flash('success', 'تم إضافة المحضر. يتم توجيهك لتقيم العمالة..');
 
         sleep(2);
@@ -206,11 +195,6 @@ class Import extends Component
         $import = $this->report->import;
         $this->report->delete();
 
-        activity('import')->causedBy(auth()->user())->performedOn($import)->withProperties([
-            'office' => $this->office->name,
-            'date' => $this->date,
-            'import' => $import->id,
-        ])->log('تم حذف تقرير توريد');
 
         $this->reset(['benefits', 'benefitError', 'reallyImported', 'report']);
         $this->setData();

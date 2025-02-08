@@ -20,11 +20,11 @@ class ImportAnalytics extends Component
             $this->showPrices = $showPrices;
         }
 
-        $this->offices = (new OfficeController())->getOfficesForUser();
+        $this->offices = (new OfficeController())->getOfficesForUser()->load('OfficeMissions.mission');
 
         if ($this->offices->count() > 0) {
             $this->office = $this->offices->first();
-            $this->mission = $this->offices->first()->OfficeMissions->first()->mission;
+            $this->mission = $this->office->OfficeMissions->first()->mission;
             $this->selectedOfficeId = $this->office->id;
             $this->selectedMissionId = $this->mission->id;
             $this->dates = (new ReportSurvice())->getDaysForOffice($this->office);
@@ -35,6 +35,7 @@ class ImportAnalytics extends Component
             $this->updateDaysCount();
             $this->updatePayed();
         }
+
 
     }
 
@@ -61,6 +62,7 @@ class ImportAnalytics extends Component
         $this->getOffice();
         $this->dates = (new ReportSurvice())->getDaysForOffice($this->office);
         $this->updatePayed();
+
     }
 
     protected function getOffice()

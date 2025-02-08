@@ -1,4 +1,5 @@
 <div class="report-page">
+    <x-message/>
     <div class="header">
         <h1 class="text-center text-success">
             محضر صرف الأصناف الجافة
@@ -6,19 +7,16 @@
     </div>
 
     <div class="report-details">
+        <x-calc-loading/>
         <div class="d-flex justify-content-between align-items-center">
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex gap-1">
                 @if($dryFoodReport->id)
-                    <span wire:loading>
-                <span class="spinner-border spinner-border-sm text-success" role="status"></span>
-            </span>
-
-                    <button wire:click="edit" class="btn btn-primary">
+                    <button wire:click="edit" class="btn btn-primary btn-sm" wire:confirm="هل انت متأكد من التعديل">
                         <i class="fa-solid fa-edit"></i>
                     </button>
                 @else
-                    <button wire:click="save" class="btn btn-success">
+                    <button wire:click="save" class="btn btn-success btn-sm">
                         حفظ
                     </button>
                 @endif
@@ -34,12 +32,12 @@
                     <td>
                         <div class="grid">
                             <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}"
-                               class="btn btn-secondary ">
+                               class="btn btn-secondary btn-sm">
                                 <i class="fas fa-print"></i>
                                 التقرير
                             </a>
                             <a href="{{ route('dry-food-reports.delegateReport', $dryFoodReport->id) }}"
-                               class="btn btn-secondary ">
+                               class="btn btn-secondary btn-sm">
                                 <i class="fas fa-print"></i>
                                 إقرار المندوب
                             </a>
@@ -120,7 +118,7 @@
                     <select wire:model.live="selectedDelegateId"
                             class="form-select @error('selectedDelegateId') is-invalid @enderror">
                         <option value="">اختر المندوب</option>
-                        @foreach($delegates as $delegate)
+                        @foreach($selectedOfficeId ? \App\Office\Office::find($selectedOfficeId)->delegates : [] as $delegate)
                             <option value="{{ $delegate->id }}"
                                     @if($selectedDelegateId == $delegate->id) selected @endif>
                                 {{ $delegate->name }}

@@ -84,6 +84,15 @@ class ObligationsLivewire extends Component
         ]);
 
         $this->saveBands();
+
+        activity('obligations')
+            ->performedOn($this->obligation)
+            ->causedBy(auth()->user())
+            ->withProperties(['obligation_id' => $this->obligation->id])
+            ->log('تم إنشاء محضر على المتعهد');
+
+        session()->flash('success', 'تم إنشاء المحضر  بنجاح');
+
         $this->redirect(route('obligations.edit', $this->obligation->id));
     }
 
@@ -109,6 +118,16 @@ class ObligationsLivewire extends Component
         ]);
 
         $this->editBands();
+
+        activity('obligations')
+            ->performedOn($this->obligation)
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'office_id' => $this->selectedOfficeId,
+                'old' => $this->obligation
+            ])
+            ->log('تم تعديل محضر على النتعهد');
+        session()->flash('success', 'تم تعديل المحضر  بنجاح');
     }
 
     //edit bands
@@ -120,13 +139,28 @@ class ObligationsLivewire extends Component
 
         // save bands
         $this->saveBands();
+
+
     }
 
 
     public function delete()
     {
         $this->obligation->delete();
-        $this->redirect(route('obligations'));
+
+
+        activity('obligations')
+            ->performedOn($this->obligation)
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'office_id' => $this->selectedOfficeId,
+                'old' => $this->obligation
+            ])
+            ->log('تم حذف محضر على النتعهد');
+
+
+        return redirect()->route('obligations')->with('success', 'تم حذف المحضر بنجاح');
+
     }
 
     public function render()

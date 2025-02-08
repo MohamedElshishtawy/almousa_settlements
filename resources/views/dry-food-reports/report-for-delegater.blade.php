@@ -10,17 +10,25 @@
     <h4 class="text-center">
         إقرار وتعهد بتاريخ
         <br>
+        {{$formatedDate}}
 
     </h4>
 @endsection
 
 @section('article')
     <p>
-        أُقر أنا <strong>{{$delegate->name}}</strong> مندوب <strong>{{$delegate->institution}}</strong> وعدد المستفيدين
-        <strong>{{$delegate->benefits}}</strong>، بأنني قد إستلمت كامل المخصص من الإعاشة الجافة وعمالة جيدة اعتباراً من
-        تاريخ {{\App\Models\Day::DateToHijri($dryFoodReport->start_date)}} إلى
-        تاريخ {{\App\Models\Day::DateToHijri($dryFoodReport->end_date)}}، ولن أكون مسؤولاً عن الإعاشة غير المطهية. ويوجد
-        لدي أماكن تخزين وترتيب.
+        أقر أنا
+        <span>{{$delegate->rank}}</span>/<strong>{{$delegate->name}}</strong>
+        مندوب
+        <span>{{$delegate->institution}}</span>
+        وعدد المستفيدين
+        <span>{{$delegate->benefits}}</span>
+        شخص
+        بأنني قد إستلمت كامل المخصص من الإعاشة الجافة وبحالة جيدة اعتباراً من تاريخ
+        <span>{{$formatedDate}}</span>
+        إلى تاريخ
+        <span>{{$formatedDate}}</span>
+        ، وإنى مسؤولاً عن الإعاشة غير المطهية. ويوجد لدي أماكن تخزين وتبريد.
     </p>
 
     <div class="text-center mt-5">
@@ -41,7 +49,7 @@
             <td><input type="text" class="form-control" value="{{$delegate->role_ar}}"></td>
         </tr>
         <tr>
-            <th>رقم التلفون</th>
+            <th>رقم الجوال</th>
             <td><input type="text" class="form-control" value="{{$delegate->phone}}"></td>
         </tr>
         <tr>

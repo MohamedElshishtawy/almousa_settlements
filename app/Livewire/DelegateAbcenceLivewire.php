@@ -58,6 +58,14 @@ class DelegateAbcenceLivewire extends Component
             'meal_id' => $this->meal_id,
         ]);
 
+        activity('delegate_absence')
+            ->causedBy(auth()->user())
+            ->performedOn($delegate)
+            ->withProperties(['delegate_id' => $delegate->id])
+            ->log('تم اضافة محضر غياب لمندوب');
+
+        session()->flash('تم حفظ محضر غياب المندوب بنجاح');
+
         $this->resetForm();
     }
 
@@ -70,7 +78,22 @@ class DelegateAbcenceLivewire extends Component
 
     public function delete($id)
     {
-        DelegateAbsence::find($id)->delete();
+        $delegateAbsence = DelegateAbsence::find($id);
+
+        if ($delegateAbsence) {
+            $delegateAbsence->delete();
+            activity('delegate_absence')
+                ->causedBy(auth()->user())
+                ->performedOn(DelegateAbsence::find($id))
+                ->withProperties([
+                    'delegate_id' => DelegateAbsence::find($id)->delegate_id,
+                    'old' => $delegateAbsence->getOriginal()
+                ])
+                ->log('تم حذف محضر غياب لمندوب');
+
+            session()->flash('تك حذف المحضر بنجاح');
+        }
+
     }
 }
 

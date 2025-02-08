@@ -32,12 +32,12 @@
                         </a>
                     @endcan
                     @can('surplus_delete')
-                        <button class="btn btn-danger mx-1 btn-sm" wire:click="delete">
+                        <button class="btn btn-danger mx-1 btn-sm" wire:click="delete" wire:confirm="هل انت متأكد">
                             <i class="fa fa-trash"></i>
                         </button>
                     @endcan
                     @can('surplus_edit')
-                        <button class="btn btn-primary btn-sm" wire:click="reportUpdate">
+                        <button class="btn btn-primary btn-sm" wire:click="reportUpdate" wire:confirm="هل انت متأكد">
                             <i class="fa-solid fa-pen-to-square fa-lg fa-fw"></i>
                         </button>
                     @endcan

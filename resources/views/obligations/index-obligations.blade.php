@@ -2,12 +2,15 @@
 
 @section('content')
     <div class="container">
+        <x-message/>
         <div class="row justify-content-center">
             <div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>محاضر على المتعهد</h2>
-                        <a href="{{route('obligations.create')}}" class="btn btn-success">إضافة</a>
+                        @can('obligations_create')
+                            <a href="{{route('obligations.create')}}" class="btn btn-success">إضافة</a>
+                        @endcan
                     </div>
                     <div class="card-body table-responsive">
                         @if (session('status'))

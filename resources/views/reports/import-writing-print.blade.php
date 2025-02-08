@@ -40,25 +40,27 @@
             </div>
             <div></div>
             <div class="title">
-                <h1>محضر توريد ({{$office->name}})</h1>
+                <h1>محضر توريد كتابى نموذج رقم ( ) {{$office->name}}</h1>
             </div>
         </header>
 
         <article>
             <div>
                 محضر بتوريد وصرف كامل استحقاق المستفيدين من المواد الطازجة والجافة لإعاشة
-                العاملين {{$office->living->title}} ب{{$office->name}} ليوم
+                العاملين بال{{$office->living->title}} ب{{$office->name}} ليوم
                 {{$Hijri['day-text']}} الموافق ({{$Hijri['year']}}/{{$Hijri['month']}}/{{$Hijri['day']}} هـ).
 
             </div>
             <div class="mt-5">
                 لقد تم توريد وصرف كامل استحقاق المستفيدين من الوجبات الثلاث للمواد الطازجة والجافة والمطهية بعد مطابقتها
-                بالشروط والمواصفات {{$isHasDifferance ? "ماعدا النقص الموضح في نموذج التوريد" : ''}}، وتم الإشراف على
+                بالشروط
+                والمواصفات {{$isHasDifferance && $office->living->title == 'ميدان' ? "ماعدا النقص الموضح في نموذج التوريد" : ''}}
+                ، وتم الإشراف على
                 توزيعها وصرفها من موقع إعاشة العاملين بال{{$office->living->title}} بـ ({{$office->name}} وقد بلغ عدد
                 المستفيدين في اليوم والتاريخ الموضح أعلاه ({{$report->import->benefits}}) مستفيد.
             </div>
             <div class="text-center">
-                وجارى التأكد من ذلك وعلى مسؤوليتنا والله الموفق ،،،
+                وجرى التأكد من ذلك وعلى مسؤوليتنا والله الموفق ،،،
             </div>
         </article>
     </div>
@@ -81,6 +83,35 @@
             <tr>
                 <th>المسمى</th>
                 <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+                <th>الرتبة</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table rules="all" class="no-break mt-2">
+            <tbody>
+            <tr>
+                <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+                <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
+            </tr>
+            <tr>
+                <th>الاسم</th>
+                <td>
+                    <input type="text" class="form-control" value="">
+                </td>
+                <th>الاسم</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>المسمى</th>
+                <td><input type="text" class="form-control" value=""></td>
                 <th>الرتبة</th>
                 <td><input type="text" class="form-control"></td>
             </tr>

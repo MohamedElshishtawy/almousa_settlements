@@ -53,12 +53,21 @@
         <div>
             <header>
                 <div>
-                    <div>إعاشة الميدان</div>
-                    <div>{{$delegate ? $delegate->office->name : 'المقر'}}</div>
+                    الإمداد و التموين
+                    <br>
+                    قيادة الإعاشة
+                    <br>
+                    إعاشة
+                    {{$delegate ? $delegate->office->living->title : 'الإعاشة'}}
+                    <br>
+                    {{$delegate ? $delegate->office->name : 'المقر'}}
                 </div>
                 <div></div>
                 <div>
-                    <div>رقم التسلسل</div>
+                    <div>
+                        رقم التسلسل
+                        ({{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(optional($delegate)->number)}})
+                    </div>
                 </div>
                 <div class="title">
                     <h4>إقرار بتاريخ
@@ -70,20 +79,18 @@
                 <div>
                     إنه فى يوم
                     {{$dateHijri['weekday']}}
-                    الموافق للتاريخ أعلاه أثناء صرف وجبة
+                    الموافق للتاريخ أعلاه أثناء صرف وجبة ال
                     {{$selectedMeal ? $selectedMeal->name : ''}}
                     حضر مندوب رقم
-                    {{$delegate ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($delegate->number) : '0'}}
+                    ({{$delegate ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($delegate->number) : '0'}})
+                    مندوب إعاشة
                     {{$delegate ? $delegate->institution : 'اسم الجهة'}}.
                     وبناءً على رغبته لم يستلم كامل مخصصهم من الإعاشة المطهية.
                     <br>
                     وحفظُا للواقعة تم إعداد هذا المحضر.
                 </div>
 
-                <div class="mt-3">
-                    وأتعهد بإحضار خطاب من مديرى المباشر يفيد <strong>عدم</strong>
-                    رغبتنا بإستلام بعض أصناف مخصصنا من الإعاشة
-                </div>
+
                 <div class="text-center">
                     وعلى ذلك جرى التوقيع،،،
                 </div>
@@ -94,13 +101,8 @@
             <table rules="all" class="no-break">
                 <tbody>
                 <tr>
+                    <th colspan="2">معد الإقرار</th>
                     <th colspan="2">مندوب الجهة</th>
-                    <th colspan="2">
-                        <div class="">
-                            <span>مشرف صرف وجبة</span>
-                            {{$selectedMeal ? $selectedMeal->name : ''}}
-                        </div>
-                    </th>
                 </tr>
                 <tr>
                     <th>الاسم</th>
