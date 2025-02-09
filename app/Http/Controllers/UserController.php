@@ -34,7 +34,7 @@ class UserController extends Controller
             ->causedBy(auth()->user())
             ->performedOn($user)
             ->withProperties(['user' => $user])
-            ->log('تم حذف الموظف');
+            ->log('تم حذف موظف');
 
         return redirect()->route('admin.users')->with('success', 'تم حذف الموظف بنجاح');
     }
