@@ -29,6 +29,13 @@ class UserController extends Controller
     public function delete(User $user)
     {
         $user->delete();
+
+        activity('users')
+            ->causedBy(auth()->user())
+            ->performedOn($user)
+            ->withProperties(['user' => $user])
+            ->log('تم حذف الموظف');
+
         return redirect()->route('admin.users')->with('success', 'تم حذف الموظف بنجاح');
     }
 

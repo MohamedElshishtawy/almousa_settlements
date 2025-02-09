@@ -23,7 +23,7 @@ class ManageEmployee extends Component
         if ($user->exists) {
             $this->name = $user->name;
             $this->phone = $user->phone;
-            $this->role = $user->role->name;
+            $this->role = optional($user->role)->name;
             $this->office_id = $user->office ? $user->office->id : null;
         }
         $this->offices = Office::all();
@@ -44,6 +44,7 @@ class ManageEmployee extends Component
             'password' => 'nullable|string|min:6', // Password is optional but must be at least 8 characters if provided
         ]);
 
+        $isNewUser = $this->user;
         // Update user attributes
         $this->user->name = $this->name;
         $this->user->phone = $this->phone;
@@ -58,6 +59,20 @@ class ManageEmployee extends Component
 
 
         $this->user->syncRoles($this->role);
+
+        if ($isNewUser) {
+            activity('users')
+                ->performedOn($this->user)
+                ->causedBy(auth()->user())
+                ->withProperties(['user' => $this->user])
+                ->log('تم إضافة موظف');
+        } else {
+            activity('users')
+                ->performedOn($this->user)
+                ->causedBy(auth()->user())
+                ->withProperties(['user' => $this->user])
+                ->log('تم تعديل بيانات الموظف'.explode(' ', $this->user->name)[0]);
+        }
 
         return redirect()->route('admin.users')->with('success', 'تم حفظ الموظف بنجاح');
     }

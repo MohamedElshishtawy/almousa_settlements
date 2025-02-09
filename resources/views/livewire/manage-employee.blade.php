@@ -1,5 +1,5 @@
 <div class="container mt-5" dir="rtl">
-
+    <x-message/>
     <!-- Success Message -->
     @if (session()->has('message'))
         <div class="alert alert-success">
