@@ -49,14 +49,14 @@
                         </li>
                     @endcanany
 
-                    @canany(['tasks_create', 'tasks_edit', 'tasks_delete'])
-                        <li>
-                            <a href="{{ route('managers.tasks') }}"
-                               class="{{ request()->routeIs('managers.tasks') ? 'active' : '' }}">
-                                المهام
-                            </a>
-                        </li>
-                    @endcanany
+                    {{--                    @canany(['tasks_create', 'tasks_edit', 'tasks_delete'])--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="{{ route('managers.tasks') }}"--}}
+                    {{--                               class="{{ request()->routeIs('managers.tasks') ? 'active' : '' }}">--}}
+                    {{--                                المهام--}}
+                    {{--                            </a>--}}
+                    {{--                        </li>--}}
+                    {{--                    @endcanany--}}
 
                     @canany(['import_writing_print', 'import_create', 'import_edit', 'import_delete'])
                         <li>

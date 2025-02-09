@@ -123,7 +123,7 @@ class Import extends Component
         }
 
         session()->flash('success', 'تم تحديث المحضر بنجاح.');
-        
+
         return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date]);
     }
 
@@ -183,7 +183,7 @@ class Import extends Component
 
         session()->flash('success', 'تم إضافة المحضر. يتم توجيهك لتقيم العمالة..');
 
-        sleep(2);
+        sleep(5);
 
         session()->forget('success');
 
@@ -195,6 +195,13 @@ class Import extends Component
         $import = $this->report->import;
         $this->report->delete();
 
+        activity('import')
+            ->causedBy(auth()->user())
+            ->performedOn($import)
+            ->withProperties([
+                'old' => $import->toArray(),
+            ])
+            ->log('تم حذف محضر توريد');
 
         $this->reset(['benefits', 'benefitError', 'reallyImported', 'report']);
         $this->setData();

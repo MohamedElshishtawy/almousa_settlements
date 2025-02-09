@@ -19,6 +19,11 @@ class LogsListLivewire extends Component
     public function checkLogs()
     {
         $this->lastLogs = Activity::orderBy('created_at', 'desc')->limit(6)->get();
+    }
+
+    public function checkCountsAndLogs()
+    {
+        $this->checkLogs();
         if ($this->lastLogs->isNotEmpty()) {
             $this->makeAllVisible();
         }

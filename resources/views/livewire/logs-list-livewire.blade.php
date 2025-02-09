@@ -1,4 +1,4 @@
-<ul-body wire:poll.visible.1="checkLogs">
+<ul-body wire:poll.visible="checkCountsAndLogs">
     @foreach($lastLogs as $log)
         <li class="{{ in_array($log->id, $unreadedLogsIds) ? 'unreaded' : '' }}">
             <div>{{ $log->description }}</div>
