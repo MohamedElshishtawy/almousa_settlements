@@ -44,7 +44,7 @@
                                               method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                            <button type="submit" class="btn btn-danger btn-sm confirm-btn"><i
                                                     class="fa-solid fa-trash"></i> حذف
                                             </button>
                                         </form>

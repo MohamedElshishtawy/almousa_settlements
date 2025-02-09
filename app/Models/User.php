@@ -65,10 +65,10 @@ class User extends Authenticatable
         return $enRole ? __('roles_permissions.'.$enRole) : '';
     }
 
-    public function getRoleAttribute(): Role
+    public function getRoleAttribute(): Role|null
     {
         $enRole = $this->getRoleNames()->first();
-        return Role::findByName($enRole);
+        return $enRole ? Role::findByName($enRole) : null;
     }
 
     public function isBelongsToOffice($officeId)
