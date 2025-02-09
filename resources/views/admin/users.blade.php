@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @php($active = 'employee')
 @section('content')
+    <x-message/>
     <div class="container">
         <div class="row justify-content-center">
             <div>
@@ -12,7 +13,7 @@
                     </div>
 
                     <div class="card-body table-responsive">
-                        <x-message/>
+
 
                         <table class="table">
                             <thead>
