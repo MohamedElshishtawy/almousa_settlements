@@ -2,10 +2,9 @@
 @php($active = 'units')
 @section('content')
     <div class="container">
-        <x-message/>
         <div class="row justify-content-center">
             <div>
-                <livewire:manage-units/>
+                @livewire('permission-management-livewire')
             </div>
         </div>
     </div>

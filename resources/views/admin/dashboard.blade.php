@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div>
+                
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>الرئيسية</h2>
@@ -129,6 +130,12 @@
                                         <i class="fa-solid fa-products"></i>
                                         <span>أصناف الإفطار</span>
                                     </a>
+                                @endcan
+                                @role('admin')
+                                <a href="{{route('admin.permission-management')}}" class="btn btn-primary">
+                                    <i class="fa-solid fa-products"></i>
+                                    <span>إدارة الصلاحيات</span>
+                                </a>
                                 @endcan
                             </div>
                         </section>

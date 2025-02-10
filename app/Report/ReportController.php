@@ -21,7 +21,7 @@ class ReportController extends Controller
         $days = (new ReportSurvice())->getDays($offices);
 
         $officesReports = (new ReportSurvice())->days2groupOffices($days);
-
+//        dd(auth()->user()->can('import_create'));
         return view('reports', compact('officesReports'));
 
     }

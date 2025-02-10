@@ -16,7 +16,7 @@
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
-                            </div>q
+                            </div>
                         @endif
 
 
@@ -45,45 +45,45 @@
                                     </thead>
                                     <tbody>
                                     @php($n = 0)
-                                        @forelse($reports as $report)
-                                            <tr>
-                                                <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
-                                                <td>{{ Day::DateToHijri($report['date']) }}</td>
+                                    @forelse($reports as $report)
+                                        <tr>
+                                            <th scope="row">{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$n) }}</th>
+                                            <td>{{ Day::DateToHijri($report['date']) }}</td>
 
-                                                @canany(['import_create', 'import_edit', 'import_delete', 'import_writing_print', 'import_print'])
-                                                    <td>
-                                                        <a href="{{route('managers.reports.import', [$report['officeMission']->id, $report['date']])}}"
-                                                           class="btn {{ $report['import'] ? 'btn-success' : 'btn-primary' }}">
-                                                            <span>التوريد</span>
-                                                            @if($report['import'])
-                                                                <span><i
-                                                                        class="fa-regular fa-circle-check fa-sm"></i></span>
-                                                            @endif
-                                                        </a>
-                                                    </td>
-                                                @endcanany
+                                            @canany(['import_create', 'import_edit', 'import_delete', 'import_writing_print', 'import_print'])
+                                                <td>
+                                                    <a href="{{route('managers.reports.import', [$report['officeMission']->id, $report['date']])}}"
+                                                       class="btn {{ $report['import'] ? 'btn-success' : 'btn-primary' }}">
+                                                        <span>التوريد</span>
+                                                        @if($report['import'])
+                                                            <span><i
+                                                                    class="fa-regular fa-circle-check fa-sm"></i></span>
+                                                        @endif
+                                                    </a>
+                                                </td>
+                                            @endcanany
 
-                                                @canany(['surplus_create', 'surplus_edit', 'surplus_delete', 'surplus_print'])
-                                                    <td>
-                                                        <a href="{{route('managers.reports.surplus', [$report['officeMission']->id, $report['date']])}}"
-                                                           class="btn {{ $report['surplus'] ? 'btn-success' : 'btn-primary' }} @if(!$report['import']) disabled @endif">
-                                                            <span>الوفر</span>
-                                                            @if($report['surplus'])
-                                                                <span><i
-                                                                        class="fa-regular fa-circle-check fa-sm"></i></span>
-                                                            @endif
-                                                        </a>
-                                                    </td>
-                                                @endcanany
+                                            @canany(['surplus_create', 'surplus_edit', 'surplus_delete', 'surplus_print'])
+                                                <td>
+                                                    <a href="{{route('managers.reports.surplus', [$report['officeMission']->id, $report['date']])}}"
+                                                       class="btn {{ $report['surplus'] ? 'btn-success' : 'btn-primary' }} @if(!$report['import']) disabled @endif">
+                                                        <span>الوفر</span>
+                                                        @if($report['surplus'])
+                                                            <span><i
+                                                                    class="fa-regular fa-circle-check fa-sm"></i></span>
+                                                        @endif
+                                                    </a>
+                                                </td>
+                                            @endcanany
 
-                                                <td>{{ $report['officeMission']->mission->title }}</td>
-                                                <td>{{ $report['office']->living->title }}</td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="7" class="text-center">لا يوجد محاضر</td>
-                                            </tr>
-                                        @endforelse
+                                            <td>{{ $report['officeMission']->mission->title }}</td>
+                                            <td>{{ $report['office']->living->title }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">لا يوجد محاضر</td>
+                                        </tr>
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>

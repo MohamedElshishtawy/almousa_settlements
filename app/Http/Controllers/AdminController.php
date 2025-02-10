@@ -43,5 +43,10 @@ class AdminController extends Controller
         ]);
     }
 
+    public function permissionManagement()
+    {
+        return view('admin.permission-management');
+    }
+
 
 }

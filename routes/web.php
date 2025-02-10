@@ -47,6 +47,9 @@ Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard')-
 
 Route::middleware('auth')->group(function () {
 
+    Route::get('permission-management', [AdminController::class, 'permissionManagement'])
+        ->name('admin.permission-management')->middleware('role:admin');
+
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.users');
         Route::get('/create', [UserController::class, 'create'])->name('admin.users.create');
@@ -118,7 +121,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('/import')->group(function () {
             Route::get('/{officeMission}/{date}', [
                 ReportController::class, 'import'
-            ])->name('managers.reports.import')->middleware('permission:import_create|import_edit|import_delete');
+            ])->name('managers.reports.import')->middleware('permission:import_create|import_edit|import_delete|import_print|import_writing_print');
             Route::get('/{office}/{date}/print',
                 [
                     ReportController::class, 'importPrint'
