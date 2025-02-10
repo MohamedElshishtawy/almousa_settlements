@@ -29,6 +29,7 @@
                                 type="checkbox"
                                 wire:change="updateRolePermission({{ $role->id }}, {{ $permission->id }})"
                                 class="form-check-input"
+                                wire:loading.attr="disabled"
                                 @if($role->hasPermissionTo($permission->name)) checked @endif
                             >
                         </td>

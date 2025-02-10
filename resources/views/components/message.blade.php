@@ -5,6 +5,7 @@
         <div>
             {{session('success')}}
         </div>
+        {{--Wire when c slisk clear susess sessions--}}
         <button type="button" class="close-message">
             <i class="fa fa-xmark"></i>
         </button>
