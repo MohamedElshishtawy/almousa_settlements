@@ -33,15 +33,17 @@ class PermissionManagementLivewire extends Component
         if ($role && $permission) {
             if ($this->rolePermissions[$roleId][$permissionId]) {
                 $role->revokePermissionTo($permission);
+                $log = 'تم إزالة الصلاحية '.__('roles_permissions.'.$permission->name).' من الرتبة '.__('roles_permissions.'.$role->name);
             } else {
                 $role->givePermissionTo($permission);
+                $log = 'تم إعطاء الصلاحية '.__('roles_permissions.'.$permission->name).' لرتبة '.__('roles_permissions.'.$role->name);
             }
 
             app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
             activity('logs')
                 ->causedBy(auth()->user())
                 ->performedOn($role)
-                ->log('تم إعطاء الصلاحية '.__('roles_permissions.'.$permission->name).' للرتبة '.__('roles_permissions.'.$role->name));
+                ->log($log);
             session()->flash('success', 'تم تعديل الصلاحيات بنجاح');
 
         } else {
