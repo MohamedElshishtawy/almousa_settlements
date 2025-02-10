@@ -18,6 +18,10 @@ return [
     'meal_dispenser' => 'عضو صرف الوجبات',
     'admin' => 'الأدمن', // or مسؤول النظام
     'delegate' => 'مندوب',
+    'import_model2_create_price' => 'إنشاء استيراد نموذج ٢ بالأسعار',
+    'surplus_model2_price' => 'إنشاء وفر نموذج ٢ بالأسعار',
+    'view_beneficiaries_report' => 'تقرير المستفيدين',
+
 
     // Permissions (from your list, translated)
     'import_writing_print' => 'طباعة محضر توريد كتابي',
