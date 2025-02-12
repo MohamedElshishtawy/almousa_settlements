@@ -46,7 +46,7 @@
                             <input type="text"
                                    class="form-control @error('titles.{{ $employment->id }}') is-invalid @enderror"
                                    wire:model.live="titles.{{ $employment->id }}"
-                                   wire:keyup.debounce.240="editField({{ $employment->id }}, 'title', $event.target.value)">
+                                   wire:keyup.debounce.420="editField({{ $employment->id }}, 'title', $event.target.value)">
                             @error('titles.{{ $employment->id }}') <span
                                 class="text-danger">{{ $message }}</span> @enderror
                         </td>
@@ -54,7 +54,7 @@
                             <input type="number" min="0"
                                    class="form-control @error('benefitses.{{ $employment->id }}') is-invalid @enderror"
                                    wire:model.live="benefitses.{{ $employment->id }}"
-                                   wire:keyup.debounce.240="editField({{ $employment->id }}, 'benefits', $event.target.value)">
+                                   wire:keyup.debounce.420="editField({{ $employment->id }}, 'benefits', $event.target.value)">
                             @error('benefitses.{{ $employment->id }}') <span
                                 class="text-danger">{{ $message }}</span> @enderror
                         </td>
@@ -62,7 +62,7 @@
                             <input type="number" min="0"
                                    class="form-control @error('counts.{{ $employment->id }}') is-invalid @enderror"
                                    wire:model.live="counts.{{ $employment->id }}"
-                                   wire:keyup.debounce.240="editField({{ $employment->id }}, 'count', $event.target.value)">
+                                   wire:keyup.debounce.420="editField({{ $employment->id }}, 'count', $event.target.value)">
                             @error('counts.{{ $employment->id }}') <span
                                 class="text-danger">{{ $message }}</span> @enderror
                         </td>

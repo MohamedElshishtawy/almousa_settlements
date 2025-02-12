@@ -80,7 +80,7 @@ class DryFoodReportLivewire extends Component
             ->withProperties([
                 'dry_food_report_id' => $this->dryFoodReport->id,
             ])
-            ->performedOn($this->dryFoodReport)->log('تم إنشاء تقرير إعاشة');
+            ->performedOn($this->dryFoodReport)->log('تم إنشاء محضر الجاف');
         session()->flash('success', 'تم حفظ المحضر بنجاح');
         return redirect()->route('dry-food-reports.edit', $this->dryFoodReport);
     }
@@ -103,7 +103,7 @@ class DryFoodReportLivewire extends Component
                 'old' => $this->dryFoodReport->getOriginal(),
                 'new' => $this->dryFoodReport->getAttributes(),
             ])
-            ->performedOn($this->dryFoodReport)->log('تم تعديل تقرير إعاشة');
+            ->performedOn($this->dryFoodReport)->log('تم تعديل محضر الجاف');
         Session::flash('success', 'تم تعديل المحضر بنجاح');
     }
 
@@ -116,10 +116,8 @@ class DryFoodReportLivewire extends Component
                 'dry_food_report_id' => $this->dryFoodReport->id,
                 'old' => $this->dryFoodReport->getOriginal(),
             ])
-            ->performedOn($this->dryFoodReport)->log('تم حذف تقرير إعاشة');
-
-        Session::flash('success', 'تم حذف المحضر بنجاح');
-        return redirect()->route('dry-food-reports.index');
+            ->performedOn($this->dryFoodReport)->log('تم حذف محضر الجاف');
+        return redirect()->route('dry-food-reports')->with('success', 'تم حذف المحضر بنجاح');
     }
 
     protected function rules()

@@ -63,6 +63,7 @@ class DelegatesManagement extends Component
         ]);
         $delegate->number = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
@@ -74,6 +75,7 @@ class DelegatesManagement extends Component
         ]);
         $delegate->name = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
@@ -85,17 +87,16 @@ class DelegatesManagement extends Component
         ]);
         $delegate->institution = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
     public function changeRank($delegateId, $value)
     {
         $delegate = Delegate::find($delegateId);
-//        $validatedData = $this->validate([
-//            "delegatesRanks.$delegateId" => 'nullable|string|max:255',
-//        ]);
         $delegate->rank = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
@@ -107,6 +108,7 @@ class DelegatesManagement extends Component
         ]);
         $delegate->benefits = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
@@ -115,6 +117,7 @@ class DelegatesManagement extends Component
         $delegate = Delegate::find($delegateId);
         $delegate->food_type_id = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
@@ -123,6 +126,7 @@ class DelegatesManagement extends Component
         $delegate = Delegate::find($delegateId);
         $delegate->office_id = $value;
         $delegate->save();
+        $this->logActivityAndMessageOn($delegate);
         $this->changeDelegats();
     }
 
@@ -134,20 +138,43 @@ class DelegatesManagement extends Component
         ]);
         $delegate->phone = $value;
         $delegate->save();
+
+        $this->logActivityAndMessageOn($delegate);
+
         $this->changeDelegats();
     }
 
     public function store()
     {
         $validatedData = $this->validate();
-        Delegate::create($validatedData);
+        $delegate = Delegate::create($validatedData);
+
+        activity('delegate')
+            ->causedBy(Auth::user())
+            ->performedOn($delegate)
+            ->withProperties(['delegate_id' => $delegate->id])
+            ->log('تم اضافة مندوب');
+
+        session()->flash('message', 'تم اضافة المندوب بنجاح');
+
         $this->reset();
         $this->changeDelegats();
     }
 
     public function delete($delegateId)
     {
-        Delegate::find($delegateId)->delete();
+        $delegate = Delegate::find($delegateId);
+        $delegate->delete();
+
+
+        activity('delegate')
+            ->causedBy(Auth::user())
+            ->performedOn(Delegate::find($delegateId))
+            ->withProperties(['old' => $delegate->getOriginal()])
+            ->log('تم حذف مندوب');
+
+        session()->flash('message', 'تم حذف المندوب بنجاح');
+
         $this->changeDelegats();
     }
 
@@ -156,15 +183,21 @@ class DelegatesManagement extends Component
         return view('livewire.delegates-management');
     }
 
-    /**
-     * Check if the user has the necessary role to perform an action.
-     *
-     * @param  string  $role
-     * @return bool
-     */
     protected function roles(string $role): bool
     {
         $user = Auth::user();
         return $user && $user->hasRole($role);
     }
+
+    protected function logActivityAndMessageOn($delegate)
+    {
+        activity('delegate')
+            ->causedBy(Auth::user())
+            ->performedOn($delegate)
+            ->withProperties(['delegate_id' => $delegate->id])
+            ->log('تم تعديل مندوب');
+
+        session()->flash('message', 'تم تعديل المندوب بنجاح');
+    }
+
 }

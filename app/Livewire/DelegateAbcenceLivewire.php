@@ -32,6 +32,13 @@ class DelegateAbcenceLivewire extends Component
             $delegates = Delegate::all();
         }
 
+        // get the delegate from the history
+        $delegateAbsences->map(function ($delegateAbsence) {
+            $delegateAbsence->delegate = $delegateAbsence->delegate
+                ->delegateFromHistory($delegateAbsence->created_at->format('Y-m-d'));
+            return $delegateAbsence;
+        });
+
         $meals = Meal::all();
 
         return view('livewire.delegate-abcence-livewire', [

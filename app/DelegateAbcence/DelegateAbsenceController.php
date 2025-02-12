@@ -17,6 +17,9 @@ class DelegateAbsenceController extends Controller
         if (!auth()->user()->isBelongsToOffice($delegateAbcence->delegate->office->id)) {
             abort(403);
         }
+        // get the delegate from the history
+        $delegateAbcence->delegate = $delegateAbcence->delegate
+            ->delegateFromHistory($delegateAbcence->created_at->format('Y-m-d'));
         return view('delegate-abcence.print', compact('delegateAbcence'));
     }
 

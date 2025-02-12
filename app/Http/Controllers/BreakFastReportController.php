@@ -15,6 +15,7 @@ class BreakFastReportController extends Controller
     {
         $breakFastReports = BreakFastReport::with('breakFastReportDelegates')->latest()->get();
 
+
         return view('breakfast.index', compact('breakFastReports'));
     }
 
@@ -63,6 +64,14 @@ class BreakFastReportController extends Controller
     {
         $breakFastReport = BreakFastReport::with('breakFastReportDelegates')->findOrFail($id);
         $delegatesAll = Delegate::all();
+
+        // selected delegates from history
+
+
+        // delegates from history
+        $delegatesAll = $delegatesAll->map(function ($delegate) use ($breakFastReport) {
+            return $delegate->delegateFromHistory($breakFastReport->created_at);
+        });
 
         return view('breakfast.form', compact('breakFastReport', 'delegatesAll'));
     }

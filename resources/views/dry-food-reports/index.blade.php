@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <x-message/>
         <div class="row justify-content-center">
             <div>
                 <div class="card">

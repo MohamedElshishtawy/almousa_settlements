@@ -77,7 +77,7 @@
                     <th>{{ $formEmployment['title'] }}</th>
                     <td>
                         <input class="form-control" type="number"
-                               wire:input.debounce.240="updateCounts({{$formEmployment['id']}}, $event.target.value)"
+                               wire:input.debounce.420="updateCounts({{$formEmployment['id']}}, $event.target.value)"
                                wire:model="counts.{{$formEmployment['id'] ?? $n++}}"
                                value="{{$formEmployment['count']}}">
                     </td>

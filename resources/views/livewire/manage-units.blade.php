@@ -25,7 +25,7 @@
                 <tr wire:key="{{$unit->id}}">
                     <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($loop->iteration)}}</td>
                     <td><input class="form-control" wire:model.live="titles.{{$unit->id}}"
-                               wire:keyup.debounce.240="editTitle({{$unit->id}})" value="{{$unit->title}}"></td>
+                               wire:keyup.debounce.420="editTitle({{$unit->id}})" value="{{$unit->title}}"></td>
                     <td>
                         <button wire:click="delete({{ $unit->id }})" class="btn btn-danger"
                                 @if($unit->products()->count())

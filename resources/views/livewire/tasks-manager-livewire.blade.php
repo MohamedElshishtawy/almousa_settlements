@@ -36,7 +36,7 @@
                     <td>
                         <input type="text" class="form-control"
                                wire:model.live="notesArr.{{ $task->id }}"
-                               wire:keyup.debounce.240="editField({{ $task->id }}, 'notes', $event.target.value)"
+                               wire:keyup.debounce.420="editField({{ $task->id }}, 'notes', $event.target.value)"
                                placeholder="-">
                     </td>
                     <td>

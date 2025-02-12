@@ -110,8 +110,22 @@ Route::middleware('auth')->group(function () {
         DelegateController::class, 'index'
     ])->name('admin.delegates')->middleware('permission:delegate_create|delegate_edit|delegate_delete');
 
-    Route::resource('breakfast',
-        BreakFastReportController::class)->middleware('permission:break_fast_create|break_fast_edit|break_fast_delete|break_fast_print');
+    Route::prefix('breakfast')->group(function () {
+        Route::get('/', [BreakFastReportController::class, 'index'])
+            ->name('breakfast.index');
+        Route::get('/create', [BreakFastReportController::class, 'create'])
+            ->name('breakfast.create')->middleware('permission:break_fast_create');
+        Route::post('/', [BreakFastReportController::class, 'store'])
+            ->name('breakfast.store')->middleware('permission:break_fast_create');
+        Route::get('/{breakfast}/edit', [BreakFastReportController::class, 'edit'])
+            ->name('breakfast.edit')->middleware('permission:break_fast_edit');
+        Route::put('/{breakfast}', [BreakFastReportController::class, 'update'])
+            ->name('breakfast.update')->middleware('permission:break_fast_edit');
+        Route::delete('/{breakfast}', [BreakFastReportController::class, 'destroy'])
+            ->name('breakfast.destroy')->middleware('permission:break_fast_delete');
+        Route::get('/{breakfast}/print', [BreakFastReportController::class, 'print'])
+            ->name('breakfast.print')->middleware('permission:break_fast_print');
+    })->middleware('permission:break_fast_create|break_fast_edit|break_fast_delete|break_fast_print');
 
     Route::get('/breakfast/{breakFastReport}/print', [BreakFastReportController::class, 'print'])
         ->name('breakfast.print')->middleware('permission:break_fast_print');

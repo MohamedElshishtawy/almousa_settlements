@@ -38,14 +38,14 @@
                     <td>
                         <input type="text" class="form-control @error('names.{{ $company->id }}') is-invalid @enderror"
                                wire:model.live="names.{{ $company->id }}"
-                               wire:keyup.debounce.240="editField({{ $company->id }}, 'names', $event.target.value)">
+                               wire:keyup.debounce.420="editField({{ $company->id }}, 'names', $event.target.value)">
                         @error('names.{{ $company->id }}') <span class="text-danger">{{ $message }}</span> @enderror
                     </td>
                     <td>
                         <input type="text"
                                class="form-control @error('delegate_names.{{ $company->id }}') is-invalid @enderror"
                                wire:model.live="delegate_names.{{ $company->id }}"
-                               wire:keyup.debounce.240="editField({{ $company->id }}, 'delegate_name', $event.target.value)">
+                               wire:keyup.debounce.420="editField({{ $company->id }}, 'delegate_name', $event.target.value)">
                         @error('delegate_names.{{ $company->id }}') <span
                             class="text-danger">{{ $message }}</span> @enderror
                     </td>
@@ -53,7 +53,7 @@
                         <input type="text"
                                class="form-control @error('delegate_ranks.{{ $company->id }}') is-invalid @enderror"
                                wire:model.live="delegate_ranks.{{ $company->id }}"
-                               wire:keyup.debounce.240="editField({{ $company->id }}, 'delegate_rank', $event.target.value)">
+                               wire:keyup.debounce.420="editField({{ $company->id }}, 'delegate_rank', $event.target.value)">
                         @error('delegate_ranks.{{ $company->id }}') <span
                             class="text-danger">{{ $message }}</span> @enderror
                     </td>
@@ -61,7 +61,7 @@
                         <input type="text"
                                class="form-control @error('delegate_phones.{{ $company->id }}') is-invalid @enderror"
                                wire:model.live="delegate_phones.{{ $company->id }}"
-                               wire:keyup.debounce.240="editField({{ $company->id }}, 'delegate_phone', $event.target.value)">
+                               wire:keyup.debounce.420="editField({{ $company->id }}, 'delegate_phone', $event.target.value)">
                         @error('delegate_phones.{{ $company->id }}') <span
                             class="text-danger">{{ $message }}</span> @enderror
                     </td>

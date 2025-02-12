@@ -19,6 +19,13 @@ class DryFoodReportController extends Controller
             });
         }
 
+        // make delegates from the history
+        $dryFoodReports->map(function ($dryFoodReport) {
+            $dryFoodReport->delegate = $dryFoodReport->delegate
+                ->delegateFromHistory($dryFoodReport->created_at->format('Y-m-d'));
+            return $dryFoodReport;
+        });
+
         return view('dry-food-reports.index', compact('dryFoodReports'));
     }
 
@@ -39,6 +46,12 @@ class DryFoodReportController extends Controller
         if (!$dryFoodReport) {
             return redirect()->route('dry-food-reports.create');
         }
+
+        // make delegates from the history
+        $dryFoodReport->delegate = $dryFoodReport->delegate
+            ->delegateFromHistory($dryFoodReport->created_at->format('Y-m-d'));
+
+
         return view('dry-food-reports.edit', compact('dryFoodReport'));
     }
 
@@ -72,7 +85,7 @@ class DryFoodReportController extends Controller
         if (auth()->user()->office() && !auth()->user()->isBelongsToOffice($dryFoodReport->delegate->office->id)) {
             abort(403);
         }
-        $delegate = $dryFoodReport->delegate;
+        $delegate = $dryFoodReport->delegate->delegateFromHistory($dryFoodReport->created_at->format('Y-m-d'));
         $formatedDate = HijriDate::formatedDate($dryFoodReport->created_at->format('Y-m-d'));
 
 

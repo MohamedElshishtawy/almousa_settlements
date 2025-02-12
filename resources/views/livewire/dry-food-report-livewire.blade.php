@@ -1,3 +1,8 @@
+@php use App\Models\Delegate; @endphp
+@php use App\Office\Office; @endphp
+@php use App\Models\Day; @endphp
+@php use App\Product\ProductLivingMission; @endphp
+@php use App\Product\ProductDayMeal; @endphp
 <div class="report-page">
     <x-message/>
     <div class="header">
@@ -12,13 +17,22 @@
             <h2 class="text-success">معلومات المحضر</h2>
             <div class="d-flex gap-1">
                 @if($dryFoodReport->id)
-                    <button wire:click="edit" class="btn btn-primary btn-sm" wire:confirm="هل انت متأكد من التعديل">
-                        <i class="fa-solid fa-edit"></i>
-                    </button>
+                    @can('dry_food_edit')
+                        <button wire:click="edit" class="btn btn-primary btn-sm" wire:confirm="هل انت متأكد من التعديل">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                    @endcan
+                    @can('dry_food_delete')
+                        <button wire:click="delete" class="btn btn-danger btn-sm" wire:confirm="هل انت متأكد من الحذف">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    @endcan
                 @else
-                    <button wire:click="save" class="btn btn-success btn-sm">
-                        حفظ
-                    </button>
+                    @can('dry_food_create')
+                        <button wire:click="save" class="btn btn-success btn-sm">
+                            حفظ
+                        </button>
+                    @endcan
                 @endif
             </div>
         </div>
@@ -31,16 +45,20 @@
 
                     <td>
                         <div class="grid">
-                            <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}"
-                               class="btn btn-secondary btn-sm">
-                                <i class="fas fa-print"></i>
-                                التقرير
-                            </a>
-                            <a href="{{ route('dry-food-reports.delegateReport', $dryFoodReport->id) }}"
-                               class="btn btn-secondary btn-sm">
-                                <i class="fas fa-print"></i>
-                                إقرار المندوب
-                            </a>
+                            @can('dry_food_print')
+                                <a href="{{ route('dry-food-reports.print', $dryFoodReport->id) }}"
+                                   class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-print"></i>
+                                    التقرير
+                                </a>
+                            @endcan
+                            @can('confirm_dry_food_reception')
+                                <a href="{{ route('dry-food-reports.delegateReport', $dryFoodReport->id) }}"
+                                   class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-print"></i>
+                                    إقرار المندوب
+                                </a>
+                            @endcan
                         </div>
                     </td>
                 </tr>
@@ -68,7 +86,7 @@
                     <select wire:model.live="selectedMissionId"
                             class="form-select @error('selectedMissionId') is-invalid @enderror">
                         <option value="">اختر المهمة</option>
-                        @foreach($selectedOfficeId ? \App\Office\Office::find($selectedOfficeId)->OfficeMissions : [] as $officeMission)
+                        @foreach($selectedOfficeId ? Office::find($selectedOfficeId)->OfficeMissions : [] as $officeMission)
                             <option value="{{ $officeMission->mission->id }}"
                                     @if($selectedMissionId == $officeMission->mission->id) selected @endif>
                                 {{ $officeMission->mission->title }}
@@ -87,7 +105,7 @@
                         <option value="">اختر التاريخ</option>
                         @foreach($dates as $date)
                             <option value="{{ $date }}" @if($startDate == $date) selected @endif>
-                                {{ \App\Models\Day::DateToHijri($date) }}
+                                {{ Day::DateToHijri($date) }}
                             </option>
                         @endforeach
                     </select>
@@ -103,7 +121,7 @@
                         <option value="">اختر التاريخ</option>
                         @foreach($dates as $date)
                             <option value="{{ $date }}" @if($endDate == $date) selected @endif>
-                                {{ \App\Models\Day::DateToHijri($date) }}
+                                {{ Day::DateToHijri($date) }}
                             </option>
                         @endforeach
                     </select>
@@ -118,7 +136,7 @@
                     <select wire:model.live="selectedDelegateId"
                             class="form-select @error('selectedDelegateId') is-invalid @enderror">
                         <option value="">اختر المندوب</option>
-                        @foreach($selectedOfficeId ? \App\Office\Office::find($selectedOfficeId)->delegates : [] as $delegate)
+                        @foreach($selectedOfficeId ? Office::find($selectedOfficeId)->delegates : [] as $delegate)
                             <option value="{{ $delegate->id }}"
                                     @if($selectedDelegateId == $delegate->id) selected @endif>
                                 {{ $delegate->name }}
@@ -132,7 +150,7 @@
             </tr>
             <tr>
                 <th>المستفيدين</th>
-                <td>{{$selectedDelegateId ? \App\Models\Delegate::find($selectedDelegateId)->benefits : 0}}</td>
+                <td>{{$selectedDelegateId ? Delegate::find($selectedDelegateId)->benefits : 0}}</td>
             </tr>
             </tbody>
         </table>
@@ -157,8 +175,8 @@
 
                 $startDate = date('Y-m-d', strtotime($startDate));
                 $endDate = date('Y-m-d', strtotime($endDate));
-                $benefits = $selectedDelegateId ? \App\Models\Delegate::find($selectedDelegateId)->benefits : 0;
-                $office = $selectedOfficeId ? \App\Office\Office::find($selectedOfficeId) : null;
+                $benefits = $selectedDelegateId ? Delegate::find($selectedDelegateId)->benefits : 0;
+                $office = $selectedOfficeId ? Office::find($selectedOfficeId) : null;
             @endphp
 
             @foreach($products as $product)
@@ -168,13 +186,13 @@
                     $currentDate = $startDate;
                     while ($currentDate <= $endDate) {
 
-                        $day = \App\Models\Day::date2object($currentDate);
+                        $day = Day::date2object($currentDate);
                         if ($day) {
-                            $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $product->id)
+                            $productLivingMission = ProductLivingMission::where('product_id', $product->id)
                                 ->where('living_id', $office->living_id)->where('mission_id', $selectedMissionId)
                                 ->first();
 
-                            $productMissionData = \App\Product\ProductDayMeal::where('product_living_mission_id', $productLivingMission->id)
+                            $productMissionData = ProductDayMeal::where('product_living_mission_id', $productLivingMission->id)
                                 ->where('day_id', $day->id)
                                 ->first();
 

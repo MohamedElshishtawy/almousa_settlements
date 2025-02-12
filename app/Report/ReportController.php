@@ -9,6 +9,7 @@ use App\Office\Office;
 use App\Office\OfficeController;
 use App\Office\OfficeMission;
 use App\Product\ProductController;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class ReportController extends Controller
 {
@@ -70,6 +71,18 @@ class ReportController extends Controller
 
         $Hijri = Day::DateToHijriSpecificArray($date);
 
+
+        Pdf::view('reports.import-writing-print', [
+            'office' => $office,
+            'date' => $date,
+            'products' => $products,
+            'import' => $import,
+            'isHasDifferance' => $isHasDifferance,
+            'Hijri' => $Hijri,
+            'report' => $report
+        ])
+            ->disk('public')
+            ->save('reports/import-writing-print-'.$office->id.'-'.$date.'.pdf');
 
         return view('reports.import-writing-print',
             compact('office', 'Hijri', 'products', 'report', 'import', 'isHasDifferance'));
