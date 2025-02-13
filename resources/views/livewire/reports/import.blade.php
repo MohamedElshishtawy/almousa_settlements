@@ -130,9 +130,9 @@
                 <th>المقرر اليومى</th>
                 <th>الوحدة</th>
                 <th>الصرف بالاسبوع</th>
-                @if (auth()->user()->isAdmin())
+                @can('import_show_price')
                     <th>السعر</th>
-                @endif
+                @endcan
                 <th>مرات الصرف باليوم</th>
                 <th>الكمية المقررة</th>
                 <th>الكمية الموردة</th>
@@ -171,9 +171,9 @@
                     <td>{{ number_format($productMissionData->daily_amount, 4) }}</td>
                     <td>{{ $product->foodUnit->title }}</td>
                     <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
-                    @if (auth()->user()->role->hasPermissionTo('import_show_price'))
+                    @can ('import_show_price')
                         <td>{{ number_format($productMissionData->price, 4) . ' ر.س.' }}</td>
-                    @endif
+                    @endcan
                     <td>{{ (int)$dailyTotal ? $dayMissionTimes : 'غير مقرر' }}</td>
                     <td>{{ (int)$expectedSupply? $expectedSupply : 'غير مقرر' }}</td>
                     <td>
