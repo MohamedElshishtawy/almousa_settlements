@@ -11,31 +11,17 @@ use Livewire\Component;
 class ImportAnalytics extends Component
 {
     public Office $office;
-    public $showPrices = null, $startDate, $endDate, $selectedOfficeId, $selectedMissionId, $mission; // inputs
+    public $showPrices = null, $startDate, $endDate, $selectedOfficesIds = [], $selectedMissionId, $mission, $selectedOffices; // inputs
     public $dates, $staticProducts, $missions, $offices, $benefitsTotal, $totalPayed, $daysCount; // outputs
 
     public function mount($showPrices)
     {
+        $this->selectedOffices = collect();
         if (auth()->user()->role->hasPermissionTo('import_model2_create_price')) {
             $this->showPrices = $showPrices;
         }
 
         $this->offices = (new OfficeController())->getOfficesForUser()->load('OfficeMissions.mission');
-
-        if ($this->offices->count() > 0) {
-            $this->office = $this->offices->first();
-            $this->mission = $this->office->OfficeMissions->first()->mission;
-            $this->selectedOfficeId = $this->office->id;
-            $this->selectedMissionId = $this->mission->id;
-            $this->dates = (new ReportSurvice())->getDaysForOffice($this->office);
-            if ($this->dates->count()) {
-                $this->startDate = $this->dates->first();
-                $this->endDate = $this->dates->last();
-            }
-            $this->updateDaysCount();
-            $this->updatePayed();
-        }
-
 
     }
 
@@ -57,19 +43,22 @@ class ImportAnalytics extends Component
         return $this->totalPayed;
     }
 
-    public function updatedSelectedOfficeId()
+    public function updatedSelectedOfficesIds()
     {
-        $this->getOffice();
-        $this->dates = (new ReportSurvice())->getDaysForOffice($this->office);
+        $this->getSelectedOffices();
+        $this->dates = (new ReportSurvice())->getDaysForOffices($this->selectedOffices);
         $this->getStaticProducts();
         $this->updatePayed();
 
     }
 
-    protected function getOffice()
+    protected function getSelectedOffices()
     {
-        $this->office = Office::find($this->selectedOfficeId);
-        return $this->office;
+        $this->selectedOffices = collect();
+        foreach ($this->selectedOfficesIds as $selectedOfficesId) {
+            $office = Office::find($selectedOfficesId);
+            $this->selectedOffices->push($office);
+        }
     }
 
     public function updatedStartDate()
@@ -80,6 +69,7 @@ class ImportAnalytics extends Component
         }
 
         $this->updateDaysCount();
+
         $this->updatePayed();
 
     }
@@ -92,45 +82,46 @@ class ImportAnalytics extends Component
         if (!$this->startDate || !$this->endDate) {
             return;
         }
-        $x = 0;
-        $reports = $this->office->reports()->whereBetween('for_date', [$this->startDate, $this->endDate])->get();
 
-        foreach ($reports as $report) {
-            $staticProducts = $report->staticProducts;
-            $this->benefitsTotal += $report->import ? $report->import->benefits : 0;
+        foreach ($this->offices as $office) {
+            $reports = $office->reports()->whereBetween('for_date', [$this->startDate, $this->endDate])->get();
+            foreach ($reports as $report) {
+                $staticProducts = $report->staticProducts;
+                $this->benefitsTotal += $report->import ? $report->import->benefits : 0;
 
-            // if there are a static product in $this->staticReports with the same data as $staticProduct, then add the amount to the existing one
-            foreach ($staticProducts as $staticProduct) {
-                if (!in_array($staticProduct->old_id, array_keys($this->staticProducts))) {
-                    $this->insert($staticProduct);
-                } else {
-
-                    $staticProductArr = $this->staticProducts[$staticProduct->old_id];
-                    // check if all data is the same
-
-                    if ($staticProductArr['name'] == $staticProduct->name &&
-                        $staticProductArr['price'] == $staticProduct->price &&
-                        $staticProductArr['daily_amount'] == $staticProduct->daily_amount &&
-                        $staticProductArr['food_type_id'] == $staticProduct->food_type_id &&
-                        $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
-
-                    ) {
-                        $totalImported = $staticProduct->importProductError ?
-                            $staticProduct->importProductError->error : ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
-
-                        $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->daily_amount * $report->import->benefits;
-                        $this->staticProducts[$staticProduct->old_id]['imported_total'] += $totalImported;
-//                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $staticProduct->getSurplus();
-                        $staticProductArr['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
-
-
-                    } else {
+                // if there are a static product in $this->staticReports with the same data as $staticProduct, then add the amount to the existing one
+                foreach ($staticProducts as $staticProduct) {
+                    if (!in_array($staticProduct->old_id, array_keys($this->staticProducts))) {
                         $this->insert($staticProduct);
+                    } else {
+
+                        $staticProductArr = $this->staticProducts[$staticProduct->old_id];
+                        // check if all data is the same
+
+                        if ($staticProductArr['name'] == $staticProduct->name &&
+                            $staticProductArr['price'] == $staticProduct->price &&
+                            $staticProductArr['daily_amount'] == $staticProduct->daily_amount &&
+                            $staticProductArr['food_type_id'] == $staticProduct->food_type_id &&
+                            $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
+
+                        ) {
+                            $totalImported = $staticProduct->importProductError ?
+                                $staticProduct->importProductError->error : ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
+
+                            $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->daily_amount * $report->import->benefits;
+                            $this->staticProducts[$staticProduct->old_id]['imported_total'] += $totalImported;
+//                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $staticProduct->getSurplus();
+                            $staticProductArr['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
+
+
+                        } else {
+                            $this->insert($staticProduct);
+                        }
+
                     }
 
+
                 }
-
-
             }
         }
 

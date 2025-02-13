@@ -69,6 +69,15 @@ class ReportSurvice
         return $days;
     }
 
+    public function getDaysForOffices($officesCollection)
+    {
+        $days = collect();
+        foreach ($officesCollection as $office) {
+            $days = $days->merge($this->getDaysForOffice($office));
+        }
+        return $days->unique();
+    }
+
 
     public function days2groupOffices($days)
     {
