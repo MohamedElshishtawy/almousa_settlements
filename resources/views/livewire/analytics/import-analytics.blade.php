@@ -119,7 +119,13 @@
             <tbody>
             <tr>
                 <th colspan="2">المورد أو من ينوب عنه</th>
-                <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+                <th colspan="2">عضو لجنة الإستلام
+                    @if($selectedOffices->count() > 1)
+                        الرئيسية
+                    @else
+                        الفرعية
+                    @endif
+                </th>
             </tr>
             <tr>
                 <th>الاسم</th>
@@ -132,6 +138,48 @@
             <tr>
                 <th>المسمى</th>
                 <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+                <th>الرتبة</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+                <th>التوقيع</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <table rules="all" class="no-break mt-2">
+            <tbody>
+            <tr>
+                <th colspan="2">عضو لجنة الإستلام
+                    @if($selectedOffices->count() > 1)
+                        الرئيسية
+                    @else
+                        الفرعية
+                    @endif
+                </th>
+                <th colspan="2">رئيس لجنة الإستلام
+                    @if($selectedOffices->count() > 1)
+                        الرئيسية
+                    @else
+                        الفرعية
+                    @endif
+                </th>
+            </tr>
+            <tr>
+                <th>الاسم</th>
+                <td>
+                    <input type="text" class="form-control" value="">
+                </td>
+                <th>الاسم</th>
+                <td><input type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <th>المسمى</th>
+                <td><input type="text" class="form-control" value=""></td>
                 <th>الرتبة</th>
                 <td><input type="text" class="form-control"></td>
             </tr>

@@ -116,7 +116,13 @@
             <tbody>
             <tr>
                 <th colspan="2">المورد أو من ينوب عنه</th>
-                <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+                <th colspan="2">عضو لجنة الإستلام
+                    @if($selectedOffices->count() > 1)
+                        الرئيسية
+                    @else
+                        الفرعية
+                    @endif
+                </th>
             </tr>
             <tr>
                 <th>الاسم</th>
@@ -145,8 +151,20 @@
         <table rules="all" class="no-break mt-2">
             <tbody>
             <tr>
-                <th colspan="2">عضو لجنة الإستلام الفرعية</th>
-                <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
+                <th colspan="2">عضو لجنة الإستلام
+                    @if($selectedOffices->count() > 1)
+                        الرئيسية
+                    @else
+                        الفرعية
+                    @endif
+                </th>
+                <th colspan="2">رئيس لجنة الإستلام
+                    @if($selectedOffices->count() > 1)
+                        الرئيسية
+                    @else
+                        الفرعية
+                    @endif
+                </th>
             </tr>
             <tr>
                 <th>الاسم</th>
