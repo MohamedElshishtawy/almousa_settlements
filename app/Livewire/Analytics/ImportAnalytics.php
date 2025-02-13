@@ -61,6 +61,7 @@ class ImportAnalytics extends Component
     {
         $this->getOffice();
         $this->dates = (new ReportSurvice())->getDaysForOffice($this->office);
+        $this->getStaticProducts();
         $this->updatePayed();
 
     }

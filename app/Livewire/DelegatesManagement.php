@@ -169,7 +169,7 @@ class DelegatesManagement extends Component
 
         activity('delegate')
             ->causedBy(Auth::user())
-            ->performedOn(Delegate::find($delegateId))
+            ->performedOn($delegate)
             ->withProperties(['old' => $delegate->getOriginal()])
             ->log('تم حذف مندوب');
 

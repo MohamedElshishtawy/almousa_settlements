@@ -29,14 +29,12 @@ return [
     'import_edit' => 'تعديل محضر توريد', // or تعديل محضر استيراد
     'import_delete' => 'حذف محضر توريد', // or حذف محضر استيراد
     'import_show_price' => 'عرض سعر الاستيراد',
-    'import_model2_create' => 'إنشاء استيراد نموذج ٢',
-    'import_model2_edit' => 'تعديل استيراد نموذج ٢',
-    'import_model2_delete' => 'حذف استيراد نموذج ٢',
+    'import_model2_create' => 'تقرير التوريد',
     'surplus_create' => 'إنشاء وفر',
     'surplus_edit' => 'تعديل وفر',
     'surplus_delete' => 'حذف وفر',
     'surplus_show_price' => 'عرض سعر وفر',
-    'surplus_model2_create' => 'إنشاء وفر نموذج ٢',
+    'surplus_model2_create' => 'إنشاء تقرير الوفر',
 
     'employment_create' => 'إنشاء تكميل العمالة',
     'employment_edit' => 'تعديل تكميل العمالة',
