@@ -83,7 +83,7 @@ class ImportAnalytics extends Component
             return;
         }
 
-        foreach ($this->offices as $office) {
+        foreach ($this->selectedOffices as $office) {
             $reports = $office->reports()->whereBetween('for_date', [$this->startDate, $this->endDate])->get();
             foreach ($reports as $report) {
                 $staticProducts = $report->staticProducts;
