@@ -7,14 +7,18 @@
         </tr>
         <tr>
             <th>المقر</th>
-            <th colspan="100">
-                <select wire:model.live="selectedOfficeId" class="form-select">
-                    <option value="">إختر المقر</option>
-                    @foreach($offices as $officeDB)
-                        <option value="{{$officeDB->id}}"
-                                @if($selectedOfficeId == $officeDB->id) selected @endif>{{$officeDB->name}}</option>
+            <th colspan="100" class="p-2">
+                <div class="d-flex gap-2">
+                    @foreach($offices as $officeDb)
+                        <span>
+                            <input type="checkbox" class="form-check-input p-2"
+                                   wire:model.live="selectedOfficesIds"
+                                   id="office{{$officeDb->id}}"
+                                   value="{{$officeDb->id}}">
+                            <label for="office{{$officeDb->id}}">{{$officeDb->name}}</label>
+                        </span>
                     @endforeach
-                </select>
+                </div>
             </th>
         </tr>
         <tr>
@@ -42,17 +46,20 @@
     <hr class="not-print">
     <table rules="all" class="mt-4">
         <tr>
-            <th colspan="5">
+            <th colspan="100">
             <span>
                 <span wire:loading>
                         <span class="spinner-border spinner-border-sm text-success" role="status"></span>
                     </span>
             </span>
                 تقرير نموذج رقم (2) (تقرير وفر) خاص بلجان الإستلام الفرعية إعاشة
-                ال{{$office ? $office->living->title : ''}} ب
-            </th>
-            <th colspan="3">
-                {{\App\Office\Office::find($selectedOfficeId)->name ?? ''}}
+                ب
+                @foreach($selectedOffices as $office)
+                    مقر <span>{{$office->name}}</span>
+                    @if(!$loop->last)
+                        و
+                    @endif
+                @endforeach
             </th>
         </tr>
         <tr>
