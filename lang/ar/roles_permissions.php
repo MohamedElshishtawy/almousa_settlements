@@ -48,6 +48,7 @@ return [
     'tasks_create' => 'إنشاء مهمة',
     'tasks_edit' => 'تعديل مهمة',
     'tasks_delete' => 'حذف مهمة',
+    'tasks_manage' => 'إدارة المهام',
     'delegate_absence_create' => 'إنشاء محضر  غياب مندوب',
     'delegate_absence_edit' => 'تعديل  محضر غياب مندوب',
     'delegate_absence_delete' => 'حذف محضر  غياب مندوب',

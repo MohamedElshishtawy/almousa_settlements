@@ -10,14 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('office_tasks', function (Blueprint $table) {
+        Schema::create('stages', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Task\Task::class)->constrained()
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-            $table->foreignIdFor(\App\Office\Office::class)->constrained()
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+            $table->string('expression');
+            $table->string('ar_expression');
             $table->timestamps();
         });
     }
@@ -27,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('office_tasks');
+        Schema::dropIfExists('stages');
     }
 };

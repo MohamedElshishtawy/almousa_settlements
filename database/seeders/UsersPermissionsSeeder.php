@@ -29,7 +29,7 @@ class UsersPermissionsSeeder extends Seeder
             // dry food
             'dry_food_create', 'dry_food_edit', 'dry_food_delete', 'dry_food_print', 'confirm_dry_food_reception',
             // tasks
-            'tasks_create', 'tasks_edit', 'tasks_delete',
+            'tasks_create', 'tasks_edit', 'tasks_delete', 'tasks_manage',
             // delegate absence (corrected spelling)
             'delegate_absence_create', 'delegate_absence_edit', 'delegate_absence_delete', 'delegate_absence_print',
             // delegate

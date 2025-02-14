@@ -1,7 +1,7 @@
 @props(['type' => 'success', 'message' => 'تم'])
 
 @if(session('success'))
-    <div class="alert alert-success float-message" role="alert">
+    <div class="alert alert-success float-message z-3" role="alert">
         <div>
             {{session('success')}}
         </div>

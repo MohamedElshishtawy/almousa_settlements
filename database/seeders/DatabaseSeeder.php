@@ -16,8 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+
         // permission seeding
         $this->call(UsersPermissionsSeeder::class);
+
+        // seed the stages
+        $this->call(StagesSeeder::class);
 
         // seed the week days
         $days = \App\Models\Day::$days;

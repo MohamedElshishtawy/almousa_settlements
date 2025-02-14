@@ -6,7 +6,7 @@
             تقييم العمالة
         </h1>
     </div>
-    <x-message></x-message>
+    <x-message/>
     <div class="report-details">
         <div class="d-flex justify-content-between align-items-center">
             <div class="justify-content-right">

@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->string('state')->nullable();
-            $table->text('notes')->nullable();
+            $table->text('description');
+            $table->text('note')->nullable();
+            $table->foreignIdFor(\App\Models\User::class)->comment('The user who created the task')->constrained()->onDelete('cascade')->cascadeOnUpdate();
             $table->foreignIdFor(\App\Office\Office::class)->constrained()->onDelete('cascade')->cascadeOnUpdate();
             $table->timestamps();
         });

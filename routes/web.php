@@ -102,13 +102,28 @@ Route::middleware('auth')->group(function () {
         [AdminController::class, 'units'])->name('admin.units')->middleware('permission:unites_management');
     Route::get('/dates',
         [HijriDateController::class, 'index'])->name('admin.dates')->middleware('permission:manage_dates');
-    Route::get('/tasks', [
-        TaskController::class, 'index'
-    ])->name('admin.tasks')->middleware('permission:tasks_create|tasks_edit|tasks_delete');
 
-    Route::get('/delegates', [
-        DelegateController::class, 'index'
-    ])->name('admin.delegates')->middleware('permission:delegate_create|delegate_edit|delegate_delete');
+    Route::prefix('tasks')->group(function () {
+        Route::get('/', [TaskController::class, 'index'])->name('admin.tasks');
+        Route::get('/{officeId}', [TaskController::class, 'officeTasks'])->name('admin.tasks.office');
+        Route::post('/{officeId}/store',
+            [TaskController::class, 'storeTask'])->name('admin.tasks.store')->middleware('permission:tasks_create');
+        Route::get('/{officeId?}/show', [TaskController::class, 'show'])->name('admin.tasks.managers');
+
+    })->middleware('permission:tasks_create|tasks_edit|tasks_delete');
+
+
+    Route::prefix('/delegates')->group(function () {
+        Route::get('/', [DelegateController::class, 'index'])->name('admin.delegates');
+        Route::get('/create', [
+            DelegateController::class, 'create'
+        ])->name('admin.delegates.create')->middleware('permission:delegate_create');
+        Route::get('/{delegate}',
+            [DelegateController::class, 'edit'])->name('admin.delegates.edit')->middleware('permission:delegate_edit');
+        Route::delete('/{delegate}', [
+            DelegateController::class, 'delete'
+        ])->name('admin.delegates.delete')->middleware('permission:delegate_delete');
+    })->middleware('permission:delegate_create|delegate_edit|delegate_delete');
 
     Route::prefix('breakfast')->group(function () {
         Route::get('/', [BreakFastReportController::class, 'index'])
@@ -218,9 +233,6 @@ Route::middleware('auth')->group(function () {
         });
 
     });
-
-    Route::get('/tasks', [TaskController::class, 'managers'])
-        ->name('managers.tasks')->middleware('permission:tasks_create|tasks_edit|tasks_delete');
 
 });
 

@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Office\Office;
+use App\Task\History;
+use App\Task\LastReadedHistory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -90,6 +92,16 @@ class User extends Authenticatable
     public function lastReadedLog()
     {
         return $this->hasOne(LastReadedLog::class);
+    }
+
+    public function tasksHistories()
+    {
+        return $this->hasMany(History::class);
+    }
+
+    public function tasksLastReadedHistories()
+    {
+        return $this->hasMany(LastReadedHistory::class);
     }
 
 }

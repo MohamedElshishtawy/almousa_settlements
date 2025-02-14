@@ -48,16 +48,22 @@
                             </a>
                         </li>
                     @endcanany
-
-                    {{--                    @canany(['tasks_create', 'tasks_edit', 'tasks_delete'])--}}
-                    {{--                        <li>--}}
-                    {{--                            <a href="{{ route('managers.tasks') }}"--}}
-                    {{--                               class="{{ request()->routeIs('managers.tasks') ? 'active' : '' }}">--}}
-                    {{--                                المهام--}}
-                    {{--                            </a>--}}
-                    {{--                        </li>--}}
-                    {{--                    @endcanany--}}
-
+                    @canany(['tasks_create', 'tasks_edit', 'tasks_delete'])
+                        <li>
+                            <a href="{{ route('admin.tasks') }}"
+                               class="{{ request()->routeIs('admin.tasks') ? 'active' : '' }}">
+                                إدارة المهام
+                            </a>
+                        </li>
+                    @endcanany
+                    @can('tasks_manage')
+                        <li>
+                            <a href="{{ route('admin.tasks.managers', [optional(auth()->user()->office)->id]) }}"
+                               class="{{ request()->routeIs('admin.tasks.managers') ? 'active' : '' }}">
+                                المهام
+                            </a>
+                        </li>
+                    @endcan
                     @canany(['import_writing_print', 'import_create', 'import_edit', 'import_delete'])
                         <li>
                             <a href="{{ route('managers.reports') }}"

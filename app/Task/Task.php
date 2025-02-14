@@ -9,18 +9,26 @@ class Task extends Model
 {
     use HasFactory;
 
-    public static $states = ['لم يبدأ', 'تم إنجازها', 'توفر الى حد ما'];
-    protected $fillable = ['title', 'state', 'notes', 'office_id'];
+    protected $fillable = ['description', 'note', 'user_id', 'office_id'];
 
     public function office()
     {
         return $this->belongsTo(\App\Office\Office::class);
     }
 
-    public function offices()
+    public function histories()
     {
-        return $this->belongsToMany(\App\Office\Office::class)->using(\App\Task\OfficeTask::class);
+        return $this->hasMany(History::class);
     }
 
+    public function lastReadedHistories()
+    {
+        return $this->hasMany(LastReadedHistory::class);
+    }
+
+    public function getStageAttribute()
+    {
+        return $this->histories->last()->stage ?? null;
+    }
 
 }
