@@ -35,8 +35,8 @@ Route::get('/me', function () {
         1)->get(); // have prices
     foreach ($ramadanMainQiada as $product) {
         $product = \App\Product\ProductLivingMission::where('product_id', $product->product_id)->where('mission_id',
-            '4')->where('living_id',
-            1)->first();
+            '4')->where('living_id', 1)->first();
+        dd($product = \App\Product\ProductLivingMission::where('product_id', $product->product_id)->get());
         if ($product) {
             $product->update(['price' => $product->price]);
         }
