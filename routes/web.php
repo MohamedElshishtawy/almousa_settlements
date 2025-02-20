@@ -10,6 +10,7 @@ use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DryFoodReportController;
 use App\Http\Controllers\HijriDateController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserEvaluateController;
 use App\Http\Controllers\WhatsAppController;
 use App\Obligations\ObligationsController;
 use App\Office\OfficeController;
@@ -28,12 +29,29 @@ use Livewire\Livewire;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/me', function () {
+    $ramadanMainQiada = \App\Product\ProductLivingMission::where('mission_id', 2)->where('living_id',
+        1)->get(); // have prices
+    foreach ($ramadanMainQiada as $product) {
+        \App\Product\ProductLivingMission::where('id', $product->id)->where('mission_id', '4')->where('living_id',
+            1)->first()->update(['price' => $product->price]);
+    }
+});
+
 Livewire::setUpdateRoute(function ($handle) {
     return Route::post(env('LARAVEL_URL').'/livewire/update', $handle);
 });
 
 Livewire::setScriptRoute(function ($handle) {
     return Route::get(env('LARAVEL_URL').'/livewire/livewire.js', $handle);
+});
+
+Route::get('create', function () {
+    $r = ['evaluation_create', 'evaluation_edit', 'evaluation_delete', 'evaluation_print'];
+    foreach ($r as $role) {
+        \Spatie\Permission\Models\Permission::create(['name' => $role]);
+    }
 });
 
 Route::get('/', function () {
@@ -76,6 +94,17 @@ Route::middleware('auth')->group(function () {
         ])->name('admin.breakfast-products')->middleware('permission:break_fast_products_manage');
     })->middleware('permission:manage_all_products|manage_mission_products|break_fast_products_manage');
 
+    Route::prefix('employment')->group(function () {
+        Route::get('/', [EmploymentController::class, 'employment'])->name('admin.employment');
+    })->middleware('permission:employment_create|employment_edit|employment_delete');
+
+    Route::prefix('evaluate')->group(function () {
+        Route::get('/', [UserEvaluateController::class, 'index'])->name('admin.evaluate.index');
+        Route::get('/manage', [UserEvaluateController::class, 'manage'])->name('admin.evaluate.manager');
+        Route::get('/manage/{user}', [UserEvaluateController::class, 'manage'])->name('admin.evaluate.manager.');
+        Route::get('/{user}', [UserEvaluateController::class, 'evaluate'])->name('admin.evaluate.user');
+    })->middleware('permission:evaluation_create|evaluation_edit|evaluation_delete');
+
     Route::prefix('analytics')->group(function () {
         Route::get('/imports/{showPrices?}', [
             ReportController::class, 'AnalyticsImport'
@@ -94,9 +123,6 @@ Route::middleware('auth')->group(function () {
         ])->name('admin.companies')->middleware('permission:manage_companies');
     });
 
-    Route::prefix('employment')->group(function () {
-        Route::get('/', [EmploymentController::class, 'employment'])->name('admin.employment');
-    })->middleware('permission:employment_create|employment_edit|employment_delete');
 
     Route::get('/units',
         [AdminController::class, 'units'])->name('admin.units')->middleware('permission:unites_management');
