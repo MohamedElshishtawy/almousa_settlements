@@ -194,7 +194,7 @@ class Import extends Component
 
         session()->flash('success', 'تم إضافة المحضر. يتم توجيهك لتقيم العمالة..');
 
-        sleep(5);
+        sleep(1);
 
         session()->forget('success');
 
