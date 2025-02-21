@@ -108,9 +108,11 @@ class ImportAnalytics extends Component
                             $totalImported = $staticProduct->importProductError ?
                                 $staticProduct->importProductError->error : ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
 
+                            if ($staticProduct->name == 'زبادي') {
+                                dd($staticProduct->daily_amount, $report->import->benefits);
+                            }
                             $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->daily_amount * $report->import->benefits;
                             $this->staticProducts[$staticProduct->old_id]['imported_total'] += $totalImported;
-//                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $staticProduct->getSurplus();
                             $staticProductArr['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
 
 
