@@ -132,11 +132,22 @@ class Import extends Component
         // Check if benefits is a valid number, greater than 0, and that no report exists for the date and office
         $this->validate();
 
+        $existingReport = Report::where('office_id', $this->office->id)
+            ->where('for_date', $this->date)
+            ->first();
+
+        if ($existingReport) {
+            session()->flash('error',
+                'تم إضافة محضر توريد لهذا المكتب في هذا التاريخ مسبقاً. يمكنك الرجوع للمطور فى هذه الحالة');
+            return redirect()->route('managers.reports.import', [$this->officeMission->id, $this->date]);
+        }
+
         // Create the report for the specified office and date
         $report = Report::create([
             'office_id' => $this->office->id,
             'for_date' => $this->date,
         ]);
+
 
         // Create the import entry for the report
         $import = $report->import()->create([
