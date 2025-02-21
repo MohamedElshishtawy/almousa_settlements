@@ -105,12 +105,12 @@ class ImportAnalytics extends Component
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
 
                         ) {
-                            $totalImported = $staticProduct->importProductError ?
-                                $staticProduct->importProductError->error : ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
+                            $totalImported = ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
                             if ($staticProductArr['name'] == 'زبادي') {
                                 dd($totalImported, $staticProduct->daily_amount,
                                     $staticProduct->report->import->benefits,
-                                    $staticProduct->daily_amount * $staticProduct->report->import->benefits);
+                                    $staticProduct->daily_amount * $staticProduct->report->import->benefits,
+                                    ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount);
                             }
 
                             $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->daily_amount * $report->import->benefits;
