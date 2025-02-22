@@ -1,6 +1,4 @@
-@php use Carbon\Carbon; @endphp
 @extends('analytics.print-layout')
-@php($active = 'units')
 @section('content')
     <div class="container">
         <x-message/>

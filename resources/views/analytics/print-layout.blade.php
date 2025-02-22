@@ -30,6 +30,7 @@
 </head>
 <body dir="rtl">
 <x-nav :active="$active ?? null"></x-nav>
+
 @yield('content')
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
