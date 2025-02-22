@@ -125,6 +125,7 @@ class StaticProduct extends Product
         return $this->productsDayMeal()
             ->select('day_id')
             ->groupBy('day_id')
+            ->get()
             ->count();
     }
 
