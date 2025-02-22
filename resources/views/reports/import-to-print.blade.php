@@ -111,6 +111,35 @@
         </tr>
         </tbody>
     </table>
+
+    <table rules="all" class="no-break mt-2">
+        <tbody>
+        <tr>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
+        </tr>
+        <tr>
+            <th>الاسم</th>
+            <td>
+                <input type="text" class="form-control" value="">
+            </td>
+            <th>الاسم</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value=""></td>
+            <th>الرتبة</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        <tr>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control"></td>
+            <th>التوقيع</th>
+            <td><input type="text" class="form-control"></td>
+        </tr>
+        </tbody>
+    </table>
 </footer>
 
 </body>

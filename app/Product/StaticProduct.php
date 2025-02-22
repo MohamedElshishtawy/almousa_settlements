@@ -3,9 +3,7 @@
 namespace App\Product;
 
 use App\Models\Day;
-use App\Models\Meal;
 use App\Report\ImportProductError;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StaticProduct extends Product
@@ -27,11 +25,73 @@ class StaticProduct extends Product
         'packet_value',
     ];
 
-    public static function howMealPerDay($productId, $dayId)
+    // Appended attributes when model is converted to array or JSON
+    protected $appends = [
+        'total_imported',
+        'number_per_week',
+        'day_amount',
+        'total_amount',
+    ];
+
+    /**
+     * Accessor for total_imported
+     * Calculates the total imported value
+     */
+    public function getTotalImportedAttribute()
     {
-        return StaticProductDayMeal::where('day_id', $dayId)->where('static_product_id', $productId)->count();
+        $error = optional($this->importProductError)->error;
+        $benefits = optional($this->report->import)->benefits ?? 0;
+        $mealsPerDay = static::howMealPerDay($this->id, Day::date2object($this->report->for_date)->id);
+
+        return $error ?: ($benefits * $this->daily_amount * $mealsPerDay);
     }
 
+    /**
+     * Accessor for number_per_week
+     * Counts how many days the product is used per week
+     */
+    public function getNumberPerWeekAttribute()
+    {
+        return $this->getHowManyDayPerWeekUsed();
+    }
+
+    /**
+     * Accessor for day_amount
+     * Calculates the daily amount based on meals per day
+     */
+    public function getDayAmountAttribute()
+    {
+        $benefits = optional($this->report->import)->benefits ?? 0;
+        $day = Day::date2object($this->report->for_date);
+        $timesPerDay = static::howMealPerDay($this->id, $day->id);
+        return $timesPerDay ? $this->daily_amount * $benefits : 0;
+    }
+
+    /**
+     * Accessor for total_amount
+     * Calculates the total amount by multiplying daily amount, benefits, and meals per day
+     */
+    public function getTotalAmountAttribute()
+    {
+        $day = Day::date2object($this->report->for_date);
+        $benefits = optional($this->report->import)->benefits ?? 0;
+        return $this->daily_amount * $benefits;
+    }
+
+    public function getSurplus($mealId = null)
+    {
+        foreach ($this->report->surplus as $surplus) {
+            $mealPerDay = $this->getHowManyPerDay(Day::date2object($surplus->report->for_date));
+            $surplusFromType = $surplus->surplusFoodTypes->where('food_type_id', $this->food_type_id)->first();
+            $surplusFromTypeValue = $mealPerDay ? optional($surplusFromType)->value * $this->daily_amount / $mealPerDay : 0;
+            $surplusFromSpecific = $surplus->surplusProductErrors->where('static_product_id', $this->id)->first();
+            $surplusFromSpecificValue = $surplusFromSpecific ? $surplusFromSpecific->surplus_amount + $surplusFromSpecific->surplus_benefits * $this->daily_amount / $mealPerDay : 0;
+        }
+
+        return $surplusFromSpecificValue + $surplusFromTypeValue;
+    }
+
+    // Relationships
     public function report()
     {
         return $this->belongsTo(\App\Report\Report::class);
@@ -52,40 +112,27 @@ class StaticProduct extends Product
         return $this->hasMany(\App\Report\SurplusProductError::class);
     }
 
-
-    // Get Functions -----------------------
+    // Utility methods
+    public static function howMealPerDay($productId, $dayId)
+    {
+        return StaticProductDayMeal::where('day_id', $dayId)
+            ->where('static_product_id', $productId)
+            ->count();
+    }
 
     public function getHowManyDayPerWeekUsed(ProductLivingMission $productLivingMission = null)
     {
-        return $this->productsDayMeal->select('day_id')->groupBy('day_id')->count();
-    }
-
-    public function getAmountForMeal(Day $day, Meal $meal, ProductLivingMission $productLivingMission = null)
-    {
-        $isHasMeal = $this->productsDayMeal->where('day_id', $day->id)->where('meal_id', $meal->id)->first();
-        if ($isHasMeal) {
-            return $this->daily_amount / $this->getHowManyPerDay($day);
-        }
-        return 0;
+        return $this->productsDayMeal()
+            ->select('day_id')
+            ->groupBy('day_id')
+            ->count();
     }
 
     public function getHowManyPerDay(Day $day, ProductLivingMission $productLivingMission = null)
     {
-        // $productLivingMission (not used)
-        return count(array_unique($this->productsDayMeal->where('day_id', $day->id)->pluck('meal_id')->toArray()));
-    }
-
-    public function getSurplus($mealId = null)
-    {
-        foreach ($this->report->surplus as $surplus) {
-            $mealPerDay = $this->productsDayMeal->where('day_id',
-                \App\Models\Day::text2object(\App\Models\Day::$daysTranslteEn2Ar[Carbon::parse($this->report->for_date)->format('l')])->id)->count();
-            $surplusFromType = $surplus->surplusFoodTypes->where('food_type_id', $this->food_type_id)->first();
-            $surplusFromTypeValue = $surplusFromType ? $surplusFromType->value * $this->daily_amount / $mealPerDay : 0;
-            $surplusFromSpecific = $surplus->surplusProductErrors->where('static_product_id', $this->id)->first();
-            $surplusFromSpecificValue = $surplusFromSpecific ? $surplusFromSpecific->surplus_amount + $surplusFromSpecific->surplus_benefits * $this->daily_amount / $mealPerDay : 0;
-        }
-
-        return $surplusFromSpecificValue + $surplusFromTypeValue;
+        return count(array_unique($this->productsDayMeal
+            ->where('day_id', $day->id)
+            ->pluck('meal_id')
+            ->toArray()));
     }
 }

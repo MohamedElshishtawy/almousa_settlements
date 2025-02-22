@@ -133,25 +133,21 @@ class SurplusAnalytics extends Component
 
     protected function insert($staticProduct)
     {
-        $totalImported = $staticProduct->importProductError ?
-            $staticProduct->importProductError->error : ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
-        $data = [
+        $this->staticProducts[$staticProduct->old_id] = [
             'name' => $staticProduct->name,
             'price' => $staticProduct->price,
             'daily_amount' => $staticProduct->daily_amount,
             'food_type_id' => $staticProduct->food_type_id,
             'food_unit_id' => $staticProduct->food_unit_id,
             'unit' => $staticProduct->foodUnit->title,
-            'numberPerWeek' => $staticProduct->getHowManyDayPerWeekUsed(),
-            'totalAmount' => $staticProduct->daily_amount * $staticProduct->report->import->benefits,
-            'imported_total' => $totalImported,
+            'numberPerWeek' => $staticProduct->number_per_week,
+            'totalAmount' => $staticProduct->day_amount,
+            'imported_total' => $staticProduct->total_imported,
             'total_surplus' => $staticProduct->getSurplus(),
         ];
-        $this->staticProducts[$staticProduct->old_id] = $data;
     }
 
     // start and end date
-
     public function updatedEndDate()
     {
         if ($this->startDate && $this->endDate) {
