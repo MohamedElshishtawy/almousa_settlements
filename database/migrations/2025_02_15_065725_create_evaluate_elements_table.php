@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('import_product_errors', function (Blueprint $table) {
+        Schema::create('evaluate_elements', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Report\Import::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Product\StaticProduct::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->float('error', 10, 6)->default(0);
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('import_product_errors');
+        Schema::dropIfExists('evaluate_elements');
     }
 };

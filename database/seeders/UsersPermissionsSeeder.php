@@ -57,6 +57,8 @@ class UsersPermissionsSeeder extends Seeder
             'manage_mission_products',
             // view_beneficiaries_report
             'view_beneficiaries_report',
+            // evaluation
+            'evaluation_create', 'evaluation_edit', 'evaluation_delete', 'evaluation_print',
         ];
 
         // Create permissions

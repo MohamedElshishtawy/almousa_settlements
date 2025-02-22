@@ -57,18 +57,6 @@
     </table>
     <h2 class="text-center not-print mb-0 mt-3">ملف الطباعة</h2>
     <hr class="not-print">
-
-    {{--the value بيان بأعداد المستفيدين لمهمة
-            @foreach($selectedMissions as $mission)
-                {{\App\Mission\Mission::find($mission)->title}}
-                @if(!$loop->last && count($selectedMissions) > 1)
-                    و
-                @endif
-            @endforeach
-        لعام
-        {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($year)}}
-        هـ
-    --}}
     @php($value  = ' بيان بأعداد المستفيدين لمهمة ')
     @foreach($selectedMissions as $mission)
         @php($value .= \App\Mission\Mission::find($mission)->title)

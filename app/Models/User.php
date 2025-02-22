@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Evaluation\UserEvaluate;
 use App\Office\Office;
 use App\Task\History;
 use App\Task\LastReadedHistory;
@@ -103,5 +104,30 @@ class User extends Authenticatable
     {
         return $this->hasMany(LastReadedHistory::class);
     }
+
+
+    // evaluates user makes
+    public function getEvaluatesAttribute()
+    {
+        return UserEvaluate::where('evaluator_id', $this->id)->get();
+    }
+
+    // evaluates user receives
+    public function getEvaluationsAttribute()
+    {
+        return UserEvaluate::where('evaluated_id', $this->id)->get();
+    }
+
+    public function getEvaluatorAttribute()
+    {
+        $userRole = $this->role;
+        $evaluatorId = $userRole->evaluator_id;
+        if (!$evaluatorId) {
+            return [];
+        }
+        $role = Role::find($evaluatorId);
+        return User::HaveRole($role->name)->get();
+    }
+
 
 }

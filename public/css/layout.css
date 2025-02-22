@@ -166,7 +166,7 @@ h2 {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1168px) {
 
     & .tours {
         grid-template-columns: repeat(1, 1fr);
@@ -176,6 +176,10 @@ h2 {
         & .tour-info {
             padding: 5px;
         }
+    }
+
+    .navbar .a {
+        font-size: 11px !important;
     }
 }
 

@@ -1,7 +1,7 @@
 @auth
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm not-print">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/home') }}">
+            <a class="navbar-brand d-md-none d-lg-block" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -13,6 +13,12 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav nav-pages">
+                    <li>
+                        <a href="{{ url('/') }}"
+                           class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            الرئيسية
+                        </a>
+                    </li>
                     @can('users_management')
                         <li>
                             <a href="{{ route('admin.users') }}"
@@ -69,6 +75,22 @@
                             <a href="{{ route('managers.reports') }}"
                                class="{{ request()->routeIs('managers.reports') ? 'active' : '' }}">
                                 المحاضر
+                            </a>
+                        </li>
+                    @endcanany
+                    @canany(['evaluation_create', 'evaluation_edit', 'evaluation_delete'])
+                        <li>
+                            <a href="{{ route('admin.evaluate.index') }}"
+                               class="{{ request()->routeIs('admin.evaluations') ? 'active' : '' }}">
+                                التقييم
+                            </a>
+                        </li>
+                    @endcanany
+                    @canany(['evaluation_print'])
+                        <li>
+                            <a href="{{ route('admin.evaluate.index') }}"
+                               class="{{ request()->routeIs('admin.evaluations') ? 'active' : '' }}">
+                                التقييم
                             </a>
                         </li>
                     @endcanany

@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
         // seed the stages
         $this->call(StagesSeeder::class);
 
+        // seed the evaluations
+        $this->call(EvaluationSeeder::class);
+
         // seed the week days
         $days = \App\Models\Day::$days;
         foreach ($days as $day) {

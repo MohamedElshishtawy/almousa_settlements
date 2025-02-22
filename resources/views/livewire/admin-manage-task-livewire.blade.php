@@ -68,7 +68,19 @@
                     </tr>
                     @foreach($task->histories as $history)
                         <tr>
-                            <td>{{$history->description}}</td>
+                            <td>
+                                <div class="d-flex justify-content-between ">
+                                    <small>{{$history->description}}</small>
+                                    <small class="text-info"><strong><i class="fa fa-clock fw"></i></strong>
+                                        {{$history->created_at->diffForHumans()}}</small>
+                                </div>
+                                <div>
+                                    <small
+                                        class="text-muted"> <strong><i
+                                                class="fa fa-user fw"></i></strong>{{$history->user->name}}</small>
+                                </div>
+
+                            </td>
                         </tr>
                     @endforeach
                 </table>

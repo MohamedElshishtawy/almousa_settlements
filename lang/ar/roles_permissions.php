@@ -81,4 +81,11 @@ return [
     'break_fast_delete' => 'حذف محضر وجبة فطور',
     'break_fast_print' => 'طباعة محضر وجبة فطور',
     'manage_mission_products' => 'إدارة أصناف المهام',
+
+    // evaluation
+    'evaluation_create' => 'إنشاء تقييم',
+    'evaluation_edit' => 'تعديل تقييم',
+    'evaluation_delete' => 'حذف تقييم',
+    'evaluation_print' => 'طباعة تقييم',
+
 ];
