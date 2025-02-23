@@ -27,7 +27,7 @@ class FormEmploymentElement extends Model
 
     public function getEmploymentRealCount($benefits, $count, $realBenefits)
     {
-        return $benefits ? ceil($count * $realBenefits / $benefits) * $count : 0;
+        return $benefits ? ceil($realBenefits / $benefits) * $count : 0;
     }
 
 
