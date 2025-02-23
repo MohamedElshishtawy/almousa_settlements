@@ -23,7 +23,7 @@
 
 
                         @forelse ($officesReports as $officeName => $reports)
-                            <div class="office-container">
+                            <div class="office-container" id="{{$reports[0]['office']->id}}">
                                 <table
                                     class="table table-hover table-bordered table-small rounded-3 thead-light office-table @if(count($officesReports) == 1) show-table @endif">
                                     <thead>

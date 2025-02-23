@@ -80,7 +80,7 @@
                 @endif
                 <tr>
                     <th>اسم المقر</th>
-                    <td><a href="{{ route('admin.offices') }}#{{ $office->id }}">{{ $office->name }}</a></td>
+                    <td><a href="{{ route('managers.reports') }}#{{ $office->id }}">{{ $office->name }}</a></td>
                 </tr>
                 <tr>
                     <th>التاريخ</th>

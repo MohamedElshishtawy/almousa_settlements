@@ -78,14 +78,14 @@
                             </a>
                         </li>
                     @endcanany
-                    @canany(['evaluation_create', 'evaluation_edit', 'evaluation_delete'])
-                        <li>
-                            <a href="{{ route('admin.evaluate.index') }}"
-                               class="{{ request()->routeIs('admin.evaluations') ? 'active' : '' }}">
-                                التقييم
-                            </a>
-                        </li>
-                    @endcanany
+                    {{--                    @canany(['evaluation_create', 'evaluation_edit', 'evaluation_delete'])--}}
+                    {{--                        <li>--}}
+                    {{--                            <a href="{{ route('admin.evaluate.index') }}"--}}
+                    {{--                               class="{{ request()->routeIs('admin.evaluations') ? 'active' : '' }}">--}}
+                    {{--                                التقييم--}}
+                    {{--                            </a>--}}
+                    {{--                        </li>--}}
+                    {{--                    @endcanany--}}
                     @canany(['evaluation_print'])
                         <li>
                             <a href="{{ route('admin.evaluate.index') }}"
