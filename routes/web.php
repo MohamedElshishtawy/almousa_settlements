@@ -83,7 +83,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', [OfficeController::class, 'CreateOffice'])->name('admin.office.create');
         Route::get('/{id}', [OfficeController::class, 'EditOffice'])->name('admin.office.edit');
         Route::delete('/{id}', [OfficeController::class, 'DeleteOffice'])->name('admin.office.delete');
-    })->middleware('permission:offices_management');
+    })->middleware('can:offices_management');
 
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminController::class, 'products'])->name('admin.products');
