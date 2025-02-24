@@ -168,7 +168,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/breakfast/{breakFastReport}/print', [BreakFastReportController::class, 'print'])
         ->name('breakfast.print')->middleware('permission:break_fast_print');
 
-    Route::prefix('/reports')->middleware('permission:import_create|import_edit|import_delete|import_print|surplus_create|surplus_edit|surplus_delete|surplus_print')->group(function (
+    Route::prefix('/reports')->middleware('permission:import_create|import_edit|import_delete|import_print|surplus_create|surplus_edit|surplus_delete|surplus_print|import_writing_print')->group(function (
     ) {
         Route::get('/', [ReportController::class, 'reports'])->name('managers.reports');
         Route::prefix('/import')->group(function () {
