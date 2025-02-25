@@ -57,7 +57,6 @@
         <th width="100">الوحدة</th>
         <th>الإستحقاق اليومى (للوجبة)</th>
         <th>إجمال الإستحقاق</th>
-        <th>الوارد الحقيقى</th>
         <th>الوفر(الأشخاص)</th>
         <th>إجمالى الوفر(الوحدة)</th>
         <th>إجمالى المصروف(الوحدة)</th>
@@ -72,7 +71,9 @@
         @php
             if ($meal) {
                 $timesPerDay = $staticProduct->getHowManyPerDay($day);
-                $amountForMeal = $staticProduct->getAmountForMeal($day, $surplus->meal) * $report->import->benefits;
+                $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $staticProduct->old_id)
+                    ->where('living_id', $report->office->living_id)->where('mission_id', $report->office->getOfficeMission($report->for_date))->first();
+                $amountForMeal = $staticProduct->getAmountForMeal($day, $surplus->meal, $productLivingMission) * $report->import->benefits;
                 $thisDayImported = $timesPerDay && $staticProduct->importProductError ? $staticProduct->importProductError->error / $timesPerDay: 0;
 
                 $surplusProductError = $surplus->surplusProductErrors
@@ -84,12 +85,10 @@
 
                 $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
                     ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
-                $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
+                $totalSurplus = max($totalSurplus, 0);
                 $total = $thisDayImported - $totalSurplus;
-                $total = $total >= 0 ? $total : 0;
+                $total = max($total, 0);
             } else {
-                //$timesPerDay = $staticProduct->getHowManyPerDay($day);
-
                 $thisDayImported =  $staticProduct->importProductError ? $staticProduct->importProductError->error : 0;
                  $amountForMeal = $thisDayImported; // this will be for all meals
                 $totalSurplus = 0;
@@ -118,7 +117,6 @@
             <td>{{ $staticProduct->foodUnit->title }}</td>
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct->daily_amount, 4)) }}</td>
             <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($amountForMeal, 4)) : 'غير مقرر'}}</td>
-            <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($thisDayImported, 4)) : 'غير مقرر'}}</td>
             <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($surplusBenefit) : 'غير مقرر'}}</td>
             <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($totalSurplus, 4)) : 'غير مقرر'}}</td>
             <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($total, 4)) : 'غير مقرر'}}</td>

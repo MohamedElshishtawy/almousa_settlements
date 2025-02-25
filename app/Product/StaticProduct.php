@@ -3,6 +3,7 @@
 namespace App\Product;
 
 use App\Models\Day;
+use App\Models\Meal;
 use App\Report\ImportProductError;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -90,6 +91,16 @@ class StaticProduct extends Product
 
         return $surplusFromSpecificValue + $surplusFromTypeValue;
     }
+
+    public function getAmountForMeal(Day $day, Meal $meal, ProductLivingMission $productLivingMission = null)
+    {
+        $isHasMeal = $productLivingMission->isHasMeal($day, $meal);
+        if ($isHasMeal) {
+            return $productLivingMission->daily_amount / $productLivingMission->getHowManyPerDay($day);
+        }
+        return 0;
+    }
+
 
     // Relationships
     public function report()
