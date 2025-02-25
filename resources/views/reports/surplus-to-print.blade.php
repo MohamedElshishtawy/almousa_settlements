@@ -73,7 +73,6 @@
                 $timesPerDay = $staticProduct->getHowManyPerDay($day);
                 $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $staticProduct->old_id)
                     ->where('living_id', $report->office->living_id)->where('mission_id', $report->office->getOfficeMission($report->for_date))->first();
-                dd($productLivingMission);
                 $amountForMeal = $staticProduct->getAmountForMeal($day, $surplus->meal, $productLivingMission) * $report->import->benefits;
                 dd($amountForMeal);
                 $thisDayImported = $timesPerDay && $staticProduct->importProductError ? $staticProduct->importProductError->error / $timesPerDay: 0;
