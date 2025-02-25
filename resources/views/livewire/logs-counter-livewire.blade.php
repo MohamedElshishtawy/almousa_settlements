@@ -1,1 +1,1 @@
-<span wire:poll.1="checkLogs">{{$unreadedCount}}</span>
+<span wire:poll.2="checkLogs">{{$unreadedCount}}</span>

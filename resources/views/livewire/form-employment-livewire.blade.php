@@ -58,7 +58,9 @@
             <tr>
                 <th>التاريخ</th>
                 <td>
-                    {{ Day::DateToHijri($import->report->for_date) }}
+                    <a href="{{route('managers.reports.import', [$import->report->office->getOfficeMission($import->report->for_date)->id, $import->report->for_date])}}">
+                        {{ Day::DateToHijri($import->report->for_date) }}
+                    </a>
                 </td>
             </tr>
             <tr>

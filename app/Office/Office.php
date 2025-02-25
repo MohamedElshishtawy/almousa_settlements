@@ -32,6 +32,14 @@ class Office extends Model
         return $this->HasMany(OfficeMission::class);
     }
 
+
+    public function getOfficeMission($date)
+    {
+        return $this->OfficeMissions()->where('start_date', '<=', $date)
+            ->where('end_date', '>=', $date)->first();
+    }
+
+
     public function reports()
     {
         return $this->hasMany(\App\Report\Report::class);

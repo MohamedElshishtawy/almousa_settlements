@@ -5,6 +5,7 @@ namespace App\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Day;
 use App\Models\Meal;
+use App\Models\User;
 use App\Office\Office;
 use App\Office\OfficeController;
 use App\Office\OfficeMission;
@@ -53,8 +54,21 @@ class ReportController extends Controller
 
         $dateHijry = Day::DateToHijri($date);
 
+        $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_president')->first();
+
+        $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_member')->first();
+
+        $supplier = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role == 'supplier')->first();
+
         return view('reports.import-to-print',
-            compact('office', 'date', 'dateHijry', 'products', 'import'));
+            compact('office', 'date', 'dateHijry', 'products', 'import', 'subsidiary_receiving_committee_president',
+                'subsidiary_receiving_committee_member', 'supplier'));
     }
 
 
@@ -98,6 +112,7 @@ class ReportController extends Controller
 
         $officeMission = OfficeMission::find($officeMission);
         $office = $officeMission->office;
+
         $report = $office->reports()->where('for_date', $date)->first();
         $staticProducts = $report->staticProducts;
         // if there is no meal id will print for all available meals for this report's surplus
@@ -108,8 +123,23 @@ class ReportController extends Controller
             $meal = null;
             $surplus = null;
         }
+
+        $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_president')->first();
+
+        $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_member')->first();
+
+        $supplier = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role == 'supplier')->first();
+
         return view('reports.surplus-to-print',
-            compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal'));
+            compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal',
+                'subsidiary_receiving_committee_president',
+                'subsidiary_receiving_committee_member', 'supplier'));
 
     }
 

@@ -58,7 +58,7 @@
                 <tr>
                     <th class="text-success">اسم المقر</th>
                     <td>
-                        <a href="{{route('admin.offices')}}#{{$office->id}}">{{ $office->name }}</a>
+                        <a href="{{route('managers.reports')}}#{{$office->id}}">{{ $office->name }}</a>
                     </td>
                 </tr>
                 <tr>
