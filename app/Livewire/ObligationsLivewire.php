@@ -24,7 +24,13 @@ class ObligationsLivewire extends Component
     {
         // Load the company and offices for initialization
         $this->company = Company::CompanyOfTheSeason();
-        $this->offices = Office::all()->filter(fn($office) => $office->living->title === 'ميدان');
+        $this->offices = Office::all();
+
+        if (auth()->user()->office) {
+            $this->offices = $this->offices->filter(function ($office) {
+                return auth()->user()->office->id == $office->id;
+            });
+        }
 
         // Determine the selected office
         $this->selectedOfficeId = auth()->user()->isAdmin()
