@@ -170,12 +170,13 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ number_format($productMissionData->daily_amount, 4) }}</td>
                     <td>{{ $product->foodUnit->title }}</td>
-                    <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null); }}</td>
+                    <td>{{ $product->getHowManyDayPerWeekUsed(!$report?$productMissionData:null) }}</td>
                     @can ('import_show_price')
                         <td>{{ number_format($productMissionData->price, 4) . ' ر.س.' }}</td>
                     @endcan
+
                     <td>{{ (int)$dailyTotal ? $dayMissionTimes : 'غير مقرر' }}</td>
-                    <td>{{ (int)$expectedSupply? $expectedSupply : 'غير مقرر' }}</td>
+                    <td>{{$dailyTotal ?$expectedSupply: 'غير مقرر'}}</td>
                     <td>
                         <input type="text"
                                wire:model="reallyImported.{{ $product->id }}"

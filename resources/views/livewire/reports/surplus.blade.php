@@ -144,7 +144,6 @@
                     $hasThisMeal = $staticProduct->productsDayMeal->where('day_id', Day::text2object(Day::$daysTranslteEn2Ar[Carbon::parse($date)->format('l')])->id);
                     if ($hasThisMeal->count()) {
                         $thisDayAmount =  $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? (($report->import->benefits * $staticProduct->daily_amount) /  $hasThisMeal->count())  : 0;
-
                         $thisDayImported = $staticProduct->importProductError && $hasThisMeal->count() && $hasThisMeal->where('meal_id', $selectedMeal->id)->count() ? $staticProduct->importProductError->error / $hasThisMeal->count() : 0;
 
                         $totalSurplus = ($surplusAmount[$staticProduct->id] ?? 0) +
@@ -152,17 +151,6 @@
 
 
                         $total = $thisDayImported - $totalSurplus;
-//                        $surplusError = $staticProduct->surplusProductError ? $staticProduct->surplusProductError->where('surplus_id')->first() : '';
-//
-//                        $surplusErrorAmount = $surplusError ? $surplusError->surplus_amount : 0;
-//                        $surplusErrorBenefits = $surplusError ? $surplusError->benefits * $staticProduct->daily_amount : 0;
-//                        $surplusErrorTotal = $surplusErrorBenefits + $surplusErrorAmount;
-//
-//                        $totalSurplus = $surplusErrorTotal ?: ($staticProduct->daily_amount * $surplusBenefit / $hasThisMeal->count()); // 0 for the wrongs input
-//
-//                        $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0; // not negative
-//                        $total = $thisDayImported - $totalSurplus;
-//                        $total = $total >= 0 ? $total : 0;
 
                         // format
                         $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
@@ -188,17 +176,17 @@
                         </div>
                     </td>
                     <td>{{$surplusBenefit}}</td>
-                    <td>{{(int)$thisDayAmount ? $thisDayAmount : 'غير مقرر'}}</td>
+                    <td>{{$thisDayAmount ? $thisDayAmount : 'غير مقرر'}}</td>
                     <td>{{$thisDayImported}}</td>
-                    <td>{{(int)$thisDayAmount ? $totalSurplus : 'غير مقرر'}}</td>
-                    <td>{{(int)$thisDayAmount ? $total : 'غير مقرر'}}</td>
+                    <td>{{$thisDayAmount ? $totalSurplus : 'غير مقرر'}}</td>
+                    <td>{{$thisDayAmount ? $total : 'غير مقرر'}}</td>
                     <td>
                         <div class="d-flex">
                             <input type="text"
                                    wire:input.debounce.450ms="surplusAmountUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
                                    wire:model.defer="surplusAmount.{{$staticProduct->id}}"
-                                   @if(!(int)$thisDayAmount) disabled @endif>
+                                   @if(!$thisDayAmount) disabled @endif>
                             <span class="unit">{{ $staticProduct->foodUnit->title }}</span>
                         </div>
                     </td>
@@ -208,7 +196,7 @@
                                    wire:input.debounce.450ms="surplusBenefitsUpdate({{$staticProduct->id}}, $event.target.value)"
                                    class="form-control number-input"
                                    wire:model.defer="surplusBenefits.{{$staticProduct->id}}"
-                                   @if(!(int)$thisDayAmount) disabled @endif>
+                                   @if(!$thisDayAmount) disabled @endif>
                             <span class="unit">{{'شخص'}}</span>
                         </div>
                     </td>

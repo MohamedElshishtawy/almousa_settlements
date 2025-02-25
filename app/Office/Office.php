@@ -36,7 +36,7 @@ class Office extends Model
     public function getOfficeMission($date)
     {
         return $this->OfficeMissions()->where('start_date', '<=', $date)
-            ->where('end_date', '>=', $date)->first()->mission_id;
+            ->where('end_date', '>=', $date)->first();
     }
 
 

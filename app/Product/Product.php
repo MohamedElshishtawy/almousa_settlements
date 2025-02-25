@@ -57,7 +57,6 @@ class Product extends Model
     public function getAmountForMeal(Day $day, Meal $meal, ProductLivingMission $productLivingMission)
     {
         $isHasMeal = $productLivingMission->isHasMeal($day, $meal);
-        dd($isHasMeal);
         if ($isHasMeal) {
             return $productLivingMission->daily_amount / $productLivingMission->getHowManyPerDay($day);
         }
