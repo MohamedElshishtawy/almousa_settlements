@@ -10,6 +10,7 @@ use App\Office\Office;
 use App\Office\OfficeController;
 use App\Office\OfficeMission;
 use App\Product\ProductController;
+use App\Product\StaticProductService;
 
 class ReportController extends Controller
 {
@@ -112,6 +113,8 @@ class ReportController extends Controller
 
         $officeMission = OfficeMission::find($officeMission);
         $office = $officeMission->office;
+        $surplusData = [];
+        $meal = null;
 
         $report = $office->reports()->where('for_date', $date)->first();
         $staticProducts = $report->staticProducts;
@@ -119,11 +122,40 @@ class ReportController extends Controller
         if ($mealId) {
             $meal = Meal::find($mealId);
             $surplus = $report->surplus->where('meal_id', $mealId)->first();
+            $surplusService = new SurplusService($surplus);
+            foreach ($staticProducts as $staticProduct) {
+                $staticProductService = new StaticProductService($staticProduct);
+                $surplusData = $staticProductService->getSurplusDataFor($report, $meal);
+                $staticProduct->surplusData = $surplusData;
+            }
+
         } else {
-            $meal = null;
-            $surplus = null;
+            foreach ($report->surplus as $surplus) {
+                $surplusMeal = $surplus->meal;
+                foreach ($staticProducts as $staticProduct) {
+                    $staticProductService = new StaticProductService($staticProduct);
+                    $surplusData = $staticProductService->getSurplusDataFor($report, $surplusMeal);
+
+                    if (!$staticProduct->surplusData) {
+                        $staticProduct->surplusData = $surplusData;
+                    } else {
+                        $data = $staticProduct->surplusData;
+
+                        $data['amountForMeal'] = ($data['amountForMeal'] ?? 0) + $surplusData['amountForMeal'];
+                        $data['totalAmountForMeal'] = ($data['totalAmountForMeal'] ?? 0) + $surplusData['totalAmountForMeal'];
+                        $data['thisDayImported'] = ($data['thisDayImported'] ?? 0) + $surplusData['thisDayImported'];
+                        $data['surplusBenefit'] = ($data['surplusBenefit'] ?? 0) + $surplusData['surplusBenefit'];
+                        $data['totalSurplus'] = ($data['totalSurplus'] ?? 0) + $surplusData['totalSurplus'];
+                        $data['total'] = ($data['total'] ?? 0) + $surplusData['total'];
+
+                        $staticProduct->surplusData = $data;
+                    }
+                }
+            }
         }
 
+
+        // Signs data
         $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
             $user
         ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_president')->first();
@@ -139,7 +171,7 @@ class ReportController extends Controller
         return view('reports.surplus-to-print',
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal',
                 'subsidiary_receiving_committee_president',
-                'subsidiary_receiving_committee_member', 'supplier'));
+                'subsidiary_receiving_committee_member', 'supplier', 'surplusData'));
 
     }
 

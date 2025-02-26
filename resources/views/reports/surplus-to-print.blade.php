@@ -43,7 +43,7 @@
         <th>اليوم</th>
         <td>{{ \App\Models\Day::convertDate2ArName($date) }}</td>
         <th>التاريخ</th>
-        <td colspan="2">{{\App\Models\Day::DateToHijri($date)}}</td>
+        <td>{{\App\Models\Day::DateToHijri($date)}}</td>
         <th>إجمالى القوة</th>
         <td colspan="1"
             class="focus">{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($report->import->benefits)}}</td>
@@ -55,7 +55,7 @@
         <th>ت</th>
         <th width="100">الصنف</th>
         <th width="100">الوحدة</th>
-        <th>الإستحقاق اليومى (للوجبة)</th>
+        <th>الإستحقاق اليومى</th>
         <th>إجمال الإستحقاق</th>
         <th>الوفر(الأشخاص)</th>
         <th>إجمالى الوفر(الوحدة)</th>
@@ -68,58 +68,15 @@
         $day = \App\Models\Day::date2object($date);
     @endphp
     @foreach($staticProducts as $staticProduct)
-        @php
-            if ($meal) {
-                $timesPerDay = $staticProduct->getHowManyPerDay($day);
-                $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $staticProduct->old_id)
-                    ->where('living_id', $report->office->living_id)->where('mission_id', $report->office->getOfficeMission($report->for_date)->mission_id)->first();
-                $amountForMeal = $staticProduct->getAmountForMeal($day, $surplus->meal, $productLivingMission) * $report->import->benefits;
-                $thisDayImported = $timesPerDay && $staticProduct->importProductError ? $staticProduct->importProductError->error / $timesPerDay: 0;
-
-                $surplusProductError = $surplus->surplusProductErrors
-                                ->where('static_product_id', $staticProduct->id)->first();
-                $surplusFoodType = $surplus->surplusFoodTypes->where('food_type_id', $staticProduct->food_type_id)->first();
-                $surplusBenefitFromTypes =  $surplus->surplusFoodTypes
-                                ->where('food_type_id', $staticProduct->food_type_id)->first()->value ?? 0;
-                $surplusBenefit = $surplusBenefitFromTypes + ($surplusProductError ? $surplusProductError->surplus_benefits : 0);
-
-                $totalSurplus = $staticProduct->daily_amount * $surplusBenefit +
-                    ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
-                $totalSurplus = max($totalSurplus, 0);
-                $total = $thisDayImported - $totalSurplus;
-                $total = max($total, 0);
-            } else {
-                $thisDayImported =  $staticProduct->importProductError ? $staticProduct->importProductError->error : 0;
-                 $amountForMeal = $thisDayImported; // this will be for all meals
-                $totalSurplus = 0;
-                foreach ($report->surplus as $surplus) {
-                    $surplusProductError = $surplus->surplusProductErrors
-                       ->where('static_product_id', $staticProduct->id)->first();
-                    $surplusFoodType = $surplus->surplusFoodTypes->where('food_type_id', $staticProduct->food_type_id)->first();
-                    $surplusBenefitFromTypes =  $surplus->surplusFoodTypes
-                                ->where('food_type_id', $staticProduct->food_type_id)->first()->value ?? 0;
-                    $surplusBenefit = $surplusBenefitFromTypes + ($surplusProductError ? $surplusProductError->surplus_benefits : 0);
-                    $totalSurplus += $staticProduct->daily_amount * $surplusBenefit +
-                    ($surplusProductError ? $surplusProductError->surplus_amount : 0); // 0 for the wrongs input
-                }
-                $totalSurplus = $totalSurplus >= 0 ? $totalSurplus : 0;
-                $total = $thisDayImported - $totalSurplus;
-                $total = $total >= 0 ? $total : 0;
-            }
-
-
-            // format numbers
-
-        @endphp
         <tr>
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
             <td>{{ $staticProduct->name }}</td>
             <td>{{ $staticProduct->foodUnit->title }}</td>
-            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct->daily_amount, 4)) }}</td>
-            <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($amountForMeal, 4)) : 'غير مقرر'}}</td>
-            <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($surplusBenefit) : 'غير مقرر'}}</td>
-            <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($totalSurplus, 4)) : 'غير مقرر'}}</td>
-            <td>{{$amountForMeal ? \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($total, 4)) : 'غير مقرر'}}</td>
+            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['amountForMeal'], 4)) }}</td>
+            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['totalAmountForMeal'])}}</td>
+            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['surplusBenefitFromTypes'])}}</td>
+            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['totalSurplus'], 4))}}</td>
+            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['total'], 4))}}</td>
         </tr>
     @endforeach
     </tbody>
