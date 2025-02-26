@@ -141,7 +141,7 @@ class ReportController extends Controller
                     } else {
                         $data = $staticProduct->surplusData;
 
-                        $data['amountForMeal'] = $surplusData['daily_amount'];
+                        $data['amountForMeal'] = $surplusData['amountForMeal'];
                         $data['totalAmountForMeal'] = $surplusData['totalAmountForMeal'];
                         $data['thisDayImported'] = ($data['thisDayImported'] ?? 0) + $surplusData['thisDayImported'];
                         $data['surplusBenefit'] = ($data['surplusBenefit'] ?? 0) + $surplusData['surplusBenefit'];
