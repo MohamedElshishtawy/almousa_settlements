@@ -3,16 +3,17 @@
 namespace App\Obligations;
 
 use App\Http\Controllers\Controller;
-use App\Models\Employee;
 use App\Models\HijriDate;
 
 class ObligationsController extends Controller
 {
     public function index()
     {
-        $employee = Employee::find(auth()->user()->id);
-        $obligations = auth()->user()->isAdmin() ? Obligations::all() :
-            Obligations::where('office_id', $employee->office()->id)->get();
+        $user = auth()->user();
+
+
+        $obligations = $user->office ? Obligations::where('office_id', $user->office->id)->get() : Obligations::all();
+
 
         return view('obligations.index-obligations', compact('obligations'));
     }

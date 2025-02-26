@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div>
-                
+
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h2>الرئيسية</h2>

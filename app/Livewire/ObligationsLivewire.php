@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Company;
-use App\Models\Employee;
 use App\Obligations\Bands;
 use App\Obligations\Obligations;
 use App\Office\Office;
@@ -33,9 +32,7 @@ class ObligationsLivewire extends Component
         }
 
         // Determine the selected office
-        $this->selectedOfficeId = auth()->user()->isAdmin()
-            ? $this->offices->first()->id
-            : Employee::find(auth()->user()->id)->office()->id;
+        $this->selectedOfficeId = $this->offices->first()->id;
 
         // Initialize obligation and bands
         if ($obligation->id) {
@@ -99,7 +96,7 @@ class ObligationsLivewire extends Component
 
         session()->flash('success', 'تم إنشاء المحضر  بنجاح');
 
-        $this->redirect(route('obligations.edit', $this->obligation->id));
+        $this->redirect(route('obligations'));
     }
 
     private function saveBands()
