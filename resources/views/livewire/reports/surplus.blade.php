@@ -154,7 +154,7 @@
                        $surplusData = $service->getSurplusData($report, $selectedMeal, $surplusFoodType, $surplusAmount ,$surplusBenefits);
 
                         // format
-                        $staticProduct->daily_amount = round($staticProduct->daily_amount;
+                        $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
                         $amountForMeal = $surplusData['amountForMeal'];
                         $thisDayAmount = $surplusData['totalAmountForMeal'];
                         $thisDayImported = $surplusData['thisDayImported'];
