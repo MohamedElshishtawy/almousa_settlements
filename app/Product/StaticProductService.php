@@ -94,13 +94,13 @@ class StaticProductService
 
         return [
             'amountForMeal' => round($amountForMeal, 4),
-            'totalAmountForMeal' => round($importData['totalAmountForMeal']),
-            'thisDayImported' => round($thisDayImported),
-            'surplusProductError' => round($surplusProductErrorAmount),
-            'surplusBenefitFromTypes' => round($surplusBenefitFromTypes),
-            'surplusBenefit' => round($surplusBenefit),
-            'totalSurplus' => round($totalSurplus),
-            'total' => round($total)
+            'totalAmountForMeal' => round($importData['totalAmountForMeal'], 4),
+            'thisDayImported' => round($thisDayImported, 4),
+            'surplusProductError' => round($surplusProductErrorAmount, 4),
+            'surplusBenefitFromTypes' => round($surplusBenefitFromTypes, 4),
+            'surplusBenefit' => round($surplusBenefit, 4),
+            'totalSurplus' => round($totalSurplus, 4),
+            'total' => round($total, 4)
         ];
 
     }
