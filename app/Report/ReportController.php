@@ -134,15 +134,15 @@ class ReportController extends Controller
                 $surplusMeal = $surplus->meal;
                 foreach ($staticProducts as $staticProduct) {
                     $staticProductService = new StaticProductService($staticProduct);
-                    $surplusData = $staticProductService->getSurplusDataFor($report, $surplusMeal);
+                    $surplusData = $staticProductService->getSurplusDataForAllMeals($report, $surplusMeal);
 
                     if (!$staticProduct->surplusData) {
                         $staticProduct->surplusData = $surplusData;
                     } else {
                         $data = $staticProduct->surplusData;
 
-                        $data['amountForMeal'] = ($data['amountForMeal'] ?? 0) + $surplusData['amountForMeal'];
-                        $data['totalAmountForMeal'] = ($data['totalAmountForMeal'] ?? 0) + $surplusData['totalAmountForMeal'];
+                        $data['amountForMeal'] = $surplusData['daily_amount'];
+                        $data['totalAmountForMeal'] = $surplusData['totalAmountForMeal'];
                         $data['thisDayImported'] = ($data['thisDayImported'] ?? 0) + $surplusData['thisDayImported'];
                         $data['surplusBenefit'] = ($data['surplusBenefit'] ?? 0) + $surplusData['surplusBenefit'];
                         $data['totalSurplus'] = ($data['totalSurplus'] ?? 0) + $surplusData['totalSurplus'];

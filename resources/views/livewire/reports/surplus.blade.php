@@ -151,7 +151,7 @@
 
 
                        $service = new \App\Product\StaticProductService($staticProduct);
-                       $surplusData = $service->getSurplusData($report, $selectedMeal, $surplusFoodType, $surplusAmount ,$surplusBenefits);
+                       $surplusData = $service->calcSurplusData($report, $selectedMeal, $surplusFoodType, $surplusAmount ,$surplusBenefits);
 
                         // format
                         $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
