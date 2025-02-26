@@ -79,11 +79,11 @@
                 <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['totalSurplus'], 4))}}</td>
                 <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['total'], 4))}}</td>
             @else
-                <td>غير مقرر</td>
-                <td>غير مقرر</td>
-                <td>غير مقرر</td>
-                <td>غير مقرر</td>
-                <td>غير مقرر</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
             @endif
         </tr>
     @endforeach
