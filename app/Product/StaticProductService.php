@@ -93,14 +93,14 @@ class StaticProductService
         $total = max($thisDayImported - $totalSurplus, 0);
 
         return [
-            'amountForMeal' => $amountForMeal,
-            'totalAmountForMeal' => $importData['totalAmountForMeal'],
-            'thisDayImported' => $thisDayImported,
-            'surplusProductError' => $surplusProductErrorAmount,
-            'surplusBenefitFromTypes' => $surplusBenefitFromTypes,
-            'surplusBenefit' => $surplusBenefit,
-            'totalSurplus' => $totalSurplus,
-            'total' => $total
+            'amountForMeal' => round($amountForMeal, 4),
+            'totalAmountForMeal' => round($importData['totalAmountForMeal']),
+            'thisDayImported' => round($thisDayImported),
+            'surplusProductError' => round($surplusProductErrorAmount),
+            'surplusBenefitFromTypes' => round($surplusBenefitFromTypes),
+            'surplusBenefit' => round($surplusBenefit),
+            'totalSurplus' => round($totalSurplus),
+            'total' => round($total)
         ];
 
     }
