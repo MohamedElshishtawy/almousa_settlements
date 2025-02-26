@@ -72,11 +72,15 @@
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
             <td>{{ $staticProduct->name }}</td>
             <td>{{ $staticProduct->foodUnit->title }}</td>
-            <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['amountForMeal'], 4)) }}</td>
-            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['totalAmountForMeal'])}}</td>
-            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['surplusBenefitFromTypes'])}}</td>
-            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['totalSurplus'], 4))}}</td>
-            <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['total'], 4))}}</td>
+            @if ($staticProduct['surplusData']['amountForMeal'])
+                <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['amountForMeal'], 4)) }}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['totalAmountForMeal'])}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['surplusBenefitFromTypes'])}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['totalSurplus'], 4))}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['total'], 4))}}</td>
+            @else
+                <td colspan="100">غير مقرر</td>
+            @endif
         </tr>
     @endforeach
     </tbody>
