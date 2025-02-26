@@ -146,7 +146,7 @@ class StaticProductService
 
         $surplusBenefit = $surplusBenefitFromTypes + $surplusProductErrorBenefits;
 
-        $totalSurplus = $amountForMeal * $surplusBenefit + $surplusProductErrorAmount;
+        $totalSurplus = $importData['amountForMeal'] * $surplusBenefit + $surplusProductErrorAmount;
 
         $totalSurplus = max($totalSurplus, 0);
 
