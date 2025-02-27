@@ -155,11 +155,11 @@
 
                         // format
                         $staticProduct->daily_amount = round($staticProduct->daily_amount, 4);
-                        $amountForMeal = $surplusData['amountForMeal'];
-                        $thisDayAmount = $surplusData['totalAmountForMeal'];
-                        $thisDayImported = $surplusData['thisDayImported'];
-                        $totalSurplus = $surplusData['totalSurplus'];
-                        $total = $surplusData['total'];
+                       $amountForMeal = round($surplusData['amountForMeal'], 4);
+                        $thisDayAmount = round($surplusData['totalAmountForMeal'], 4);
+                        $thisDayImported = round($surplusData['thisDayImported'], 4);
+                        $totalSurplus = round($surplusData['totalSurplus'], 4);
+                        $total = round($surplusData['total'], 4);
                     }
                     else {
                         $amountForMeal = 0;
