@@ -138,6 +138,7 @@ class ReportController extends Controller
 
                     if (!$staticProduct->surplusData) {
                         $staticProduct->surplusData = $surplusData;
+                        dd($surplusData['totalSurplus']);
                     } else {
                         $data = $staticProduct->surplusData;
 
