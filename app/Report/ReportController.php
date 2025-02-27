@@ -142,11 +142,14 @@ class ReportController extends Controller
                         $data = $staticProduct->surplusData;
 
                         $data['amountForMeal'] = bcadd($surplusData['amountForMeal'], $data['amountForMeal'], 100000);
-                        $data['totalAmountForMeal'] = $surplusData['totalAmountForMeal'];
-                        $data['thisDayImported'] = ($data['thisDayImported'] ?? 0) + $surplusData['thisDayImported'];
-                        $data['surplusBenefit'] = ($data['surplusBenefit'] ?? 0) + $surplusData['surplusBenefit'];
-                        $data['totalSurplus'] = ($data['totalSurplus'] ?? 0) + $surplusData['totalSurplus'];
-                        $data['total'] = ($data['total'] ?? 0) + $surplusData['total'];
+                        $data['totalAmountForMeal'] = bcadd($surplusData['totalAmountForMeal'],
+                            $data['totalAmountForMeal'], 100000);
+                        $data['thisDayImported'] = bcadd($surplusData['thisDayImported'], $data['thisDayImported'],
+                            100000);
+                        $data['surplusBenefit'] = bcadd($surplusData['surplusBenefit'], $data['surplusBenefit'],
+                            100000);
+                        $data['totalSurplus'] = bcadd($surplusData['totalSurplus'], $data['totalSurplus'], 100000);
+                        $data['total'] = bcadd($surplusData['total'], $data['total'], 100000);
 
                         $staticProduct->surplusData = $data;
                     }
