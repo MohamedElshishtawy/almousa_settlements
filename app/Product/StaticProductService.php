@@ -116,7 +116,7 @@ class StaticProductService
 
         $totalSurplus = max($totalSurplus, 0);
 
-        dd($thisDayImported, $totalSurplus);
+
         $total = bcsub($thisDayImported, $totalSurplus, 100);
 
         $total = max($total, 0);
