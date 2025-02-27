@@ -112,7 +112,6 @@ class StaticProductService
 
 
         $surplusBenefit = bcadd($surplusBenefitFromTypes, $surplusProductErrorBenefits, 100);
-        dd($surplusBenefit);
 
         $totalSurplus = bcadd(bcmul($amountForMeal, $surplusBenefit, 100), $surplusProductErrorAmount, 100);
 
