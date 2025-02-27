@@ -116,7 +116,9 @@ class StaticProductService
 
         $totalSurplus = max($totalSurplus, 0);
 
-        $total = max($thisDayImported - $totalSurplus, 0);
+        $total = bcsub($thisDayImported, $totalSurplus, 100);
+
+        $total = max($total, 0);
 
         return [
             'amountForMeal' => $amountForMeal,
