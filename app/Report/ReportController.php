@@ -147,8 +147,7 @@ class ReportController extends Controller
                             $data['totalAmountForMeal'], 100);
                         $data['thisDayImported'] = bcadd($surplusData['thisDayImported'], $data['thisDayImported'],
                             100);
-                        $data['surplusBenefit'] = bcadd($surplusData['surplusBenefit'], $data['surplusBenefit'],
-                            100);
+                        $data['surplusBenefit'] = $surplusData['surplusBenefit'] + $data['surplusBenefit'];
                         $data['totalSurplus'] = bcadd($surplusData['totalSurplus'], $data['totalSurplus'], 100);
                         $data['total'] = bcadd($surplusData['total'], $data['total'], 100);
 

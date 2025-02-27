@@ -111,7 +111,7 @@ class StaticProductService
         $thisDayImported = $importData['thisDayImported'];
 
 
-        $surplusBenefit = bcadd($surplusBenefitFromTypes, $surplusProductErrorBenefits, 100);
+        $surplusBenefit = $surplusBenefitFromTypes + $surplusProductErrorBenefits;
 
         $totalSurplus = bcadd(bcmul($amountForMeal, $surplusBenefit, 100), $surplusProductErrorAmount, 100);
 
