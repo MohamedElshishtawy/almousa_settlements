@@ -119,14 +119,14 @@ class StaticProductService
         $total = max($thisDayImported - $totalSurplus, 0);
 
         return [
-            'amountForMeal' => number_format($amountForMeal, 5),
-            'totalAmountForMeal' => number_format($importData['totalAmountForMeal'], 5),
-            'thisDayImported' => number_format($thisDayImported, 5),
-            'surplusProductError' => number_format($surplusProductErrorAmount, 5),
-            'surplusBenefitFromTypes' => number_format($surplusBenefitFromTypes, 5),
-            'surplusBenefit' => number_format($surplusBenefit, 5),
-            'totalSurplus' => number_format($totalSurplus, 5),
-            'total' => number_format($total, 5)
+            'amountForMeal' => round($amountForMeal, 5),
+            'totalAmountForMeal' => round($importData['totalAmountForMeal'], 5),
+            'thisDayImported' => round($thisDayImported, 5),
+            'surplusProductError' => round($surplusProductErrorAmount, 5),
+            'surplusBenefitFromTypes' => round($surplusBenefitFromTypes, 5),
+            'surplusBenefit' => round($surplusBenefit, 5),
+            'totalSurplus' => round($totalSurplus, 5),
+            'total' => round($total, 5)
         ];
 
     }
