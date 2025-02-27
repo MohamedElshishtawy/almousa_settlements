@@ -129,7 +129,7 @@ class StaticProductService
             'surplusProductError' => $surplusProductErrorAmount,
             'surplusBenefitFromTypes' => $surplusBenefitFromTypes,
             'surplusBenefit' => $surplusBenefit,
-            'totalSurplus' => $totalSurplus,
+            'totalSurplus' => 1,
             'total' => $total
         ];
 
