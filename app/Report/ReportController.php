@@ -140,9 +140,7 @@ class ReportController extends Controller
                         $staticProduct->surplusData = $surplusData;
                     } else {
                         $data = $staticProduct->surplusData;
-                        if ($staticProduct->name == 'ملح خشن') {
-                            dd($data, $surplusData);
-                        }
+
                         $data['amountForMeal'] = bcadd($surplusData['amountForMeal'], $data['amountForMeal'], 100);
                         $data['totalAmountForMeal'] = bcadd($surplusData['totalAmountForMeal'],
                             $data['totalAmountForMeal'], 100);
