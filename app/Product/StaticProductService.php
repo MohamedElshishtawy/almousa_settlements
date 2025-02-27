@@ -86,7 +86,7 @@ class StaticProductService
         $totalAmountForMeal = $amountForMeal * $import->benefits;
 
         $thisDayImported = $amountForMeal && $this->staticProduct->importProductError
-            ? bcdiv($this->staticProduct->importProductError->imported_amount, $timesPerDay, 10)
+            ? bcdiv($this->staticProduct->importProductError->imported_amount, $timesPerDay, 100000)
             : 0;
 
         return [
@@ -110,9 +110,9 @@ class StaticProductService
         $amountForMeal = $importData['amountForMeal'];
         $thisDayImported = $importData['thisDayImported'];
 
-        $surplusBenefit = bcadd($surplusBenefitFromTypes, $surplusProductErrorBenefits, 10);
+        $surplusBenefit = bcadd($surplusBenefitFromTypes, $surplusProductErrorBenefits, 100000);
 
-        $totalSurplus = bcadd(bcmul($amountForMeal, $surplusBenefit, 10), $surplusProductErrorAmount, 10);
+        $totalSurplus = bcadd(bcmul($amountForMeal, $surplusBenefit, 100000), $surplusProductErrorAmount, 100000);
 
         $totalSurplus = max($totalSurplus, 0);
 
