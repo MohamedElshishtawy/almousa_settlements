@@ -86,7 +86,7 @@ class StaticProductService
         $totalAmountForMeal = bcmul($amountForMeal, $import->benefits, 100);
 
         $thisDayImported = $amountForMeal && $this->staticProduct->importProductError
-            ? bcdiv($this->staticProduct->importProductError->imported_amount, $timesPerDay, 100)
+            ? bcdiv($this->staticProduct->importProductError->error, $timesPerDay, 100)
             : 0;
 
         return [
@@ -129,7 +129,7 @@ class StaticProductService
             'surplusProductError' => $surplusProductErrorAmount,
             'surplusBenefitFromTypes' => $surplusBenefitFromTypes,
             'surplusBenefit' => $surplusBenefit,
-            'totalSurplus' => 1,
+            'totalSurplus' => $totalSurplus,
             'total' => $total
         ];
 
