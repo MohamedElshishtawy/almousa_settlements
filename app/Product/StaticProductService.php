@@ -83,7 +83,7 @@ class StaticProductService
 
         $timesPerDay = $this->staticProduct->getHowManyPerDay($day);
         $amountForMeal = $this->staticProduct->getAmountForMeal($day, $meal, $productLivingMission);
-        $totalAmountForMeal = $amountForMeal * $import->benefits;
+        $totalAmountForMeal = bcmul($amountForMeal, $timesPerDay, 100);
 
         $thisDayImported = $amountForMeal && $this->staticProduct->importProductError
             ? bcdiv($this->staticProduct->importProductError->imported_amount, $timesPerDay, 100)
