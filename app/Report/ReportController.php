@@ -134,7 +134,7 @@ class ReportController extends Controller
                 $surplusMeal = $surplus->meal;
                 foreach ($staticProducts as $staticProduct) {
                     $staticProductService = new StaticProductService($staticProduct);
-                    $surplusData = $staticProductService->getSurplusDataForAllMeals($report, $surplusMeal);
+                    $surplusData = $staticProductService->getSurplusDataFor($report, $surplusMeal);
 
                     if (!$staticProduct->surplusData) {
                         $staticProduct->surplusData = $surplusData;
