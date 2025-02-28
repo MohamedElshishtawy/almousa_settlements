@@ -110,12 +110,12 @@
                                         <span>شركة الموسم</span>
                                     </a>
                                 @endcan
-                                @canany(['employment_create','employment_edit','employment_delete'])
-                                    {{-- Added can gate --}}
-                                    <a href="{{route('admin.employment')}}" class="btn btn-primary">
-                                        <i class="fa-solid fa-users"></i>
-                                        <span>إعدادات العمالة</span>
-                                    </a>
+                                @role('admin')
+                                {{-- Added can gate --}}
+                                <a href="{{route('admin.employment')}}" class="btn btn-primary">
+                                    <i class="fa-solid fa-users"></i>
+                                    <span>إعدادات العمالة</span>
+                                </a>
                                 @endcanany
                                 @can('unites_management')
                                     {{-- Added can gate --}}

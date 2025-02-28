@@ -93,23 +93,23 @@
     <table rules="all" class="no-break mt-2">
         <tbody>
         <tr>
-            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
             <th colspan="2">المورد أو من ينوب عنه</th>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
+            <th>الاسم</th>
+            <td><input type="text" class="form-control" value="{{optional($supplier)->name}}"></td>
             <th>الاسم</th>
             <td>
                 <input type="text" class="form-control"
-                       value="{{optional($subsidiary_receiving_committee_president)->name}}">
+                       value="{{isset($subsidiary_receiving_committee_member[0]) ? $subsidiary_receiving_committee_member[0]->name : ''}}">
             </td>
-            <th>الاسم</th>
-            <td><input type="text" class="form-control" value="{{optional($supplier)->name}}"></td>
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="{{'رئيس لجنة الإستلام الفرعية'}}"></td>
-            <th>الرتبة</th>
             <td><input type="text" class="form-control" value="{{'المورد'}}"></td>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
@@ -123,25 +123,26 @@
         <tbody>
         <tr>
             <th colspan="2">عضو لجنة الإستلام الفرعية</th>
-            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
-            <th>الاسم</th>
-            <td>
-                <input type="text" class="form-control"
-                       value="{{isset($subsidiary_receiving_committee_member[0]) ? $subsidiary_receiving_committee_member[0]->name : ''}}">
-            </td>
             <th>الاسم</th>
             <td>
                 <input type="text" class="form-control"
                        value="{{isset($subsidiary_receiving_committee_member[1]) ? $subsidiary_receiving_committee_member[1]->name : ''}}">
             </td>
+            <th>الاسم</th>
+            <td>
+                <input type="text" class="form-control"
+                       value="{{optional($subsidiary_receiving_committee_president)->name}}">
+            </td>
+
         </tr>
         <tr>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
-            <th>الرتبة</th>
-            <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value="{{'رئيس لجنة الإستلام الفرعية'}}"></td>
         </tr>
         <tr>
             <th>التوقيع</th>

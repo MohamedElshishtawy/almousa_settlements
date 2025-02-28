@@ -57,15 +57,15 @@ class ReportController extends Controller
 
         $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_president')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_president')->first();
 
         $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_member')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
 
         $supplier = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role == 'supplier')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'supplier')->first();
 
         return view('reports.import-to-print',
             compact('office', 'date', 'dateHijry', 'products', 'import', 'subsidiary_receiving_committee_president',
@@ -85,8 +85,25 @@ class ReportController extends Controller
 
         $Hijri = Day::DateToHijriSpecificArray($date);
 
+
+        // Signs data
+        $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_president')->first();
+
+        $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
+
+        $supplier = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'supplier')->first();
+
+
         return view('reports.import-writing-print',
-            compact('office', 'Hijri', 'products', 'report', 'import', 'isHasDifferance'));
+            compact('office', 'Hijri', 'products', 'report', 'import', 'isHasDifferance',
+                'subsidiary_receiving_committee_president',
+                'subsidiary_receiving_committee_member', 'supplier'));
     }
 
 
@@ -161,15 +178,15 @@ class ReportController extends Controller
         // Signs data
         $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_president')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_president')->first();
 
         $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role == 'subsidiary_receiving_committee_member')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
 
         $supplier = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role == 'supplier')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'supplier')->first();
 
         return view('reports.surplus-to-print',
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal',

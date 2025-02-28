@@ -65,8 +65,8 @@
         </article>
     </div>
 
-    <footer>
-        <table rules="all" class="no-break">
+    <footer class="mt-4">
+        <table rules="all" class="no-break mt-2">
             <tbody>
             <tr>
                 <th colspan="2">المورد أو من ينوب عنه</th>
@@ -74,17 +74,18 @@
             </tr>
             <tr>
                 <th>الاسم</th>
-                <td>
-                    <input type="text" class="form-control" value="{{auth()->user()->name}}">
-                </td>
+                <td><input type="text" class="form-control" value="{{optional($supplier)->name}}"></td>
                 <th>الاسم</th>
-                <td><input type="text" class="form-control"></td>
+                <td>
+                    <input type="text" class="form-control"
+                           value="{{isset($subsidiary_receiving_committee_member[0]) ? $subsidiary_receiving_committee_member[0]->name : ''}}">
+                </td>
             </tr>
             <tr>
                 <th>المسمى</th>
-                <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
-                <th>الرتبة</th>
-                <td><input type="text" class="form-control"></td>
+                <td><input type="text" class="form-control" value="{{'المورد'}}"></td>
+                <th>المسمى</th>
+                <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
             </tr>
             <tr>
                 <th>التوقيع</th>
@@ -94,7 +95,6 @@
             </tr>
             </tbody>
         </table>
-
         <table rules="all" class="no-break mt-2">
             <tbody>
             <tr>
@@ -104,16 +104,21 @@
             <tr>
                 <th>الاسم</th>
                 <td>
-                    <input type="text" class="form-control" value="">
+                    <input type="text" class="form-control"
+                           value="{{isset($subsidiary_receiving_committee_member[1]) ? $subsidiary_receiving_committee_member[1]->name : ''}}">
                 </td>
                 <th>الاسم</th>
-                <td><input type="text" class="form-control"></td>
+                <td>
+                    <input type="text" class="form-control"
+                           value="{{optional($subsidiary_receiving_committee_president)->name}}">
+                </td>
+
             </tr>
             <tr>
                 <th>المسمى</th>
-                <td><input type="text" class="form-control" value=""></td>
-                <th>الرتبة</th>
-                <td><input type="text" class="form-control"></td>
+                <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
+                <th>المسمى</th>
+                <td><input type="text" class="form-control" value="{{'رئيس لجنة الإستلام الفرعية'}}"></td>
             </tr>
             <tr>
                 <th>التوقيع</th>

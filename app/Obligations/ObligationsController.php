@@ -4,6 +4,7 @@ namespace App\Obligations;
 
 use App\Http\Controllers\Controller;
 use App\Models\HijriDate;
+use App\Models\User;
 
 class ObligationsController extends Controller
 {
@@ -32,7 +33,25 @@ class ObligationsController extends Controller
     public function printPage(Obligations $obligations)
     {
         $dateHijri = HijriDate::where('gregorian_date', $obligations->created_at->format('Y-m-d'))->first();
-        return view('obligations.print-obligation', compact('obligations', 'dateHijri'));
+
+        $office = $obligations->office;
+
+        $subsidiary_receiving_committee_president = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_president')->first();
+
+        $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
+
+        $supplier = User::with('roles')->get()->filter(fn(
+            $user
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'supplier')->first();
+
+
+        return view('obligations.print-obligation',
+            compact('obligations', 'dateHijri', 'subsidiary_receiving_committee_president',
+                'subsidiary_receiving_committee_member', 'supplier'));
 
     }
 

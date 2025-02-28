@@ -11,7 +11,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Indie+Flower&family=Lalezar&family=Matemasie&family=Permanent+Marker&family=Playwrite+FR+Moderne:wght@100..400&family=Readex+Pro:wght@160..700&family=Sen:wght@400..800&family=Tajawal:wght@200;300;400;500;700;800;900&family=Titan+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -86,23 +85,23 @@
     <table rules="all" class="no-break mt-2">
         <tbody>
         <tr>
-            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
             <th colspan="2">المورد أو من ينوب عنه</th>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
+            <th>الاسم</th>
+            <td><input type="text" class="form-control" value="{{optional($supplier)->name}}"></td>
             <th>الاسم</th>
             <td>
                 <input type="text" class="form-control"
-                       value="{{optional($subsidiary_receiving_committee_president)->name}}">
+                       value="{{isset($subsidiary_receiving_committee_member[0]) ? $subsidiary_receiving_committee_member[0]->name : ''}}">
             </td>
-            <th>الاسم</th>
-            <td><input type="text" class="form-control" value="{{optional($supplier)->name}}"></td>
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="{{'رئيس لجنة الإستلام الفرعية'}}"></td>
-            <th>الرتبة</th>
             <td><input type="text" class="form-control" value="{{'المورد'}}"></td>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
@@ -116,25 +115,26 @@
         <tbody>
         <tr>
             <th colspan="2">عضو لجنة الإستلام الفرعية</th>
-            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
-            <th>الاسم</th>
-            <td>
-                <input type="text" class="form-control"
-                       value="{{isset($subsidiary_receiving_committee_member[0]) ? $subsidiary_receiving_committee_member[0]->name : ''}}">
-            </td>
             <th>الاسم</th>
             <td>
                 <input type="text" class="form-control"
                        value="{{isset($subsidiary_receiving_committee_member[1]) ? $subsidiary_receiving_committee_member[1]->name : ''}}">
             </td>
+            <th>الاسم</th>
+            <td>
+                <input type="text" class="form-control"
+                       value="{{optional($subsidiary_receiving_committee_president)->name}}">
+            </td>
+
         </tr>
         <tr>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
-            <th>الرتبة</th>
-            <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
+            <th>المسمى</th>
+            <td><input type="text" class="form-control" value="{{'رئيس لجنة الإستلام الفرعية'}}"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
