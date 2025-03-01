@@ -72,7 +72,6 @@
         <strong>ولسعادتكم تحياتى و تقديرى</strong>
     </p>
 @endsection
-
 @section('footer')
     <table rules="all" class="no-break">
         <tbody>
@@ -83,10 +82,12 @@
         <tr>
             <th>الاسم</th>
             <td>
-                <input type="text" class="form-control" value="{{$supplier->name}}">
+                <input type="text" class="form-control" value="{{ $supplier ? $supplier->name : '' }}">
             </td>
             <th>الاسم</th>
-            <td><input type="text" class="form-control" value="{{$subsidiary_receiving_committee_president->name}}">
+            <td>
+                <input type="text" class="form-control"
+                       value="{{ $subsidiary_receiving_committee_president ? $subsidiary_receiving_committee_president->name : '' }}">
             </td>
         </tr>
         <tr>
@@ -108,12 +109,12 @@
         <tbody>
         <tr>
             <th colspan="2">عضو لجنة الإستلام الفرعية</th>
-
         </tr>
         <tr>
             <th>الاسم</th>
             <td>
-                <input type="text" class="form-control" value="{{$subsidiary_receiving_committee_member->name}}">
+                <input type="text" class="form-control"
+                       value="{{ $subsidiary_receiving_committee_member ? $subsidiary_receiving_committee_member->name : '' }}">
             </td>
         </tr>
         <tr>
