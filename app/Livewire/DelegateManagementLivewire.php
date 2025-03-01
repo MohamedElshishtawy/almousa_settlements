@@ -27,9 +27,14 @@ class DelegateManagementLivewire extends Component
 
     public function mount(Delegate $delegate)
     {
+        $user = auth()->user();
         $this->delegates = Delegate::all();
         $this->foodTypes = FoodType::all();
-        $this->offices = Office::all();
+        if ($user->office) {
+            $this->offices = Office::where('id', $user->office->id);
+        } else {
+            $this->offices = Office::all();
+        }
         $this->delegate = $delegate;
         if ($delegate) {
             $this->number = $delegate->number;
