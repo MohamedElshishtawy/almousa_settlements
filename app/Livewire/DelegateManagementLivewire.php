@@ -31,7 +31,7 @@ class DelegateManagementLivewire extends Component
         $this->delegates = Delegate::all();
         $this->foodTypes = FoodType::all();
         if ($user->office) {
-            $this->offices = Office::where('id', $user->office->id);
+            $this->offices = Office::where('id', $user->office->id)->get();
         } else {
             $this->offices = Office::all();
         }
