@@ -18,7 +18,15 @@ class DelegateController extends Controller
 
     public function create()
     {
-        $offices = Office::all();
+
+
+        $user = auth()->user();
+        if ($user->office) {
+            $offices = Office::where('id', $user->office->id);
+        } else {
+            $offices = Office::all();
+        }
+
         $foodTypes = FoodType::all();
         return view('delegates.create', compact('offices', 'foodTypes'));
     }
