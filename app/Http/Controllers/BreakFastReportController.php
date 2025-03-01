@@ -103,14 +103,15 @@ class BreakFastReportController extends Controller
         return redirect()->route('breakfast.index')->with('message', 'تم تحديث التقرير بنجاح');
     }
 
-    public function print(BreakFastReport $breakFastReport) // Changed to show and accept ID
+    public function print(BreakFastReport $breakfast) // Changed to show and accept ID
     {
 
         // Find the BreakFastReport by ID, eager loading relationships
         $breakfastReport = BreakFastReport::with([
             'breakFastReportProducts.breakFastProduct.product',
             'breakFastReportDelegates.delegate'
-        ])->find($breakFastReport->id);
+        ])->find($breakfast->id);
+
 
         // Extract data for the view
         $breakfastReportDelegates = $breakfastReport->breakFastReportDelegates;
