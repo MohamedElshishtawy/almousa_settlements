@@ -61,7 +61,7 @@ class ReportController extends Controller
 
         $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->values();
 
         $supplier = User::with('roles')->get()->filter(fn(
             $user
@@ -93,7 +93,7 @@ class ReportController extends Controller
 
         $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->values();
 
         $supplier = User::with('roles')->get()->filter(fn(
             $user
@@ -182,7 +182,8 @@ class ReportController extends Controller
 
         $subsidiary_receiving_committee_member = User::with('roles')->get()->filter(fn(
             $user
-        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->first();
+        ) => $user->office && $user->office->id == $office->id && $user->role->name == 'subsidiary_receiving_committee_member')->values();
+
 
         $supplier = User::with('roles')->get()->filter(fn(
             $user
