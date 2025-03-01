@@ -12,7 +12,15 @@ class DelegateController extends Controller
     public function index()
     {
         $delegates = Delegate::all();
-        $delegateHistory = DelegateHistory::all()->groupBy('name');
+        $delegateHistory = DelegateHistory::all();
+        if (auth()->user()->office) {
+            $delegates = $delegates->filter(fn($delegate) => $delegate->office->id == auth()->user()->office->id);
+            $delegateHistory = $delegateHistory->filter(fn($delegateHis
+            ) => $delegateHis->office->id == auth()->user()->office->id);
+        }
+
+        $delegateHistory = $delegateHistory->groupBy('name');
+
         return view('delegates.index', compact('delegates', 'delegateHistory'));
     }
 
