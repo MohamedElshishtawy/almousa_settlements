@@ -46,18 +46,18 @@
                         <span class="spinner-border spinner-border-sm text-white" role="status"></span>
                     </span>
                     </button>
-                    @endcan
-                    @can('tasks_delete')
-                        <button class="btn btn-danger"
-                                wire:click="delete"
-                                wire:confirm="هل أنت متأكد من حذف المهمة؟">
-                            <span wire:loading.remove wire:target="delete">حذف</span>
-                            <span wire:loading wire:target="delete">
+                </div>
+            @endcan
+            @can('tasks_delete')
+                <button class="btn btn-danger"
+                        wire:click="delete"
+                        wire:confirm="هل أنت متأكد من حذف المهمة؟">
+                    <span wire:loading.remove wire:target="delete">حذف</span>
+                    <span wire:loading wire:target="delete">
                         <span class="spinner-border spinner-border-sm text-white" role="status"></span>
                     </span>
-                        </button>
-                    @endcan
-                </div>
+                </button>
+            @endcan
         </div>
 
         @if ($task->histories->count())
