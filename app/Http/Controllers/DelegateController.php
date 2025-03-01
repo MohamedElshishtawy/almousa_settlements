@@ -21,6 +21,7 @@ class DelegateController extends Controller
 
 
         $user = auth()->user();
+        dd($user->office);
         if ($user->office) {
             $offices = Office::where('id', $user->office->id);
         } else {
