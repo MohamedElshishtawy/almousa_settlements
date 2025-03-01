@@ -83,16 +83,17 @@
         <tr>
             <th>الاسم</th>
             <td>
-                <input type="text" class="form-control" value="{{auth()->user()->name}}">
+                <input type="text" class="form-control" value="{{$supplier->name}}">
             </td>
             <th>الاسم</th>
-            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control" value="{{$subsidiary_receiving_committee_president->name}}">
+            </td>
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+            <td><input type="text" class="form-control" value="المندوب"></td>
             <th>الرتبة</th>
-            <td><input type="text" class="form-control"></td>
+            <td><input type="text" class="form-control" value="رئيس لجنة الإستلام الفرعية"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
@@ -112,12 +113,12 @@
         <tr>
             <th>الاسم</th>
             <td>
-                <input type="text" class="form-control" value="{{auth()->user()->name}}">
+                <input type="text" class="form-control" value="{{$subsidiary_receiving_committee_member->name}}">
             </td>
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="{{auth()->user()->role_ar}}"></td>
+            <td><input type="text" class="form-control" value="عضو لجنة الإستلام الفرعية"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
