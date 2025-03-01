@@ -192,6 +192,10 @@ class FormEmploymentLivewire extends Component
             $this->titles[] = $element->title;
             $this->benefits[] = $element->benefits;
             $this->mainCounts[] = $element->count;
+            // set default values
+            $this->cleaningState = FormEmploymentElement::CLEAN_STATUS[0];
+            $this->countState = FormEmploymentElement::COUNT_STATUS[0];
+            $this->healthState = FormEmploymentElement::HEALTH_STATUS[0];
         }
     }
 
