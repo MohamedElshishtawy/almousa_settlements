@@ -124,12 +124,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/dates',
         [HijriDateController::class, 'index'])->name('admin.dates')->middleware('permission:manage_dates');
 
-    Route::prefix('tasks')->middleware('permission:tasks_create|tasks_edit|tasks_delete')->group(function () {
+    Route::prefix('tasks')->middleware('permission:tasks_create|tasks_edit|tasks_delete|tasks_manage')->group(function (
+    ) {
         Route::get('/', [TaskController::class, 'index'])->name('admin.tasks');
         Route::get('/{officeId}', [TaskController::class, 'officeTasks'])->name('admin.tasks.office');
         Route::post('/{officeId}/store',
             [TaskController::class, 'storeTask'])->name('admin.tasks.store')->middleware('permission:tasks_create');
-        Route::get('/{officeId?}/show', [TaskController::class, 'show'])->name('admin.tasks.managers');
+        Route::get('/{officeId?}/show',
+            [TaskController::class, 'show'])->name('admin.tasks.managers')->middleware('permission:tasks_manage');
 
     });
 
