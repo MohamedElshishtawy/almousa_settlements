@@ -52,7 +52,7 @@
             <tr>
                 <th>اسم المقر</th>
                 <td>
-                    <a href="{{ route('admin.offices') }}#{{ $import->report->office->id }}">{{ $import->report->office->name }}</a>
+                    <a href="{{ route('managers.reports') }}#{{ $import->report->office->id }}">{{ $import->report->office->name }}</a>
                 </td>
             </tr>
             <tr>
