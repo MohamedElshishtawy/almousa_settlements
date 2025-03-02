@@ -103,10 +103,10 @@ class SurplusAnalytics extends Component
                             $staticProductArr['food_type_id'] == $staticProduct->food_type_id &&
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
                         ) {
-                            $staticProductArr['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
-                            $staticProductArr['totalAmount'] += $report->import->benefits * $staticProduct->daily_amount;
-                            $staticProductArr['imported_total'] += optional($staticProduct->importProductError)->error;
-                            $staticProductArr['total_surplus'] += $totalSurplus;
+                            $this->staticProducts[$staticProduct->old_id]['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
+                            $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $report->import->benefits * $staticProduct->daily_amount;
+                            $this->staticProducts[$staticProduct->old_id]['imported_total'] += optional($staticProduct->importProductError)->error;
+                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $totalSurplus;
                         } else {
                             $this->staticProducts[$staticProduct->old_id] = [
                                 'name' => $staticProduct->name,
