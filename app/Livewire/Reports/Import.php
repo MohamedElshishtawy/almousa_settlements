@@ -23,7 +23,7 @@ class Import extends Component
     protected function rules()
     {
         return [
-            'benefits' => 'required|numeric|min:1',
+            'benefits' => 'required|numeric|min:0',
             'benefitError' => 'numeric|min:0',
             'date' => 'required|date',
         ];
