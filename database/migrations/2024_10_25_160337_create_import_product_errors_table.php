@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(\App\Report\Import::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Product\StaticProduct::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->float('error', 10, 6)->default(0);
+            $table->double('error', 20, 6)->default(0);
             $table->timestamps();
         });
     }

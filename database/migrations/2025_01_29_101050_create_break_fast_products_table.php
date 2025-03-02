@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('break_fast_products', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Product\Product::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->float('daily_amount', 10, 6)->nullable();
-            $table->float('price', 10, 6)->nullable();
+            $table->double('daily_amount', 20, 6)->nullable();
+            $table->double('price', 20, 6)->nullable();
             $table->timestamps();
         });
     }

@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('products_living_mission', function (Blueprint $table) {
             $table->id();
-            $table->float('price', 10, 6)->nullable();
-            $table->float('daily_amount', 10, 6)->nullable();
+            $table->double('price', 10, 6)->nullable();
+            $table->double('daily_amount', 20, 6)->nullable();
             $table->foreignIdFor(\App\Product\Product::class)
                 ->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(\App\Living\Living::class)
