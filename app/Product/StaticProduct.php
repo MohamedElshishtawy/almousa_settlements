@@ -79,18 +79,6 @@ class StaticProduct extends Product
         return $this->daily_amount * $benefits;
     }
 
-    public function getSurplus($mealId = null)
-    {
-        foreach ($this->report->surplus as $surplus) {
-            $mealPerDay = $this->getHowManyPerDay(Day::date2object($surplus->report->for_date));
-            $surplusFromType = $surplus->surplusFoodTypes->where('food_type_id', $this->food_type_id)->first();
-            $surplusFromTypeValue = $mealPerDay ? optional($surplusFromType)->value * $this->daily_amount / $mealPerDay : 0;
-            $surplusFromSpecific = $surplus->surplusProductErrors->where('static_product_id', $this->id)->first();
-            $surplusFromSpecificValue = $surplusFromSpecific ? $surplusFromSpecific->surplus_amount + $surplusFromSpecific->surplus_benefits * $this->daily_amount / $mealPerDay : 0;
-        }
-
-        return $surplusFromSpecificValue + $surplusFromTypeValue;
-    }
 
     public function getAmountForMeal(Day $day, Meal $meal, ProductLivingMission $productLivingMission = null)
     {

@@ -45,30 +45,41 @@ class StaticProductService
         );
     }
 
-//    public function getSurplusDataForAllMeals(
-//        Report $report,
-//        Meal $meal
-//    ) // temporary // if you solved the error ratio in the small numbers
-//    {
-//        $surplus = $report->surplus->where('meal_id', $meal->id)->first();
-//
-//        $surplusBenefitFromTypes = $surplus->surplusFoodTypes
-//            ->where('food_type_id', $this->staticProduct->food_type_id)->first()->value ?? 0;
-//        $surplusProductError = $surplus->surplusProductErrors
-//            ->where('static_product_id', $this->staticProduct->id)->first();
-//
-//        $surplusProductErrorBenefits = $surplusProductError ? $surplusProductError->surplus_benefits : 0;
-//        $surplusProductErrorAmount = $surplusProductError ? $surplusProductError->surplus_amount : 0;
-//
-//
-//        return $this->calcSurplusDataForAllMeals(
-//            $report,
-//            $meal,
-//            $surplusBenefitFromTypes,
-//            $surplusProductErrorAmount,
-//            $surplusProductErrorBenefits
-//        );
-//    }
+    public function getAllSurplus()
+    {
+        $totalSurplus = 0;
+        $day = Day::date2object($this->staticProduct->report->for_date);
+
+        foreach ($this->staticProduct->report->surplus as $surplus) {
+            $meal = $surplus->meal;
+            $productLivingMission = \App\Product\ProductLivingMission::where('product_id', $this->staticProduct->old_id)
+                ->where('living_id', $surplus->report->office->living_id)
+                ->where('mission_id',
+                    $surplus->report->office->getOfficeMission($surplus->report->for_date)->mission_id)
+                ->first();
+
+            $amountForMeal = $this->staticProduct->getAmountForMeal($day, $meal, $productLivingMission);
+
+            if (!$amountForMeal) {
+                continue;
+            }
+
+            $mealPerDay = $this->staticProduct->getHowManyPerDay(Day::date2object($surplus->report->for_date));
+            $surplusFromType = $surplus->surplusFoodTypes->where('food_type_id',
+                $this->staticProduct->food_type_id)->first();
+            $surplusFromTypeValue = $mealPerDay ? bcmul(optional($surplusFromType)->value,
+                bcdiv($this->staticProduct->daily_amount, $mealPerDay, 100), 100) : 0;
+            $surplusFromSpecific = $surplus->surplusProductErrors->where('static_product_id',
+                $this->staticProduct->id)->first();
+            $surplusFromSpecificValue = $surplusFromSpecific ? bcadd($surplusFromSpecific->surplus_amount,
+                bcmul($surplusFromSpecific->surplus_benefits,
+                    bcdiv($this->staticProduct->daily_amount, $mealPerDay, 100), 100),
+                100) : 0;
+            $totalSurplus = bcadd($totalSurplus, bcadd($surplusFromTypeValue, $surplusFromSpecificValue, 100), 100);
+        }
+
+        return $totalSurplus;
+    }
 
 
     public function calcImportedDataForMeal(Report $report, Meal $meal)
@@ -135,38 +146,4 @@ class StaticProductService
         ];
 
     }
-
-//    public function calcSurplusDataForAllMeals( // temporary
-//        $report,
-//        $meal,
-//        $surplusBenefitFromTypes,
-//        $surplusProductErrorAmount,
-//        $surplusProductErrorBenefits
-//    ) {
-//
-//        $importData = $this->calcImportedDataForMeal($report, $meal);
-//
-//        $amountForMeal = $importData['daily_amount'];
-//        $thisDayImported = $importData['thisDayImported'];
-//
-//        $surplusBenefit = $surplusBenefitFromTypes + $surplusProductErrorBenefits;
-//
-//        $totalSurplus = $importData['amountForMeal'] * $surplusBenefit + $surplusProductErrorAmount;
-//
-//        $totalSurplus = max($totalSurplus, 0);
-//
-//        $total = max($thisDayImported - $totalSurplus, 0);
-//
-//        return [
-//            'amountForMeal' => $importData['daily_amount'],
-//            'totalAmountForMeal' => $importData['daily_amount'] * $report->import->benefits,
-//            'thisDayImported' => round($thisDayImported, 4),
-//            'surplusProductError' => round($surplusProductErrorAmount, 4),
-//            'surplusBenefitFromTypes' => round($surplusBenefitFromTypes, 4),
-//            'surplusBenefit' => round($surplusBenefit, 4),
-//            'totalSurplus' => round($totalSurplus, 4),
-//            'total' => round($total, 4)
-//        ];
-//
-//    }
 }

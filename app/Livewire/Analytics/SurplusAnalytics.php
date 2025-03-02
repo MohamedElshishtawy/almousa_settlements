@@ -4,6 +4,7 @@ namespace App\Livewire\Analytics;
 
 use App\Office\Office;
 use App\Office\OfficeController;
+use App\Product\StaticProductService;
 use App\Report\ReportSurvice;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -33,24 +34,11 @@ class SurplusAnalytics extends Component
         }
     }
 
-    protected function updatePayed()
-    {
-        $this->totalPayed = 0;
-        if ($this->staticProducts && count($this->staticProducts) > 0) {
-            foreach ($this->staticProducts as $staticProduct) {
-                $this->totalPayed += ($staticProduct['imported_total'] - $staticProduct['total_surplus']) * $staticProduct['price'] / $staticProduct['daily_amount'];
-                $this->totalNotPayed += ($staticProduct['total_surplus']) * $staticProduct['price'] / $staticProduct['daily_amount'];
-            }
-        }
-        return $this->totalPayed;
-    }
-
     public function updatedSelectedOfficesIds()
     {
         $this->getOffices();
         $this->dates = (new ReportSurvice())->getDaysForOffices($this->selectedOffices);
         $this->getStaticProducts();
-        $this->updatePayed();
     }
 
     protected function getOffices(): void
@@ -72,7 +60,6 @@ class SurplusAnalytics extends Component
         }
 
         $this->updateDaysCount();
-        $this->updatePayed();
 
     }
 
@@ -81,6 +68,14 @@ class SurplusAnalytics extends Component
         // get reports between the start and end date
         $this->staticProducts = [];
         $this->benefitsTotal = 0;
+        $this->totalPayed = 0;
+        $this->totalNotPayed = 0;
+
+        /*
+         *
+           $this->totalNotPayed += ($staticProduct['total_surplus']) * $staticProduct['price'] / $staticProduct['daily_amount'];
+        */
+
         if (!$this->startDate || !$this->endDate) {
             return;
         }
@@ -89,62 +84,48 @@ class SurplusAnalytics extends Component
             $reports = $office->reports()->whereBetween('for_date', [$this->startDate, $this->endDate])->get();
 
             foreach ($reports as $report) {
-                if ($report->surplus->count() == 0) {
-                    continue;
-                }
-
                 $staticProducts = $report->staticProducts;
                 $this->benefitsTotal += $report->import ? $report->import->benefits : 0;
+
                 // if there are a static product in $this->staticReports with the same data as $staticProduct, then add the amount to the existing one
-                foreach ($staticProducts as $staticProduct) {
-                    if (!in_array($staticProduct->old_id, array_keys($this->staticProducts))) {
-                        $this->insert($staticProduct);
-                    } else {
-                        $staticProductArr = $this->staticProducts[$staticProduct->old_id];
-                        // check if all data is the same
-                        if ($staticProductArr['name'] == $staticProduct->name &&
+                if ($report->staticProducts) {
+                    foreach ($report->staticProducts as $staticProduct) {
+                        $staticProductArr = $this->staticProducts[$staticProduct->old_id] ?? [];
+                        $totalSurplus = (new StaticProductService($staticProduct))->getAllSurplus();
+
+                        $this->totalPayed += optional($staticProduct->importProductError)->error * $staticProduct['price'];
+                        $this->totalNotPayed += $totalSurplus * $staticProduct['price'];
+
+                        if ($staticProductArr &&
+                            $staticProductArr['name'] == $staticProduct->name &&
                             $staticProductArr['price'] == $staticProduct->price &&
                             $staticProductArr['daily_amount'] == $staticProduct->daily_amount &&
                             $staticProductArr['food_type_id'] == $staticProduct->food_type_id &&
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
                         ) {
-                            $totalImported = $staticProduct->importProductError ?
-                                $staticProduct->importProductError->error : ($staticProduct->report->import->benefits ?? 0) * $staticProduct->daily_amount;
-
-                            $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->daily_amount * $report->import->benefits;
-                            $this->staticProducts[$staticProduct->old_id]['imported_total'] += $totalImported;
-                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $staticProduct->getSurplus();
                             $staticProductArr['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
-
-
+                            $staticProductArr['totalAmount'] += $report->import->benefits * $staticProduct->daily_amount;
+                            $staticProductArr['imported_total'] += optional($staticProduct->importProductError)->error;
+                            $staticProductArr['total_surplus'] += $totalSurplus;
                         } else {
-                            $this->insert($staticProduct);
+                            $this->staticProducts[$staticProduct->old_id] = [
+                                'name' => $staticProduct->name,
+                                'price' => $staticProduct->price,
+                                'daily_amount' => $staticProduct->daily_amount,
+                                'food_type_id' => $staticProduct->food_type_id,
+                                'food_unit_id' => $staticProduct->food_unit_id,
+                                'unit' => $staticProduct->foodUnit->title,
+                                'numberPerWeek' => $staticProduct->getHowManyDayPerWeekUsed(),
+                                'totalAmount' => $report->import->benefits * $staticProduct->daily_amount, //
+                                'imported_total' => optional($staticProduct->importProductError)->error, //
+                                'total_surplus' => $totalSurplus, //
+                            ];
                         }
-
                     }
-
-
                 }
+
             }
         }
-
-
-    }
-
-    protected function insert($staticProduct)
-    {
-        $this->staticProducts[$staticProduct->old_id] = [
-            'name' => $staticProduct->name,
-            'price' => $staticProduct->price,
-            'daily_amount' => $staticProduct->daily_amount,
-            'food_type_id' => $staticProduct->food_type_id,
-            'food_unit_id' => $staticProduct->food_unit_id,
-            'unit' => $staticProduct->foodUnit->title,
-            'numberPerWeek' => $staticProduct->number_per_week,
-            'totalAmount' => $staticProduct->day_amount,
-            'imported_total' => $staticProduct->total_imported,
-            'total_surplus' => $staticProduct->getSurplus(),
-        ];
     }
 
     // start and end date
@@ -154,8 +135,8 @@ class SurplusAnalytics extends Component
             $this->getStaticProducts();
         }
         $this->updateDaysCount();
-        $this->updatePayed();
     }
+
 
     public function render()
     {

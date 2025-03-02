@@ -84,11 +84,11 @@
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$staticProduct['name']}}</td>
-                <td>{{$staticProduct['daily_amount']}}</td>
-                <td>{{$staticProduct['totalAmount']}}</td>
-                <td>{{$staticProduct['imported_total']}}</td>
-                <td>{{round($staticProduct['imported_total'] - $staticProduct['total_surplus'], 4)}}</td>
-                <td>{{$staticProduct['total_surplus']}}</td>
+                <td>{{round($staticProduct['daily_amount'], 4)}}</td>
+                <td>{{round($staticProduct['totalAmount'], 4)}}</td>
+                <td>{{round($staticProduct['imported_total'], 4)}}</td>
+                <td>{{round(bcsub($staticProduct['imported_total'], $staticProduct['total_surplus']), 4)}}</td>
+                <td>{{round($staticProduct['total_surplus'], 4)}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
         @endforeach
@@ -101,7 +101,7 @@
             <td>{{$daysCount}}</td>
             <th>إجمالى عدد المستفيدين</th>
             <td>{{$benefitsTotal ?: 0}}</td>
-            @if($showPrices && auth()->user()->role->hasPermissionTo('import_model2_create_price'))
+            @if($showPrices && auth()->user()->can('import_model2_create_price'))
                 <th>إجمالى المبالغ المصروفة</th>
                 <td>{{$staticProducts ? number_format($totalPayed, 2) : 0}}</td>
                 <th>إجمالى المبالغ غير المصروفة</th>

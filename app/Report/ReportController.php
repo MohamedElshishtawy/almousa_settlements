@@ -209,6 +209,8 @@ class ReportController extends Controller
         if (!auth()->user()->role->hasPermissionTo('import_model2_create_price')) {
             $showPrices = null;
         }
+
+
         return view('analytics.surplus-analytics', compact('showPrices'));
     }
 
