@@ -104,9 +104,12 @@ class SurplusAnalytics extends Component
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
                         ) {
                             $this->staticProducts[$staticProduct->old_id]['numberPerWeek'] = $staticProduct->getHowManyDayPerWeekUsed();
-                            $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $report->import->benefits * $staticProduct->daily_amount;
-                            $this->staticProducts[$staticProduct->old_id]['imported_total'] += optional($staticProduct->importProductError)->error;
-                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] += $totalSurplus;
+                            $this->staticProducts[$staticProduct->old_id]['totalAmount'] = bcadd($this->staticProducts[$staticProduct->old_id]['totalAmount'],
+                                bcmul($report->import->benefits, $staticProduct->daily_amount, 100), 100);
+                            $this->staticProducts[$staticProduct->old_id]['imported_total'] = bcadd($this->staticProducts[$staticProduct->old_id]['imported_total'],
+                                optional($staticProduct->importProductError)->error, 100);
+                            $this->staticProducts[$staticProduct->old_id]['total_surplus'] = bcadd($this->staticProducts[$staticProduct->old_id]['total_surplus'],
+                                $totalSurplus, 100);
                         } else {
                             $this->staticProducts[$staticProduct->old_id] = [
                                 'name' => $staticProduct->name,
@@ -116,7 +119,7 @@ class SurplusAnalytics extends Component
                                 'food_unit_id' => $staticProduct->food_unit_id,
                                 'unit' => $staticProduct->foodUnit->title,
                                 'numberPerWeek' => $staticProduct->getHowManyDayPerWeekUsed(),
-                                'totalAmount' => $report->import->benefits * $staticProduct->daily_amount, //
+                                'totalAmount' => bcmul($report->import->benefits, $staticProduct->daily_amount, 100), //
                                 'imported_total' => optional($staticProduct->importProductError)->error, //
                                 'total_surplus' => $totalSurplus, //
                             ];
