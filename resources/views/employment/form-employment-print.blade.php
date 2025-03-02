@@ -77,7 +77,7 @@
         <tbody>
         <tr>
             <th colspan="2">المتعهد أو من ينوب عنه</th>
-            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
+            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
             <th>الاسم</th>
@@ -87,14 +87,14 @@
             <th>الاسم</th>
             <td>
                 <input type="text" class="form-control"
-                       value="{{ $subsidiary_receiving_committee_president ? $subsidiary_receiving_committee_president->name : '' }}">
+                       value="{{ $subsidiary_receiving_committee_member ? $subsidiary_receiving_committee_member->name : '' }}">
             </td>
         </tr>
         <tr>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="مندوب"></td>
             <th>الرتبة</th>
-            <td><input type="text" class="form-control" value="رئيس لجنة الإستلام الفرعية"></td>
+            <td><input type="text" class="form-control" value="عضو لجنة الإستلام الفرعية"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
@@ -108,18 +108,20 @@
     <table rules="all" class="no-break mt-2">
         <tbody>
         <tr>
-            <th colspan="2">عضو لجنة الإستلام الفرعية</th>
+
+            <th colspan="2">رئيس لجنة الإستلام الفرعية</th>
         </tr>
         <tr>
             <th>الاسم</th>
             <td>
                 <input type="text" class="form-control"
-                       value="{{ $subsidiary_receiving_committee_member ? $subsidiary_receiving_committee_member->name : '' }}">
+                       value="{{ $subsidiary_receiving_committee_president ? $subsidiary_receiving_committee_president->name : '' }}">
             </td>
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="عضو لجنة الإستلام الفرعية"></td>
+
+            <td><input type="text" class="form-control" value="رئيس لجنة الإستلام الفرعية"></td>
         </tr>
         <tr>
             <th>التوقيع</th>
