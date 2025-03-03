@@ -29,6 +29,7 @@
     <thead>
     <tr>
         <th colspan="100">محضر توريد المواد الطازجة و الجافة إعاشة {{$office->living->title}}
+            مقر الأمن العام بـ
             ({{$office->name}})
         </th>
     </tr>

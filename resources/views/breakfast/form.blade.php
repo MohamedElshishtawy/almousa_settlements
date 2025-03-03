@@ -51,7 +51,7 @@
                                 <!-- Third row: Select Delegates -->
                                 <div class="row mb-3">
                                     <div class="col-12">
-                                        <label for="delegates" class="form-label">اختر المندوبين</label>
+                                        <label for="delegates" class="form-label">اختر المناديب</label>
 
                                         @foreach($delegatesAll as $delegate)
                                             <div class=" d-flex gap-2">

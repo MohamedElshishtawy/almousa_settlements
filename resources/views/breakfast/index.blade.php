@@ -27,7 +27,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">التاريخ</th>
                                 <th scope="col">الملاحظات</th>
-                                <th scope="col">عدد المندوبين</th>
+                                <th scope="col">عدد المناديب</th>
                                 @can('break_fast_edit')
                                     <th scope="col">تعديل</th>
                                 @endcan

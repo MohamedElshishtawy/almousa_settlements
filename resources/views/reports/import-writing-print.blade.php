@@ -40,7 +40,9 @@
             </div>
             <div></div>
             <div class="title">
-                <h1>محضر توريد كتابى نموذج رقم ( ) {{$office->name}}</h1>
+                <h1>محضر توريد نموذج رقم
+                    ({{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(1)}})
+                    مقر الأمن العام ب{{$office->name}}</h1>
             </div>
         </header>
 

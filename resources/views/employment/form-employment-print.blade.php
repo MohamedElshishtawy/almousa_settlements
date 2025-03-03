@@ -2,7 +2,7 @@
 
 
 @section('titlePaper')
-    <h1>تقرير أعداد العاملة وحالتهم</h1>
+    <h1>تقرير أعداد العمالة وحالتهم</h1>
 @endsection
 
 @section('article')
@@ -44,8 +44,6 @@
         السلام عليكم ورحمة الله وبركاته،
         <br>
         نفيدكم أنه جرى التفتيش على كافة العمالة لهذا اليوم
-        {{\App\Models\Day::convertDate2ArName($formEmployment->import->report->for_date)}}
-        الموافق
         {{\App\Models\Day::DateToHijri($formEmployment->import->report->for_date)}}
         و الموضح أعدادهم فى الجدول أعلاه وأتضح ما يلى:
     </p>

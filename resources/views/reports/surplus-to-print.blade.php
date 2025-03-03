@@ -34,7 +34,7 @@
             محضر وفر نموذج رقم (
             {{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(2)}}
             ) المواد الطازجة و الجافة إعاشة {{$office->living->title}}
-            ال
+            بمقر الأمن العام بـ
             ({{$office->name}})
 
         </th>
