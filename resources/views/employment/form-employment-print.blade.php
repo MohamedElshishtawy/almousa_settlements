@@ -10,8 +10,8 @@
     <table class="text-center">
         <tr>
             <th colspan="100">
-                بيان بأعداد العمالة الموجودة بمقر صرف الإعاشة ب
-                {{$formEmployment->import->report->office->name}}
+                بيان بأعداد العمالة الموجودة بمقر صرف الإعاشة بمقر الأمن العام
+                ب{{$formEmployment->import->report->office->name}}
                 و حالتهم
             </th>
         </tr>

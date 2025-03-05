@@ -49,17 +49,25 @@
         <article>
             <div>
                 محضر بتوريد وصرف كامل استحقاق المستفيدين من المواد الطازجة والجافة لإعاشة
-                العاملين بال{{$office->living->title}} ب{{$office->name}} ليوم
+                العاملين
+                بال{{$office->living->title}}
+                بمقر الأمن العام ب{{$office->name}}
+                ليوم
                 {{$Hijri['day-text']}} الموافق ({{$Hijri['year']}}/{{$Hijri['month']}}/{{$Hijri['day']}} هـ).
 
             </div>
             <div class="mt-5">
                 لقد تم توريد وصرف كامل استحقاق المستفيدين من الوجبات الثلاث للمواد الطازجة والجافة والمطهية بعد مطابقتها
                 بالشروط
-                والمواصفات {{$isHasDifferance && $office->living->title == 'ميدان' ? "ماعدا النقص الموضح في نموذج التوريد" : ''}}
-                ، وتم الإشراف على
-                توزيعها وصرفها من موقع إعاشة العاملين بال{{$office->living->title}} بـ ({{$office->name}} وقد بلغ عدد
-                المستفيدين في اليوم والتاريخ الموضح أعلاه ({{$report->import->benefits}}) مستفيد.
+                {{$isHasDifferance && $office->living->title == 'ميدان' ? "ماعدا النقص الموضح في نموذج التوريد" : ''}}
+                والمواصفات، وتم الإشراف على
+                توزيعها وصرفها من موقع إعاشة العاملين
+                بال{{$office->living->title}}
+                بمقر الأمن العام
+                ب{{$office->name}}
+                وقد بلغ عدد
+                المستفيدين في اليوم والتاريخ الموضح أعلاه
+                ({{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($report->import->benefits)}}) مستفيد.
             </div>
             <div class="text-center">
                 وجرى التأكد من ذلك وعلى مسؤوليتنا والله الموفق ،،،
