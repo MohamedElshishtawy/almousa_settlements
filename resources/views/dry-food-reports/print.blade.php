@@ -112,7 +112,7 @@
         <tbody>
         <tr>
             <th colspan="2">معد المحضر</th>
-            <th colspan="2">المندوب</th>
+            <th colspan="2">المفوض الشركة</th>
         </tr>
         <tr>
             <th>الاسم</th>

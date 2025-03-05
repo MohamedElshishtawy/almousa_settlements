@@ -90,7 +90,7 @@
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="مندوب"></td>
+            <td><input type="text" class="form-control" value="مفوض الشركة"></td>
             <th>الرتبة</th>
             <td><input type="text" class="form-control" value="عضو لجنة الإستلام الفرعية"></td>
         </tr>
