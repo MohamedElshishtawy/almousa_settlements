@@ -107,7 +107,7 @@
         </tr>
         <tr>
             <th>المسمى</th>
-            <td><input type="text" class="form-control" value="{{'المورد'}}"></td>
+            <td><input type="text" class="form-control" value="{{'مفوض الشركة'}}"></td>
             <th>المسمى</th>
             <td><input type="text" class="form-control" value="{{'عضو لجنة الإستلام الفرعية'}}"></td>
         </tr>

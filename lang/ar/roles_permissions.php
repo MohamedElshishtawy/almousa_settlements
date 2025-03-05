@@ -12,7 +12,7 @@ return [
     'administrative_affairs_member' => 'عضو الشؤون الإدارية',
     'security_member' => 'عضو الحراسة', // or عضو الأمن
     'group_head' => 'رئيس المجموعة',
-    'supplier' => 'المورد',
+    'supplier' => 'مفوض الشركة',
     'deputy_supplier' => 'نائب المورد',
     'company_representative' => 'المتعهد',
     'meal_dispenser' => 'عضو صرف الوجبات',
