@@ -22,7 +22,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <title>طباعة الوفر</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?7')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?8')}}">
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?7')}}" media="print">
 </head>
 <body dir="rtl" class="m-3">

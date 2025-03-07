@@ -99,7 +99,12 @@ table .focus {
 
 
 footer table th {
-    width: 20%;
+    width: 14%;
+    font-size: 12px;
+}
+
+footer table td .form-control {
+    font-size: 12px !important;
 }
 
 .text-center {

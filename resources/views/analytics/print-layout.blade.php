@@ -24,7 +24,7 @@
     <script src="https://kit.fontawesome.com/1f4dd9add7.js" crossorigin="anonymous"></script>
 
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?7')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?8')}}">
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?10')}}" media="print">
     <link href="{{asset('css/layout.css?8')}}" rel="stylesheet"/>
 </head>
