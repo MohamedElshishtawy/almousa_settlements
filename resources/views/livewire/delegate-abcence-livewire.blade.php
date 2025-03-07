@@ -1,7 +1,7 @@
 <div class="card">
     <x-message/>
     <div class="card-header d-flex justify-content-right align-items-center">
-        <h2>إدارة غياب الوفد</h2>
+        <h2>إدارة غياب المندوب</h2>
         <span wire:loading>
             <span class="spinner-border spinner-border-sm text-success" role="status"></span>
         </span>
