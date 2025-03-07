@@ -16,7 +16,7 @@
 
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?10')}}" media="print">
     <title>بيان رفض مندوب إستلام صنف {{ \App\Models\Day::DateToHijri(now()->format('Y-m-d')) }}</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?8')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?10')}}">
 </head>
 <body dir="rtl" class="import-writing m-3">
 

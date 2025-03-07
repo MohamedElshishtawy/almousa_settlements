@@ -23,7 +23,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="{{asset('css/print-page-media.css?9')}}" media="print">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{asset('css/print-page.css?8')}}">
+    <link rel="stylesheet" href="{{asset('css/print-page.css?10')}}">
     @if(isset($landScape) && $landScape)
         <link rel="stylesheet" href="{{asset('css/landscape.css')}}">
     @endif
