@@ -112,13 +112,13 @@
                         @endif
                     @else
                         @role('admin')
-                        {{--                        <li class="nav-item dropdown notification-li" wire:click="updateUnreadedLogs">--}}
-                        {{--                            <i class="fa-solid fa-bell fa-lg"></i>--}}
-                        {{--                            <span class="badge badge-danger">@livewire('logs-counter-livewire')</span>--}}
-                        {{--                            <ul class="logs">--}}
-                        {{--                                @livewire('logs-list-livewire')--}}
-                        {{--                            </ul>--}}
-                        {{--                        </li>--}}
+                        <li class="nav-item dropdown notification-li" wire:click="updateUnreadedLogs">
+                            <i class="fa-solid fa-bell fa-lg"></i>
+                            <span class="badge badge-danger">@livewire('logs-counter-livewire')</span>
+                            <ul class="logs">
+                                @livewire('logs-list-livewire')
+                            </ul>
+                        </li>
                         @endrole
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
