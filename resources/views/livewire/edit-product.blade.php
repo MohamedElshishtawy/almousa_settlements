@@ -37,12 +37,14 @@
     </td>
 
     <td>
-        <input type="number" min="1" wire:model.live.debounce.250ms="packet_value" step="0.1" class="form-control">
+        <input type="number" min="1" wire:model.live.debounce.250ms="packet_value" step="0.1"
+               class="form-control @error('packet_value') is-invalid @enderror">
     </td>
 
 
     <td>
-        <input type="number" min="1" wire:model.live.debounce.250ms="carton_value" class="form-control">
+        <input type="number" min="1" wire:model.live.debounce.250ms="carton_value"
+               class="form-control @error('carton_value') is-invalid @enderror">
     </td>
 
     <td>

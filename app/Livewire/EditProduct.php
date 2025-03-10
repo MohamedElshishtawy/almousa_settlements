@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Product\Product;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 
@@ -10,8 +11,16 @@ class EditProduct extends Component
 {
 
     public Product $product;
-    public $name, $food_type_id, $food_unit_id, $carton_value, $packet_value, $isBreakFast;
+    public $food_type_id, $food_unit_id;
+    #[Validate('required|string|max:255')]
+    public $name;
+    #[Validate('required|numeric|gt:0')]
+    public $carton_value;
+    #[Validate('required|numeric|gt:0')]
+    public $packet_value;
+    public $isBreakFast;
     public $index, $mission, $living, $units, $types;
+
 
     public function mount($product)
     {
@@ -30,6 +39,7 @@ class EditProduct extends Component
     // This will update the product when any field is changed
     public function updated()
     {
+        $this->validate();
         $this->product->update([
             'name' => $this->name,
             'food_type_id' => $this->food_type_id,
