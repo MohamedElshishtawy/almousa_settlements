@@ -72,7 +72,7 @@
             <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(++$index) }}</td>
             <td>{{ $staticProduct->name }}</td>
             <td>{{ $staticProduct->foodUnit->title }}</td>
-            @if ($staticProduct['surplusData']['amountForMeal'])
+            @if ((float)$staticProduct['surplusData']['amountForMeal'])
                 <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['amountForMeal'], 4)) }}</td>
                 <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['surplusData']['totalAmountForMeal'], 4)) }}</td>
                 <td>{{ \Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['surplusData']['surplusBenefit']) }}</td>
