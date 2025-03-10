@@ -52,27 +52,27 @@
 
                                             @canany(['import_create', 'import_edit', 'import_delete', 'import_writing_print', 'import_print'])
                                                 <td>
-                                                    <a href="{{route('managers.reports.import', [$report['officeMission']->id, $report['date']])}}"
-                                                       class="btn {{ $report['import'] ? 'btn-success' : 'btn-primary' }}">
-                                                        <span>التوريد</span>
-                                                        @if($report['import'])
-                                                            <span><i
-                                                                    class="fa-regular fa-circle-check fa-sm"></i></span>
-                                                        @endif
-                                                    </a>
+                                                    {{--                                                    <a href="{{route('managers.reports.import', [$report['officeMission']->id, $report['date']])}}"--}}
+                                                    {{--                                                       class="btn {{ $report['import'] ? 'btn-success' : 'btn-primary' }}">--}}
+                                                    {{--                                                        <span>التوريد</span>--}}
+                                                    {{--                                                        @if($report['import'])--}}
+                                                    {{--                                                            <span><i--}}
+                                                    {{--                                                                    class="fa-regular fa-circle-check fa-sm"></i></span>--}}
+                                                    {{--                                                        @endif--}}
+                                                    {{--                                                    </a>--}}
                                                 </td>
                                             @endcanany
 
                                             @canany(['surplus_create', 'surplus_edit', 'surplus_delete', 'surplus_print'])
                                                 <td>
-                                                    <a href="{{route('managers.reports.surplus', [$report['officeMission']->id, $report['date']])}}"
-                                                       class="btn {{ $report['surplus'] ? 'btn-success' : 'btn-primary' }} @if(!$report['import']) disabled @endif">
-                                                        <span>الوفر</span>
-                                                        @if($report['surplus'])
-                                                            <span><i
-                                                                    class="fa-regular fa-circle-check fa-sm"></i></span>
-                                                        @endif
-                                                    </a>
+                                                    {{--                                                    <a href="{{route('managers.reports.surplus', [$report['officeMission']->id, $report['date']])}}"--}}
+                                                    {{--                                                       class="btn {{ $report['surplus'] ? 'btn-success' : 'btn-primary' }} @if(!$report['import']) disabled @endif">--}}
+                                                    {{--                                                        <span>الوفر</span>--}}
+                                                    {{--                                                        @if($report['surplus'])--}}
+                                                    {{--                                                            <span><i--}}
+                                                    {{--                                                                    class="fa-regular fa-circle-check fa-sm"></i></span>--}}
+                                                    {{--                                                        @endif--}}
+                                                    {{--                                                    </a>--}}
                                                 </td>
                                             @endcanany
 
