@@ -170,6 +170,9 @@ class ReportController extends Controller
 
                         $staticProduct->surplusData = $data;
                     }
+                    if ($staticProduct->name == 'حلاوة طحينية') {
+                        dd($staticProduct);
+                    }
                 }
             }
         }
@@ -189,7 +192,6 @@ class ReportController extends Controller
             $user
         ) => $user->office && $user->office->id == $office->id && $user->role->name == 'supplier')->first();
 
-        dd($staticProducts);
 
         return view('reports.surplus-to-print',
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal',
