@@ -170,11 +170,6 @@ class ReportController extends Controller
 
                         $staticProduct->surplusData = $data;
                     }
-                    if ($staticProduct->name == 'حلاوة طحينية') {
-                        dd($staticProduct, $staticProduct['surplusData']['amountForMeal'],
-                            (float) $staticProduct['surplusData']['amountForMeal'],
-                            $staticProduct['surplusData']['amountForMeal'] ? 'y' : 'n');
-                    }
                 }
             }
         }
