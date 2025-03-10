@@ -189,6 +189,8 @@ class ReportController extends Controller
             $user
         ) => $user->office && $user->office->id == $office->id && $user->role->name == 'supplier')->first();
 
+        dd($staticProducts);
+
         return view('reports.surplus-to-print',
             compact('office', 'report', 'date', 'staticProducts', 'officeMission', 'surplus', 'meal',
                 'subsidiary_receiving_committee_president',
