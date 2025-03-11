@@ -11,7 +11,8 @@ class TaskController extends Controller
     {
         $offices = Office::all();
         if (auth()->user()->office) {
-            $offices = $offices->filter(fn($office) => auth()->user()->isBelongsToOffice($office->id));
+            $office = auth()->user()->office;
+            return view('tasks.for-office', compact('office'));
         }
         return view('tasks.index', compact('offices'));
     }
