@@ -92,7 +92,7 @@
                 <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['numberPerWeek'])}}</td>
                 <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['totalAmount'])}}</td>
                 <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['imported_total'])}}</td>
-                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['totalAmount'] - $staticProduct['imported_total'], 4 ))}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round(bcsub($staticProduct['totalAmount'], $staticProduct['imported_total'], 100), 4 ))}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
         @endforeach
