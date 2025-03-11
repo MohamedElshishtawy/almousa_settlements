@@ -2,10 +2,11 @@
 
 namespace App\Product;
 
+
 use App\Models\Day;
 use App\Models\Meal;
 use App\Report\Report;
-use http\Exception\InvalidArgumentException;
+
 
 class StaticProductService
 {
@@ -124,11 +125,6 @@ class StaticProductService
 
 
         $surplusBenefit = $importData['amountForMeal'] ? $surplusBenefitFromTypes : 0 + $surplusProductErrorBenefits;
-
-        // execution error if there is no amount of data and there are some surplus
-        if (!$importData['amountForMeal'] && $surplusBenefitFromTypes || $surplusProductErrorBenefits) {
-            throw new InvalidArgumentException('لا يوجد توريد للمنتج وهناك وفر الرجاء الرجوع لأدمن الموقع');
-        }
 
         $totalSurplus = bcadd(bcmul($amountForMeal, $surplusBenefit, 100), $surplusProductErrorAmount, 100);
 
