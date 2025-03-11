@@ -88,11 +88,11 @@
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$staticProduct['name']}}</td>
-                <td>{{$staticProduct['daily_amount']}}</td>
-                <td>{{$staticProduct['numberPerWeek']}}</td>
-                <td>{{$staticProduct['totalAmount']}}</td>
-                <td>{{$staticProduct['imported_total']}}</td>
-                <td>{{round($staticProduct['totalAmount'] - $staticProduct['imported_total'], 4 )}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['daily_amount'])}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['numberPerWeek'])}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['totalAmount'])}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits($staticProduct['imported_total'])}}</td>
+                <td>{{\Alkoumi\LaravelArabicNumbers\Numbers::ShowInArabicDigits(round($staticProduct['totalAmount'] - $staticProduct['imported_total'], 4 ))}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
         @endforeach
