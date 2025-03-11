@@ -15,7 +15,7 @@ class TaskController extends Controller
 
     public function officeTasks($officeId)
     {
-        $office = Office::find($officeId)->with('tasks')->first();
+        $office = Office::find($officeId);
         return view('tasks.for-office', compact('office'));
     }
 
