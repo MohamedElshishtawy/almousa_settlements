@@ -10,12 +10,18 @@ class TaskController extends Controller
     public function index()
     {
         $offices = Office::all();
+        if (auth()->user()->office) {
+            $offices = $offices->filter(fn($office) => auth()->user()->isBelongsToOffice($office->id));
+        }
         return view('tasks.index', compact('offices'));
     }
 
     public function officeTasks($officeId)
     {
         $office = Office::find($officeId);
+        if (auth()->user()->office && auth()->user()->office->id != $office->id) {
+            abort(403, 'غير مسموح لك بالوصول لهذه الصفحة');
+        }
         return view('tasks.for-office', compact('office'));
     }
 
