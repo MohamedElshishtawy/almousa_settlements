@@ -103,7 +103,6 @@ class ImportAnalytics extends Component
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id;
 
                         if ($isSameProduct) {
-                            dd($staticProduct);
                             $this->staticProducts[$staticProductId]['totalAmount'] += $staticProduct->day_amount;
                             $this->staticProducts[$staticProductId]['imported_total'] += $staticProduct->total_imported;
                             $this->staticProducts[$staticProductId]['numberPerWeek'] = $staticProduct->number_per_week;
@@ -122,6 +121,9 @@ class ImportAnalytics extends Component
 
     protected function insertToStaticProducts($staticProduct)
     {
+        if ($staticProduct->name == 'سبانخ') {
+            dd($staticProduct);
+        }
         $this->staticProducts[$staticProduct->old_id] = [
             'name' => $staticProduct->name,
             'price' => $staticProduct->price,
