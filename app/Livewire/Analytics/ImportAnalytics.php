@@ -93,7 +93,9 @@ class ImportAnalytics extends Component
                 foreach ($staticProductsDB as $staticProduct) {
                     $staticProductId = $staticProduct->old_id;
                     $staticProductArr = $this->staticProducts[$staticProductId] ?? null;
-
+                    if ($staticProduct->name == 'سبانخ') {
+                        dd($staticProduct);
+                    }
                     if ($staticProductArr) {
                         // Check if all data is the same
                         $isSameProduct = $staticProductArr['name'] == $staticProduct->name &&
@@ -121,9 +123,7 @@ class ImportAnalytics extends Component
 
     protected function insertToStaticProducts($staticProduct)
     {
-        if ($staticProduct->name == 'سبانخ') {
-            dd($staticProduct);
-        }
+
         $this->staticProducts[$staticProduct->old_id] = [
             'name' => $staticProduct->name,
             'price' => $staticProduct->price,
