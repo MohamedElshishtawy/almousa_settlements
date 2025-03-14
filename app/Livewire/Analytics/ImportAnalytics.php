@@ -105,6 +105,7 @@ class ImportAnalytics extends Component
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
 
                         ) {
+                            var_export($staticProduct->name);
                             $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->day_amount;
                             $this->staticProducts[$staticProduct->old_id]['imported_total'] += $staticProduct->total_imported;
                             $staticProductArr['numberPerWeek'] = $staticProduct->number_per_week;
