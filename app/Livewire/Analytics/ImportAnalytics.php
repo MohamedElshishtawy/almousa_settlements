@@ -91,30 +91,27 @@ class ImportAnalytics extends Component
                 $this->benefitsTotal += $report->import ? $report->import->benefits : 0;
 
                 foreach ($staticProductsDB as $staticProduct) {
-                    // if there are a static product in $this->staticReports with the same data as $staticProduct, then add the amount to the existing one
-                    if (!in_array($staticProduct->old_id, array_keys($this->staticProducts))) {
-                        $this->insertToStaticProducts($staticProduct);
-                    } else {
-                        $staticProductArr = $this->staticProducts[$staticProduct->old_id];
-                        // check if all data is the same
+                    $staticProductId = $staticProduct->old_id;
+                    $staticProductArr = $this->staticProducts[$staticProductId] ?? null;
 
-                        if ($staticProductArr['name'] == $staticProduct->name &&
+                    if ($staticProductArr) {
+                        // Check if all data is the same
+                        $isSameProduct = $staticProductArr['name'] == $staticProduct->name &&
                             $staticProductArr['price'] == $staticProduct->price &&
                             $staticProductArr['daily_amount'] == $staticProduct->daily_amount &&
                             $staticProductArr['food_type_id'] == $staticProduct->food_type_id &&
-                            $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id
+                            $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id;
 
-                        ) {
-                            $this->staticProducts[$staticProduct->old_id]['totalAmount'] += $staticProduct->day_amount;
-                            $this->staticProducts[$staticProduct->old_id]['imported_total'] += $staticProduct->total_imported;
-                            $staticProductArr['numberPerWeek'] = $staticProduct->number_per_week;
+                        if ($isSameProduct) {
+                            $this->staticProducts[$staticProductId]['totalAmount'] += $staticProduct->day_amount;
+                            $this->staticProducts[$staticProductId]['imported_total'] += $staticProduct->total_imported;
+                            $this->staticProducts[$staticProductId]['numberPerWeek'] = $staticProduct->number_per_week;
                         } else {
                             $this->insertToStaticProducts($staticProduct);
                         }
-
+                    } else {
+                        $this->insertToStaticProducts($staticProduct);
                     }
-
-
                 }
             }
         }
