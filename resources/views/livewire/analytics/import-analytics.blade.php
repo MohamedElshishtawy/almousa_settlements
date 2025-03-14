@@ -84,6 +84,7 @@
         </tr>
         </thead>
         <tbody>
+        @dd($staticProducts)
         @foreach($staticProducts ?? [] as $staticProduct)
             <tr>
                 <td>{{$loop->iteration}}</td>
