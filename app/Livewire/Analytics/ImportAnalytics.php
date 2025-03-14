@@ -93,9 +93,7 @@ class ImportAnalytics extends Component
                 foreach ($staticProductsDB as $staticProduct) {
                     $staticProductId = $staticProduct->old_id;
                     $staticProductArr = $this->staticProducts[$staticProductId] ?? null;
-                    if ($staticProduct->name == 'سبانخ') {
-                        dd($staticProduct, $staticProductArr, $staticProduct->total_imported);
-                    }
+
                     if ($staticProductArr) {
                         // Check if all data is the same
                         $isSameProduct = $staticProductArr['name'] == $staticProduct->name &&

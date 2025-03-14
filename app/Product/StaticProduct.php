@@ -40,11 +40,7 @@ class StaticProduct extends Product
      */
     public function getTotalImportedAttribute()
     {
-        $error = optional($this->importProductError)->error;
-        $benefits = optional($this->report->import)->benefits ?? 0;
-        $mealsPerDay = static::howMealPerDay($this->id, Day::date2object($this->report->for_date)->id);
-
-        return $error ?: ($benefits * $this->daily_amount * $mealsPerDay);
+        return optional($this->importProductError)->error ?? 0;
     }
 
     /**
