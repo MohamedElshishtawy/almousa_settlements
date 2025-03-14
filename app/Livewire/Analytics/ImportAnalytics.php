@@ -86,7 +86,6 @@ class ImportAnalytics extends Component
         foreach ($this->selectedOffices as $office) {
             $reports = $office->reports()
                 ->whereBetween('for_date', [$this->startDate, $this->endDate])->with('import', 'staticProducts')->get();
-            dd($reports);
             foreach ($reports as $report) {
                 $staticProductsDB = $report->staticProducts;
                 $this->benefitsTotal += $report->import ? $report->import->benefits : 0;
@@ -104,6 +103,7 @@ class ImportAnalytics extends Component
                             $staticProductArr['food_unit_id'] == $staticProduct->food_unit_id;
 
                         if ($isSameProduct) {
+                            dd($staticProduct);
                             $this->staticProducts[$staticProductId]['totalAmount'] += $staticProduct->day_amount;
                             $this->staticProducts[$staticProductId]['imported_total'] += $staticProduct->total_imported;
                             $this->staticProducts[$staticProductId]['numberPerWeek'] = $staticProduct->number_per_week;
