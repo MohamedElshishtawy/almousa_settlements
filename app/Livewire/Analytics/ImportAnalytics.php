@@ -86,6 +86,7 @@ class ImportAnalytics extends Component
         foreach ($this->selectedOffices as $office) {
             $reports = $office->reports()
                 ->whereBetween('for_date', [$this->startDate, $this->endDate])->with('import', 'staticProducts')->get();
+            dd($reports);
             foreach ($reports as $report) {
                 $staticProductsDB = $report->staticProducts;
                 $this->benefitsTotal += $report->import ? $report->import->benefits : 0;
