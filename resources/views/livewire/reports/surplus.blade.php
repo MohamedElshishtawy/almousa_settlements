@@ -187,7 +187,7 @@
                         <div class="d-flex">
                             <input type="text"
                                    wire:input.debounce.450ms="surplusAmountUpdate({{$staticProduct->id}}, $event.target.value)"
-                                   class="form-control number-input"
+                                   class="form-control number-input p-2"
                                    wire:model="surplusAmount.{{$staticProduct->id}}"
                                    @if(!$thisDayAmount) disabled @endif>
                             <span class="unit">{{ $staticProduct->foodUnit->title }}</span>
@@ -197,7 +197,7 @@
                         <div class="d-flex">
                             <input type="text"
                                    wire:input.debounce.450ms="surplusBenefitsUpdate({{$staticProduct->id}}, $event.target.value)"
-                                   class="form-control number-input p-1"
+                                   class="form-control number-input p-2"
                                    wire:model="surplusBenefits.{{$staticProduct->id}}"
                                    @if(!$thisDayAmount) disabled @endif>
                             <span class="unit">{{'شخص'}}</span>
