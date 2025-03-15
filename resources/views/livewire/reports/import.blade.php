@@ -64,16 +64,15 @@
                     @canany(['employment_create', 'employment_edit', 'employment_delete', 'employment_print'])
                         <tr>
                             <th>تقييم العمالة</th>
-                            <td><a href="{{ route('managers.employment', ['import' => $report->import]) }}">
+                            <td>
+                                <a href="{{ route('managers.employment', ['import' => $report->import]) }}">
                                     @if($report->import->formEmployment)
                                         <span><i class="fa-regular fa-circle-check fa-sm "></i></span>
                                         عرض وطباعة
                                     @else
                                         عمل التقييم
                                     @endif
-
                                 </a>
-
                             </td>
                         </tr>
                     @endcan

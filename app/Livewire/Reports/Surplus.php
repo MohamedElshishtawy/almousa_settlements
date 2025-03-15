@@ -47,11 +47,8 @@ class Surplus extends Component
 
     public function setData()
     {
+        $this->reset('surplusAmount', 'surplusBenefits', 'surplusfoodTypeValues');
         if (!$this->surplus) {
-            // reset arrays and data
-            $this->surplusAmount = [];
-            $this->surplusBenefits = [];
-            $this->surplusfoodTypeValues = [];
             return;
         }
         // put all the arrays data for the database
@@ -142,7 +139,6 @@ class Surplus extends Component
         if (!$forMeal) {
             $forMeal = $this->selectedMeal;
         }
-
 
         // create Report
         $surplus = new \App\Report\Surplus();
