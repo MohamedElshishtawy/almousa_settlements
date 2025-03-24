@@ -103,7 +103,7 @@
             <td>{{$benefitsTotal ?: 0}}</td>
             @if($showPrices && auth()->user()->can('import_model2_create_price'))
                 <th>إجمالى المبالغ المصروفة</th>
-                <td>{{$staticProducts ? number_format($totalPayed, 2) : 0}}</td>
+                <td>{{$staticProducts ? number_format($totalPayed - $totalNotPayed, 2) : 0}}</td>
                 <th>إجمالى المبالغ غير المصروفة</th>
                 <td>{{$staticProducts ? number_format($totalNotPayed, 2) : 0}}</td>
             @endif
