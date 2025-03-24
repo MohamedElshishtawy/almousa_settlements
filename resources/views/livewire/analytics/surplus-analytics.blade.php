@@ -64,17 +64,16 @@
         </tr>
         <tr>
             <th>الفترة من</th>
-            <td colspan="2">{{\App\Models\Day::DateToHijri($startDate)}}</td>
+            <td>{{\App\Models\Day::DateToHijri($startDate)}}</td>
             <th>الى</th>
-            <td colspan="2">{{\App\Models\Day::DateToHijri($endDate)}}</td>
-            <th>قوة المستفيدين</th>
+            <td>{{\App\Models\Day::DateToHijri($endDate)}}</td>
+            <th colspan="2">قوة المستفيدين</th>
             <td>{{$benefitsTotal ?: 0}}</td>
         </tr>
         <tr>
             <td>عدد</td>
             <td>اسم الصنف</td>
             <td>مقرر الفرد اليومى</td>
-            <td>الكمية المقررة</td>
             <td>الكمية الموردة</td>
             <td>الكمية المصروف</td>
             <td>كمية الوفر</td>
@@ -85,7 +84,6 @@
                 <td>{{$loop->iteration}}</td>
                 <td>{{$staticProduct['name']}}</td>
                 <td>{{round($staticProduct['daily_amount'], 4)}}</td>
-                <td>{{round($staticProduct['totalAmount'], 4)}}</td>
                 <td>{{round($staticProduct['imported_total'], 4)}}</td>
                 <td>{{number_format(bcsub($staticProduct['imported_total'], $staticProduct['total_surplus']), 2)}}</td>
                 <td>{{number_format($staticProduct['total_surplus'], 2)}}</td>
