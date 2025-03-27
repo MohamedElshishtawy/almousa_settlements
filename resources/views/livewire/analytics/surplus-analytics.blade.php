@@ -85,7 +85,7 @@
                 <td>{{$staticProduct['name']}}</td>
                 <td>{{round($staticProduct['daily_amount'], 4)}}</td>
                 <td>{{round($staticProduct['imported_total'], 4)}}</td>
-                <td>{{number_format(bcsub($staticProduct['imported_total'], $staticProduct['total_surplus']), 2)}}</td>
+                <td>{{number_format(bcsub($staticProduct['imported_total'], $staticProduct['total_surplus'], 100), 2)}}</td>
                 <td>{{number_format($staticProduct['total_surplus'], 2)}}</td>
                 <td>{{$staticProduct['unit']}}</td>
             </tr>
