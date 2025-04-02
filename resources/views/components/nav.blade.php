@@ -94,6 +94,13 @@
                             </a>
                         </li>
                     @endcanany
+
+                    <li>
+                        <a href="{{ route('contract.index') }}"
+                           class="{{ request()->routeIs('contract.index') ? 'active' : '' }}">
+                            العقود
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

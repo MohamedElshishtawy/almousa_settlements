@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BreakFastProductController;
 use App\Http\Controllers\BreakFastReportController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\DryFoodReportController;
 use App\Http\Controllers\HijriDateController;
@@ -261,6 +262,12 @@ Route::middleware('auth')->group(function () {
                 ])->name('dry-food-reports.destroy')->middleware('permission:dry_food_delete');
         });
 
+    });
+
+    Route::prefix('contract')->group(function () {
+        Route::get('/', [ContractController::class, 'index'])->name('contract.index');
+        Route::get('/create', [ContractController::class, 'create'])->name('contract.create');
+        Route::post('/store', [ContractController::class, 'store'])->name('contract.store');
     });
 
 });

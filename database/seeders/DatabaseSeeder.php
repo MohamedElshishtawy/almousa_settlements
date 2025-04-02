@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        // Contract type
+        $this->call(ContractTypeSeeder::class);
 
         // permission seeding
         $this->call(UsersPermissionsSeeder::class);
